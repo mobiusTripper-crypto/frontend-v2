@@ -1,0 +1,83 @@
+{
+  "name": "Beethoven Fuji",
+  "timestamp": "2021-02-27T18:18:18.181Z",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "https://app2.acsi.finance/images/tokens/acsi.svg",
+  "keywords": [
+    "beethoven",
+    "default",
+    "avax",
+    "fuji"
+  ],
+  "tokens": [
+    {
+      "name": "Wrapped Avalanche",
+      "address": "0xd00ae08403B9bbb9124bB305C09058E32C39A48c",
+      "symbol": "WAVAX",
+      "decimals": 18,
+      "chainId": 43113,
+      "logoURI": "https://assets.coingecko.com/coins/images/12559/large/coin-round-red.png"
+    },
+    {
+      "name": "Chainlink",
+      "address": "0x83eE4DA0ac6557bD3B7439FD28C0A7ed77C73c4e",
+      "symbol": "LINK",
+      "decimals": 18,
+      "chainId": 43113,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x514910771AF9Ca656af840dff83E8264EcF986CA/logo.png"
+    },
+    {
+      "name": "Pangolin",
+      "address": "0x83080D4b5fC60e22dFFA8d14AD3BB41Dde48F199",
+      "symbol": "PNG",
+      "decimals": 18,
+      "chainId": 43113,
+      "logoURI": "https://app.pangolin.exchange/static/media/icon.adcff230.svg"
+    },
+    {
+      "name": "Wrapped Bitcoin",
+      "address": "0x9d78950bc4C531D32C3F874120F0B96213D81DFC",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "chainId": 43113,
+      "logoURI": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png"
+    },
+    {
+      "name": "Wrapped Ethereum",
+      "address": "0xfBD49f16d9fc6566aE41C20026DDCf3bADb6ba9F",
+      "symbol": "WETH",
+      "decimals": 18,
+      "chainId": 43113,
+      "logoURI": "https://assets.coingecko.com/coins/images/279/large/ethereum.png"
+    },
+    {
+      "name": "DAI",
+      "address": "0x510CD68b4Bdd8cd2fd6e93afe368F0F4e17791F8",
+      "symbol": "DAI",
+      "decimals": 18,
+      "chainId": 43113,
+      "logoURI": "https://assets.coingecko.com/coins/images/9956/large/dai-multi-collateral-mcd.png"
+    },
+    {
+      "name": "BAL",
+      "address": "0x9c2eE4065F5BcaF2220c6eA788829eEd80aec503",
+      "symbol": "BAL",
+      "decimals": 18,
+      "chainId": 43113,
+      "logoURI": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png"
+    },
+    {
+      "name": "USDC",
+      "address": "0x0a35823b2C0a025D97e4002aec5038b96087942D",
+      "symbol": "USDC",
+      "decimals": 6,
+      "chainId": 43113,
+      "logoURI": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png"
+    }
+  ]
+}

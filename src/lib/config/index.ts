@@ -4,6 +4,7 @@ import rinkeby from './rinkeby.json';
 import polygon from './polygon.json';
 import docker from './docker.json';
 import test from './test.json';
+import fuji from './fuji.json';
 
 export interface Config {
   key: string;
@@ -57,6 +58,7 @@ const config: Record<string, Config> = {
   '4': rinkeby,
   '137': polygon,
   '12345': test,
+  '43113': fuji,
   // @ts-ignore
   '17': docker
 };

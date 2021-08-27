@@ -155,7 +155,10 @@ export class SorManager {
     try {
       // Wait for V2 subgraph fetch
       const subgraphPoolsV2 = await subgraphFetchV2;
-      console.log('[SorManager] SubgraphV2 fetched');
+      console.log(
+        '[SorManager] SubgraphV2 fetched',
+        subgraphPoolsV2.pools.slice(-3)
+      );
       console.time('[SorManager] V2 fetchPools');
       // Use Subgraph pools data and fetch onChain
       const v2result = await this.sorV2.fetchPools(true, subgraphPoolsV2);

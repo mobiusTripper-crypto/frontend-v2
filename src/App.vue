@@ -6,7 +6,7 @@
     <div class="pb-12">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
-    <AppFooterNav v-if="upToLargeBreakpoint" />
+<!--    <AppFooterNav v-if="upToLargeBreakpoint" />
     <BalBtn
       v-else
       id="intercom-activator"
@@ -16,7 +16,7 @@
       class="fixed bottom-0 right-0 m-4 z-100"
     >
       <BalIcon name="message-square" size="lg" />
-    </BalBtn>
+    </BalBtn>-->
     <VueQueryDevTools />
     <WalletSelectModal
       :isVisible="isWalletSelectVisible"
@@ -65,7 +65,7 @@ const isGnosisSafeApp = async (): Promise<boolean> => {
 export default defineComponent({
   components: {
     AppNav,
-    AppFooterNav,
+    //AppFooterNav,
     AppHero,
     VueQueryDevTools,
     WalletSelectModal,

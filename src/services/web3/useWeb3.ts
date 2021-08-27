@@ -33,9 +33,7 @@ export default function useWeb3() {
   } = inject(Web3ProviderSymbol) as Web3Plugin;
   const configService = new ConfigService();
   const appNetworkConfig = configService.network;
-  const isV1Supported = isAddress(
-    configService.network.addresses.exchangeProxy
-  );
+  const isV1Supported = false;
 
   // COMPUTED REFS + COMPUTED REFS
   const userNetworkConfig = computed(() => {
