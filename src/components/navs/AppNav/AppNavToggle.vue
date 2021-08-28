@@ -59,7 +59,7 @@ export default defineComponent({
       activeClasses,
       trackGoal,
       Goals,
-      EXTERNAL_LINKS,
+      EXTERNAL_LINKS
     };
   }
 });
