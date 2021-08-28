@@ -7,6 +7,7 @@ export class Goals {
   ClickHeroLearnMore = '';
   ClickNavConnectWallet = '';
   ClickNavTrade = '';
+  ClickNavFarm = '';
   ClickNavInvest = '';
   ClickNavLogo = '';
   ClickInvestSettings = '';

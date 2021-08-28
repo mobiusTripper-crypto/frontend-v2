@@ -62,6 +62,8 @@ export const POOLS = {
     '0xc66ba2b6595d3613ccab350c886ace23866ede24': 'stablePool',
     '0x67d27634e44793fe63c467035e31ea8635117cd4': 'stablePool', // Metastable
     '0x751dfdace1ad995ff13c927f6f761c6604532c79': 'stablePool', // Kovan
-    '0x590e544e7ca956bb878f8c873e82e65550d67d2f': 'stablePool' // Kovan Metastable
+    '0x590e544e7ca956bb878f8c873e82e65550d67d2f': 'stablePool', // Kovan Metastable
+    '0x3582c64a66ac068851e9c912eac5c855dbe2b1e1': 'weightedPool',
+    '0x4928dcc463f329bddb7159aede6cdc7fb72349a3': 'stablePool'
   }
 };
