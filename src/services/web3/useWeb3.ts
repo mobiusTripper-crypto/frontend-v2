@@ -44,6 +44,10 @@ export default function useWeb3() {
   const isWalletReady = computed(() => walletState.value === 'connected');
   const isMainnet = computed(() => appNetworkConfig.chainId === 1);
   const isPolygon = computed(() => appNetworkConfig.chainId === 137);
+  const isAvalanche = computed(
+    () =>
+      appNetworkConfig.chainId === 43113 || appNetworkConfig.chainId === 43114
+  );
   const canLoadProfile = computed(
     () => account.value !== '' && userNetworkConfig.value?.chainId !== 0
   );
@@ -112,7 +116,7 @@ export default function useWeb3() {
     isV1Supported,
     isMainnet,
     isPolygon,
-
+    isAvalanche,
     // methods
     connectWallet,
     getProvider,

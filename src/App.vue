@@ -6,7 +6,7 @@
     <div class="pb-12">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
-<!--    <AppFooterNav v-if="upToLargeBreakpoint" />
+    <!--    <AppFooterNav v-if="upToLargeBreakpoint" />
     <BalBtn
       v-else
       id="intercom-activator"

@@ -123,7 +123,7 @@
         @update:modelValue="setTradeLiquidity"
       />
     </div>
-    <div v-if="!isPolygon" class="px-4 mt-6">
+    <div v-if="!isPolygon && !isAvalanche" class="px-4 mt-6">
       <div class="flex items-baseline">
         <span v-text="$t('transactionType')" class="font-medium mb-2" />
         <BalTooltip>
@@ -139,7 +139,7 @@
         @update:modelValue="setEthereumTxType"
       />
     </div>
-    <div v-if="!isPolygon" class="px-4 mt-6">
+    <div v-if="!isPolygon && !isAvalanche" class="px-4 mt-6">
       <div class="flex items-baseline">
         <span v-text="$t('tradeInterface')" class="font-medium mb-2" />
         <BalTooltip>
@@ -217,6 +217,7 @@ export default defineComponent({
     const {
       explorerLinks,
       isPolygon,
+      isAvalanche,
       account,
       chainId,
       disconnectWallet,
@@ -287,6 +288,7 @@ export default defineComponent({
       hideLiquidity,
       hideDisconnect,
       isPolygon,
+      isAvalanche,
       // methods
       disconnectWallet,
       setDarkMode,

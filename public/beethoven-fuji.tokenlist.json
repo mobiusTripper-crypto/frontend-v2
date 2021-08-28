@@ -26,7 +26,7 @@
     {
       "name": "Chainlink",
       "address": "0x83eE4DA0ac6557bD3B7439FD28C0A7ed77C73c4e",
-      "symbol": "LINK",
+      "symbol": "LINK.e",
       "decimals": 18,
       "chainId": 43113,
       "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x514910771AF9Ca656af840dff83E8264EcF986CA/logo.png"
@@ -42,7 +42,7 @@
     {
       "name": "Wrapped Bitcoin",
       "address": "0x9d78950bc4C531D32C3F874120F0B96213D81DFC",
-      "symbol": "WBTC",
+      "symbol": "WBTC.e",
       "decimals": 8,
       "chainId": 43113,
       "logoURI": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png"
@@ -50,7 +50,7 @@
     {
       "name": "Wrapped Ethereum",
       "address": "0xfBD49f16d9fc6566aE41C20026DDCf3bADb6ba9F",
-      "symbol": "WETH",
+      "symbol": "WETH.e",
       "decimals": 18,
       "chainId": 43113,
       "logoURI": "https://assets.coingecko.com/coins/images/279/large/ethereum.png"
@@ -58,7 +58,7 @@
     {
       "name": "DAI",
       "address": "0x510CD68b4Bdd8cd2fd6e93afe368F0F4e17791F8",
-      "symbol": "DAI",
+      "symbol": "DAI.e",
       "decimals": 18,
       "chainId": 43113,
       "logoURI": "https://assets.coingecko.com/coins/images/9956/large/dai-multi-collateral-mcd.png"
@@ -74,7 +74,7 @@
     {
       "name": "USDC",
       "address": "0x0a35823b2C0a025D97e4002aec5038b96087942D",
-      "symbol": "USDC",
+      "symbol": "USDC.e",
       "decimals": 6,
       "chainId": 43113,
       "logoURI": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png"
