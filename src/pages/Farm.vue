@@ -27,6 +27,7 @@ import usePoolFilters from '@/composables/pools/usePoolFilters';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import useFarms from '@/composables/farms/useFarms';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
+import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 
 export default defineComponent({
   components: {
@@ -52,6 +53,10 @@ export default defineComponent({
       poolsHasNextPage,
       poolsIsFetchingNextPage
     } = usePools(selectedTokens);
+
+    // const pendingBeetx = masterChefContractsService.masterChef.withdrawAndHarvest(4, 1,'0xd3F32d840f684061eEB2B6c6B78cA346C3fe0030').then(beetx => {
+    //   console.log('withdraw')
+    // }).catch(error => console.error("ERRor fetcing beetx", error));
 
     const { farms, isLoadingFarms } = useFarms();
     const { blocksPerDay, blocksPerYear } = useAverageBlockTime();

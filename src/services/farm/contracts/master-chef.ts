@@ -16,7 +16,7 @@ export default class MasterChef {
     this.service = service;
   }
 
-  public async getPendingBeetx(): Promise<number> {
+  public async getPendingBeetx(pid: number, user: string): Promise<number> {
     let result = {} as Record<any, any>;
 
     const masterChefMultiCaller = new Multicaller(
@@ -25,12 +25,10 @@ export default class MasterChef {
       MasterChefAbi
     );
 
-    masterChefMultiCaller.call(
-      'pendingBeetx',
-      this.address,
-      'pendingBeetx',
-      []
-    );
+    masterChefMultiCaller.call('pendingBeetx', this.address, 'pendingBeetx', [
+      pid,
+      user
+    ]);
     result = await masterChefMultiCaller.execute(result);
 
     return result.pendingBeetx;
@@ -59,12 +57,7 @@ export default class MasterChef {
       MasterChefAbi
     );
 
-    masterChefMultiCaller.call(
-      'withdrawAndHarvest',
-      this.address,
-      'withdrawAndHarvest',
-      [pid, to]
-    );
+    masterChefMultiCaller.call('harvest', this.address, 'harvest', [pid, to]);
     await masterChefMultiCaller.execute();
   }
 
