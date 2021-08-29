@@ -36,7 +36,8 @@
     "weightedPoolFactory": "0x3582C64a66Ac068851E9c912eAc5c855DbE2b1E1",
     "stablePoolFactory": "0x4928DcC463f329BdDB7159aEDE6cdc7Fb72349A3",
     "weth": "0x2aBcDD4948b43921B06846E570e38399a0C33EF3",
-    "balancerHelpers": "0x4ccc00CA64671BFD770F3fE219abF0A0e80e271A"
+    "balancerHelpers": "0x4ccc00CA64671BFD770F3fE219abF0A0e80e271A",
+    "masterChef": "0x42BaFb14a27295A6e9Ff2c806B8F367E273BD2e4"
   },
   "strategies": {
     "0": {

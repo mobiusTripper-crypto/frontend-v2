@@ -37,6 +37,7 @@ export interface Config {
     merkleRedeem: string;
     multicall: string;
     vault: string;
+    masterChef: string;
     weightedPoolFactory: string;
     stablePoolFactory: string;
     weth: string;
