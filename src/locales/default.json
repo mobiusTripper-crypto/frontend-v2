@@ -379,5 +379,6 @@
     "wrapStEthTooltip": "This pool requires Wrapped Liquid Staked ETH 2.0 (wstETH). To maximize your investment, you could wrap some additional stETH.",
     "yearAbbrev": "y",
     "youDidIt": "You did it!",
-    "yourTransactions": "Your transactions in this pool"
+    "yourTransactions": "Your transactions in this pool",
+    "deposit": "Deposit"
 }

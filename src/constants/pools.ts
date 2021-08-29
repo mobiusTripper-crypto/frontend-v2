@@ -1,6 +1,6 @@
 export const POOLS = {
   Pagination: {
-    PerPage: 10
+    PerPage: 50
   },
   DelegateOwner: '0xba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1b',
   ZeroAddress: '0x0000000000000000000000000000000000000000',

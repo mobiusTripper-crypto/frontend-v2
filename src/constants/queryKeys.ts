@@ -1,11 +1,13 @@
 import { Ref } from 'vue';
 export const POOLS_ROOT_KEY = 'pools';
+export const FARMS_ROOT_KEY = 'farms';
 export const BALANCES_ROOT_KEY = 'accountBalances';
 export const CLAIMS_ROOT_KEY = 'claims';
 
 const QUERY_KEYS = {
   Farms: {
-    All: ['farms', 'all']
+    All: ['farms', 'all'],
+    Current: (id: string) => [FARMS_ROOT_KEY, 'current', { id }]
   },
   Pools: {
     All: (tokens: Ref<string[]>, poolIds: Ref<string[]> | undefined) => [

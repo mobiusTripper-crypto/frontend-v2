@@ -17,7 +17,7 @@ const routes: RouteRecordRaw[] = [
   },
   { path: '/pool/:id', name: 'pool', component: Pool },
   { path: '/farm', name: 'farm', component: Farm },
-  { path: '/farm/:id', name: 'farm-detail', component: FarmDetail },
+  { path: '/farm/:id/:poolId?', name: 'farm-detail', component: FarmDetail },
   {
     path: '/liquidity-mining',
     name: 'liquidity-mining',

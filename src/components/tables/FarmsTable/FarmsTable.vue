@@ -16,7 +16,7 @@
       :square="upToLargeBreakpoint"
       :link="{
         to: 'farm-detail',
-        getParams: farm => ({ id: farm.id })
+        getParams: farm => ({ id: farm.id, poolId: farm.pool?.id })
       }"
       :on-row-click="handleRowClick"
       :is-paginated="isPaginated"
@@ -46,6 +46,7 @@
           />
         </div>
       </template>
+      <div>abcdefg</div>
     </BalTable>
   </BalCard>
 </template>
@@ -54,16 +55,13 @@
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-
 import {
   DecoratedPoolWithShares,
   PoolToken,
   FarmWithPool,
   DecoratedPool
 } from '@/services/balancer/subgraph/types';
-
 import { getAddress } from '@ethersproject/address';
-
 import useNumbers from '@/composables/useNumbers';
 import useFathom from '@/composables/useFathom';
 import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
@@ -119,7 +117,7 @@ export default defineComponent({
     const { trackGoal, Goals } = useFathom();
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
-    const { tokens } = useTokens();
+    const { tokens, priceFor } = useTokens();
 
     const columns = ref<ColumnDefinition<FarmWithPool>[]>([
       {
@@ -185,7 +183,7 @@ export default defineComponent({
 
     function orderedTokenAddressesFor(farm: FarmWithPool) {
       if (!farm.pool) {
-        return [farm.pair];
+        return [getAddress(farm.pair)];
       }
 
       const sortedTokens = orderedPoolTokens(farm.pool);
@@ -201,20 +199,26 @@ export default defineComponent({
     }
 
     function calculateTvl(farm: FarmWithPool) {
-      //TODO: if this is a single token, use that
       if (
-        !farm.pool ||
-        farm.pool.totalShares === '0' ||
-        farm.slpBalance === '0'
+        farm.pool &&
+        farm.pool.totalShares !== '0' &&
+        farm.slpBalance !== '0'
       ) {
-        return 0;
+        const valuePerShare =
+          parseFloat(farm.pool.totalLiquidity) /
+          parseFloat(farm.pool.totalShares);
+
+        return Number(parseInt(farm.slpBalance) / 1e18) * valuePerShare;
       }
 
-      const valuePerShare =
-        parseFloat(farm.pool.totalLiquidity) /
-        parseFloat(farm.pool.totalShares);
+      const address = getAddress(farm.pair);
+      const price = priceFor(address);
 
-      return Number(parseInt(farm.slpBalance) / 1e18) * valuePerShare;
+      if (tokens.value[address] && price) {
+        return Number(parseInt(farm.slpBalance) / 1e18) * price;
+      }
+
+      return 0;
     }
 
     function calculateRewardsPerDay(farm: FarmWithPool, blocksPerDay: number) {
@@ -227,11 +231,8 @@ export default defineComponent({
     }
 
     function calculateApr(farm: FarmWithPool, blocksPerYear: number) {
-      if (
-        !farm.pool ||
-        farm.pool.totalShares === '0' ||
-        farm.slpBalance === '0'
-      ) {
+      const tvl = calculateTvl(farm);
+      if (tvl === 0) {
         return 0;
       }
 
@@ -244,14 +245,8 @@ export default defineComponent({
       const farmBeetxPerYear =
         (farm.allocPoint / farm.masterChef.totalAllocPoint) * beetxPerYear;
       const valuePerYear = beetxPrice * farmBeetxPerYear;
-      const valuePerShare =
-        parseFloat(farm.pool.totalLiquidity) /
-        parseFloat(farm.pool.totalShares);
-
-      const tvl = Number(parseInt(farm.slpBalance) / 1e18) * valuePerShare;
 
       return valuePerYear / tvl;
-      //return fNum(valuePerYear / tvl, 'percent', { forcePreset: true });
     }
 
     function handleRowClick(pool: DecoratedPoolWithShares) {

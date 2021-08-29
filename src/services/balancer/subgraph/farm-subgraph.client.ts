@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { configService as _configService } from '@/services/config/config.service';
+import { Farm } from '@/services/balancer/subgraph/types';
 
 export default class FarmSubgraphClient {
   url: string;
@@ -17,6 +18,31 @@ export default class FarmSubgraphClient {
         orderBy: "id"
         orderDirection: "desc"
       ) {
+        id
+        pair
+        allocPoint
+        slpBalance
+        masterChef {
+          id
+          totalAllocPoint
+          beetxPerBlock
+        }
+        rewarder {
+          id
+          rewardToken
+          rewardPerSecond
+        }
+      }
+    }
+    `;
+
+    return this.get(query);
+  }
+
+  public async getFarm(id: string) {
+    const query = `
+    query {
+      farm: pool(id: "${id}") {
         id
         pair
         allocPoint
