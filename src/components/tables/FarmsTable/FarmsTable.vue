@@ -237,8 +237,9 @@ export default defineComponent({
 
       //TODO: load the beetxPrice from a subgraph
       const beetxPrice = 0.01;
-      //TODO: load the beetxPerBlock from a subgraph
-      const beetxPerBlock = 3;
+      const beetxPerBlock = Number(
+        parseInt(farm.masterChef.beetxPerBlock) / 1e18
+      );
       const beetxPerYear = beetxPerBlock * blocksPerYear;
       const farmBeetxPerYear =
         (farm.allocPoint / farm.masterChef.totalAllocPoint) * beetxPerYear;
