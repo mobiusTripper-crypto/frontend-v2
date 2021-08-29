@@ -42,7 +42,7 @@ import BalIcon from '@/components/_global/BalIcon/BalIcon.vue';
 
 export default defineComponent({
   name: 'AppNavToggle',
-  components: { },
+  components: {},
   props: {
     darkModeBg: { type: String, default: '800' }
   },
