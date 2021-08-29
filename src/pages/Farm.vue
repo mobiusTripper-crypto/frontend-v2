@@ -26,7 +26,7 @@ import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import useFarms from '@/composables/farms/useFarms';
-import useAverageBlockTime from "@/composables/useAverageBlockTime";
+import useAverageBlockTime from '@/composables/useAverageBlockTime';
 
 export default defineComponent({
   components: {
