@@ -3,6 +3,8 @@ import Home from '@/pages/Home.vue';
 import Pool from '@/pages/Pool.vue';
 import LiquidityMining from '@/pages/LiquidityMining.vue';
 import Trade from '@/pages/Trade.vue';
+import Farm from '@/pages/Farm.vue';
+import FarmDetail from '@/pages/FarmDetail.vue';
 
 const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', component: Home },
@@ -14,6 +16,8 @@ const routes: RouteRecordRaw[] = [
     }
   },
   { path: '/pool/:id', name: 'pool', component: Pool },
+  { path: '/farm', name: 'farm', component: Farm },
+  { path: '/farm/:id', name: 'farm-detail', component: FarmDetail },
   {
     path: '/liquidity-mining',
     name: 'liquidity-mining',

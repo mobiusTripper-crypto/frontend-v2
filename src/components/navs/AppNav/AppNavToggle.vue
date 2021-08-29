@@ -4,7 +4,7 @@
       :to="{ name: 'home' }"
       :class="[
         'toggle-link px-6 rounded-l-lg',
-        { [activeClasses]: !isTradePage }
+        { [activeClasses]: !isTradePage && !isFarmPage }
       ]"
       @click="trackGoal(Goals.ClickNavInvest)"
     >
@@ -20,16 +20,16 @@
     >
       {{ $t('trade') }}
     </router-link>
-    <a
-      :class="['toggle-link px-6 rounded-r-lg']"
+    <router-link
+      :to="{ name: 'farm' }"
+      :class="[
+        'toggle-link px-6 rounded-r-lg',
+        { [activeClasses]: isFarmPage }
+      ]"
       @click="trackGoal(Goals.ClickNavFarm)"
-      :href="EXTERNAL_LINKS.Balancer.Farm"
-      target="_blank"
-      rel="noreferrer"
     >
       Farm
-      <BalIcon name="arrow-up-right" size="sm" class="ml-1" />
-    </a>
+    </router-link>
   </div>
 </template>
 
@@ -42,7 +42,7 @@ import BalIcon from '@/components/_global/BalIcon/BalIcon.vue';
 
 export default defineComponent({
   name: 'AppNavToggle',
-  components: { BalIcon },
+  components: { },
   props: {
     darkModeBg: { type: String, default: '800' }
   },
@@ -52,10 +52,12 @@ export default defineComponent({
     const activeClasses =
       'bg-black text-white rounded-lg dark:text-black dark:bg-white';
     const isTradePage = computed(() => route.name === 'trade');
+    const isFarmPage = computed(() => String(route.name).startsWith('farm'));
     const { trackGoal, Goals } = useFathom();
 
     return {
       isTradePage,
+      isFarmPage,
       activeClasses,
       trackGoal,
       Goals,

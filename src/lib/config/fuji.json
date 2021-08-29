@@ -12,6 +12,8 @@
   "publicRpc": "https://api.avax-test.network/ext/bc/C/rpc",
   "explorer": "https://cchain.explorer.avax-test.network",
   "subgraph": "https://api.studio.thegraph.com/query/7097/beethovenx/v0.0.9",
+  "farmSubgraph": "https://api.studio.thegraph.com/query/7097/masterchefv2/v0.0.10",
+  "blockSubgraph": "https://api.thegraph.com/subgraphs/name/matthewlilley/avalanche-blocks",
   "poolsUrlV1": "",
   "poolsUrlV2": "",
   "nativeAsset": {

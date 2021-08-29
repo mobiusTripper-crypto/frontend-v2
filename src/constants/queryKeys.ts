@@ -4,6 +4,9 @@ export const BALANCES_ROOT_KEY = 'accountBalances';
 export const CLAIMS_ROOT_KEY = 'claims';
 
 const QUERY_KEYS = {
+  Farms: {
+    All: ['farms', 'all']
+  },
   Pools: {
     All: (tokens: Ref<string[]>, poolIds: Ref<string[]> | undefined) => [
       POOLS_ROOT_KEY,

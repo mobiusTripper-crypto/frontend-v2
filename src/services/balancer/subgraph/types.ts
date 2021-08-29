@@ -21,6 +21,7 @@ export interface PoolToken {
 
 export interface Pool {
   id: string;
+  name: string;
   address: string;
   poolType: PoolType;
   swapFee: string;
@@ -102,3 +103,24 @@ export interface PoolSnapshot {
 }
 
 export type PoolSnapshots = Record<number, PoolSnapshot>;
+
+export interface Farm {
+  id: string;
+  pair: string;
+  allocPoint: number;
+  slpBalance: string;
+  masterChef: {
+    id: string;
+    totalAllocPoint: number;
+    beetxPerBlock: string;
+  };
+  rewarder: {
+    id: string;
+    rewardToken: string;
+    rewardPerSecond: number;
+  };
+}
+
+export interface FarmWithPool extends Farm {
+  pool?: DecoratedPool;
+}
