@@ -1,13 +1,7 @@
 import Service from '@/services/balancer/contracts/balancer-contracts.service';
 import ConfigService from '@/services/config/config.service';
-import { OnchainPoolData, PoolType } from '@/services/balancer/subgraph/types';
-import { TokenInfoMap } from '@/types/TokenList';
-import { getAddress } from '@ethersproject/address';
 import { Multicaller } from '@/lib/utils/balancer/contract';
-import { default as vaultAbi } from '@/lib/abi/Vault.json';
 import { default as MasterChefAbi } from '@/lib/abi/MasterChefV2.json';
-import { formatUnits } from '@ethersproject/units';
-import { BigNumber } from '@ethersproject/bignumber';
 
 export default class MasterChef {
   service: Service;
@@ -58,6 +52,21 @@ export default class MasterChef {
     );
 
     masterChefMultiCaller.call('harvest', this.address, 'harvest', [pid, to]);
+    await masterChefMultiCaller.execute();
+  }
+
+  public async deposit(pid: number, amount: number, to: string) {
+    const masterChefMultiCaller = new Multicaller(
+      this.configService.network.key,
+      this.service.provider,
+      MasterChefAbi
+    );
+
+    masterChefMultiCaller.call('deposit', this.address, 'deposit', [
+      pid,
+      amount,
+      to
+    ]);
     await masterChefMultiCaller.execute();
   }
 

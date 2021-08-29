@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import usePools from '@/composables/pools/usePools';
@@ -28,6 +28,7 @@ import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import useFarms from '@/composables/farms/useFarms';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
+import useFarmTokenApprovals from '@/composables/farms/useFarmTokenApprovals';
 
 export default defineComponent({
   components: {
@@ -60,6 +61,15 @@ export default defineComponent({
 
     const { farms, isLoadingFarms } = useFarms();
     const { blocksPerDay, blocksPerYear } = useAverageBlockTime();
+
+    // const userFarmToken = useFarmTokenApprovals('0xf4f5a8fa35d00d2273e1466c2e29a417a3464e3c', ref("10000000"))
+    // console.log('required allowences', userFarmToken.requiredAllowances.value)
+    // if(userFarmToken.requiredAllowances.value.length > 0) {
+    //   userFarmToken.approveAllowances();
+    // }
+    // // userFarmToken.approvedAll.value = true;
+    // console.log(userFarmToken)
+    // userFarmToken.approveAllowances()
 
     const decoratedFarms = computed(() =>
       farms.value.length > 0 && pools.value.length > 0
