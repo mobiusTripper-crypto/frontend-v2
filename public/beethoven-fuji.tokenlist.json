@@ -17,7 +17,7 @@
   "tokens": [
     {
       "name": "Wrapped Avalanche",
-      "address": "0xd00ae08403B9bbb9124bB305C09058E32C39A48c",
+      "address": "0xd00ae08403b9bbb9124bb305c09058e32c39a48c",
       "symbol": "WAVAX",
       "decimals": 18,
       "chainId": 43113,
@@ -25,7 +25,7 @@
     },
     {
       "name": "Chainlink",
-      "address": "0x83eE4DA0ac6557bD3B7439FD28C0A7ed77C73c4e",
+      "address": "0x83ee4da0ac6557bd3b7439fd28c0a7ed77c73c4e",
       "symbol": "LINK.e",
       "decimals": 18,
       "chainId": 43113,
@@ -33,7 +33,7 @@
     },
     {
       "name": "Pangolin",
-      "address": "0x83080D4b5fC60e22dFFA8d14AD3BB41Dde48F199",
+      "address": "0x83080d4b5fc60e22dffa8d14ad3bb41dde48f199",
       "symbol": "PNG",
       "decimals": 18,
       "chainId": 43113,
@@ -41,7 +41,7 @@
     },
     {
       "name": "Wrapped Bitcoin",
-      "address": "0x9d78950bc4C531D32C3F874120F0B96213D81DFC",
+      "address": "0x9d78950bc4c531d32c3f874120f0b96213d81dfc",
       "symbol": "WBTC.e",
       "decimals": 8,
       "chainId": 43113,
@@ -49,7 +49,7 @@
     },
     {
       "name": "Wrapped Ethereum",
-      "address": "0xfBD49f16d9fc6566aE41C20026DDCf3bADb6ba9F",
+      "address": "0xfbd49f16d9fc6566ae41c20026ddcf3badb6ba9f",
       "symbol": "WETH.e",
       "decimals": 18,
       "chainId": 43113,
@@ -57,7 +57,7 @@
     },
     {
       "name": "DAI",
-      "address": "0x510CD68b4Bdd8cd2fd6e93afe368F0F4e17791F8",
+      "address": "0x510cd68b4bdd8cd2fd6e93afe368f0f4e17791f8",
       "symbol": "DAI.e",
       "decimals": 18,
       "chainId": 43113,
@@ -65,7 +65,7 @@
     },
     {
       "name": "BAL",
-      "address": "0x9c2eE4065F5BcaF2220c6eA788829eEd80aec503",
+      "address": "0x9c2ee4065f5bcaf2220c6ea788829eed80aec503",
       "symbol": "BAL",
       "decimals": 18,
       "chainId": 43113,
@@ -73,7 +73,7 @@
     },
     {
       "name": "USDC",
-      "address": "0x0a35823b2C0a025D97e4002aec5038b96087942D",
+      "address": "0x0a35823b2c0a025d97e4002aec5038b96087942d",
       "symbol": "USDC.e",
       "decimals": 6,
       "chainId": 43113,

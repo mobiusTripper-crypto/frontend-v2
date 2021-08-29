@@ -46,24 +46,6 @@
           />
         </div>
       </template>
-      <!--      <template v-slot:poolNameCell="pool">
-             <div v-if="!isLoading" class="px-6 py-4">
-              <TokenPills
-                 :tokens="orderedPoolTokens(pool)"
-                 :isStablePool="isStableLike(pool)"
-               />
-             </div>
-           </template>
-           <template v-slot:aprCell="pool">
-             <div class="px-6 py-4 -mt-1 flex justify-end">
-               {{
-                 Number(pool.dynamic.apr.pool) > 10000
-                   ? '-'
-                   : fNum(pool.dynamic.apr.total, 'percent')
-               }}
-               <LiquidityMiningTooltip :pool="pool" />
-             </div>
-           </template>-->
     </BalTable>
   </BalCard>
 </template>
@@ -76,7 +58,6 @@ import { useI18n } from 'vue-i18n';
 import {
   DecoratedPoolWithShares,
   PoolToken,
-  Farm,
   FarmWithPool,
   DecoratedPool
 } from '@/services/balancer/subgraph/types';
@@ -89,7 +70,7 @@ import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isStableLike } from '@/composables/usePool';
-import { Pool } from '@balancer-labs/sor/dist/types';
+import useTokens from '@/composables/useTokens';
 
 export default defineComponent({
   components: {
@@ -132,15 +113,14 @@ export default defineComponent({
   },
 
   setup(props) {
-    // COMPOSABLES
     const { fNum } = useNumbers();
     const router = useRouter();
     const { t } = useI18n();
     const { trackGoal, Goals } = useFathom();
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
+    const { tokens } = useTokens();
 
-    // DATA
     const columns = ref<ColumnDefinition<FarmWithPool>[]>([
       {
         name: 'Icons',
@@ -154,7 +134,19 @@ export default defineComponent({
       {
         name: 'Name',
         id: 'name',
-        accessor: farm => farm.pool?.name || ''
+        accessor: farm => {
+          if (farm.pool) {
+            return farm.pool.name;
+          }
+
+          for (const address of Object.keys(tokens.value)) {
+            if (address.toLowerCase() === farm.pair.toLowerCase()) {
+              return tokens.value[address].symbol;
+            }
+          }
+
+          return '';
+        }
       },
       {
         name: 'TVL',
@@ -189,55 +181,8 @@ export default defineComponent({
         sortKey: farm => calculateApr(farm, props.blocksPerYear),
         align: 'right'
       }
-      /*{
-        name: t('myBalance'),
-        accessor: pool => fNum(pool.shares, 'usd', { forcePreset: true }),
-        align: 'right',
-        id: 'myBalance',
-        hidden: !props.showPoolShares,
-        sortKey: pool => Number(pool.shares),
-        width: 150
-      },
-      {
-        name: 'TVL',
-        accessor: pool => fNum(pool.totalLiquidity, 'usd'),
-        align: 'right',
-        id: 'poolValue',
-        sortKey: pool => {
-          const apr = Number(pool.totalLiquidity);
-          if (apr === Infinity || isNaN(apr)) return 0;
-          return apr;
-        },
-        width: 150
-      },
-      {
-        name: 'Rewards',
-        accessor: pool => fNum(pool.dynamic.volume, 'usd'),
-        align: 'right',
-        id: 'poolVolume',
-        sortKey: pool => {
-          const apr = Number(pool.dynamic.volume);
-          if (apr === Infinity || isNaN(apr)) return 0;
-          return apr;
-        },
-        width: 175
-      },
-      {
-        name: 'Farm APR',
-        Cell: 'aprCell',
-        accessor: pool => pool.dynamic.apr.total,
-        align: 'right',
-        id: 'poolApr',
-        sortKey: pool => {
-          const apr = Number(pool.dynamic.apr.total);
-          if (apr === Infinity || isNaN(apr)) return 0;
-          return apr;
-        },
-        width: 150
-      }*/
     ]);
 
-    // METHODS
     function orderedTokenAddressesFor(farm: FarmWithPool) {
       if (!farm.pool) {
         return [farm.pair];
@@ -265,13 +210,6 @@ export default defineComponent({
         return 0;
       }
 
-      console.log(
-        farm.pool.name,
-        farm.pool.totalLiquidity,
-        farm.pool.totalShares,
-        farm.slpBalance
-      );
-
       const valuePerShare =
         parseFloat(farm.pool.totalLiquidity) /
         parseFloat(farm.pool.totalShares);
@@ -289,7 +227,11 @@ export default defineComponent({
     }
 
     function calculateApr(farm: FarmWithPool, blocksPerYear: number) {
-      if (!farm.pool) {
+      if (
+        !farm.pool ||
+        farm.pool.totalShares === '0' ||
+        farm.slpBalance === '0'
+      ) {
         return 0;
       }
 
@@ -298,9 +240,9 @@ export default defineComponent({
       //TODO: load the beetxPerBlock from a subgraph
       const beetxPerBlock = 3;
       const beetxPerYear = beetxPerBlock * blocksPerYear;
-      const farmBeetxPerDay =
+      const farmBeetxPerYear =
         (farm.allocPoint / farm.masterChef.totalAllocPoint) * beetxPerYear;
-      const valuePerYear = beetxPrice * farmBeetxPerDay * 365;
+      const valuePerYear = beetxPrice * farmBeetxPerYear;
       const valuePerShare =
         parseFloat(farm.pool.totalLiquidity) /
         parseFloat(farm.pool.totalShares);
@@ -330,9 +272,7 @@ export default defineComponent({
       fNum,
       isStableLike,
       orderedTokenAddressesFor,
-      calculateTvl,
-      calculateRewardsPerDay,
-      calculateApr
+      calculateRewardsPerDay
     };
   }
 });

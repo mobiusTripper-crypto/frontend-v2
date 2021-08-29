@@ -20,7 +20,7 @@ export const TOKENS = {
       BAL: '0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3'
     },
     '43113': {
-      WETH: '0xfBD49f16d9fc6566aE41C20026DDCf3bADb6ba9F',
+      WETH: '0xfbd49f16d9fc6566ae41c20026ddcf3badb6ba9f',
       BAL: '0x9c2eE4065F5BcaF2220c6eA788829eEd80aec503'
     }
   },

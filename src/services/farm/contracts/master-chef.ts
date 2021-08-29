@@ -69,6 +69,6 @@ export default class MasterChef {
   }
 
   public get address(): string {
-    return this.service.config.addresses.masterChef;
+    return this.service.config.addresses.masterChef || '';
   }
 }
