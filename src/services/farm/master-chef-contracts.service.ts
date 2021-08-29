@@ -1,11 +1,11 @@
-import { Config } from "@/lib/config";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { default as MasterChefAbi } from "@/lib/abi/MasterChefV2.json";
-import { rpcProviderService as _rpcProviderService } from "@/services/rpc-provider/rpc-provider.service";
-import { configService as _configService } from "@/services/config/config.service";
-import MasterChef from "./contracts/master-chef";
+import { Config } from '@/lib/config';
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { default as MasterChefAbi } from '@/lib/abi/MasterChefV2.json';
+import { rpcProviderService as _rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
+import { configService as _configService } from '@/services/config/config.service';
+import MasterChef from './contracts/master-chef';
 
-export default class MasterChefContractsService{
+export default class MasterChefContractsService {
   masterChef: MasterChef;
   config: Config;
   provider: JsonRpcProvider;
