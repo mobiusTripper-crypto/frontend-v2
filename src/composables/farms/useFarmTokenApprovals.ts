@@ -1,13 +1,16 @@
-import { computed, ref, Ref } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { ref, Ref } from 'vue';
 import useWeb3 from '@/services/web3/useWeb3';
-import useTokens from '@/composables/useTokens';
 import useEthers from '@/composables/useEthers';
 import useTransactions from '../useTransactions';
 import { TransactionResponse, Web3Provider } from '@ethersproject/providers';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
-import { default as abi } from '@/lib/abi/ERC20.json';
+import { default as erc20Abi, default as abi } from '@/lib/abi/ERC20.json';
 import { MaxUint256 } from '@ethersproject/constants';
+import { configService } from '@/services/config/config.service';
+import { Multicaller } from '@/lib/utils/balancer/contract';
+import { rpcProviderService as _rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
+import { bnum } from '@/lib/utils';
+import { erc20ContractService } from '@/services/erc20/erc20-contracts.service';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -31,30 +34,49 @@ export default function useFarmTokenApprovals(
   /**
    * COMPOSABLES
    */
-  const { getProvider, appNetworkConfig } = useWeb3();
-  const { tokens, refetchAllowances, approvalsRequired } = useTokens();
+  const { getProvider, appNetworkConfig, account } = useWeb3();
   const { txListener } = useEthers();
   const { addTransaction } = useTransactions();
-  const { t } = useI18n();
 
-  /**
-   * COMPUTED
-   */
-  const requiredAllowances = computed(() =>
-    approvalsRequired([tokenAddress], [amount.value])
+  const multicaller = new Multicaller(
+    configService.network.key,
+    _rpcProviderService.jsonProvider,
+    erc20Abi
   );
+
+  const requiresAllowance = async () => {
+    // const result = await multicaller
+    //   .call('allowance', tokenAddress, 'allowance', [
+    //     account.value,
+    //     configService.network.addresses.masterChef
+    //   ])
+    //   .execute();
+    const allowance = await erc20ContractService.erc20.allowance(
+      tokenAddress,
+      account.value,
+      configService.network.addresses.masterChef || ''
+    );
+    console.log('Allowance', allowance);
+    // const allowance = await call(_rpcProviderService, erc20Abi, [
+    //   tokenAddress,
+    //   'allowance',
+    //   [ account, configService.network.addresses.masterChef]
+    // ]);
+
+    if (!amount || bnum(amount.value).eq(0)) return false;
+    return allowance.lt(amount.value);
+  };
 
   /**
    * METHODS
    */
 
   // console.log('REUIRED allowances', requiredAllowances);
-  async function approveAllowances(): Promise<void> {
+  async function approveAllowance(): Promise<void> {
     try {
       approving.value = true;
-      const tokenAddress = requiredAllowances.value[0];
 
-      const txs = await approveToken(
+      const tx = await erc20ContractService.erc20.approveToken(
         getProvider(),
         appNetworkConfig.addresses.masterChef || '',
         tokenAddress,
@@ -62,20 +84,18 @@ export default function useFarmTokenApprovals(
       );
 
       addTransaction({
-        id: txs.hash,
+        id: tx.hash,
         type: 'tx',
         action: 'approve',
-        summary: `Approve for farming ${tokens.value[tokenAddress]?.symbol ??
-          ''}`,
+        summary: `Approve for farming`,
         details: {
           contractAddress: tokenAddress,
           spender: appNetworkConfig.addresses.masterChef
         }
       });
 
-      txListener(txs, {
+      txListener(tx, {
         onTxConfirmed: async () => {
-          await refetchAllowances.value();
           approving.value = false;
         },
         onTxFailed: () => {
@@ -92,8 +112,8 @@ export default function useFarmTokenApprovals(
     approving,
     approvedAll,
     // computed
-    requiredAllowances,
+    requiresAllowance,
     // methods
-    approveAllowances
+    approveAllowance
   };
 }

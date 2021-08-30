@@ -3,6 +3,7 @@
     <div class="px-4 lg:px-0">
       <h3 class="mb-3">Farms</h3>
     </div>
+    <button v-on:click="onApprove">approve</button>
     <FarmsTable
       :isLoading="isLoadingPools"
       :data="decoratedFarms"
@@ -62,11 +63,6 @@ export default defineComponent({
     const { farms, isLoadingFarms } = useFarms();
     const { blocksPerDay, blocksPerYear } = useAverageBlockTime();
 
-    // const userFarmToken = useFarmTokenApprovals('0xf4f5a8fa35d00d2273e1466c2e29a417a3464e3c', ref("10000000"))
-    // console.log('required allowences', userFarmToken.requiredAllowances.value)
-    // if(userFarmToken.requiredAllowances.value.length > 0) {
-    //   userFarmToken.approveAllowances();
-    // }
     // // userFarmToken.approvedAll.value = true;
     // console.log(userFarmToken)
     // userFarmToken.approveAllowances()
@@ -97,6 +93,29 @@ export default defineComponent({
 
     const hideV1Links = computed(() => !isV1Supported);
 
+    const {
+      requiresAllowance,
+      approveAllowance,
+      approvedAll,
+      approving
+    } = useFarmTokenApprovals(
+      '0xf4f5a8fa35d00d2273e1466c2e29a417a3464e3c',
+      ref('10000000')
+    );
+
+    const onApprove = () => {
+      requiresAllowance().then(result => {
+        console.log('requires allowance', result);
+        if (result) {
+          approveAllowance();
+        }
+      });
+      // if (userFarmToken.requiredAllowances.value.length > 0) {
+      //   userFarmToken.approveAllowances()
+      //   // userFarmToken.value.ap();
+      // }
+    };
+
     return {
       // data
       filteredPools,
@@ -120,6 +139,7 @@ export default defineComponent({
       removeSelectedToken,
 
       decoratedFarms,
+      onApprove,
 
       // constants
       EXTERNAL_LINKS
