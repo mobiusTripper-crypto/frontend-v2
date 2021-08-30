@@ -20,7 +20,7 @@ export default function useApprovalRequiredQuery(
       appNetworkConfig.addresses.masterChef
     );
 
-    return allowance.gt(0);
+    return allowance.eq(0);
   };
 
   const queryOptions = reactive({

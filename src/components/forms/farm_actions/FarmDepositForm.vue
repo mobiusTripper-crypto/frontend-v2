@@ -1,40 +1,6 @@
 <template>
   <BalForm ref="depositForm" @on-submit="submit">
     <div class="px-4 pt-6 border-b dark:border-gray-900">
-      <!--      <BalTextInput
-        name="Deposit"
-        :rules="amountRules()"
-        type="number"
-        min="0"
-        step="any"
-        placeholder="0"
-        validate-on="input"
-        prepend-border
-        append-shadow
-      >
-        <template v-slot:prepend>
-          <div class="flex items-center h-full w-24"></div>
-        </template>
-        <template v-slot:info>
-          <div
-            class="cursor-pointer"
-            @click.prevent="amounts[i] = tokenBalance(i).toString()"
-          >
-            {{ $t('balance') }}: {{ formatBalance(i) }}
-          </div>
-        </template>
-        <template v-slot:append>
-          <div class="p-2">
-            <BalBtn
-              size="xs"
-              color="white"
-              @click.prevent="amounts[i] = tokenBalance(i).toString()"
-            >
-              {{ $t('max') }}
-            </BalBtn>
-          </div>
-        </template>
-      </BalTextInput>-->
       <BalTextInput
         name="Deposit"
         v-model="amount"
@@ -79,7 +45,7 @@
           :label="`${$t('approve')}`"
           :loading="approving"
           :loading-label="$t('approving')"
-          :disabled="!validInput || amount === '0'"
+          :disabled="!validInput || amount === '0' || amount === ''"
           block
           @click.prevent="approveAllowance"
         />
@@ -140,11 +106,6 @@ import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import useBalancesQuery from '@/composables/queries/useBalancesQuery';
 import useBalanceQuery from '@/composables/queries/useBalanceQuery';
 import useApprovalRequiredQuery from '@/composables/queries/useApprovalRequiredQuery';
-
-export enum FormTypes {
-  proportional = 'proportional',
-  custom = 'custom'
-}
 
 type DataProps = {
   depositForm: FormRef;
@@ -215,9 +176,7 @@ export default defineComponent({
       const value = balanceQuery.data.value;
       return value ? `${Number(parseInt(value) / 1e18)}` : '0';
     });
-    const approvalRequired = computed(
-      () => approvalRequiredQuery.data.value || true
-    );
+    const approvalRequired = computed(() => approvalRequiredQuery.data.value);
 
     const farmUser = computed(() => {
       return farmUserQuery.data.value;
