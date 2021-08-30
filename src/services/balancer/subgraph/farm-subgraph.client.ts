@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { configService as _configService } from '@/services/config/config.service';
 import { Farm } from '@/services/balancer/subgraph/types';
+import { getAddress } from '@ethersproject/address';
 
 export default class FarmSubgraphClient {
   url: string;
@@ -62,6 +63,24 @@ export default class FarmSubgraphClient {
     `;
 
     return this.get(query);
+  }
+
+  public async getUserDataForFarm(farmId: string, userAddress: string) {
+    const query = `
+    query {
+      user: user(id: "${farmId}-${userAddress.toLowerCase()}") {
+        amount
+        rewardDebt
+        beetxHarvested
+      }
+    }
+    `;
+
+    const data = await this.get(query);
+
+    return data.user
+      ? data.user
+      : { amount: 0, rewardDebt: 0, beetxHarvested: 0 };
   }
 
   private async get(query) {

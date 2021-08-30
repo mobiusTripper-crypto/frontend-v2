@@ -1,26 +1,7 @@
-import { computed, ComputedRef, ref, Ref } from 'vue';
-import usePoolsQuery from '@/composables/queries/usePoolsQuery';
-import useUserPoolsQuery from '@/composables/queries/useUserPoolsQuery';
+import { computed, ComputedRef } from 'vue';
 import { flatten } from 'lodash';
 import useFarmsQuery from '@/composables/queries/useFarmsQuery';
 import { Farm } from '@/services/balancer/subgraph/types';
-/*export function useMasterChefFarms(swrConfig = undefined) {
-  const { chainId } = useActiveWeb3React();
-  const shouldFetch =
-    chainId &&
-    [SupportedChainId.AVALANCHE, SupportedChainId.AVALANCHE_TESTNET].includes(
-      chainId
-    );
-  const { data } = useSWR(
-    shouldFetch ? 'masterChefV1Farms' : null,
-    () => getMasterChefFarms(chainId),
-    swrConfig
-  );
-  return useMemo(() => {
-    if (!data) return [];
-    return data.map(data => ({ ...data, chef: Chef.MASTERCHEF }));
-  }, [data]);
-}*/
 
 export default function useFarms(): {
   farms: ComputedRef<Farm[]>;
@@ -73,15 +54,5 @@ export default function useFarms(): {
     // computed
     farms,
     isLoadingFarms
-    /*tokens,
-    userPools,
-    totalInvestedAmount,
-    isLoadingPools,
-    isLoadingUserPools,
-    poolsHasNextPage,
-    poolsIsFetchingNextPage,*/
-
-    // methods
-    //loadMorePools
   };
 }

@@ -6,6 +6,7 @@ import { BigNumber } from 'ethers';
 import { BN } from 'ethereumjs-util';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { Web3Provider } from '@ethersproject/providers';
+import { getAddress } from '@ethersproject/address';
 
 export default class MasterChef {
   service: Service;
@@ -14,7 +15,10 @@ export default class MasterChef {
     this.service = service;
   }
 
-  public async getPendingBeetx(pid: number, user: string): Promise<number> {
+  public async getPendingBeetxForFarm(
+    id: string,
+    user: string
+  ): Promise<number> {
     let result = {} as Record<any, any>;
 
     const masterChefMultiCaller = new Multicaller(
@@ -24,8 +28,8 @@ export default class MasterChef {
     );
 
     masterChefMultiCaller.call('pendingBeetx', this.address, 'pendingBeetx', [
-      pid,
-      user
+      id,
+      getAddress(user)
     ]);
     result = await masterChefMultiCaller.execute(result);
 
@@ -34,7 +38,7 @@ export default class MasterChef {
 
   public async withdrawAndHarvest(
     provider: Web3Provider,
-    pid: number,
+    farmId: string,
     amount: string,
     to: string
   ) {
@@ -43,23 +47,23 @@ export default class MasterChef {
       this.configService.network.addresses.masterChef || '',
       MasterChefAbi,
       'withdrawAndHarvest',
-      [pid, amount.toString(), to]
+      [farmId, amount.toString(), to]
     );
   }
 
-  public async harvest(provider: Web3Provider, pid: number, to: string) {
+  public async harvest(provider: Web3Provider, farmId: string, to: string) {
     return sendTransaction(
       provider,
       this.configService.network.addresses.masterChef || '',
       MasterChefAbi,
       'harvest',
-      [pid, to]
+      [farmId, to]
     );
   }
 
   public async deposit(
     provider: Web3Provider,
-    pid: number,
+    pid: string,
     amount: string | number,
     to: string
   ) {

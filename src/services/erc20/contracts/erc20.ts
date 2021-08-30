@@ -40,7 +40,7 @@ export default class Erc20 {
     return sendTransaction(web3, token, abi, 'approve', [spender, amount]);
   }
 
-  async balanceOf(tokenAddress: string, user: string) {
+  async balanceOf(tokenAddress: string, user: string): Promise<string> {
     const multicaller = new Multicaller(
       this.configService.network.key,
       this.service.provider,
@@ -51,6 +51,6 @@ export default class Erc20 {
       .call('balanceOf', tokenAddress, 'balanceOf', [user])
       .execute();
 
-    return result.allowance;
+    return result.balanceOf.toString();
   }
 }

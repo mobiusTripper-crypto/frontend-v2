@@ -3,7 +3,7 @@ import Home from '@/pages/Home.vue';
 import Pool from '@/pages/Pool.vue';
 import LiquidityMining from '@/pages/LiquidityMining.vue';
 import Trade from '@/pages/Trade.vue';
-import Farm from '@/pages/Farm.vue';
+import Farm from '@/pages/FarmList.vue';
 import FarmDetail from '@/pages/FarmDetail.vue';
 
 const routes: RouteRecordRaw[] = [

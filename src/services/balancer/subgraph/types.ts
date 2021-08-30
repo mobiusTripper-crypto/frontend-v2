@@ -124,3 +124,10 @@ export interface Farm {
 export interface FarmWithPool extends Farm {
   pool?: DecoratedPool;
 }
+
+export interface FarmUser {
+  pendingBeetx: number;
+  amount: number;
+  rewardDebt: number;
+  beetxHarvested: number;
+}

@@ -49,7 +49,7 @@ import { useI18n } from 'vue-i18n';
 import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
 import FarmDepositForm from '@/components/forms/farm_actions/FarmDepositForm.vue';
-import { Farm, FullPool } from '@/services/balancer/subgraph/types';
+import { Farm, FarmUser, FullPool } from '@/services/balancer/subgraph/types';
 
 export default defineComponent({
   name: 'FarmActionsCard',
@@ -65,6 +65,7 @@ export default defineComponent({
   props: {
     pool: { type: Object as PropType<FullPool>, required: true },
     farm: { type: Object as PropType<Farm>, required: true },
+    farmUser: { type: Object as PropType<FarmUser> },
     missingPrices: { type: Boolean, default: false }
   },
 

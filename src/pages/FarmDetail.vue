@@ -5,9 +5,7 @@
         <BalLoadingBlock v-if="loading" class="h-16" />
         <div v-else class="px-4 lg:px-0 flex flex-col">
           <div class="flex flex-wrap items-center -mt-2">
-            <h3 class="pool-title">
-              Farm
-            </h3>
+            <h3 class="pool-title">Farm - {{ pool?.name }}</h3>
           </div>
         </div>
       </div>
@@ -24,6 +22,7 @@
           v-else
           :pool="pool"
           :farm="farm"
+          :farmUser="farmUser"
           :missing-prices="missingPrices"
           @on-tx="onNewTx"
           class="sticky top-24"
@@ -50,6 +49,7 @@ import useTokens from '@/composables/useTokens';
 import useApp from '@/composables/useApp';
 import useFarmQuery from '@/composables/queries/useFarmQuery';
 import FarmActionsCard from '@/components/pages/farm/FarmActionsCard.vue';
+import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 
 interface PoolPageData {
   id: string;
@@ -83,6 +83,7 @@ export default defineComponent({
      */
     const farmQuery = useFarmQuery(route.params.id as string);
     const poolQuery = usePoolQuery(route.params.poolId as string);
+    const farmUserQuery = useFarmUserQuery(route.params.id as string);
     const poolSnapshotsQuery = usePoolSnapshotsQuery(
       route.params.id as string,
       30
@@ -100,11 +101,8 @@ export default defineComponent({
      * COMPUTED
      */
     const pool = computed(() => poolQuery.data.value);
-    const farm = computed(() => {
-      console.log('FARM QUERY', farmQuery);
-
-      return farmQuery.data.value;
-    });
+    const farm = computed(() => farmQuery.data.value);
+    const farmUser = computed(() => farmUserQuery.data.value);
 
     const loading = computed(
       () =>
@@ -164,7 +162,7 @@ export default defineComponent({
     });
 
     watch(poolQuery.error, () => {
-      router.push({ name: 'home' });
+      router.push({ name: 'farm' });
     });
 
     return {
@@ -175,6 +173,7 @@ export default defineComponent({
       appLoading,
       pool,
       farm,
+      farmUser,
       historicalPrices,
       snapshots,
       isLoadingSnapshots,

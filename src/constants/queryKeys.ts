@@ -7,7 +7,22 @@ export const CLAIMS_ROOT_KEY = 'claims';
 const QUERY_KEYS = {
   Farms: {
     All: ['farms', 'all'],
-    Current: (id: string) => [FARMS_ROOT_KEY, 'current', { id }]
+    Current: (id: string) => [FARMS_ROOT_KEY, 'current', { id }],
+    ApprovalRequired: (token: string) => [
+      FARMS_ROOT_KEY,
+      'approvalRequired',
+      { token }
+    ],
+    User: (id: string, account: Ref<string>) => [
+      FARMS_ROOT_KEY,
+      'user',
+      { id, account }
+    ],
+    TokenBalance: (address: string) => [
+      FARMS_ROOT_KEY,
+      'token-balance',
+      { address }
+    ]
   },
   Pools: {
     All: (tokens: Ref<string[]>, poolIds: Ref<string[]> | undefined) => [

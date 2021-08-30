@@ -36,24 +36,29 @@
         </template>
       </BalTextInput>-->
       <BalTextInput
-        v-model="modelValue"
-        v-bind="args"
+        name="Deposit"
+        v-model="amount"
+        v-model:isValid="validInput"
+        :rules="amountRules()"
+        :disabled="loading"
         type="number"
         min="0"
         step="any"
         placeholder="0"
+        :decimal-limit="18"
         validate-on="input"
         prepend-border
         append-shadow
       >
         <template v-slot:info>
-          <div class="cursor-pointer">
-            {{ $t('balance') }}: {{ '1234.232' }}
+          <div class="cursor-pointer" @click.prevent="amount = lpBalance">
+            {{ $t('balance') }}:
+            {{ lpBalance }}
           </div>
         </template>
         <template v-slot:append>
           <div class="p-2">
-            <BalBtn size="xs" color="white">
+            <BalBtn size="xs" color="white" @click.prevent="amount = lpBalance">
               {{ $t('max') }}
             </BalBtn>
           </div>
@@ -70,11 +75,11 @@
       />
       <template v-else>
         <BalBtn
-          v-if="requireApproval"
+          v-if="approvalRequired"
           :label="`${$t('approve')}`"
           :loading="approving"
           :loading-label="$t('approving')"
-          :disabled="!hasAmounts || !hasValidInputs"
+          :disabled="!validInput || amount === '0'"
           block
           @click.prevent="approveAllowance"
         />
@@ -83,7 +88,7 @@
             type="submit"
             :loading-label="$t('confirming')"
             color="gradient"
-            :disabled="!hasAmounts || !hasValidInputs"
+            :disabled="!validInput || amount === '0'"
             :loading="loading"
             block
             @click="trackGoal(Goals.ClickInvest)"
@@ -103,6 +108,7 @@ import {
   onMounted,
   PropType,
   reactive,
+  ref,
   toRef,
   toRefs,
   watch
@@ -113,7 +119,6 @@ import { useI18n } from 'vue-i18n';
 import { formatUnits } from '@ethersproject/units';
 import isEqual from 'lodash/isEqual';
 
-import useTokenApprovals from '@/composables/pools/useTokenApprovals';
 import useNumbers from '@/composables/useNumbers';
 import useSlippage from '@/composables/useSlippage';
 
@@ -121,7 +126,7 @@ import PoolExchange from '@/services/pool/exchange';
 import PoolCalculator from '@/services/pool/calculator/calculator.sevice';
 import { getPoolWeights } from '@/services/pool/pool.helper';
 import { bnum } from '@/lib/utils';
-import { Farm, FullPool } from '@/services/balancer/subgraph/types';
+import { Farm, FarmUser, FullPool } from '@/services/balancer/subgraph/types';
 import useFathom from '@/composables/useFathom';
 
 import { TOKENS } from '@/constants/tokens';
@@ -130,8 +135,11 @@ import useTokens from '@/composables/useTokens';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 import useEthers from '@/composables/useEthers';
 import useTransactions from '@/composables/useTransactions';
-import { usePool } from '@/composables/usePool';
-import useFarmTokenApprovals from '@/composables/farms/useFarmTokenApprovals';
+import useFarm from '@/composables/farms/useFarm';
+import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
+import useBalancesQuery from '@/composables/queries/useBalancesQuery';
+import useBalanceQuery from '@/composables/queries/useBalanceQuery';
+import useApprovalRequiredQuery from '@/composables/queries/useApprovalRequiredQuery';
 
 export enum FormTypes {
   proportional = 'proportional',
@@ -139,15 +147,12 @@ export enum FormTypes {
 }
 
 type DataProps = {
-  investForm: FormRef;
-  investType: FormTypes;
+  depositForm: FormRef;
   loading: boolean;
   amount: string;
   propMax: string[];
-  validInputs: boolean[];
+  validInput: boolean;
   propToken: number;
-  range: number;
-  highPiAccepted: boolean;
 };
 
 export default defineComponent({
@@ -162,17 +167,14 @@ export default defineComponent({
     pool: { type: Object as PropType<FullPool>, required: true }
   },
 
-  setup(props: { pool: FullPool; farm: Farm }, { emit }) {
+  setup(props: { pool: FullPool; farm: Farm; farmUser?: FarmUser }, { emit }) {
     const data = reactive<DataProps>({
-      investForm: {} as FormRef,
-      investType: FormTypes.proportional,
+      depositForm: {} as FormRef,
       loading: false,
       amount: '0',
       propMax: [],
-      validInputs: [],
-      propToken: 0,
-      range: 1000,
-      highPiAccepted: false
+      validInput: true,
+      propToken: 0
     });
 
     // COMPOSABLES
@@ -186,28 +188,40 @@ export default defineComponent({
     const { fNum, toFiat } = useNumbers();
     const { t } = useI18n();
     const { minusSlippage } = useSlippage();
-    const { tokens, balances: allBalances } = useTokens();
+    const { tokens, balances: allBalances, balanceFor } = useTokens();
     const { trackGoal, Goals } = useFathom();
     const { txListener } = useEthers();
     const { addTransaction } = useTransactions();
-    const { isStableLikePool, isWethPool, isWstETHPool } = usePool(
-      toRef(props, 'pool')
-    );
-
     const { amount } = toRefs(data);
 
     const {
-      requiresAllowance,
+      requiresApproval,
       approveAllowance,
       approving,
-      approvedAll
-    } = useFarmTokenApprovals(props.farm.pair, amount);
+      approvedAll,
+      checkAllowanceAndApprove,
+      deposit
+    } = useFarm(toRef(props, 'farm'));
+
+    const farmUserQuery = useFarmUserQuery(props.farm.id);
+    const balanceQuery = useBalanceQuery(props.farm.pair);
+    const approvalRequiredQuery = useApprovalRequiredQuery(props.farm.pair);
 
     // SERVICES
     const poolExchange = computed(
       () => new PoolExchange(props.pool, appNetworkConfig.key, tokens.value)
     );
+    const lpBalance = computed(() => {
+      const value = balanceQuery.data.value;
+      return value ? `${Number(parseInt(value) / 1e18)}` : '0';
+    });
+    const approvalRequired = computed(
+      () => approvalRequiredQuery.data.value || true
+    );
 
+    const farmUser = computed(() => {
+      return farmUserQuery.data.value;
+    });
     const poolCalculator = new PoolCalculator(
       props.pool,
       tokens.value,
@@ -225,10 +239,6 @@ export default defineComponent({
         .map(amount => parseFloat(amount))
         .reduce((a, b) => a + b, 0);
       return amountSum > 0;
-    });
-
-    const hasValidInputs = computed(() => {
-      return data.validInputs.every(validInput => validInput === true);
     });
 
     const balances = computed(() => {
@@ -253,7 +263,8 @@ export default defineComponent({
     const requireApproval = computed(() => {
       if (!hasAmounts.value) return false;
       if (approvedAll.value) return false;
-      return requiresAllowance();
+
+      return false;
     });
 
     const fullAmounts = computed(() => {
@@ -291,6 +302,18 @@ export default defineComponent({
     }
 
     function amountRules() {
+      /*
+      return isWalletReady.value
+        ? [
+            isPositive(),
+            isLessThanOrEqualTo(
+              Number(tokenBalance(index)),
+              t('exceedsBalance')
+            )
+          ]
+        : [isPositive()];
+       */
+
       return [isPositive()];
     }
 
@@ -316,7 +339,7 @@ export default defineComponent({
     }
 
     async function submit(): Promise<void> {
-      if (!data.investForm.validate()) return;
+      if (!data.depositForm.validate()) return;
       try {
         data.loading = true;
         const tx = await poolExchange.value.join(
@@ -380,22 +403,6 @@ export default defineComponent({
       }
     });
 
-    watch(
-      () => data.investType,
-      newType => {
-        if (newType === FormTypes.proportional) {
-          setPropMax();
-        }
-      }
-    );
-
-    watch(
-      () => data.range,
-      newVal => {
-        setPropAmountsFor(newVal);
-      }
-    );
-
     watch(isWalletReady, isAuth => {
       if (!isAuth) {
         data.amount = '0';
@@ -405,15 +412,19 @@ export default defineComponent({
 
     watch(account, () => {
       if (hasZeroBalance.value) {
-        data.investType = FormTypes.custom;
+        //
       } else {
         setPropMax();
       }
     });
 
+    watch(ref(props.farmUser), () => {
+      console.log('watching farm user', props.farmUser);
+    });
+
     onMounted(() => {
       if (hasZeroBalance.value) {
-        data.investType = FormTypes.custom;
+        //
       } else {
         setPropMax();
       }
@@ -422,14 +433,16 @@ export default defineComponent({
     return {
       // data
       ...toRefs(data),
+
+      approving: false,
+      approvalRequired,
+
       Goals,
       TOKENS,
       // computed
       tokens,
       appNetworkConfig,
-      hasValidInputs,
       hasAmounts,
-      approving,
       requireApproval,
       tokenWeights,
       tokenBalance,
@@ -441,15 +454,14 @@ export default defineComponent({
       amountUSD,
       isRequired,
       hasZeroBalance,
-      isWethPool,
-      isWstETHPool,
-      isStableLikePool,
       // methods
       submit,
       approveAllowance,
       fNum,
       trackGoal,
       tokenDecimals,
+      farmUser,
+      lpBalance,
       modelValue: ''
     };
   }
