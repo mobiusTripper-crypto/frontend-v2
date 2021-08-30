@@ -11,6 +11,8 @@ import { Multicaller } from '@/lib/utils/balancer/contract';
 import { rpcProviderService as _rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
 import { bnum } from '@/lib/utils';
 import { erc20ContractService } from '@/services/erc20/erc20-contracts.service';
+import { tokenService } from '@/services/token/token.service';
+import useTokens from '@/composables/useTokens';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -37,12 +39,6 @@ export default function useFarmTokenApprovals(
   const { getProvider, appNetworkConfig, account } = useWeb3();
   const { txListener } = useEthers();
   const { addTransaction } = useTransactions();
-
-  const multicaller = new Multicaller(
-    configService.network.key,
-    _rpcProviderService.jsonProvider,
-    erc20Abi
-  );
 
   const requiresAllowance = async () => {
     // const result = await multicaller

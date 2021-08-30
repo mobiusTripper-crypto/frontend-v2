@@ -2,6 +2,10 @@ import Service from '@/services/balancer/contracts/balancer-contracts.service';
 import ConfigService from '@/services/config/config.service';
 import { Multicaller } from '@/lib/utils/balancer/contract';
 import { default as MasterChefAbi } from '@/lib/abi/MasterChefV2.json';
+import { BigNumber } from 'ethers';
+import { BN } from 'ethereumjs-util';
+import { sendTransaction } from '@/lib/utils/balancer/web3';
+import { Web3Provider } from '@ethersproject/providers';
 
 export default class MasterChef {
   service: Service;
@@ -28,46 +32,50 @@ export default class MasterChef {
     return result.pendingBeetx;
   }
 
-  public async withdrawAndHarvest(pid: number, amount: number, to: string) {
-    const masterChefMultiCaller = new Multicaller(
-      this.configService.network.key,
-      this.service.provider,
-      MasterChefAbi
-    );
-
-    masterChefMultiCaller.call(
+  public async withdrawAndHarvest(
+    provider: Web3Provider,
+    pid: number,
+    amount: string,
+    to: string
+  ) {
+    return sendTransaction(
+      provider,
+      this.configService.network.addresses.masterChef || '',
+      MasterChefAbi,
       'withdrawAndHarvest',
-      this.address,
-      'withdrawAndHarvest',
-      [pid, amount, to]
+      [pid, amount.toString(), to]
     );
-    await masterChefMultiCaller.execute();
   }
 
-  public async harvest(pid: number, to: string) {
-    const masterChefMultiCaller = new Multicaller(
-      this.configService.network.key,
-      this.service.provider,
-      MasterChefAbi
+  public async harvest(provider: Web3Provider, pid: number, to: string) {
+    return sendTransaction(
+      provider,
+      this.configService.network.addresses.masterChef || '',
+      MasterChefAbi,
+      'harvest',
+      [pid, to]
     );
-
-    masterChefMultiCaller.call('harvest', this.address, 'harvest', [pid, to]);
-    await masterChefMultiCaller.execute();
   }
 
-  public async deposit(pid: number, amount: number, to: string) {
-    const masterChefMultiCaller = new Multicaller(
-      this.configService.network.key,
-      this.service.provider,
-      MasterChefAbi
+  public async deposit(
+    provider: Web3Provider,
+    pid: number,
+    amount: string | number,
+    to: string
+  ) {
+    return sendTransaction(
+      provider,
+      this.configService.network.addresses.masterChef || '',
+      MasterChefAbi,
+      'deposit',
+      [pid, amount.toString(), to]
     );
-
-    masterChefMultiCaller.call('deposit', this.address, 'deposit', [
-      pid,
-      amount,
-      to
-    ]);
-    await masterChefMultiCaller.execute();
+    // masterChefMultiCaller.call('deposit', this.address, 'deposit', [
+    //   pid,
+    //   amount.toString(),
+    //   to
+    // ]);
+    // await masterChefMultiCaller.execute();
   }
 
   public get address(): string {

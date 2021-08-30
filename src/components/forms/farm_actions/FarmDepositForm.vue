@@ -71,12 +71,12 @@
       <template v-else>
         <BalBtn
           v-if="requireApproval"
-          :label="`${$t('approve')} ${symbolFor(requiredAllowances[0])}`"
+          :label="`${$t('approve')}`"
           :loading="approving"
           :loading-label="$t('approving')"
           :disabled="!hasAmounts || !hasValidInputs"
           block
-          @click.prevent="approveAllowances"
+          @click.prevent="approveAllowance"
         />
         <template v-else>
           <BalBtn
@@ -131,6 +131,7 @@ import { TransactionResponse } from '@ethersproject/abstract-provider';
 import useEthers from '@/composables/useEthers';
 import useTransactions from '@/composables/useTransactions';
 import { usePool } from '@/composables/usePool';
+import useFarmTokenApprovals from '@/composables/farms/useFarmTokenApprovals';
 
 export enum FormTypes {
   proportional = 'proportional',
@@ -141,7 +142,7 @@ type DataProps = {
   investForm: FormRef;
   investType: FormTypes;
   loading: boolean;
-  amounts: string[];
+  amount: string;
   propMax: string[];
   validInputs: boolean[];
   propToken: number;
@@ -166,7 +167,7 @@ export default defineComponent({
       investForm: {} as FormRef,
       investType: FormTypes.proportional,
       loading: false,
-      amounts: [],
+      amount: '0',
       propMax: [],
       validInputs: [],
       propToken: 0,
@@ -193,14 +194,14 @@ export default defineComponent({
       toRef(props, 'pool')
     );
 
-    const { amounts } = toRefs(data);
+    const { amount } = toRefs(data);
 
     const {
-      requiredAllowances,
-      approveAllowances,
+      requiresAllowance,
+      approveAllowance,
       approving,
       approvedAll
-    } = useTokenApprovals(props.pool.tokenAddresses, amounts);
+    } = useFarmTokenApprovals(props.farm.pair, amount);
 
     // SERVICES
     const poolExchange = computed(
@@ -252,12 +253,12 @@ export default defineComponent({
     const requireApproval = computed(() => {
       if (!hasAmounts.value) return false;
       if (approvedAll.value) return false;
-      return requiredAllowances.value.length > 0;
+      return requiresAllowance();
     });
 
     const fullAmounts = computed(() => {
       return props.pool.tokenAddresses.map((_, i) => {
-        return data.amounts[i] || '0';
+        return data.amount;
       });
     });
 
@@ -306,12 +307,12 @@ export default defineComponent({
         .div(10000)
         .toFixed(tokenDecimals(data.propToken));
 
-      const { send } = poolCalculator.propAmountsGiven(
-        amount,
-        data.propToken,
-        'send'
-      );
-      data.amounts = send;
+      // const { send } = poolCalculator.propAmountsGiven(
+      //   amount,
+      //   data.propToken,
+      //   'send'
+      // );
+      data.amount = amount;
     }
 
     async function submit(): Promise<void> {
@@ -343,7 +344,7 @@ export default defineComponent({
         txListener(tx, {
           onTxConfirmed: async (tx: TransactionResponse) => {
             emit('success', tx);
-            data.amounts = [];
+            data.amount = '0';
             data.loading = false;
             setPropMax();
           },
@@ -397,7 +398,7 @@ export default defineComponent({
 
     watch(isWalletReady, isAuth => {
       if (!isAuth) {
-        data.amounts = [];
+        data.amount = '0';
         data.propMax = [];
       }
     });
@@ -430,7 +431,6 @@ export default defineComponent({
       hasAmounts,
       approving,
       requireApproval,
-      requiredAllowances,
       tokenWeights,
       tokenBalance,
       amountRules,
@@ -446,7 +446,7 @@ export default defineComponent({
       isStableLikePool,
       // methods
       submit,
-      approveAllowances,
+      approveAllowance,
       fNum,
       trackGoal,
       tokenDecimals,

@@ -3,7 +3,11 @@
     <div class="px-4 lg:px-0">
       <h3 class="mb-3">Farms</h3>
     </div>
-    <button v-on:click="onApprove">approve</button>
+    <button v-on:click="onApprove">approve</button><br />
+    <button v-on:click="onDeposit">deposit</button><br />
+    <button v-on:click="onHarvest">harvest</button><br />
+    <button v-on:click="onWithdraw">withdraw</button><br />
+    <button v-on:click="onPendingBeetx">pendingBeetx</button>
     <FarmsTable
       :isLoading="isLoadingPools"
       :data="decoratedFarms"
@@ -30,6 +34,7 @@ import useFarms from '@/composables/farms/useFarms';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import useFarmTokenApprovals from '@/composables/farms/useFarmTokenApprovals';
+import { BigNumber } from 'ethers';
 
 export default defineComponent({
   components: {
@@ -39,7 +44,7 @@ export default defineComponent({
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady, isV1Supported } = useWeb3();
+    const { isWalletReady, isV1Supported, getProvider } = useWeb3();
     const {
       selectedTokens,
       addSelectedToken,
@@ -99,21 +104,75 @@ export default defineComponent({
       approvedAll,
       approving
     } = useFarmTokenApprovals(
-      '0xf4f5a8fa35d00d2273e1466c2e29a417a3464e3c',
-      ref('10000000')
+      '0xc628026f20ed06f575b96a71f07e6d14d576f4b2',
+      ref('10000000000000000000')
     );
 
     const onApprove = () => {
       requiresAllowance().then(result => {
         console.log('requires allowance', result);
-        if (result) {
-          approveAllowance();
-        }
+        // if (result) {
+        approveAllowance();
+        // }
       });
       // if (userFarmToken.requiredAllowances.value.length > 0) {
       //   userFarmToken.approveAllowances()
       //   // userFarmToken.value.ap();
       // }
+    };
+
+    // balancer : 0xd3F32d840f684061eEB2B6c6B78cA346C3fe0030
+    // deployer: 0xD278ACc709649aAAcbAcEcc4d45DFF35c35647bC
+    const onPendingBeetx = () => {
+      masterChefContractsService.masterChef
+        .getPendingBeetx(5, '0xd3F32d840f684061eEB2B6c6B78cA346C3fe0030')
+        .then(result => {
+          console.log('pending beetx: ', result);
+        });
+    };
+
+    const onDeposit = () => {
+      const tx = masterChefContractsService.masterChef
+        .deposit(
+          getProvider(),
+          5,
+          '10000000000000000000',
+          // '1e18',
+          '0xD278ACc709649aAAcbAcEcc4d45DFF35c35647bC'
+        )
+        .then(() => {
+          console.log('deposited !!!!');
+        })
+        .catch(error => {
+          console.log('deposit failed!', error);
+        });
+    };
+
+    const onHarvest = () => {
+      masterChefContractsService.masterChef
+        .harvest(getProvider(), 5, '0xD278ACc709649aAAcbAcEcc4d45DFF35c35647bC')
+        .then(() => {
+          console.log('harvested!!!!');
+        })
+        .catch(error => {
+          console.log('harvest failed!', error);
+        });
+    };
+
+    const onWithdraw = () => {
+      masterChefContractsService.masterChef
+        .withdrawAndHarvest(
+          getProvider(),
+          5,
+          '10000000000000000000',
+          '0xD278ACc709649aAAcbAcEcc4d45DFF35c35647bC'
+        )
+        .then(() => {
+          console.log('harvested!!!!');
+        })
+        .catch(error => {
+          console.log('harvest failed!', error);
+        });
     };
 
     return {
@@ -140,7 +199,10 @@ export default defineComponent({
 
       decoratedFarms,
       onApprove,
-
+      onDeposit,
+      onHarvest,
+      onWithdraw,
+      onPendingBeetx,
       // constants
       EXTERNAL_LINKS
     };
