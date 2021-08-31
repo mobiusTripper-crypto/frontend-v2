@@ -1,6 +1,6 @@
 <template>
   <BalForm ref="depositForm" @on-submit="submit">
-    <div class="px-4 pt-6 border-b dark:border-gray-900">
+    <div class="px-4 pt-6 pb-20 border-b dark:border-gray-900">
       <BalTextInput
         name="Deposit"
         v-model="amount"
@@ -51,7 +51,7 @@
           :loading-label="$t('approving')"
           :disabled="!validInput || amount === '0' || amount === ''"
           block
-          @click.prevent="approveAllowance"
+          @click.prevent="approve"
         />
         <template v-else>
           <BalBtn
@@ -90,32 +90,19 @@ import {
   isRequired
 } from '@/lib/utils/validations';
 import { useI18n } from 'vue-i18n';
-import { formatUnits } from '@ethersproject/units';
-import isEqual from 'lodash/isEqual';
-
 import useNumbers from '@/composables/useNumbers';
-import useSlippage from '@/composables/useSlippage';
-
-import PoolExchange from '@/services/pool/exchange';
-import PoolCalculator from '@/services/pool/calculator/calculator.sevice';
-import { getPoolWeights } from '@/services/pool/pool.helper';
-import { bnum, scale } from '@/lib/utils';
+import { scale } from '@/lib/utils';
 import { Farm, FarmUser, FullPool } from '@/services/balancer/subgraph/types';
 import useFathom from '@/composables/useFathom';
 
 import { TOKENS } from '@/constants/tokens';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
-import { TransactionResponse } from '@ethersproject/abstract-provider';
-import useEthers from '@/composables/useEthers';
-import useTransactions from '@/composables/useTransactions';
 import useFarm from '@/composables/farms/useFarm';
-import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
-import useBalancesQuery from '@/composables/queries/useBalancesQuery';
-import useBalanceQuery from '@/composables/queries/useBalanceQuery';
 import useApprovalRequiredQuery from '@/composables/queries/useApprovalRequiredQuery';
 import { getAddress } from '@ethersproject/address';
 import { BigNumber } from 'bignumber.js';
+import useEthers from '@/composables/useEthers';
 
 type DataProps = {
   depositForm: FormRef;
@@ -135,10 +122,10 @@ export default defineComponent({
 
   props: {
     farm: { type: Object as PropType<Farm>, required: true },
-    pool: { type: Object as PropType<FullPool>, required: true }
+    pool: { type: Object as PropType<FullPool> }
   },
 
-  setup(props: { pool: FullPool; farm: Farm; farmUser?: FarmUser }, { emit }) {
+  setup(props: { pool?: FullPool; farm: Farm; farmUser?: FarmUser }, { emit }) {
     const data = reactive<DataProps>({
       depositForm: {} as FormRef,
       loading: false,
@@ -148,46 +135,31 @@ export default defineComponent({
       propToken: 0
     });
 
-    // COMPOSABLES
     const {
       isWalletReady,
       account,
       toggleWalletSelectModal,
-      getProvider,
       appNetworkConfig
     } = useWeb3();
-    const { fNum, toFiat } = useNumbers();
+    const { fNum } = useNumbers();
     const { t } = useI18n();
-    const { minusSlippage } = useSlippage();
     const { tokens, balances: allBalances, balanceFor } = useTokens();
     const { trackGoal, Goals } = useFathom();
-    const { txListener } = useEthers();
-    const { addTransaction } = useTransactions();
     const { amount } = toRefs(data);
+    const depositing = ref(false);
 
     const {
-      requiresApproval,
-      approveAllowance,
+      approve,
       approving,
       approvedAll,
       checkAllowanceAndApprove,
-      deposit,
-      depositing
+      deposit
     } = useFarm(toRef(props, 'farm'));
 
-    const farmUserQuery = useFarmUserQuery(props.farm.id);
     const approvalRequiredQuery = useApprovalRequiredQuery(props.farm.pair);
     const bptBalance = computed(() => balanceFor(getAddress(props.farm.pair)));
     const approvalRequired = computed(() => approvalRequiredQuery.data.value);
-    const farmUser = computed(() => {
-      return farmUserQuery.data.value;
-    });
-    const poolCalculator = new PoolCalculator(
-      props.pool,
-      tokens.value,
-      allBalances,
-      'join'
-    );
+    const { txListener } = useEthers();
 
     function amountRules() {
       return isWalletReady.value
@@ -200,33 +172,27 @@ export default defineComponent({
 
     async function submit(): Promise<void> {
       if (!data.depositForm.validate()) return;
-      try {
-        const amountScaled = scale(new BigNumber(amount.value), 18);
 
-        console.log('amountScaled', amountScaled.toString());
-        await deposit(amountScaled, () => {
+      depositing.value = true;
+      const amountScaled = scale(new BigNumber(amount.value), 18);
+      const tx = await deposit(amountScaled);
+
+      if (!tx) {
+        depositing.value = false;
+        return;
+      }
+
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          emit('success', tx);
           data.amount = '';
-        });
-      } catch (error) {
-        console.error(error);
-        data.loading = false;
-      }
-    }
-
-    watch(tokens, newTokens => {
-      poolCalculator.setAllTokens(newTokens);
-    });
-
-    watch(
-      () => props.pool.onchain.tokens,
-      (newTokens, oldTokens) => {
-        poolCalculator.setPool(props.pool);
-        const tokensChanged = !isEqual(newTokens, oldTokens);
-        if (tokensChanged) {
-          //
+          depositing.value = false;
+        },
+        onTxFailed: () => {
+          depositing.value = false;
         }
-      }
-    );
+      });
+    }
 
     /*watch(balances, (newBalances, oldBalances) => {
       const balancesChanged = !isEqual(newBalances, oldBalances);
@@ -250,10 +216,6 @@ export default defineComponent({
       }*/
     });
 
-    watch(ref(props.farmUser), () => {
-      console.log('watching farm user', props.farmUser);
-    });
-
     onMounted(() => {
       /*if (hasZeroBalance.value) {
         //
@@ -268,8 +230,7 @@ export default defineComponent({
 
       approving,
       approvalRequired,
-      approveAllowance,
-      deposit,
+      approve,
       depositing,
 
       Goals,
@@ -285,9 +246,7 @@ export default defineComponent({
       submit,
       fNum,
       trackGoal,
-      farmUser,
-      bptBalance,
-      modelValue: ''
+      bptBalance
     };
   }
 });

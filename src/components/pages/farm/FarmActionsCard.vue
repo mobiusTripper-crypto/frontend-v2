@@ -23,15 +23,15 @@
         />
       </template>
       <template v-if="activeTab === 'withdraw'">
-        <WithdrawForm
+        <FarmWithdrawForm
           :pool="pool"
-          :missing-prices="missingPrices"
+          :farm="farm"
           @success="handleWithdrawal($event)"
         />
         <SuccessOverlay
           v-if="withdrawalSuccess"
-          :title="$t('withdrawalSettled')"
-          :description="$t('withdrawalSuccess')"
+          :title="$t('farmWithdrawalSettled')"
+          :description="$t('farmWithdrawalSuccess')"
           :closeLabel="$t('close')"
           :explorerLink="explorer.txLink(txHash)"
           @close="withdrawalSuccess = false"
@@ -50,6 +50,7 @@ import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
 import FarmDepositForm from '@/components/forms/farm_actions/FarmDepositForm.vue';
 import { Farm, FarmUser, FullPool } from '@/services/balancer/subgraph/types';
+import FarmWithdrawForm from '@/components/forms/farm_actions/FarmWithdrawForm.vue';
 
 export default defineComponent({
   name: 'FarmActionsCard',
@@ -57,15 +58,14 @@ export default defineComponent({
   emits: ['onTx'],
 
   components: {
+    FarmWithdrawForm,
     FarmDepositForm,
-    WithdrawForm,
     SuccessOverlay
   },
 
   props: {
     pool: { type: Object as PropType<FullPool>, required: true },
     farm: { type: Object as PropType<Farm>, required: true },
-    farmUser: { type: Object as PropType<FarmUser> },
     missingPrices: { type: Boolean, default: false }
   },
 

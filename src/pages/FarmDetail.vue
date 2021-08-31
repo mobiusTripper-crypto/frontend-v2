@@ -22,7 +22,6 @@
           v-else
           :pool="pool"
           :farm="farm"
-          :farmUser="farmUser"
           :missing-prices="missingPrices"
           @on-tx="onNewTx"
           class="sticky top-24"
@@ -103,7 +102,9 @@ export default defineComponent({
      */
     const pool = computed(() => poolQuery.data.value);
     const farm = computed(() => farmQuery.data.value);
-    const farmUser = computed(() => farmUserQuery.data.value);
+    const farmUser = computed(() => {
+      return farmUserQuery.data.value;
+    });
 
     const loading = computed(
       () =>
