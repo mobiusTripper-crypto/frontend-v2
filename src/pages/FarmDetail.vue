@@ -84,10 +84,6 @@ export default defineComponent({
     const farmQuery = useFarmQuery(route.params.id as string);
     const poolQuery = usePoolQuery(route.params.poolId as string);
     const farmUserQuery = useFarmUserQuery(route.params.id as string);
-    const poolSnapshotsQuery = usePoolSnapshotsQuery(
-      route.params.id as string,
-      30
-    );
 
     /**
      * STATE
@@ -114,15 +110,6 @@ export default defineComponent({
         farmQuery.isLoading.value ||
         farmQuery.isIdle.value ||
         farmQuery.error.value
-    );
-
-    const snapshots = computed(() => poolSnapshotsQuery.data.value?.snapshots);
-    const historicalPrices = computed(
-      () => poolSnapshotsQuery.data.value?.prices
-    );
-    const isLoadingSnapshots = computed(
-      () =>
-        poolSnapshotsQuery.isLoading.value || poolSnapshotsQuery.isIdle.value
     );
 
     const titleTokens = computed(() => {
@@ -176,9 +163,6 @@ export default defineComponent({
       pool,
       farm,
       farmUser,
-      historicalPrices,
-      snapshots,
-      isLoadingSnapshots,
       loading,
       titleTokens,
       isWalletReady,
