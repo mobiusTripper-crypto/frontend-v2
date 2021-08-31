@@ -10,6 +10,7 @@ import { bnum } from '@/lib/utils';
 import { erc20ContractService } from '@/services/erc20/erc20-contracts.service';
 import { Farm } from '@/services/balancer/subgraph/types';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
+import BigNumber from 'bignumber.js';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -27,6 +28,9 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
 
   const approving = ref(false);
   const approvedAll = ref(false);
+  const depositing = ref(false);
+  const harvesting = ref(false);
+  const withdrawing = ref(false);
   const provider = getProvider();
   const tokenAddress = farm.value?.pair || '';
   const farmId = farm.value?.id || '';
@@ -89,65 +93,111 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
     }
   }
 
-  async function deposit(amount: Ref<string> = ref(MaxUint256.toString())) {
-    const tx = await masterChefContractsService.masterChef.deposit(
-      provider,
-      farmId,
-      amount.value,
-      account.value
-    );
+  async function deposit(amount: BigNumber, onSuccess: () => void) {
+    try {
+      depositing.value = true;
+      const tx = await masterChefContractsService.masterChef.deposit(
+        provider,
+        farmId,
+        amount.toString(),
+        account.value
+      );
 
-    addTransaction({
-      id: tx.hash,
-      type: 'tx',
-      action: 'invest',
-      summary: 'Deposit LP tokens into farm',
-      details: {
-        contractAddress: tokenAddress,
-        spender: appNetworkConfig.addresses.masterChef
-      }
-    });
+      addTransaction({
+        id: tx.hash,
+        type: 'tx',
+        action: 'invest',
+        summary: 'Deposit LP tokens into farm',
+        details: {
+          contractAddress: tokenAddress,
+          spender: appNetworkConfig.addresses.masterChef
+        }
+      });
+
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          onSuccess();
+          depositing.value = false;
+        },
+        onTxFailed: () => {
+          depositing.value = false;
+        }
+      });
+    } catch (error) {
+      depositing.value = false;
+      console.error(error);
+    }
   }
 
   async function harvest() {
-    const tx = await masterChefContractsService.masterChef.harvest(
-      provider,
-      farmId,
-      account.value
-    );
+    try {
+      harvesting.value = true;
+      const tx = await masterChefContractsService.masterChef.harvest(
+        provider,
+        farmId,
+        account.value
+      );
 
-    addTransaction({
-      id: tx.hash,
-      type: 'tx',
-      action: 'claim',
-      summary: 'Harvest farm rewards',
-      details: {
-        contractAddress: tokenAddress,
-        spender: appNetworkConfig.addresses.masterChef
-      }
-    });
+      addTransaction({
+        id: tx.hash,
+        type: 'tx',
+        action: 'claim',
+        summary: 'Harvest farm rewards',
+        details: {
+          contractAddress: tokenAddress,
+          spender: appNetworkConfig.addresses.masterChef
+        }
+      });
+
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          harvesting.value = false;
+        },
+        onTxFailed: () => {
+          harvesting.value = false;
+        }
+      });
+    } catch (error) {
+      harvesting.value = false;
+      console.error(error);
+    }
   }
 
   async function withdrawAndHarvest(
     amount: Ref<string> = ref(MaxUint256.toString())
   ) {
-    const tx = await masterChefContractsService.masterChef.withdrawAndHarvest(
-      provider,
-      farmId,
-      amount.value,
-      account.value
-    );
+    try {
+      withdrawing.value = true;
+      const tx = await masterChefContractsService.masterChef.withdrawAndHarvest(
+        provider,
+        farmId,
+        amount.value,
+        account.value
+      );
 
-    addTransaction({
-      id: tx.hash,
-      type: 'tx',
-      action: 'claim',
-      summary: 'Withdraw LP tokens',
-      details: {
-        contractAddress: tokenAddress,
-        spender: appNetworkConfig.addresses.masterChef
-      }
-    });
+      addTransaction({
+        id: tx.hash,
+        type: 'tx',
+        action: 'claim',
+        summary: 'Withdraw LP tokens',
+        details: {
+          contractAddress: tokenAddress,
+          spender: appNetworkConfig.addresses.masterChef
+        }
+      });
+
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          withdrawing.value = false;
+        },
+        onTxFailed: () => {
+          withdrawing.value = false;
+        }
+      });
+    } catch (error) {
+      withdrawing.value = false;
+      console.error(error);
+    }
   }
 
   return {
@@ -158,6 +208,9 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
     checkAllowanceAndApprove,
     deposit,
     harvest,
-    withdrawAndHarvest
+    withdrawAndHarvest,
+    depositing,
+    withdrawing,
+    harvesting
   };
 }

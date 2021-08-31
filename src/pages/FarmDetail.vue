@@ -50,6 +50,7 @@ import useApp from '@/composables/useApp';
 import useFarmQuery from '@/composables/queries/useFarmQuery';
 import FarmActionsCard from '@/components/pages/farm/FarmActionsCard.vue';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
+import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 
 interface PoolPageData {
   id: string;

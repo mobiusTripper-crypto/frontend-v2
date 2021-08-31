@@ -13,6 +13,7 @@ export class Goals {
   ClickInvestSettings = '';
   ClickTradeSettings = '';
   ClickInvest = '';
+  ClickFarmDeposit = '';
   ClickWithdraw = '';
   Invested = '';
   Withdrawal = '';

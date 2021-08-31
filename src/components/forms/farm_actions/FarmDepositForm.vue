@@ -17,14 +17,18 @@
         append-shadow
       >
         <template v-slot:info>
-          <div class="cursor-pointer" @click.prevent="amount = lpBalance">
+          <div class="cursor-pointer" @click.prevent="amount = bptBalance">
             {{ $t('balance') }}:
-            {{ lpBalance }}
+            {{ bptBalance }}
           </div>
         </template>
         <template v-slot:append>
           <div class="p-2">
-            <BalBtn size="xs" color="white" @click.prevent="amount = lpBalance">
+            <BalBtn
+              size="xs"
+              color="white"
+              @click.prevent="amount = bptBalance"
+            >
               {{ $t('max') }}
             </BalBtn>
           </div>
@@ -54,10 +58,10 @@
             type="submit"
             :loading-label="$t('confirming')"
             color="gradient"
-            :disabled="!validInput || amount === '0'"
-            :loading="loading"
+            :disabled="!validInput || amount === '0' || amount === ''"
+            :loading="depositing"
             block
-            @click="trackGoal(Goals.ClickInvest)"
+            @click="trackGoal(Goals.ClickFarmDeposit)"
           >
             {{ $t('deposit') }}
           </BalBtn>
@@ -80,7 +84,11 @@ import {
   watch
 } from 'vue';
 import { FormRef } from '@/types';
-import { isPositive, isRequired } from '@/lib/utils/validations';
+import {
+  isLessThanOrEqualTo,
+  isPositive,
+  isRequired
+} from '@/lib/utils/validations';
 import { useI18n } from 'vue-i18n';
 import { formatUnits } from '@ethersproject/units';
 import isEqual from 'lodash/isEqual';
@@ -91,7 +99,7 @@ import useSlippage from '@/composables/useSlippage';
 import PoolExchange from '@/services/pool/exchange';
 import PoolCalculator from '@/services/pool/calculator/calculator.sevice';
 import { getPoolWeights } from '@/services/pool/pool.helper';
-import { bnum } from '@/lib/utils';
+import { bnum, scale } from '@/lib/utils';
 import { Farm, FarmUser, FullPool } from '@/services/balancer/subgraph/types';
 import useFathom from '@/composables/useFathom';
 
@@ -106,6 +114,8 @@ import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import useBalancesQuery from '@/composables/queries/useBalancesQuery';
 import useBalanceQuery from '@/composables/queries/useBalanceQuery';
 import useApprovalRequiredQuery from '@/composables/queries/useApprovalRequiredQuery';
+import { getAddress } from '@ethersproject/address';
+import { BigNumber } from 'bignumber.js';
 
 type DataProps = {
   depositForm: FormRef;
@@ -132,7 +142,7 @@ export default defineComponent({
     const data = reactive<DataProps>({
       depositForm: {} as FormRef,
       loading: false,
-      amount: '0',
+      amount: '',
       propMax: [],
       validInput: true,
       propToken: 0
@@ -161,23 +171,14 @@ export default defineComponent({
       approving,
       approvedAll,
       checkAllowanceAndApprove,
-      deposit
+      deposit,
+      depositing
     } = useFarm(toRef(props, 'farm'));
 
     const farmUserQuery = useFarmUserQuery(props.farm.id);
-    const balanceQuery = useBalanceQuery(props.farm.pair);
     const approvalRequiredQuery = useApprovalRequiredQuery(props.farm.pair);
-
-    // SERVICES
-    const poolExchange = computed(
-      () => new PoolExchange(props.pool, appNetworkConfig.key, tokens.value)
-    );
-    const lpBalance = computed(() => {
-      const value = balanceQuery.data.value;
-      return value ? `${Number(parseInt(value) / 1e18)}` : '0';
-    });
+    const bptBalance = computed(() => balanceFor(getAddress(props.farm.pair)));
     const approvalRequired = computed(() => approvalRequiredQuery.data.value);
-
     const farmUser = computed(() => {
       return farmUserQuery.data.value;
     });
@@ -188,151 +189,23 @@ export default defineComponent({
       'join'
     );
 
-    // COMPUTED
-    const tokenWeights = computed(() =>
-      Object.values(props.pool.onchain.tokens).map(t => t.weight)
-    );
-
-    const hasAmounts = computed(() => {
-      const amountSum = fullAmounts.value
-        .map(amount => parseFloat(amount))
-        .reduce((a, b) => a + b, 0);
-      return amountSum > 0;
-    });
-
-    const balances = computed(() => {
-      return props.pool.tokenAddresses.map(
-        token => allBalances.value[token] || '0'
-      );
-    });
-
-    const hasZeroBalance = computed(() => {
-      return balances.value.map(b => Number(b)).includes(0);
-    });
-
-    const total = computed(() => {
-      const total = props.pool.tokenAddresses
-        .map((_, i) => amountUSD(i))
-        .reduce((a, b) => a + b, 0);
-
-      if (total < 0) return fNum(0, 'usd');
-      return fNum(total, 'usd');
-    });
-
-    const requireApproval = computed(() => {
-      if (!hasAmounts.value) return false;
-      if (approvedAll.value) return false;
-
-      return false;
-    });
-
-    const fullAmounts = computed(() => {
-      return props.pool.tokenAddresses.map((_, i) => {
-        return data.amount;
-      });
-    });
-
-    const minBptOut = computed(() => {
-      let bptOut = poolCalculator
-        .exactTokensInForBPTOut(fullAmounts.value)
-        .toString();
-      bptOut = formatUnits(bptOut, props.pool.onchain.decimals);
-      console.log(bptOut, `TS EVM _exactTokensInForBPTOut`);
-
-      return minusSlippage(bptOut, props.pool.onchain.decimals);
-    });
-
-    // METHODS
-    function tokenBalance(index: number): string {
-      return balances.value[index] || '0';
-    }
-
-    function tokenDecimals(index) {
-      return tokens.value[props.pool.tokenAddresses[index]].decimals;
-    }
-
-    function amountUSD(index) {
-      const amount = fullAmounts.value[index] || 0;
-      return toFiat(amount, props.pool.tokenAddresses[index]);
-    }
-
-    function formatBalance(index) {
-      return fNum(tokenBalance(index), 'token');
-    }
-
     function amountRules() {
-      /*
       return isWalletReady.value
         ? [
             isPositive(),
-            isLessThanOrEqualTo(
-              Number(tokenBalance(index)),
-              t('exceedsBalance')
-            )
+            isLessThanOrEqualTo(Number(bptBalance.value), t('exceedsBalance'))
           ]
         : [isPositive()];
-       */
-
-      return [isPositive()];
-    }
-
-    async function setPropMax() {
-      const { send, fixedToken } = poolCalculator.propMax();
-      data.propMax = [...send];
-      data.propToken = fixedToken;
-    }
-
-    function setPropAmountsFor(range) {
-      const fractionBasisPoints = (range / 1000) * 10000;
-      const amount = bnum(balances.value[data.propToken])
-        .times(fractionBasisPoints)
-        .div(10000)
-        .toFixed(tokenDecimals(data.propToken));
-
-      // const { send } = poolCalculator.propAmountsGiven(
-      //   amount,
-      //   data.propToken,
-      //   'send'
-      // );
-      data.amount = amount;
     }
 
     async function submit(): Promise<void> {
       if (!data.depositForm.validate()) return;
       try {
-        data.loading = true;
-        const tx = await poolExchange.value.join(
-          getProvider(),
-          account.value,
-          fullAmounts.value,
-          minBptOut.value
-        );
-        console.log('Receipt', tx);
+        const amountScaled = scale(new BigNumber(amount.value), 18);
 
-        addTransaction({
-          id: tx.hash,
-          type: 'tx',
-          action: 'invest',
-          summary: t('transactionSummary.investInPool', [
-            total.value,
-            getPoolWeights(props.pool)
-          ]),
-          details: {
-            total,
-            pool: props.pool
-          }
-        });
-
-        txListener(tx, {
-          onTxConfirmed: async (tx: TransactionResponse) => {
-            emit('success', tx);
-            data.amount = '0';
-            data.loading = false;
-            setPropMax();
-          },
-          onTxFailed: () => {
-            data.loading = false;
-          }
+        console.log('amountScaled', amountScaled.toString());
+        await deposit(amountScaled, () => {
+          data.amount = '';
         });
       } catch (error) {
         console.error(error);
@@ -350,17 +223,17 @@ export default defineComponent({
         poolCalculator.setPool(props.pool);
         const tokensChanged = !isEqual(newTokens, oldTokens);
         if (tokensChanged) {
-          setPropMax();
+          //
         }
       }
     );
 
-    watch(balances, (newBalances, oldBalances) => {
+    /*watch(balances, (newBalances, oldBalances) => {
       const balancesChanged = !isEqual(newBalances, oldBalances);
       if (balancesChanged) {
-        setPropMax();
+        //
       }
-    });
+    });*/
 
     watch(isWalletReady, isAuth => {
       if (!isAuth) {
@@ -370,11 +243,11 @@ export default defineComponent({
     });
 
     watch(account, () => {
-      if (hasZeroBalance.value) {
+      /*if (hasZeroBalance.value) {
         //
       } else {
-        setPropMax();
-      }
+        //
+      }*/
     });
 
     watch(ref(props.farmUser), () => {
@@ -382,45 +255,38 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      if (hasZeroBalance.value) {
+      /*if (hasZeroBalance.value) {
         //
       } else {
-        setPropMax();
-      }
+        //
+      }*/
     });
 
     return {
       // data
       ...toRefs(data),
 
-      approving: false,
+      approving,
       approvalRequired,
+      approveAllowance,
+      deposit,
+      depositing,
 
       Goals,
       TOKENS,
       // computed
       tokens,
       appNetworkConfig,
-      hasAmounts,
-      requireApproval,
-      tokenWeights,
-      tokenBalance,
       amountRules,
-      total,
       isWalletReady,
       toggleWalletSelectModal,
-      formatBalance,
-      amountUSD,
       isRequired,
-      hasZeroBalance,
       // methods
       submit,
-      approveAllowance,
       fNum,
       trackGoal,
-      tokenDecimals,
       farmUser,
-      lpBalance,
+      bptBalance,
       modelValue: ''
     };
   }

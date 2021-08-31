@@ -5,6 +5,7 @@ import { default as abi, default as erc20Abi } from '@/lib/abi/ERC20.json';
 import { TransactionResponse, Web3Provider } from '@ethersproject/providers';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { BigNumber } from '@ethersproject/bignumber';
+import { MaxUint256 } from '@ethersproject/constants';
 
 export default class Erc20 {
   service: Service;
@@ -35,7 +36,7 @@ export default class Erc20 {
     web3: Web3Provider,
     spender: string,
     token: string,
-    amount: string
+    amount: string = MaxUint256.toString()
   ): Promise<TransactionResponse> {
     return sendTransaction(web3, token, abi, 'approve', [spender, amount]);
   }
