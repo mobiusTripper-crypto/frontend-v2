@@ -2,13 +2,44 @@
   <div class="lg:container lg:mx-auto pt-8">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8">
       <div class="col-span-2">
-        <BalLoadingBlock v-if="loading" class="h-16" />
+        <BalLoadingBlock v-if="loadingPool" class="h-16" />
         <div v-else class="px-4 lg:px-0 flex flex-col">
           <div class="flex flex-wrap items-center -mt-2">
-            <h3 class="pool-title">Farm - {{ pool?.name }}</h3>
+            <h3 class="pool-title">
+              {{ pool?.name }}
+            </h3>
+            <div
+              v-for="([address, tokenMeta], i) in titleTokens"
+              :key="i"
+              class="mt-2 mr-2 flex items-center px-2 h-10 bg-gray-50 dark:bg-gray-850 rounded-lg"
+            >
+              <BalAsset :address="address" :size="24" />
+              <span class="ml-2">
+                {{ tokenMeta.symbol }}
+              </span>
+              <span
+                v-if="!isStableLikePool"
+                class="font-medium text-gray-400 text-xs mt-px ml-1"
+              >
+                {{ fNum(tokenMeta.weight, 'percent_lg') }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
+
+      <!--      <div class="col-span-2 order-2 lg:order-1">-->
+      <!--        <div class="grid grid-cols-1 gap-y-8">-->
+      <!--          <div class="mb-4 px-1 lg:px-0">-->
+      <!--            <FarmStatCards-->
+      <!--              :pool="pool"-->
+      <!--              :farm="farm"-->
+      <!--              :staked="staked"-->
+      <!--              :loading="loading"-->
+      <!--            />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
 
       <div class="hidden lg:block" />
 
@@ -50,6 +81,7 @@ import useFarmQuery from '@/composables/queries/useFarmQuery';
 import FarmActionsCard from '@/components/pages/farm/FarmActionsCard.vue';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
+import { FarmStatCards } from '@/components/pages/farm';
 
 interface PoolPageData {
   id: string;
@@ -62,6 +94,7 @@ export default defineComponent({
   components: {
     ...PoolPageComponents,
     FarmActionsCard
+    // FarmStatCards
   },
 
   setup() {
@@ -169,7 +202,8 @@ export default defineComponent({
       missingPrices,
       // methods
       fNum,
-      onNewTx
+      onNewTx,
+      staked: farmUser?.value?.amount
     };
   }
 });

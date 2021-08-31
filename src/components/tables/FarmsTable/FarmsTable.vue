@@ -69,6 +69,7 @@ import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isStableLike } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
+import useFarmStats from '@/composables/farms/useFarmStats';
 
 export default defineComponent({
   components: {
