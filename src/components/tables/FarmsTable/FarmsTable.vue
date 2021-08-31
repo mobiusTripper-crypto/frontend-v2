@@ -10,7 +10,6 @@
       :columns="columns"
       :data="data"
       :is-loading="isLoading"
-      :is-loading-more="isLoadingMore"
       skeleton-class="h-64"
       sticky="both"
       :square="upToLargeBreakpoint"
@@ -19,10 +18,9 @@
         getParams: farm => ({ id: farm.id, poolId: farm.pool?.id })
       }"
       :on-row-click="handleRowClick"
-      :is-paginated="isPaginated"
       @load-more="$emit('loadMore')"
       :initial-state="{
-        sortColumn: 'poolValue',
+        sortColumn: 'tvl',
         sortDirection: 'desc'
       }"
     >
@@ -52,13 +50,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
 import {
   DecoratedPool,
   DecoratedPoolWithShares,
   FarmWithPool,
+  FarmWithStatsAndPool,
   PoolToken
 } from '@/services/balancer/subgraph/types';
 import { getAddress } from '@ethersproject/address';
@@ -69,11 +67,11 @@ import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isStableLike } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
-import {
-  calculateApr,
-  calculateRewardsPerDay,
-  calculateTvl
-} from '@/lib/utils/farmHelper';
+import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
+import useFarmStats from '@/composables/farms/useFarmStats';
+import useFarms from '@/composables/farms/useFarms';
+import usePools from '@/composables/pools/usePools';
+import usePoolFilters from '@/composables/pools/usePoolFilters';
 
 export default defineComponent({
   components: {
@@ -83,48 +81,60 @@ export default defineComponent({
   emits: ['loadMore'],
 
   props: {
-    data: {
-      type: Array
-    },
-    isLoading: {
-      type: Boolean
-    },
-    isLoadingMore: {
-      type: Boolean,
-      default: false
-    },
-    showPoolShares: {
-      type: Boolean,
-      default: false
-    },
     noPoolsLabel: {
       type: String,
       default: 'No pools'
-    },
-    isPaginated: {
-      type: Boolean,
-      default: false
-    },
-    blocksPerDay: {
-      type: Number,
-      default: 0
-    },
-    blocksPerYear: {
-      type: Number,
-      default: 0
     }
   },
 
   setup(props) {
     const { fNum } = useNumbers();
     const router = useRouter();
-    const { t } = useI18n();
     const { trackGoal, Goals } = useFathom();
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
     const { tokens } = useTokens();
 
-    const columns = ref<ColumnDefinition<FarmWithPool>[]>([
+    const { farms, isLoadingFarms } = useFarms();
+
+    // // userFarmToken.approvedAll.value = true;
+    // console.log(userFarmToken)
+    // userFarmToken.approveAllowances()
+    const { selectedTokens } = usePoolFilters();
+
+    const { pools, isLoadingPools, isLoadingUserPools } = usePools(
+      selectedTokens
+    );
+
+    const decoratedFarms = computed(() =>
+      farms.value.length > 0 && pools.value.length > 0
+        ? farms.value.map(farm => {
+            const pool = pools.value.find(
+              pool => pool.address.toLowerCase() === farm.pair.toLowerCase()
+            );
+
+            const {
+              calculateRewardsPerDay,
+              calculateTvl,
+              calculateApr
+            } = useFarmStats({ ...farm, pool });
+            const apr = calculateApr();
+
+            return {
+              ...farm,
+              tvl: fNum(calculateTvl(), 'usd', { forcePreset: true }),
+              rewards:
+                fNum(calculateRewardsPerDay(), 'token_lg', {
+                  forcePreset: true
+                }) + ' BEETx / day',
+              apr: apr === 0 ? '' : fNum(apr, 'percent', { forcePreset: true }),
+              pool
+            };
+          })
+        : []
+    );
+
+    const columns = ref<ColumnDefinition<FarmWithStatsAndPool>[]>([
       {
         name: 'Icons',
         id: 'icons',
@@ -149,39 +159,28 @@ export default defineComponent({
           }
 
           return '';
-        }
+        },
+        sortKey: farm => farm.pool?.name
       },
       {
         name: 'TVL',
         id: 'tvl',
-        accessor: farm =>
-          fNum(calculateTvl(farm), 'usd', { forcePreset: true }),
-        sortKey: farm => calculateTvl(farm),
+        accessor: 'tvl',
+        sortKey: 'tvl',
         align: 'right'
       },
       {
         name: 'Rewards',
         id: 'rewards',
-        accessor: farm =>
-          fNum(calculateRewardsPerDay(farm, props.blocksPerDay), 'token_lg', {
-            forcePreset: true
-          }) + ' BEETx / day',
-        sortKey: farm => calculateRewardsPerDay(farm, props.blocksPerDay),
+        accessor: 'rewards',
+        sortKey: 'rewards',
         align: 'right'
       },
       {
         name: 'Farm APR',
         id: 'apr',
-        accessor: farm => {
-          const apr = calculateApr(farm, props.blocksPerYear);
-
-          if (apr === 0) {
-            return '';
-          }
-
-          return fNum(apr, 'percent', { forcePreset: true });
-        },
-        sortKey: farm => calculateApr(farm, props.blocksPerYear),
+        accessor: 'apr',
+        sortKey: 'apr',
         align: 'right'
       }
     ]);
@@ -211,6 +210,8 @@ export default defineComponent({
     return {
       // data
       columns,
+      data: decoratedFarms,
+      isLoading: isLoadingFarms || isLoadingPools || isLoadingUserPools,
 
       // computed
       darkMode,

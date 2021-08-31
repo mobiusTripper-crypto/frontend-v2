@@ -127,6 +127,12 @@ export interface FarmWithPool extends Farm {
   pool?: DecoratedPool;
 }
 
+export interface FarmWithStatsAndPool extends FarmWithPool {
+  tvl: string;
+  apr: string;
+  rewards: string;
+}
+
 export interface FarmUser {
   pendingBeetx: string;
   amount: number;
