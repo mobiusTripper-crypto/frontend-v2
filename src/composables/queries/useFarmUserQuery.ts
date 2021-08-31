@@ -1,4 +1,4 @@
-import { computed, reactive, ref, Ref } from 'vue';
+import { computed, reactive } from 'vue';
 import { useQuery } from 'vue-query';
 import { QueryObserverOptions } from 'react-query/core';
 import QUERY_KEYS from '@/constants/queryKeys';
@@ -6,10 +6,6 @@ import { farmSubgraphClient } from '@/services/balancer/subgraph/farm-subgraph.c
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import useWeb3 from '@/services/web3/useWeb3';
 import { FarmUser } from '@/services/balancer/subgraph/types';
-import { getAddress } from '@ethersproject/address';
-import { MaxUint256 } from '@ethersproject/constants';
-import { erc20ContractService } from '@/services/erc20/erc20-contracts.service';
-import { bnum } from '@/lib/utils';
 
 export default function useFarmUserQuery(
   farmId: string,

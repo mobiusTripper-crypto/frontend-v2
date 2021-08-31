@@ -16,9 +16,9 @@ export default function useAverageBlockTime() {
   const blocksPerMonth = computed(
     () => (SECONDS_PER_DAY * 30) / blocksPerSecond.value
   );
-  const blocksPerYear = computed(
-    () => (SECONDS_PER_DAY * 365) / blocksPerSecond.value
-  );
+  const blocksPerYear = computed(() => {
+    return (SECONDS_PER_DAY * 365) / blocksPerSecond.value;
+  });
 
   return {
     blocksPerSecond,

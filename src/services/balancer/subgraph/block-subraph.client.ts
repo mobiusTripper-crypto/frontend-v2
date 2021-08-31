@@ -13,7 +13,14 @@ export default class BlockSubgraphClient {
     const data = await this.getBlocks();
     const blocks = data.blocks;
 
-    return blocks?.reduce(
+    if (blocks.length === 0) {
+      console.error(
+        'Unable to retrieve the blocks, returning a default value of 2 seconds per block'
+      );
+      return 2;
+    }
+
+    return blocks.reduce(
       (previousValue, currentValue, currentIndex) => {
         if (previousValue.timestamp) {
           const difference = previousValue.timestamp - currentValue.timestamp;

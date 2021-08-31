@@ -2,7 +2,6 @@ import Service from '@/services/balancer/contracts/balancer-contracts.service';
 import ConfigService from '@/services/config/config.service';
 import { Multicaller } from '@/lib/utils/balancer/contract';
 import { default as MasterChefAbi } from '@/lib/abi/MasterChefV2.json';
-import { BigNumber } from 'ethers';
 import { BN } from 'ethereumjs-util';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { Web3Provider } from '@ethersproject/providers';
@@ -18,7 +17,7 @@ export default class MasterChef {
   public async getPendingBeetxForFarm(
     id: string,
     user: string
-  ): Promise<number> {
+  ): Promise<string> {
     let result = {} as Record<any, any>;
 
     const masterChefMultiCaller = new Multicaller(
@@ -33,7 +32,7 @@ export default class MasterChef {
     ]);
     result = await masterChefMultiCaller.execute(result);
 
-    return result.pendingBeetx;
+    return result.pendingBeetx.toString();
   }
 
   public async withdrawAndHarvest(

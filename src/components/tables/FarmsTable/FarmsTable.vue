@@ -56,10 +56,10 @@ import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import {
+  DecoratedPool,
   DecoratedPoolWithShares,
-  PoolToken,
   FarmWithPool,
-  DecoratedPool
+  PoolToken
 } from '@/services/balancer/subgraph/types';
 import { getAddress } from '@ethersproject/address';
 import useNumbers from '@/composables/useNumbers';
@@ -69,7 +69,11 @@ import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isStableLike } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
-import useFarmStats from '@/composables/farms/useFarmStats';
+import {
+  calculateApr,
+  calculateRewardsPerDay,
+  calculateTvl
+} from '@/lib/utils/farmHelper';
 
 export default defineComponent({
   components: {
@@ -118,7 +122,7 @@ export default defineComponent({
     const { trackGoal, Goals } = useFathom();
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
-    const { tokens, priceFor } = useTokens();
+    const { tokens } = useTokens();
 
     const columns = ref<ColumnDefinition<FarmWithPool>[]>([
       {
@@ -197,57 +201,6 @@ export default defineComponent({
       const sortedTokens = pool.tokens.slice();
       sortedTokens.sort((a, b) => parseFloat(b.weight) - parseFloat(a.weight));
       return sortedTokens;
-    }
-
-    function calculateTvl(farm: FarmWithPool) {
-      if (
-        farm.pool &&
-        farm.pool.totalShares !== '0' &&
-        farm.slpBalance !== '0'
-      ) {
-        const valuePerShare =
-          parseFloat(farm.pool.totalLiquidity) /
-          parseFloat(farm.pool.totalShares);
-
-        return Number(parseInt(farm.slpBalance) / 1e18) * valuePerShare;
-      }
-
-      const address = getAddress(farm.pair);
-      const price = priceFor(address);
-
-      if (tokens.value[address] && price) {
-        return Number(parseInt(farm.slpBalance) / 1e18) * price;
-      }
-
-      return 0;
-    }
-
-    function calculateRewardsPerDay(farm: FarmWithPool, blocksPerDay: number) {
-      //TODO: load the beetxPerBlock from a subgraph
-      const totalBeetxPerDay = 3 * blocksPerDay;
-
-      return (
-        (farm.allocPoint / farm.masterChef.totalAllocPoint) * totalBeetxPerDay
-      );
-    }
-
-    function calculateApr(farm: FarmWithPool, blocksPerYear: number) {
-      const tvl = calculateTvl(farm);
-      if (tvl === 0) {
-        return 0;
-      }
-
-      //TODO: load the beetxPrice from a subgraph
-      const beetxPrice = 0.01;
-      const beetxPerBlock = Number(
-        parseInt(farm.masterChef.beetxPerBlock) / 1e18
-      );
-      const beetxPerYear = beetxPerBlock * blocksPerYear;
-      const farmBeetxPerYear =
-        (farm.allocPoint / farm.masterChef.totalAllocPoint) * beetxPerYear;
-      const valuePerYear = beetxPrice * farmBeetxPerYear;
-
-      return valuePerYear / tvl;
     }
 
     function handleRowClick(pool: DecoratedPoolWithShares) {

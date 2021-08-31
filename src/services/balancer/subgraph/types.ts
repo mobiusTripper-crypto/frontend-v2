@@ -1,3 +1,5 @@
+import { BigNumber } from 'bignumber.js';
+
 export type QueryArgs = Record<string, any>;
 export type QueryAttrs = Record<string, any>;
 export type QueryBuilder = (
@@ -126,7 +128,7 @@ export interface FarmWithPool extends Farm {
 }
 
 export interface FarmUser {
-  pendingBeetx: number;
+  pendingBeetx: string;
   amount: number;
   rewardDebt: number;
   beetxHarvested: number;

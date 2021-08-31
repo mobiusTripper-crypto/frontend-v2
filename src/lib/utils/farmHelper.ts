@@ -34,9 +34,12 @@ export function calculateRewardsPerDay(
 
 export function calculateApr(farm: FarmWithPool, blocksPerYear: number) {
   const tvl = calculateTvl(farm);
+
   if (tvl === 0) {
     return 0;
   }
+
+  console.log('inside apr', blocksPerYear);
 
   //TODO: load the beetxPrice from a subgraph
   const beetxPrice = 0.01;
@@ -48,9 +51,3 @@ export function calculateApr(farm: FarmWithPool, blocksPerYear: number) {
 
   return valuePerYear / tvl;
 }
-
-export default {
-  calculateApr,
-  calculateTvl,
-  calculateRewardsPerDay
-};

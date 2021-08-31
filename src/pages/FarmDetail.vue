@@ -2,7 +2,7 @@
   <div class="lg:container lg:mx-auto pt-8">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8">
       <div class="col-span-2">
-        <BalLoadingBlock v-if="loadingPool" class="h-16" />
+        <BalLoadingBlock v-if="loading" class="h-16" />
         <div v-else class="px-4 lg:px-0 flex flex-col">
           <div class="flex flex-wrap items-center -mt-2">
             <h3 class="pool-title">
@@ -28,23 +28,19 @@
         </div>
       </div>
 
-      <!--      <div class="col-span-2 order-2 lg:order-1">-->
-      <!--        <div class="grid grid-cols-1 gap-y-8">-->
-      <!--          <div class="mb-4 px-1 lg:px-0">-->
-      <!--            <FarmStatCards-->
-      <!--              :pool="pool"-->
-      <!--              :farm="farm"-->
-      <!--              :staked="staked"-->
-      <!--              :loading="loading"-->
-      <!--            />-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-
       <div class="hidden lg:block" />
 
       <div class="col-span-2 order-2 lg:order-1">
-        <div class="grid grid-cols-1 gap-y-8"></div>
+        <div class="grid grid-cols-1 gap-y-8">
+          <div class="mb-4 px-1 lg:px-0">
+            <FarmStatCards
+              :farm="{ ...farm, pool }"
+              :farmUser="farmUser"
+              :staked="staked"
+              :loading="loading"
+            />
+          </div>
+        </div>
       </div>
 
       <div class="order-1 lg:order-2 px-1 lg:px-0">
@@ -82,6 +78,7 @@ import FarmActionsCard from '@/components/pages/farm/FarmActionsCard.vue';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 import { FarmStatCards } from '@/components/pages/farm';
+import { usePool } from '@/composables/usePool';
 
 interface PoolPageData {
   id: string;
@@ -93,8 +90,8 @@ const REFETCH_QUERIES_BLOCK_BUFFER = 3;
 export default defineComponent({
   components: {
     ...PoolPageComponents,
-    FarmActionsCard
-    // FarmStatCards
+    FarmActionsCard,
+    FarmStatCards
   },
 
   setup() {
@@ -130,6 +127,7 @@ export default defineComponent({
      * COMPUTED
      */
     const pool = computed(() => poolQuery.data.value);
+    const { isStableLikePool } = usePool(poolQuery.data);
     const farm = computed(() => farmQuery.data.value);
     const farmUser = computed(() => {
       return farmUserQuery.data.value;
@@ -200,6 +198,7 @@ export default defineComponent({
       titleTokens,
       isWalletReady,
       missingPrices,
+      isStableLikePool,
       // methods
       fNum,
       onNewTx,
