@@ -55,6 +55,9 @@
         />
       </div>
     </div>
+    <BalCard :no-border="!darkMode">
+      <BalBtn @click="harvestAll" label="Harvest" block />
+    </BalCard>
   </div>
 </template>
 
@@ -79,6 +82,9 @@ import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 import { FarmStatCards } from '@/components/pages/farm';
 import { usePool } from '@/composables/usePool';
+import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
+import BalCard from '@/components/_global/BalCard/BalCard.vue';
+import useFarm from '@/composables/farms/useFarm';
 
 interface PoolPageData {
   id: string;
@@ -89,9 +95,11 @@ const REFETCH_QUERIES_BLOCK_BUFFER = 3;
 
 export default defineComponent({
   components: {
+    BalBtn,
     ...PoolPageComponents,
     FarmActionsCard,
     FarmStatCards
+    // BalCard
   },
 
   setup() {
@@ -133,6 +141,8 @@ export default defineComponent({
       return farmUserQuery.data.value;
     });
 
+    const { harvest } = useFarm(farm);
+
     const loading = computed(
       () =>
         poolQuery.isLoading.value ||
@@ -170,6 +180,10 @@ export default defineComponent({
         blockNumber.value + REFETCH_QUERIES_BLOCK_BUFFER;
     }
 
+    function harvestAll() {
+      harvest();
+    }
+
     /**
      * WATCHERS
      */
@@ -202,7 +216,8 @@ export default defineComponent({
       // methods
       fNum,
       onNewTx,
-      staked: farmUser?.value?.amount
+      staked: farmUser?.value?.amount,
+      harvestAll
     };
   }
 });
