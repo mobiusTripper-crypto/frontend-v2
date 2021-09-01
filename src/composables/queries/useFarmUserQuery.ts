@@ -6,33 +6,42 @@ import { farmSubgraphClient } from '@/services/balancer/subgraph/farm-subgraph.c
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import useWeb3 from '@/services/web3/useWeb3';
 import { FarmUser } from '@/services/balancer/subgraph/types';
+import useApp from '@/composables/useApp';
 
 export default function useFarmUserQuery(
   farmId: string,
   options: QueryObserverOptions<FarmUser> = {}
 ) {
-  const { account, isWalletReady, appNetworkConfig } = useWeb3();
-  const enabled = computed(() => isWalletReady.value && account.value != null);
+  const { account, isWalletReady } = useWeb3();
+  const { appLoading } = useApp();
+  const enabled = computed(
+    () => isWalletReady.value && account.value != null && !appLoading.value
+  );
   const queryKey = QUERY_KEYS.Farms.User(farmId, account);
 
   const queryFn = async () => {
-    const userData = await farmSubgraphClient.getUserDataForFarm(
-      farmId,
-      account.value
-    );
-    const pendingBeetx = await masterChefContractsService.masterChef.getPendingBeetxForFarm(
-      farmId,
-      account.value
-    );
+    try {
+      const userData = await farmSubgraphClient.getUserDataForFarm(
+        farmId,
+        account.value
+      );
+      const pendingBeetx = await masterChefContractsService.masterChef.getPendingBeetxForFarm(
+        farmId,
+        account.value
+      );
 
-    return {
-      ...userData,
-      pendingBeetx
-    };
+      return {
+        ...userData,
+        pendingBeetx
+      };
+    } catch (e) {
+      console.log('ERROR', e);
+    }
   };
 
   const queryOptions = reactive({
     enabled,
+    refetchInterval: 3000,
     ...options
   });
 

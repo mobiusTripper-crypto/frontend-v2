@@ -33,12 +33,8 @@
       <div class="col-span-2 order-2 lg:order-1">
         <div class="grid grid-cols-1 gap-y-8">
           <div class="mb-4 px-1 lg:px-0">
-            <FarmStatCards
-              :farm="{ ...farm, pool }"
-              :farmUser="farmUser"
-              :staked="staked"
-              :loading="loading"
-            />
+            <FarmStatCardsLoading v-if="loading" />
+            <FarmStatCards v-else :farm="{ ...farm, pool }" />
           </div>
         </div>
       </div>
@@ -55,36 +51,27 @@
         />
       </div>
     </div>
-    <BalCard :no-border="!darkMode">
-      <BalBtn @click="harvestAll" label="Harvest" block />
-    </BalCard>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs, watch } from 'vue';
 import * as PoolPageComponents from '@/components/pages/pool';
-import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { useQueryClient } from 'vue-query';
 import useNumbers from '@/composables/useNumbers';
 import usePoolQuery from '@/composables/queries/usePoolQuery';
-import usePoolSnapshotsQuery from '@/composables/queries/usePoolSnapshotsQuery';
 import { POOLS_ROOT_KEY } from '@/constants/queryKeys';
-import { POOLS } from '@/constants/pools';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useApp from '@/composables/useApp';
 import useFarmQuery from '@/composables/queries/useFarmQuery';
 import FarmActionsCard from '@/components/pages/farm/FarmActionsCard.vue';
-import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
-import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 import { FarmStatCards } from '@/components/pages/farm';
 import { usePool } from '@/composables/usePool';
-import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
-import BalCard from '@/components/_global/BalCard/BalCard.vue';
 import useFarm from '@/composables/farms/useFarm';
+import FarmStatCardsLoading from '@/components/pages/farm/FarmStatCardsLoading.vue';
 
 interface PoolPageData {
   id: string;
@@ -95,11 +82,10 @@ const REFETCH_QUERIES_BLOCK_BUFFER = 3;
 
 export default defineComponent({
   components: {
-    BalBtn,
+    FarmStatCardsLoading,
     ...PoolPageComponents,
     FarmActionsCard,
     FarmStatCards
-    // BalCard
   },
 
   setup() {
@@ -108,7 +94,6 @@ export default defineComponent({
      */
     const { appLoading } = useApp();
     const router = useRouter();
-    const { t } = useI18n();
     const route = useRoute();
     const { fNum } = useNumbers();
     const { isWalletReady } = useWeb3();
@@ -121,7 +106,6 @@ export default defineComponent({
      */
     const farmQuery = useFarmQuery(route.params.id as string);
     const poolQuery = usePoolQuery(route.params.poolId as string);
-    const farmUserQuery = useFarmUserQuery(route.params.id as string);
 
     /**
      * STATE
@@ -137,9 +121,6 @@ export default defineComponent({
     const pool = computed(() => poolQuery.data.value);
     const { isStableLikePool } = usePool(poolQuery.data);
     const farm = computed(() => farmQuery.data.value);
-    const farmUser = computed(() => {
-      return farmUserQuery.data.value;
-    });
 
     const { harvest } = useFarm(farm);
 
@@ -207,7 +188,6 @@ export default defineComponent({
       appLoading,
       pool,
       farm,
-      farmUser,
       loading,
       titleTokens,
       isWalletReady,
@@ -216,7 +196,6 @@ export default defineComponent({
       // methods
       fNum,
       onNewTx,
-      staked: farmUser?.value?.amount,
       harvestAll
     };
   }

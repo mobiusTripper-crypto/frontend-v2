@@ -25,7 +25,6 @@ export default class MasterChef {
       this.service.provider,
       MasterChefAbi
     );
-
     masterChefMultiCaller.call('pendingBeetx', this.address, 'pendingBeetx', [
       id,
       getAddress(user)

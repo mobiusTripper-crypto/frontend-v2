@@ -51,7 +51,7 @@
           :loading-label="$t('approving')"
           :disabled="!validInput || amount === '0' || amount === ''"
           block
-          @click.prevent="approve"
+          @click.prevent="approveToken"
         />
         <template v-else>
           <BalBtn
@@ -143,18 +143,13 @@ export default defineComponent({
     } = useWeb3();
     const { fNum } = useNumbers();
     const { t } = useI18n();
-    const { tokens, balances: allBalances, balanceFor } = useTokens();
+    const { tokens, balanceFor } = useTokens();
     const { trackGoal, Goals } = useFathom();
     const { amount } = toRefs(data);
     const depositing = ref(false);
+    const approving = ref(false);
 
-    const {
-      approve,
-      approving,
-      approvedAll,
-      checkAllowanceAndApprove,
-      deposit
-    } = useFarm(toRef(props, 'farm'));
+    const { approve, deposit } = useFarm(toRef(props, 'farm'));
 
     const approvalRequiredQuery = useApprovalRequiredQuery(props.farm.pair);
     const bptBalance = computed(() => balanceFor(getAddress(props.farm.pair)));
@@ -168,6 +163,28 @@ export default defineComponent({
             isLessThanOrEqualTo(Number(bptBalance.value), t('exceedsBalance'))
           ]
         : [isPositive()];
+    }
+
+    async function approveToken(): Promise<void> {
+      if (!data.depositForm.validate()) return;
+
+      approving.value = true;
+      const tx = await approve();
+
+      if (!tx) {
+        approving.value = false;
+        return;
+      }
+
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          data.amount = '';
+          approving.value = false;
+        },
+        onTxFailed: () => {
+          approving.value = false;
+        }
+      });
     }
 
     async function submit(): Promise<void> {
@@ -228,10 +245,10 @@ export default defineComponent({
       // data
       ...toRefs(data),
 
-      approving,
       approvalRequired,
-      approve,
+      approveToken,
       depositing,
+      approving,
 
       Goals,
       TOKENS,

@@ -1,6 +1,5 @@
 import { ref, Ref } from 'vue';
 import useWeb3 from '@/services/web3/useWeb3';
-import useEthers from '@/composables/useEthers';
 import useTransactions from '../useTransactions';
 import { TransactionResponse, Web3Provider } from '@ethersproject/providers';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
@@ -23,14 +22,7 @@ export async function approveToken(
 
 export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
   const { getProvider, appNetworkConfig, account } = useWeb3();
-  const { txListener } = useEthers();
   const { addTransaction } = useTransactions();
-
-  const approving = ref(false);
-  const approvedAll = ref(false);
-  const harvesting = ref(false);
-
-  const provider = getProvider();
   const tokenAddress = farm.value?.pair || '';
   const farmId = farm.value?.id || '';
 
@@ -48,10 +40,9 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
     return allowance.lt(amount.value);
   }
 
-  async function approve(): Promise<void> {
+  async function approve() {
     try {
-      approving.value = true;
-
+      const provider = getProvider();
       const tx = await erc20ContractService.erc20.approveToken(
         provider,
         appNetworkConfig.addresses.masterChef,
@@ -69,16 +60,8 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
         }
       });
 
-      txListener(tx, {
-        onTxConfirmed: async () => {
-          approving.value = false;
-        },
-        onTxFailed: () => {
-          approving.value = false;
-        }
-      });
+      return tx;
     } catch (error) {
-      approving.value = false;
       console.error(error);
     }
   }
@@ -91,6 +74,7 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
 
   async function deposit(amount: BigNumber) {
     try {
+      const provider = getProvider();
       const tx = await masterChefContractsService.masterChef.deposit(
         provider,
         farmId,
@@ -117,7 +101,7 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
 
   async function harvest() {
     try {
-      harvesting.value = true;
+      const provider = getProvider();
       const tx = await masterChefContractsService.masterChef.harvest(
         provider,
         farmId,
@@ -135,22 +119,15 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
         }
       });
 
-      txListener(tx, {
-        onTxConfirmed: async () => {
-          harvesting.value = false;
-        },
-        onTxFailed: () => {
-          harvesting.value = false;
-        }
-      });
+      return tx;
     } catch (error) {
-      harvesting.value = false;
       console.error(error);
     }
   }
 
   async function withdrawAndHarvest(amount: BigNumber) {
     try {
+      const provider = getProvider();
       const tx = await masterChefContractsService.masterChef.withdrawAndHarvest(
         provider,
         farmId,
@@ -176,14 +153,11 @@ export default function useFarm(farm: Ref<Farm> | Ref<undefined>) {
   }
 
   return {
-    approving,
-    approvedAll,
     requiresApproval,
     approve,
     checkAllowanceAndApprove,
     deposit,
     harvest,
-    withdrawAndHarvest,
-    harvesting
+    withdrawAndHarvest
   };
 }
