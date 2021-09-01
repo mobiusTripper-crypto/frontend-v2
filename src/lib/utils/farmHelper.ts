@@ -6,8 +6,6 @@ import BigNumber from 'bignumber.js';
 export function calculateTvl(farm: FarmWithPool) {
   const { tokens, priceFor } = useTokens();
 
-  console.log('tvl', farm.pool?.totalShares, farm.slpBalance);
-
   if (farm.pool && farm.pool.totalShares !== '0' && farm.slpBalance !== '0') {
     const valuePerShare =
       parseFloat(farm.pool.totalLiquidity) / parseFloat(farm.pool.totalShares);
@@ -45,8 +43,6 @@ export function calculateApr(farm: FarmWithPool, blocksPerYear: number) {
   if (tvl === 0) {
     return 0;
   }
-
-  console.log('inside apr', blocksPerYear);
 
   //TODO: load the beetxPrice from a subgraph
   const beetxPrice = 0.01;
