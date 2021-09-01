@@ -67,11 +67,15 @@ import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isStableLike } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
-import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
-import useFarmStats from '@/composables/farms/useFarmStats';
+import {
+  calculateApr,
+  calculateRewardsPerDay,
+  calculateTvl
+} from '@/lib/utils/farmHelper';
 import useFarms from '@/composables/farms/useFarms';
 import usePools from '@/composables/pools/usePools';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
+import useAverageBlockTime from '@/composables/useAverageBlockTime';
 
 export default defineComponent({
   components: {
@@ -106,27 +110,30 @@ export default defineComponent({
       selectedTokens
     );
 
+    const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
+
     const decoratedFarms = computed(() =>
       farms.value.length > 0 && pools.value.length > 0
         ? farms.value.map(farm => {
             const pool = pools.value.find(
               pool => pool.address.toLowerCase() === farm.pair.toLowerCase()
             );
-
-            const {
-              calculateRewardsPerDay,
-              calculateTvl,
-              calculateApr
-            } = useFarmStats({ ...farm, pool });
-            const apr = calculateApr();
+            const farmWithPool = { ...farm, pool };
+            const apr = calculateApr(farmWithPool, blocksPerYear.value);
 
             return {
               ...farm,
-              tvl: fNum(calculateTvl(), 'usd', { forcePreset: true }),
+              tvl: fNum(calculateTvl(farmWithPool), 'usd', {
+                forcePreset: true
+              }),
               rewards:
-                fNum(calculateRewardsPerDay(), 'token_lg', {
-                  forcePreset: true
-                }) + ' BEETx / day',
+                fNum(
+                  calculateRewardsPerDay(farmWithPool, blocksPerDay.value),
+                  'token_lg',
+                  {
+                    forcePreset: true
+                  }
+                ) + ' BEETx / day',
               apr: apr === 0 ? '' : fNum(apr, 'percent', { forcePreset: true }),
               pool
             };

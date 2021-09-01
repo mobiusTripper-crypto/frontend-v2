@@ -1,9 +1,12 @@
 import { FarmWithPool } from '@/services/balancer/subgraph/types';
 import { getAddress } from '@ethersproject/address';
 import useTokens from '@/composables/useTokens';
+import BigNumber from 'bignumber.js';
 
 export function calculateTvl(farm: FarmWithPool) {
   const { tokens, priceFor } = useTokens();
+
+  console.log('tvl', farm.pool?.totalShares, farm.slpBalance);
 
   if (farm.pool && farm.pool.totalShares !== '0' && farm.slpBalance !== '0') {
     const valuePerShare =
@@ -26,10 +29,14 @@ export function calculateRewardsPerDay(
   farm: FarmWithPool,
   blocksPerDay: number
 ) {
-  //TODO: load the beetxPerBlock from a subgraph
-  const totalBeetxPerDay = 3 * blocksPerDay;
+  const totalBeetxPerDay = new BigNumber(
+    farm.masterChef.beetxPerBlock
+  ).multipliedBy(blocksPerDay);
 
-  return (farm.allocPoint / farm.masterChef.totalAllocPoint) * totalBeetxPerDay;
+  return totalBeetxPerDay
+    .multipliedBy(farm.allocPoint / farm.masterChef.totalAllocPoint)
+    .dividedBy(1e18)
+    .toNumber();
 }
 
 export function calculateApr(farm: FarmWithPool, blocksPerYear: number) {
