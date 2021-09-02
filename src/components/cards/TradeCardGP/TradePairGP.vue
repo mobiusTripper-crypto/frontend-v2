@@ -24,7 +24,7 @@
     >
       <template v-slot:prepend>
         <div
-          class="flex items-center w-28 h-full cursor-pointer"
+          class="flex items-center w-32 h-full cursor-pointer"
           @click="openModalSelectToken('input')"
         >
           <BalAsset
@@ -32,7 +32,7 @@
             :address="tokenInAddressInput"
             :size="28"
           />
-          <div class="flex flex-col ml-3 w-14 leading-none truncate">
+          <div class="flex flex-col ml-3 w-24 leading-none truncate">
             <BalTooltip v-if="tokenInSymbol.length > 5">
               <template v-slot:activator>
                 <span class="font-bold">
@@ -101,7 +101,7 @@
     >
       <template v-slot:prepend>
         <div
-          class="flex items-center w-28 h-full cursor-pointer"
+          class="flex items-center w-32 h-full cursor-pointer"
           @click="openModalSelectToken('output')"
         >
           <BalAsset
@@ -109,7 +109,7 @@
             :address="tokenOutAddressInput"
             :size="28"
           />
-          <div class="flex flex-col ml-3 w-14 leading-none truncate">
+          <div class="flex flex-col ml-3 w-24 leading-none truncate">
             <BalTooltip v-if="tokenOutSymbol.length > 5">
               <template v-slot:activator>
                 <span class="font-semibold">
