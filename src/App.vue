@@ -6,8 +6,8 @@
     <div class="pb-12">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
-    <!--    <AppFooterNav v-if="upToLargeBreakpoint" />
-    <BalBtn
+    <AppFooterNav v-if="upToLargeBreakpoint" />
+    <!--    <BalBtn
       v-else
       id="intercom-activator"
       circle
@@ -44,6 +44,7 @@ import { DEFAULT_TOKEN_DECIMALS } from './constants/tokens';
 import Notifications from '@/components/notifications/Notifications.vue';
 import useBreakpoints from './composables/useBreakpoints';
 import { tryPromiseWithTimeout } from './lib/utils/promise';
+import AppFooterNav from '@/components/navs/AppFooterNav/AppFooterNav.vue';
 
 BigNumber.config({ DECIMAL_PLACES: DEFAULT_TOKEN_DECIMALS });
 
@@ -64,7 +65,7 @@ const isGnosisSafeApp = async (): Promise<boolean> => {
 export default defineComponent({
   components: {
     AppNav,
-    //AppFooterNav,
+    AppFooterNav,
     AppHero,
     VueQueryDevTools,
     WalletSelectModal,

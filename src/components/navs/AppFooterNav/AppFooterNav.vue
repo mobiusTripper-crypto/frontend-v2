@@ -8,7 +8,7 @@
         <AppNavToggle darkModeBg="700" />
       </div>
       <div class="w-1/3 flex justify-end pr-2">
-        <IntercomToggle circle />
+        <!--        <IntercomToggle circle />-->
       </div>
     </div>
   </div>
@@ -25,8 +25,8 @@ export default defineComponent({
 
   components: {
     AppNavToggle,
-    DarkModeToggle,
-    IntercomToggle
+    DarkModeToggle
+    //IntercomToggle
   }
 });
 </script>
