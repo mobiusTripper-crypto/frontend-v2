@@ -4,10 +4,6 @@
       <h3 class="mb-3">Farms</h3>
     </div>
     <FarmsTable
-      :isLoading="isLoadingPools || isLoadingFarms"
-      :data="decoratedFarms"
-      :blocksPerDay="blocksPerDay"
-      :blocksPerYear="blocksPerYear"
       noPoolsLabel="No farms found"
       :isPaginated="false"
       :isLoadingMore="false"

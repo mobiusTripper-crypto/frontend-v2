@@ -19,10 +19,6 @@
       }"
       :on-row-click="handleRowClick"
       @load-more="$emit('loadMore')"
-      :initial-state="{
-        sortColumn: 'tvl',
-        sortDirection: 'desc'
-      }"
     >
       <template v-slot:iconColumnHeader>
         <div class="flex items-center">
@@ -50,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import {
   DecoratedPool,
@@ -76,6 +72,7 @@ import useFarms from '@/composables/farms/useFarms';
 import usePools from '@/composables/pools/usePools';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
+import useWeb3 from '@/services/web3/useWeb3';
 
 export default defineComponent({
   components: {
@@ -98,19 +95,13 @@ export default defineComponent({
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
     const { tokens } = useTokens();
-
+    const { isWalletReady } = useWeb3();
     const { farms, isLoadingFarms } = useFarms();
-
-    // // userFarmToken.approvedAll.value = true;
-    // console.log(userFarmToken)
-    // userFarmToken.approveAllowances()
     const { selectedTokens } = usePoolFilters();
-
+    const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
     const { pools, isLoadingPools, isLoadingUserPools } = usePools(
       selectedTokens
     );
-
-    const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
 
     const decoratedFarms = computed(() =>
       farms.value.length > 0 && pools.value.length > 0
@@ -214,11 +205,19 @@ export default defineComponent({
       router.push({ name: 'farm-detail', params: { id: pool.id } });
     }
 
+    const isLoading = computed(
+      () =>
+        !isWalletReady.value ||
+        isLoadingFarms.value ||
+        isLoadingPools.value ||
+        isLoadingUserPools.value
+    );
+
     return {
       // data
       columns,
       data: decoratedFarms,
-      isLoading: isLoadingFarms || isLoadingPools || isLoadingUserPools,
+      isLoading,
 
       // computed
       darkMode,
