@@ -43,13 +43,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue';
-import WithdrawForm from '@/components/forms/pool_actions/WithdrawForm.vue';
 import SuccessOverlay from '@/components/cards/SuccessOverlay.vue';
 import { useI18n } from 'vue-i18n';
 import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
 import FarmDepositForm from '@/components/forms/farm_actions/FarmDepositForm.vue';
-import { Farm, FarmUser, FullPool } from '@/services/balancer/subgraph/types';
+import { Farm, FullPool } from '@/services/balancer/subgraph/types';
 import FarmWithdrawForm from '@/components/forms/farm_actions/FarmWithdrawForm.vue';
 
 export default defineComponent({

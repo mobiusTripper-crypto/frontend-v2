@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, computed } from 'vue';
+import { computed, defineComponent, onBeforeMount } from 'vue';
 import { VueQueryDevTools } from 'vue-query/devtools';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
@@ -38,7 +38,6 @@ import useDarkMode from './composables/useDarkMode';
 import useWeb3Watchers from '@/composables/useWeb3Watchers';
 import AppNav from '@/components/navs/AppNav/AppNav.vue';
 import AppHero from '@/components/heros/AppHero.vue';
-import AppFooterNav from '@/components/navs/AppFooterNav/AppFooterNav.vue';
 import WalletSelectModal from '@/components/web3/WalletSelectModal.vue';
 import useWeb3 from '@/services/web3/useWeb3';
 import { DEFAULT_TOKEN_DECIMALS } from './constants/tokens';

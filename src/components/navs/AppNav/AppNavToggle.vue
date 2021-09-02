@@ -38,7 +38,6 @@ import useFathom from '@/composables/useFathom';
 import { computed, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { EXTERNAL_LINKS } from '@/constants/links';
-import BalIcon from '@/components/_global/BalIcon/BalIcon.vue';
 
 export default defineComponent({
   name: 'AppNavToggle',

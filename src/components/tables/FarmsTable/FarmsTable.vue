@@ -91,7 +91,7 @@ export default defineComponent({
     }
   },
 
-  setup(props) {
+  setup() {
     const { fNum } = useNumbers();
     const router = useRouter();
     const { trackGoal, Goals } = useFathom();

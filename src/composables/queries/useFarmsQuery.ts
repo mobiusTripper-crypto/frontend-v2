@@ -15,8 +15,6 @@ export default function useFarmsQuery(
   options: UseInfiniteQueryOptions<FarmsQueryResponse> = {}
 ) {
   // COMPOSABLES
-  //const { injectTokens, dynamicDataLoading, prices } = useTokens();
-  //const { currency } = useUserSettings();
   const { appLoading } = useApp();
 
   // DATA
@@ -26,19 +24,8 @@ export default function useFarmsQuery(
   const enabled = computed(() => !appLoading.value);
 
   // METHODS
-  const queryFn = async ({ pageParam = 0 }) => {
+  const queryFn = async () => {
     const data = await farmSubgraphClient.getFarms();
-
-    /*const tokens = flatten(pools.map(pool => pool.tokensList));
-    await injectTokens(tokens);
-    await forChange(dynamicDataLoading, false);
-
-    const decoratedPools = await balancerSubgraphService.pools.decorate(
-      pools,
-      '24h',
-      prices.value,
-      currency.value
-    );*/
 
     return {
       farms: data.farms

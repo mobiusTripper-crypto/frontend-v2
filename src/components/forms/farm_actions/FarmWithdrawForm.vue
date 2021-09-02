@@ -88,7 +88,6 @@ import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useFarm from '@/composables/farms/useFarm';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
-import useApprovalRequiredQuery from '@/composables/queries/useApprovalRequiredQuery';
 import { BigNumber } from 'bignumber.js';
 import useEthers from '@/composables/useEthers';
 
@@ -123,7 +122,7 @@ export default defineComponent({
     const { isWalletReady, account, toggleWalletSelectModal } = useWeb3();
     const withdrawing = ref(false);
     const { t } = useI18n();
-    const { tokens, balanceFor } = useTokens();
+    const { tokens } = useTokens();
     const { trackGoal, Goals } = useFathom();
     const { amount } = toRefs(data);
     const { withdrawAndHarvest } = useFarm(toRef(props, 'farm'));
