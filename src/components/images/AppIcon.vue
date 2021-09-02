@@ -1,11 +1,16 @@
 <template>
   <img
     v-if="darkMode"
-    src="~@/assets/images/beetx-logo.png"
-    width="30"
+    src="~@/assets/images/beethovenx-logo-dark.svg"
+    width="200"
     class="mr-2"
   />
-  <img v-else src="~@/assets/images/beetx-logo.png" width="30" class="mr-2" />
+  <img
+    v-else
+    src="~@/assets/images/beethovenx-logo.svg"
+    width="200"
+    class="mr-2"
+  />
 </template>
 
 <script lang="ts">

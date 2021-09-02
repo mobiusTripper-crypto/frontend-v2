@@ -1,10 +1,10 @@
 {
-  "short_name": "Balancer",
-  "name": "Balancer",
-  "description": "Swap tokens and manage your assets on Balancer Protocol",
+  "short_name": "Beethovenx",
+  "name": "Beethovenx",
+  "description": "Swap tokens and manage your assets on Beethovenx Protocol",
   "providedBy": {
-    "name": "Balancer Labs",
-    "url": "https://balancer.fi"
+    "name": "Beethovenx Labs",
+    "url": "https://beethovenx.io"
   },
   "icons": [
     {

@@ -1,6 +1,6 @@
 <template>
   <div :class="['app-hero', classes]">
-    <div class="w-full max-w-2xl mx-auto">
+    <div class="w-full max-w-3xl mx-auto">
       <template v-if="isWalletReady">
         <!--<h1
           v-text="$t('myInvestments')"

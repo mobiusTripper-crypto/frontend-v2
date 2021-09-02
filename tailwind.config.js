@@ -31,12 +31,7 @@ module.exports = {
         '"Apple Color Emoji"',
         '"Segoe UI Emoji"'
       ],
-      display: [
-        '"Tiempos Headline Medium"',
-        'Times',
-        '"Times New Roman"',
-        'serif'
-      ]
+      display: ['"Gotham Rounded"', 'Times', '"Times New Roman"', 'serif']
     },
     boxShadow: {
       sm: '0 2px 4px 0 rgba(0,0,0,0.05)',
