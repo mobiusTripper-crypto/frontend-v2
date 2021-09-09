@@ -27,7 +27,7 @@
             <LiquidityMiningTooltip :pool="pool" class="-ml-1 mt-2" />
           </div>
           <div class="flex items-center mt-2">
-            <div v-html="poolFeeLabel" class="text-sm text-gray-600" />
+            <div v-html="poolFeeLabel" class="text-sm text-white" />
             <BalTooltip>
               <template v-slot:activator>
                 <BalLink

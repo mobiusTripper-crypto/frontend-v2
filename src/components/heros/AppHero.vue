@@ -16,10 +16,13 @@
         </span>-->
       </template>
       <template v-else>
-        <h1
-          v-text="$t('ammPlatform')"
-          class="text-white text-center text-4xl md:text-5xl pb-2"
-        />
+        <div class="flex justify-center">
+          <img
+            v-if="darkMode"
+            src="~@/assets/images/headline.svg"
+            width="400"
+          />
+        </div>
         <div class="flex justify-center mt-4">
           <BalBtn
             :color="darkMode ? 'gray' : 'white'"
@@ -105,6 +108,6 @@ export default defineComponent({
 .app-hero {
   @apply bg-cover bg-center flex items-center justify-center text-center px-4;
   transition: all 0.3s ease-in-out;
-  background-image: url('/images/backgrounds/artboard.png');
+  background-image: url('/images/backgrounds/banner-medium.svg');
 }
 </style>

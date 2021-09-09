@@ -67,7 +67,7 @@
         <span
           >Trades from ETH route through Balancer liquidity pools and incur gas
           fees.
-          <a @click="switchToWETH()" class="text-blue-500">
+          <a @click="switchToWETH()" class="text-green-500">
             Trade from WETH
           </a>
           to avoid gas.

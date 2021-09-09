@@ -9,7 +9,7 @@
       :class="[
         'flex items-center px-1 rounded-lg shadow-inner',
         {
-          'border border-blue-500 text-blue-500': !isFixedSlippage,
+          'border border-green-500 text-green-500': !isFixedSlippage,
           'border dark:border-gray-900': isFixedSlippage
         }
       ]"

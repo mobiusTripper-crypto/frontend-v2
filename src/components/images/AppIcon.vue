@@ -1,15 +1,15 @@
 <template>
   <img
     v-if="darkMode"
-    src="~@/assets/images/beethovenx-logo-dark.svg"
+    src="~@/assets/images/logo.svg"
     width="200"
-    class="mr-2"
+    class="mr-2 -ml-2"
   />
   <img
     v-else
-    src="~@/assets/images/beethovenx-logo.svg"
+    src="~@/assets/images/logo.svg"
     width="200"
-    class="mr-2"
+    class="mr-2 -ml-2"
   />
 </template>
 

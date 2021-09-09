@@ -1,14 +1,26 @@
 <template>
   <div class="lg:container lg:mx-auto pt-10 md:pt-12">
-    <div class="px-4 lg:px-0">
+    <!--    <div class="px-4 lg:px-0">
       <h3 class="mb-3">Farms</h3>
+    </div>-->
+    <div class="mt-32">
+      <h2 class="mb-3 text-center">
+        Farms coming soon. Follow us on
+        <a href="https://twitter.com/beethoven_x" class="text-green-500"
+          >Twitter</a
+        >
+        for more updates.
+      </h2>
+      <div class="flex justify-center mt-12">
+        <img src="~@/assets/images/looking-image.png" width="400" />
+      </div>
     </div>
-    <FarmsTable
+    <!--    <FarmsTable
       noPoolsLabel="No farms found"
       :isPaginated="false"
       :isLoadingMore="false"
       class="mb-8"
-    />
+    />-->
   </div>
 </template>
 
@@ -21,7 +33,7 @@ import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 
 export default defineComponent({
   components: {
-    FarmsTable
+    //FarmsTable
   },
 
   setup() {

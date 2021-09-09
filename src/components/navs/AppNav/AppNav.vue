@@ -11,7 +11,7 @@
           <AppLogo v-else />
         </router-link>
         <!--<AppNavNetworkSelect v-if="!hideNetworkSelect" />-->
-        <DarkModeToggle v-if="!upToLargeBreakpoint" class="ml-2" />
+        <!--<DarkModeToggle v-if="!upToLargeBreakpoint" class="ml-2" />-->
       </div>
 
       <div
@@ -49,7 +49,7 @@ export default defineComponent({
     AppNavToggle,
     AppNavActions,
     //AppNavNetworkSelect,
-    DarkModeToggle
+    //DarkModeToggle
   },
 
   setup() {

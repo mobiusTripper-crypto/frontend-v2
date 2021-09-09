@@ -2,7 +2,7 @@
   <div class="app-nav-footer">
     <div class="app-nav-footer-container">
       <div class="w-1/3 pl-2">
-        <DarkModeToggle circle />
+<!--        <DarkModeToggle circle />-->
       </div>
       <div class="w-1/3 flex justify-center">
         <AppNavToggle darkModeBg="700" />
@@ -24,7 +24,7 @@ export default defineComponent({
 
   components: {
     AppNavToggle,
-    DarkModeToggle
+    //DarkModeToggle
     //IntercomToggle
   }
 });

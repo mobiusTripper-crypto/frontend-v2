@@ -51,7 +51,7 @@
           <BalIcon
             :name="'chevron-down'"
             :size="'sm'"
-            class="text-blue-500 group-hover:text-pink-500"
+            class="text-green-500 group-hover:text-red-500"
           />
         </div>
       </template>
@@ -129,7 +129,7 @@
           <BalIcon
             :name="'chevron-down'"
             :size="'sm'"
-            class="text-blue-500 group-hover:text-pink-500"
+            class="text-green-500 group-hover:text-red-500"
           />
         </div>
       </template>

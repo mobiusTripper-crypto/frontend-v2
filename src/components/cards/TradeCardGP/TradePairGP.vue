@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="dark:border-b dark:border-gray-850">
+    <div class="dark:border-b dark:border-gray-500">
       <div
-        class="p-2 flex justify-between text-sm rounded-t-lg dark:bg-gray-900 border dark:border-gray-900 w-full border-b-0"
+        class="p-2 flex justify-between text-sm rounded-t-lg dark:bg-gray-900 border dark:border-gray-500 w-full border-b-0"
       >
         <div>{{ $t('send') }}</div>
         <div v-if="tokenInValue > 0" class="text-gray-500">
@@ -50,7 +50,7 @@
           <BalIcon
             :name="'chevron-down'"
             :size="'sm'"
-            class="text-blue-500 group-hover:text-pink-500"
+            class="text-green-500 group-hover:text-red-500"
           />
         </div>
       </template>
@@ -77,9 +77,9 @@
         />
       </div>
     </div>
-    <div class="dark:border-b dark:border-gray-850">
+    <div class="dark:border-b dark:border-gray-500">
       <div
-        class="p-2 flex justify-between text-sm rounded-t-lg dark:bg-gray-900 border dark:border-gray-900 w-full border-b-0"
+        class="p-2 flex justify-between text-sm rounded-t-lg dark:bg-gray-900 border dark:border-gray-500 w-full border-b-0"
       >
         <div>{{ $t('receive') }}</div>
         <div v-if="tokenOutValue > 0" class="text-gray-500">
@@ -127,7 +127,7 @@
           <BalIcon
             :name="'chevron-down'"
             :size="'sm'"
-            class="text-blue-500 group-hover:text-pink-500"
+            class="text-green-500 group-hover:text-red-500"
           />
         </div>
       </template>
