@@ -47,7 +47,7 @@ export default defineComponent({
     AppIcon,
     AppNavAlert,
     AppNavToggle,
-    AppNavActions,
+    AppNavActions
     //AppNavNetworkSelect,
     //DarkModeToggle
   },

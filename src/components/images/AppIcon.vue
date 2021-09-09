@@ -5,12 +5,7 @@
     width="200"
     class="mr-2 -ml-2"
   />
-  <img
-    v-else
-    src="~@/assets/images/logo.svg"
-    width="200"
-    class="mr-2 -ml-2"
-  />
+  <img v-else src="~@/assets/images/logo.svg" width="200" class="mr-2 -ml-2" />
 </template>
 
 <script lang="ts">
