@@ -123,7 +123,7 @@
         @update:modelValue="setTradeLiquidity"
       />
     </div>
-    <div v-if="!isPolygon && !isAvalanche" class="px-4 mt-6">
+    <!--    <div v-if="!isPolygon && !isAvalanche" class="px-4 mt-6">
       <div class="flex items-baseline">
         <span v-text="$t('transactionType')" class="font-medium mb-2" />
         <BalTooltip>
@@ -155,7 +155,7 @@
         @update:modelValue="setTradeInterface"
       />
       <div class="flex mt-1"></div>
-    </div>
+    </div>-->
     <div
       class="network mt-4 p-4 text-sm border-t dark:border-gray-900 rounded-b-xl"
     >
