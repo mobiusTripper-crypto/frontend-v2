@@ -320,7 +320,7 @@
     "totalSupply": "Total supply",
     "totalValue": "Total value",
     "totalAPR": "Total APR",
-    "trade": "Trade",
+    "trade": "Swap",
     "tradeEarns": "This trade earns you",
     "tradeLiquidity": "Trade liquidity",
     "transactionPending": "No transactions pending | {n} transaction pending | {n} transactions pending",

@@ -1,8 +1,8 @@
 <template>
   <div class="lg:container lg:mx-auto pt-10 md:pt-12">
-    <div class="px-4 lg:px-0">
+    <!--    <div class="px-4 lg:px-0">
       <h3 class="mb-3">Farms</h3>
-    </div>
+    </div>-->
     <div class="mt-32">
       <h2 class="mb-3 text-center">
         Farms coming soon. Follow us on
