@@ -29,7 +29,7 @@ export default function useDarkMode() {
   }
 
   return {
-    darkMode,
+    darkMode: { value: true },
     toggleDarkMode
   };
 }
