@@ -6,7 +6,7 @@
         <div v-else class="px-4 lg:px-0 flex flex-col">
           <div class="flex flex-wrap items-center -mt-2">
             <h3 class="pool-title">
-              {{ poolTypeLabel }}
+              {{ poolName }}
             </h3>
             <div
               v-for="([address, tokenMeta], i) in titleTokens"
@@ -241,6 +241,12 @@ export default defineComponent({
       return key ? t(key) : t('unknownPoolType');
     });
 
+    const poolName = computed(() => {
+      if (!pool.value) return '';
+
+      return pool.value.name;
+    });
+
     const poolFeeLabel = computed(() => {
       if (!pool.value) return '';
       const feeLabel = fNum(pool.value.onchain.swapFee, 'percent');
@@ -311,6 +317,7 @@ export default defineComponent({
       feesManagedByGauntlet,
       swapFeeToolTip,
       isStableLikePool,
+      poolName,
       // methods
       fNum,
       onNewTx
