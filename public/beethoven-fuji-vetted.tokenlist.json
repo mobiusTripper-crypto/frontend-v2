@@ -7,7 +7,7 @@
     "patch": 0
   },
   "tags": {},
-  "logoURI": "https://app2.acsi.finance/images/tokens/acsi.svg",
+  "logoURI": "",
   "keywords": [
     "beethoven",
     "default",
@@ -16,33 +16,25 @@
   ],
   "tokens": [
     {
-      "name": "Wrapped Avalanche",
+      "name": "Wrapped Fantom",
       "address": "0xd00ae08403b9bbb9124bb305c09058e32c39a48c",
-      "symbol": "WAVAX",
+      "symbol": "WFTM",
       "decimals": 18,
       "chainId": 43113,
-      "logoURI": "https://assets.coingecko.com/coins/images/12559/large/coin-round-red.png"
+      "logoURI": "https://assets.coingecko.com/coins/images/4001/large/Fantom.png"
     },
     {
       "name": "Chainlink",
       "address": "0x83ee4da0ac6557bd3b7439fd28c0a7ed77c73c4e",
-      "symbol": "LINK.e",
+      "symbol": "LINK",
       "decimals": 18,
       "chainId": 43113,
       "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x514910771AF9Ca656af840dff83E8264EcF986CA/logo.png"
     },
     {
-      "name": "Pangolin",
-      "address": "0x83080d4b5fc60e22dffa8d14ad3bb41dde48f199",
-      "symbol": "PNG",
-      "decimals": 18,
-      "chainId": 43113,
-      "logoURI": "https://app.pangolin.exchange/static/media/icon.adcff230.svg"
-    },
-    {
       "name": "Wrapped Bitcoin",
       "address": "0x9d78950bc4c531d32c3f874120f0b96213d81dfc",
-      "symbol": "WBTC.e",
+      "symbol": "WBTC",
       "decimals": 8,
       "chainId": 43113,
       "logoURI": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png"
@@ -50,7 +42,7 @@
     {
       "name": "Wrapped Ethereum",
       "address": "0xfbd49f16d9fc6566ae41c20026ddcf3badb6ba9f",
-      "symbol": "WETH.e",
+      "symbol": "WETH",
       "decimals": 18,
       "chainId": 43113,
       "logoURI": "https://assets.coingecko.com/coins/images/279/large/ethereum.png"
@@ -58,7 +50,7 @@
     {
       "name": "DAI",
       "address": "0x510cd68b4bdd8cd2fd6e93afe368f0f4e17791f8",
-      "symbol": "DAI.e",
+      "symbol": "DAI",
       "decimals": 18,
       "chainId": 43113,
       "logoURI": "https://assets.coingecko.com/coins/images/9956/large/dai-multi-collateral-mcd.png"
@@ -74,7 +66,7 @@
     {
       "name": "USDC",
       "address": "0x0a35823b2c0a025d97e4002aec5038b96087942d",
-      "symbol": "USDC.e",
+      "symbol": "USDC",
       "decimals": 6,
       "chainId": 43113,
       "logoURI": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png"

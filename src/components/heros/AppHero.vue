@@ -73,7 +73,8 @@ export default defineComponent({
 
     const classes = computed(() => ({
       ['h-72']: !isWalletReady.value,
-      ['h-40']: isWalletReady.value
+      ['h-0']: isWalletReady.value
+      //['h-40']: isWalletReady.value
     }));
 
     function onClickConnect() {

@@ -1,0 +1,132 @@
+{
+  "name": "Beethoven Fuji",
+  "timestamp": "2021-02-27T18:18:18.181Z",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "",
+  "keywords": [
+    "beethoven",
+    "default",
+    "avax",
+    "fuji"
+  ],
+  "tokens": [
+    {
+      "name": "Fantom",
+      "address": "0x0483863540CB2C1ea77F7827db43ee160a0Ad7AC",
+      "symbol": "FTM",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/4001/large/Fantom.png"
+    },
+    {
+      "name": "Chainlink",
+      "address": "0xB8Fecb889862C486BccE52222c7EFe9b30371aD5",
+      "symbol": "LINK",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x514910771AF9Ca656af840dff83E8264EcF986CA/logo.png"
+    },
+    {
+      "name": "Wrapped Bitcoin",
+      "address": "0xb4761d0481B4f7a8A858D2796eEF3DAa2f3D9D2c",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png"
+    },
+    {
+      "name": "Wrapped Ethereum",
+      "address": "0x80dD2B80FbcFB06505A301d732322e987380EcD6",
+      "symbol": "WETH",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/279/large/ethereum.png"
+    },
+    {
+      "name": "DAI",
+      "address": "0x12c615406F20eDcBDa50888f9fd6734dC4836417",
+      "symbol": "DAI",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/9956/large/dai-multi-collateral-mcd.png"
+    },
+    {
+      "name": "USDC",
+      "address": "0x70b55Af71B29c5Ca7e67bD1995250364C4bE5554",
+      "symbol": "USDC",
+      "decimals": 6,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png"
+    },
+
+    {
+      "name": "Frapped USDT",
+      "address": "0x40D26F06DefEe453bCFCAa61Badb16883E4ee26C",
+      "symbol": "fUSDT",
+      "decimals": 6,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/11683/large/Tether-logo.png"
+    },
+    {
+      "name": "SpiritSwap",
+      "address": "0x6F00D64b42aF8f449dB15B0b3ee3B444550c4826",
+      "symbol": "SPIRIT",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/15118/large/4mY2Biy9_400x400.jpg"
+    },
+    {
+      "name": "Spookyswap",
+      "address": "0x4176603b0712407B1D7DCcE3ACaB685f7219E6dd",
+      "symbol": "BOO",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/15223/small/logo_200x200.png"
+    },
+    {
+      "name": "SCREAM",
+      "address": "0x0d543D9528e17Cf55Ac73660407F712b5a3085AB",
+      "symbol": "SCREAM",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/17509/large/output-onlinepngtools_%286%29.png"
+    },
+    {
+      "name": "TAROT",
+      "address": "0xdA05941B0a17a1b537C711094c575665c116D237",
+      "symbol": "TAROT",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/17881/small/tarot-200px.png"
+    },
+    {
+      "name": "Steak Token",
+      "address": "0x64Fe8666Ccbd87E819a398eeB79580255d00d8EA",
+      "symbol": "STEAK",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/18212/large/steak_orange.74852042.png"
+    },
+    {
+      "name": "LiquidDriver",
+      "address": "0x6A9598780F937c10fFFccb9Dbf9A792d122CC538",
+      "symbol": "LQDR",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/15782/small/LQDR_Glowing_Icon.png"
+    },
+    {
+      "name": "Popsicle Finance",
+      "address": "0xcAbdF4994C71e48d8E8af66457658Fc7CD29400f",
+      "symbol": "ICE",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://assets.coingecko.com/coins/images/14586/large/ice.png"
+    }
+  ]
+}

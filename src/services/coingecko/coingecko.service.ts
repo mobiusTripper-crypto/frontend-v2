@@ -5,6 +5,7 @@ import { coingeckoClient } from './coingecko.client';
 export const getNativeAssetId = (chainId: string): string => {
   const mapping = {
     '1': 'ethereum',
+    '4': 'ethereum',
     '42': 'ethereum',
     '137': 'matic-network',
     '43113': 'avalanche-2',
@@ -17,6 +18,7 @@ export const getNativeAssetId = (chainId: string): string => {
 export const getPlatformId = (chainId: string): string => {
   const mapping = {
     '1': 'ethereum',
+    '4': 'fantom',
     '42': 'ethereum',
     '137': 'polygon-pos',
     '43113': 'avalanche',

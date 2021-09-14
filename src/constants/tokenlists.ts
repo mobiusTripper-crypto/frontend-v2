@@ -56,12 +56,16 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
   },
   '43113': {
     Balancer: {
-      Default:
-        'https://development.beethovenx.io/beethoven-fuji.tokenlist.json',
-      Vetted: 'https://development.beethovenx.io/beethoven-fuji.tokenlist.json'
+      Default: 'http://localhost:8080/beethoven-fuji.tokenlist.json',
+      Vetted: 'http://localhost:8080/beethoven-fuji.tokenlist.json'
     },
-    External: [
-      'https://development.beethovenx.io/beethoven-fuji.tokenlist.json'
-    ]
+    External: ['http://localhost:8080/beethoven-fuji.tokenlist.json']
+  },
+  '4': {
+    Balancer: {
+      Default: 'http://localhost:8080/beethoven-rinkeby.tokenlist.json',
+      Vetted: 'http://localhost:8080/beethoven-rinkeby.tokenlist.json'
+    },
+    External: ['http://localhost:8080/beethoven-rinkeby.tokenlist.json']
   }
 };
