@@ -7,6 +7,7 @@
           :key="token"
           :hasBalance="hasBalance(token.address)"
           :symbol="symbolFor(token)"
+          :address="token.address"
           :isLast="tokens.length - 1 === i"
         />
       </div>
@@ -18,6 +19,7 @@
         :hasBalance="hasBalance(token.address)"
         :symbol="symbolFor(token)"
         :weight="weightFor(token)"
+        :address="token.address"
       />
     </template>
   </div>

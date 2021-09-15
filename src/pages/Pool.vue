@@ -294,6 +294,7 @@ export default defineComponent({
     });
 
     watch(poolQuery.error, () => {
+      console.log('poolQuery.error', poolQuery.error);
       router.push({ name: 'home' });
     });
 

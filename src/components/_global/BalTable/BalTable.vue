@@ -21,13 +21,13 @@
             v-for="(column, columnIndex) in filteredColumns"
             :key="`header-${column.id}`"
             :class="[
-              'p-6 bg-white dark:bg-gray-850 headingShadow border-b dark:border-gray-900',
+              'p-6 bg-white dark:bg-gray-850 headingShadow border-b dark:border-gray-700',
               column.className,
               getHorizontalStickyClass(columnIndex),
               isColumnStuck ? 'isSticky' : '',
               column.sortKey ? 'cursor-pointer' : '',
               currentSortColumn === column.id && currentSortDirection
-                ? 'text-blue-400'
+                ? 'text-green-500'
                 : 'text-gray-800 dark:text-gray-100'
             ]"
             :ref="setHeaderRef(columnIndex)"
@@ -113,7 +113,8 @@
             :key="`tableRow-${index}`"
             @click="handleRowClick(dataItem)"
             :class="[
-              'bg-white z-10 row-bg group',
+              'bg-white z-10 row-bg group border-gray-700',
+              `${index === tableData.length - 1 ? 'border-b-0' : 'border-b'}`,
               { 'cursor-pointer': onRowClick }
             ]"
           >

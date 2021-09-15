@@ -32,28 +32,9 @@
         sortDirection: 'desc'
       }"
     >
-      <template v-slot:iconColumnHeader>
-        <div class="flex items-center">
-          <img
-            v-if="darkMode"
-            :src="require('@/assets/images/icons/tokens_white.svg')"
-          />
-          <img
-            v-else
-            :src="require('@/assets/images/icons/tokens_black.svg')"
-          />
-        </div>
-      </template>
-      <template v-slot:iconColumnCell="pool">
-        <div v-if="!isLoading" class="px-6 py-4">
-          <BalAssetSet
-            :addresses="orderedTokenAddressesFor(pool)"
-            :width="100"
-          />
-        </div>
-      </template>
       <template v-slot:poolNameCell="pool">
         <div v-if="!isLoading" class="px-6 py-4">
+          <h5 class="mb-2 text-left">{{ pool.name }}</h5>
           <TokenPills
             :tokens="orderedPoolTokens(pool)"
             :isStablePool="isStableLike(pool)"
@@ -141,7 +122,7 @@ export default defineComponent({
 
     // DATA
     const columns = ref<ColumnDefinition<DecoratedPoolWithShares>[]>([
-      {
+      /*{
         name: 'Icons',
         id: 'icons',
         accessor: 'uri',
@@ -149,9 +130,9 @@ export default defineComponent({
         Cell: 'iconColumnCell',
         width: 125,
         noGrow: true
-      },
+      },*/
       {
-        name: t('composition'),
+        name: 'Pool',
         id: 'poolName',
         accessor: 'id',
         Cell: 'poolNameCell',

@@ -10,6 +10,11 @@ export const TOKENS = {
       WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
       BAL: '0xba100000625a3754423978a60c9317c58a424e3d'
     },
+    '4': {
+      ETH: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      WETH: '0x80dD2B80FbcFB06505A301d732322e987380EcD6',
+      BAL: '0xba100000625a3754423978a60c9317c58a424e3d'
+    },
     '42': {
       ETH: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
       WETH: '0xdFCeA9088c8A88A76FF74892C1457C17dfeef9C1',
@@ -22,6 +27,12 @@ export const TOKENS = {
     '43113': {
       WETH: '0xfbd49f16d9fc6566ae41c20026ddcf3badb6ba9f',
       BAL: '0x9c2eE4065F5BcaF2220c6eA788829eEd80aec503'
+    },
+    '250': {
+      //TODO: fill these in
+      //ETH: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      //WETH: '0x80dD2B80FbcFB06505A301d732322e987380EcD6',
+      //BAL: '0xba100000625a3754423978a60c9317c58a424e3d'
     }
   },
   Prices: {
