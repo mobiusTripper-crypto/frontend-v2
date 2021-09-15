@@ -56,14 +56,14 @@ export interface Config {
 }
 
 const config: Record<string, Config> = {
-  '1': homestead,
-  '42': kovan,
-  '4': rinkeby,
-  '137': polygon,
-  '12345': test,
-  '43113': fuji,
+  //'1': homestead,
+  //'42': kovan,
+  '4': rinkeby
+  //'137': polygon,
+  //'12345': test,
+  //'43113': fuji,
   // @ts-ignore
-  '17': docker
+  //'17': docker
 };
 
 export default config;

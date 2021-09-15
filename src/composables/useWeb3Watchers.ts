@@ -19,7 +19,8 @@ export default function useWeb3Watchers() {
     account,
     isMismatchedNetwork,
     isUnsupportedNetwork,
-    blockNumber
+    blockNumber,
+    chainId
   } = useWeb3();
   const { refetchBalances, refetchAllowances } = useTokens();
   const { handlePendingTransactions, updateTransaction } = useTransactions();
@@ -75,7 +76,7 @@ export default function useWeb3Watchers() {
   // Watch for user network switch
   // -> Display alert message if unsupported or not the same as app network.
   watch(
-    () => userNetworkConfig.value?.name,
+    () => chainId.value,
     () => {
       if (isUnsupportedNetwork.value) {
         const localeKey = userNetworkConfig.value?.name

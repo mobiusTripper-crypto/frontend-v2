@@ -217,7 +217,6 @@ export default defineComponent({
     const {
       explorerLinks,
       isPolygon,
-      isAvalanche,
       account,
       chainId,
       disconnectWallet,
@@ -237,9 +236,9 @@ export default defineComponent({
 
     // COMPUTED
     const networkColorClass = computed(
-      () => `network-${userNetworkConfig.value.shortName}`
+      () => `network-${userNetworkConfig.value?.shortName}`
     );
-    const networkName = computed(() => userNetworkConfig.value.name);
+    const networkName = computed(() => userNetworkConfig.value?.name || '');
     const appLocale = computed(() => store.state.app.locale);
     const appDarkMode = computed(() => store.state.app.darkMode);
     const appTradeLiquidity = computed(() => store.state.app.tradeLiquidity);
@@ -288,7 +287,6 @@ export default defineComponent({
       hideLiquidity,
       hideDisconnect,
       isPolygon,
-      isAvalanche,
       // methods
       disconnectWallet,
       setDarkMode,

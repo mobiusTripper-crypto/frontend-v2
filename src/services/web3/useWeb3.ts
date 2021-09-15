@@ -36,28 +36,33 @@ export default function useWeb3() {
 
   // COMPUTED REFS + COMPUTED REFS
   const userNetworkConfig = computed(() => {
-    if (chainId.value)
-      return configService.getNetworkConfig(String(chainId.value));
+    if (chainId.value) {
+      try {
+        return configService.getNetworkConfig(String(chainId.value));
+      } catch {
+        return null;
+      }
+    }
+
     return null;
   });
   const isWalletReady = computed(() => walletState.value === 'connected');
   const isMainnet = computed(() => appNetworkConfig.chainId === 1);
   const isPolygon = computed(() => appNetworkConfig.chainId === 137);
-  const isAvalanche = computed(
-    () =>
-      appNetworkConfig.chainId === 43113 || appNetworkConfig.chainId === 43114
-  );
+
   const canLoadProfile = computed(
     () => account.value !== '' && userNetworkConfig.value?.chainId !== 0
   );
   const isMismatchedNetwork = computed(() => {
-    return (
+    /*return (
       isWalletReady.value &&
       userNetworkConfig.value?.key !== appNetworkConfig.key
-    );
+    );*/
+
+    return false;
   });
   const isUnsupportedNetwork = computed(() => {
-    return isWalletReady.value && !userNetworkConfig.value?.key;
+    return isWalletReady.value && appNetworkConfig.chainId !== chainId.value;
   });
   const explorerLinks = {
     txLink: (txHash: string) =>
@@ -115,7 +120,6 @@ export default function useWeb3() {
     isV1Supported,
     isMainnet,
     isPolygon,
-    isAvalanche,
     // methods
     connectWallet,
     getProvider,
