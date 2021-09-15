@@ -63,7 +63,14 @@ export const POOLS = {
     '0x67d27634e44793fe63c467035e31ea8635117cd4': 'stablePool', // Metastable
     '0x751dfdace1ad995ff13c927f6f761c6604532c79': 'stablePool', // Kovan
     '0x590e544e7ca956bb878f8c873e82e65550d67d2f': 'stablePool', // Kovan Metastable
-    '0x3582c64a66ac068851e9c912eac5c855dbe2b1e1': 'weightedPool',
-    '0x4928dcc463f329bddb7159aede6cdc7fb72349a3': 'stablePool'
+    '0x72f700b6e33ab2db1b915e06b99d7ab913748380': 'weightedPool', //rinkeby
+    '0xf2955e1663a281e7cff697a6f0213ad09914f3df': 'weightedPool', //rinkeby 2 token
+    '0x73bf10fb8867f5687d0c7590d0ae2b4bebcc85fd': 'stablePool', //rinkeby
+    '0xf63193af8114855c872bc85ed9a10dd66fc9a290': 'stablePool', //rinkeby metstable
+
+    '0x60467cb225092ce0c989361934311175f437cf53': 'weightedPool', //fantom
+    '0x92b377187bccc6556fced2f1e6dad65850c20630': 'weightedPool', //fantom 2 token
+    '0x55df810876354fc3e249f701dd78dede57991f8d': 'stablePool', //rinkeby
+    '0x70b55af71b29c5ca7e67bd1995250364c4be5554': 'stablePool' //rinkeby metstable
   }
 };
