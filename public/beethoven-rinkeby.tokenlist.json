@@ -1,5 +1,5 @@
 {
-  "name": "Beethoven Fuji",
+  "name": "Beethoven Rinkeby",
   "timestamp": "2021-02-27T18:18:18.181Z",
   "version": {
     "major": 1,
@@ -11,8 +11,8 @@
   "keywords": [
     "beethoven",
     "default",
-    "avax",
-    "fuji"
+    "eth",
+    "rinkeby"
   ],
   "tokens": [
     {
@@ -70,7 +70,7 @@
       "symbol": "fUSDT",
       "decimals": 6,
       "chainId": 4,
-      "logoURI": "https://assets.coingecko.com/coins/images/11683/large/Tether-logo.png"
+      "logoURI": "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png"
     },
     {
       "name": "SpiritSwap",
