@@ -67,12 +67,16 @@ export class PriceService {
       if (addresses.length / addressesPerRequest > 10)
         throw new Error('To many requests for rate limit.');
 
-      // TODO - remove once wsteth is supported
+      addresses = addresses.map(address => this.addressMapIn(address));
+      const addressesWithCustomPlatform = addresses
+        .filter(
+          address => TOKENS.Prices.CustomPlatformId[address.toLowerCase()]
+        )
+        .map(address => address.toLowerCase());
       addresses = addresses.filter(
-        address => address !== this.configService.network.addresses.wstETH
+        address => !addressesWithCustomPlatform.includes(address.toLowerCase())
       );
 
-      addresses = addresses.map(address => this.addressMapIn(address));
       const pageCount = Math.ceil(addresses.length / addressesPerRequest);
       const pages = Array.from(Array(pageCount).keys());
       const requests: Promise<PriceResponse>[] = [];
@@ -83,6 +87,18 @@ export class PriceService {
           addressesPerRequest * (page + 1)
         );
         const endpoint = `/simple/token_price/${this.platformId}?contract_addresses=${addressString}&vs_currencies=${this.fiatParam}`;
+        const request = retryPromiseWithDelay(
+          this.client.get<PriceResponse>(endpoint),
+          3,
+          2000
+        );
+        requests.push(request);
+      });
+
+      addressesWithCustomPlatform.forEach(address => {
+        const endpoint = `/simple/token_price/${this.getPlatformIdForAddress(
+          address
+        )}?contract_addresses=${address}&vs_currencies=${this.fiatParam}`;
         const request = retryPromiseWithDelay(
           this.client.get<PriceResponse>(endpoint),
           3,
@@ -128,9 +144,9 @@ export class PriceService {
     const requests: Promise<HistoricalPriceResponse>[] = [];
 
     addresses.forEach(address => {
-      const endpoint = `/coins/${
-        this.platformId
-      }/contract/${address.toLowerCase()}/market_chart/range?vs_currency=${
+      const endpoint = `/coins/${this.getPlatformIdForAddress(
+        address.toLowerCase()
+      )}/contract/${address.toLowerCase()}/market_chart/range?vs_currency=${
         this.fiatParam
       }&from=${start}&to=${end}`;
       const request = retryPromiseWithDelay(
@@ -218,5 +234,13 @@ export class PriceService {
     const addressMap = TOKENS.Prices.ChainMap[this.appNetwork];
     if (!addressMap) return address;
     return invert(addressMap)[address.toLowerCase()] || address;
+  }
+
+  /**
+   * Support instances where a token address is not supported by the platform id, provide the option to use a different platform
+   * @param address
+   */
+  public getPlatformIdForAddress(address: string): string {
+    return TOKENS.Prices.CustomPlatformId[address] || this.platformId;
   }
 }

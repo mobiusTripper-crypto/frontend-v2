@@ -25,6 +25,9 @@ export const TOKENS = {
     }
   },
   Prices: {
+    CustomPlatformId: {
+      '0x514910771af9ca656af840dff83e8264ecf986ca': 'ethereum'
+    },
     ChainMap: {
       '42': {
         '0xdfcea9088c8a88a76ff74892c1457c17dfeef9c1':
@@ -64,7 +67,7 @@ export const TOKENS = {
         '0x80dd2b80fbcfb06505a301d732322e987380ecd6':
           '0x74b23882a30290451a17c44f4f05243b6b58c76d',
         '0xb8fecb889862c486bcce52222c7efe9b30371ad5':
-          '0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8',
+          '0x514910771af9ca656af840dff83e8264ecf986ca',
         '0x12c615406f20edcbda50888f9fd6734dc4836417':
           '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
         '0x6f00d64b42af8f449db15b0b3ee3b444550c4826':
