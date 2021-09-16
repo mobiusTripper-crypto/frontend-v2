@@ -163,8 +163,13 @@ export default defineComponent({
         if (props.outline) return 'text-white';
         else return 'text-gray-800 dark:text-gray-100';
       }
-      if (props.outline || props.flat)
+      if (props.outline || props.flat) {
         return `text-${props.color}-500 dark:text-${props.color}-400`;
+      }
+      if (props.color === 'gradient' && props.loading) {
+        return 'text-gray-600';
+      }
+
       return 'text-white';
     });
 
