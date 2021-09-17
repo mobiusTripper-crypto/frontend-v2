@@ -8,13 +8,7 @@
   >
     <BalTable
       :columns="columns"
-      :data="
-        data.filter(
-          item =>
-            item.id !==
-            '0x2a5509d2f41126cb0ace7fde028c1b385b632b1c000100000000000000000005'
-        )
-      "
+      :data="data"
       :is-loading="isLoading"
       :is-loading-more="isLoadingMore"
       skeleton-class="h-64"

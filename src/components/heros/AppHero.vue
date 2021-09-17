@@ -2,7 +2,7 @@
   <div :class="['app-hero', classes]">
     <div class="w-full max-w-3xl mx-auto">
       <template v-if="isWalletReady">
-        <!--<h1
+        <h1
           v-text="$t('myInvestments')"
           class="text-base font-medium text-white opacity-90 font-body mb-2"
         />
@@ -13,7 +13,7 @@
         />
         <span v-else class="text-3xl font-bold text-white">
           {{ fNum(totalInvestedAmount, 'usd', { forcePreset: true }) }}
-        </span>-->
+        </span>
       </template>
       <template v-else>
         <div class="flex justify-center">
@@ -73,8 +73,8 @@ export default defineComponent({
 
     const classes = computed(() => ({
       ['h-72']: !isWalletReady.value,
-      ['h-0']: isWalletReady.value
-      //['h-40']: isWalletReady.value
+      //['h-0']: isWalletReady.value
+      ['h-40']: isWalletReady.value
     }));
 
     function onClickConnect() {

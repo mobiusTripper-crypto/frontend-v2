@@ -1,6 +1,6 @@
 <template>
   <div class="lg:container lg:mx-auto pt-10 md:pt-12">
-    <template v-if="isWalletReady">
+    <template v-if="isWalletReady && userPools.length > 0">
       <div class="px-4 lg:px-0">
         <h3 class="mb-4">My Investments</h3>
       </div>
