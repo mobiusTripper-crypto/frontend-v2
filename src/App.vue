@@ -1,12 +1,15 @@
 <template>
   <div id="modal" />
-  <div id="app">
+  <div id="app" class="flex flex-col">
     <AppNav />
     <AppHero v-if="isHomePage" />
     <div class="pb-12">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
     <AppFooterNav v-if="upToLargeBreakpoint" />
+    <div class="flex flex-1 items-end">
+      <img src="~@/assets/images/community-image.png" />
+    </div>
     <!--    <BalBtn
       v-else
       id="intercom-activator"

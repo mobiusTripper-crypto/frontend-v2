@@ -2,10 +2,13 @@
   <div :class="['app-hero', classes]">
     <div class="w-full max-w-3xl mx-auto">
       <template v-if="isWalletReady">
-        <h1
-          v-text="$t('myInvestments')"
-          class="text-base font-medium text-white opacity-90 font-body mb-2"
-        />
+        <div class="flex justify-center">
+          <img
+            v-if="darkMode"
+            src="~@/assets/images/investments-headline.svg"
+            width="400"
+          />
+        </div>
         <BalLoadingBlock
           v-if="isLoadingUserPools"
           class="h-10 w-40 mx-auto"
