@@ -121,6 +121,7 @@ export default function useSor({
   const priceImpact = ref(0);
   const latestTxHash = ref('');
   const poolsLoading = ref(true);
+  const slippageError = ref(false);
 
   // COMPOSABLES
   const store = useStore();
@@ -521,6 +522,10 @@ export default function useSor({
           successCallback();
         }
       } catch (e) {
+        if (isSlippageError(e)) {
+          slippageError.value = true;
+        }
+
         console.log(e);
         trading.value = false;
         confirming.value = false;
@@ -550,6 +555,10 @@ export default function useSor({
           successCallback();
         }
       } catch (e) {
+        if (isSlippageError(e)) {
+          slippageError.value = true;
+        }
+
         console.log(e);
         trading.value = false;
         confirming.value = false;
@@ -620,6 +629,10 @@ export default function useSor({
     };
   }
 
+  function isSlippageError(e) {
+    return e.message.indexOf('BAL#507') !== -1;
+  }
+
   /**
    * Under certain circumstance we need to adjust an amount
    * for the price impact calc due to background wrapping taking place
@@ -654,6 +667,7 @@ export default function useSor({
     poolsLoading,
     getQuote,
     resetState,
-    confirming
+    confirming,
+    slippageError
   };
 }

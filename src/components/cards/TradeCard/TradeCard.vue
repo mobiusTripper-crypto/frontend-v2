@@ -81,6 +81,7 @@
       :address-out="tokenOutAddress"
       :amount-out="tokenOutAmount"
       :trading="trading"
+      :slippage-error="slippageError"
       @trade="trade"
       @close="modalTradePreviewIsOpen = false"
     />
@@ -203,7 +204,8 @@ export default defineComponent({
       latestTxHash,
       pools,
       fetchPools,
-      poolsLoading
+      poolsLoading,
+      slippageError
     } = useSor({
       exactIn,
       tokenInAddressInput: tokenInAddress,
@@ -280,6 +282,7 @@ export default defineComponent({
     }
 
     function showTradePreviewModal() {
+      slippageError.value = false;
       modalTradePreviewIsOpen.value = true;
     }
 
@@ -342,7 +345,8 @@ export default defineComponent({
       bp,
       darkMode,
       tradeCardShadow,
-      explorer: explorerLinks
+      explorer: explorerLinks,
+      slippageError
     };
   }
 });
