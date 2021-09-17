@@ -435,7 +435,9 @@ export default defineComponent({
       const prefixMap = {
         1: 'app.',
         42: 'kovan.',
-        137: 'polygon.'
+        137: 'polygon.',
+        4: 'development.',
+        250: 'app.'
       };
       const prefix = prefixMap[chainId] || '';
       if (props.sorReturn.isV1swap && chainId === 1) {
@@ -443,7 +445,7 @@ export default defineComponent({
       } else {
         return props.sorReturn.isV1swap
           ? `https://${prefix}pools.balancer.exchange/#/pool/${id}`
-          : `https://${prefix}balancer.fi/#pool/${id}`;
+          : `https://${prefix}beethovenx.io/#pool/${id}`;
       }
     }
 
