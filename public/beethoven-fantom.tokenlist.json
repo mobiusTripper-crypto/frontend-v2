@@ -1,0 +1,139 @@
+{
+  "name": "Beethoven X",
+  "timestamp": "2021-02-27T18:18:18.181Z",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/bethovenx-icon.png",
+  "keywords": [
+    "beethoven",
+    "default",
+    "fantom"
+  ],
+  "tokens": [
+    {
+      "name": "Chainlink",
+      "address": "0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8",
+      "symbol": "LINK",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png"
+    },
+    {
+      "name": "Wrapped Bitcoin",
+      "address": "0x321162Cd933E2Be498Cd2267a90534A804051b11",
+      "symbol": "wBTC",
+      "decimals": 8,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png"
+    },
+    {
+      "name": "Wrapped Ethereum",
+      "address": "0x74b23882a30290451A17c44f4F05243b6b58C76d",
+      "symbol": "wETH",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/279/large/ethereum.png"
+    },
+    {
+      "name": "Wrapped Fantom",
+      "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+      "symbol": "wFTM",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/FTM.png"
+    },
+    {
+      "name": "DAI",
+      "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+      "symbol": "DAI",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/9956/large/dai-multi-collateral-mcd.png"
+    },
+    {
+      "name": "USDC",
+      "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+      "symbol": "USDC",
+      "decimals": 6,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png"
+    },
+
+    {
+      "name": "Frapped USDT",
+      "address": "0x049d68029688eabf473097a2fc38ef61633a3c7a",
+      "symbol": "fUSDT",
+      "decimals": 6,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png"
+    },
+    {
+      "name": "SpiritSwap",
+      "address": "0x5cc61a78f164885776aa610fb0fe1257df78e59b",
+      "symbol": "SPIRIT",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/SPIRIT.png"
+    },
+    {
+      "name": "Spookyswap",
+      "address": "0x841fad6eae12c286d1fd18d1d525dffa75c7effe",
+      "symbol": "BOO",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/15223/small/logo_200x200.png"
+    },
+    {
+      "name": "SCREAM",
+      "address": "0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
+      "symbol": "SCREAM",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/SCREAM.png"
+    },
+    {
+      "name": "TAROT",
+      "address": "0xc5e2b037d30a390e62180970b3aa4e91868764cd",
+      "symbol": "TAROT",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/TAROT.png"
+    },
+    {
+      "name": "Steak Token",
+      "address": "0x05848b832e872d9edd84ac5718d58f21fd9c9649",
+      "symbol": "STEAK",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/STEAK.png"
+    },
+    {
+      "name": "Popsicle Finance",
+      "address": "0xf16e81dce15b08f326220742020379b855b87df9",
+      "symbol": "ICE",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/ICE.png"
+    },
+    {
+      "name": "Curve DAO Token",
+      "address": "0xf16e81dce15b08f326220742020379b855b87df9",
+      "symbol": "CRV",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/12124/large/Curve.png"
+    },
+    {
+      "name": "Anyswap",
+      "address": "0xddcb3ffd12750b45d32e084887fdf1aabab34239",
+      "symbol": "ANY",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/ANY.png"
+    }
+  ]
+}

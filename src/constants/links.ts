@@ -1,7 +1,7 @@
 export const EXTERNAL_LINKS = {
   Balancer: {
-    Home: 'https://beethovenx.io/',
-    Farm: 'https://farm.beethovenx.io/',
+    Home: 'https://app.beethovenx.io/',
+    Farm: 'https://app.beethovenx.io/#/farm',
     BalForGas:
       'https://docs.balancer.finance/core-concepts/bal-balancer-governance-token/bal-for-gas',
     Claim: (account: string) => `https://claim.balancer.finance/#/${account}`,

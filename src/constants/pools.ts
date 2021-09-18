@@ -71,7 +71,7 @@ export const POOLS = {
 
     '0x60467cb225092ce0c989361934311175f437cf53': 'weightedPool', //fantom
     '0x92b377187bccc6556fced2f1e6dad65850c20630': 'weightedPool', //fantom 2 token
-    '0x55df810876354fc3e249f701dd78dede57991f8d': 'stablePool', //rinkeby
-    '0x70b55af71b29c5ca7e67bd1995250364c4be5554': 'stablePool' //rinkeby metastable
+    '0x55df810876354fc3e249f701dd78dede57991f8d': 'stablePool', //fantom
+    '0x70b55af71b29c5ca7e67bd1995250364c4be5554': 'stablePool' //fantom metastable
   }
 };

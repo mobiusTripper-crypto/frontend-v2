@@ -54,13 +54,6 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
       'https://unpkg.com/quickswap-default-token-list@1.0.67/build/quickswap-default.tokenlist.json'
     ]
   },
-  '43113': {
-    Balancer: {
-      Default: 'http://localhost:8080/beethoven-fuji.tokenlist.json',
-      Vetted: 'http://localhost:8080/beethoven-fuji.tokenlist.json'
-    },
-    External: ['http://localhost:8080/beethoven-fuji.tokenlist.json']
-  },
   '4': {
     Balancer: {
       Default:
@@ -70,6 +63,17 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
     },
     External: [
       'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-rinkeby.tokenlist.json'
+    ]
+  },
+  '250': {
+    Balancer: {
+      Default:
+        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json',
+      Vetted:
+        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json'
+    },
+    External: [
+      'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json'
     ]
   }
 };

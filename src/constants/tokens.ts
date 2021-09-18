@@ -24,14 +24,9 @@ export const TOKENS = {
       WETH: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
       BAL: '0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3'
     },
-    '43113': {
-      WETH: '0xfbd49f16d9fc6566ae41c20026ddcf3badb6ba9f',
-      BAL: '0x9c2eE4065F5BcaF2220c6eA788829eEd80aec503'
-    },
     '250': {
-      //TODO: fill these in
-      //ETH: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-      //WETH: '0x80dD2B80FbcFB06505A301d732322e987380EcD6',
+      ETH: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      WETH: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83'
       //BAL: '0xba100000625a3754423978a60c9317c58a424e3d'
     }
   },
@@ -57,20 +52,6 @@ export const TOKENS = {
           '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
         '0x04df6e4121c27713ed22341e7c7df330f56f289b':
           '0x6b175474e89094c44da98b954eedeac495271d0f'
-      },
-      '43113': {
-        '0x9d78950bc4c531d32c3f874120f0b96213d81dfc':
-          '0x50b7545627a5162f82a992c33b87adc75187b218',
-        '0xfbd49f16d9fc6566ae41c20026ddcf3badb6ba9f':
-          '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
-        '0x0a35823b2c0a025d97e4002aec5038b96087942d':
-          '0xc7198437980c041c805a1edcba50c1ce5db95118',
-        '0x510cd68b4bdd8cd2fd6e93afe368f0f4e17791f8':
-          '0xd586e7f844cea2f87f50152665bcbc2c279d8d70',
-        '0x9c2ee4065f5bcaf2220c6ea788829eed80aec503':
-          '0x50b7545627a5162f82a992c33b87adc75187b218',
-        '0xd00ae08403B9bbb9124bB305C09058E32C39A48c':
-          '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7'
       },
       '4': {
         '0xb4761d0481b4f7a8a858d2796eef3daa2f3d9d2c':
