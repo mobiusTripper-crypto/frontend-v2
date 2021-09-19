@@ -10,7 +10,7 @@
   "ws": "wss://wsapi.fantom.network/",
   "loggingRpc": "",
   "explorer": "https://ftmscan.com",
-  "subgraph": "https://api.studio.thegraph.com/query/8788/beethovenx/v1.0.0",
+  "subgraph": "https://api.studio.thegraph.com/query/8788/beethovenx/v1.0.4",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "nativeAsset": {

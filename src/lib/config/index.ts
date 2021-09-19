@@ -1,10 +1,5 @@
-import homestead from './homestead.json';
-import kovan from './kovan.json';
 import rinkeby from './rinkeby.json';
-import polygon from './polygon.json';
-import docker from './docker.json';
-import test from './test.json';
-import fuji from './fuji.json';
+import fantom from './fantom.json';
 
 export interface Config {
   key: string;
@@ -58,7 +53,8 @@ export interface Config {
 const config: Record<string, Config> = {
   //'1': homestead,
   //'42': kovan,
-  '4': rinkeby
+  '4': rinkeby,
+  '250': fantom
   //'137': polygon,
   //'12345': test,
   //'43113': fuji,

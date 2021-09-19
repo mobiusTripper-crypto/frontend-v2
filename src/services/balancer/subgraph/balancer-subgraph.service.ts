@@ -5,7 +5,7 @@ import PoolShares from './entities/poolShares';
 import PoolActivities from './entities/poolActivities';
 import PoolSnapshots from './entities/poolSnapshots';
 
-const NETWORK = process.env.VUE_APP_NETWORK || '1';
+const NETWORK = process.env.VUE_APP_NETWORK || '250';
 
 export default class BalancerSubgraphService {
   pools: Pools;
@@ -34,6 +34,8 @@ export default class BalancerSubgraphService {
         // Should be ~4s but this causes subgraph to return with unindexed block error.
         return 1;
       case '43113':
+        return 1;
+      case '250':
         return 1;
       default:
         return 13;
