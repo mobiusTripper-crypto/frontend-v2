@@ -82,6 +82,10 @@ export const TOKENS = {
           '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
         '0x40d26f06defee453bcfcaa61badb16883e4ee26c':
           '0xdac17f958d2ee523a2206206994597c13d831ec7'
+      },
+      '250': {
+        '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e':
+          '0x6b175474e89094c44da98b954eedeac495271d0f'
       }
     }
   }
