@@ -25,9 +25,6 @@ export const getWrapAction = (tokenIn: string, tokenOut: string): WrapType => {
   const nativeAddress = configService.network.nativeAsset.address;
   const { weth, stETH, wstETH } = configService.network.addresses;
 
-  console.log('token in is native', tokenIn === nativeAddress);
-  console.log('token out is weth', tokenOut, weth);
-
   if (
     tokenIn.toLowerCase() === nativeAddress.toLowerCase() &&
     tokenOut.toLowerCase() === weth.toLowerCase()
