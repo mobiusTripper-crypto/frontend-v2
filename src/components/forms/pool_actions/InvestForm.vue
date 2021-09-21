@@ -154,13 +154,17 @@
               assetOut: TOKENS.AddressMap[appNetworkConfig.key].WETH
             }
           }"
-          class="text-xs text-gray-500 underline"
+          class="text-xs text-gray-500 dark:text-white underline"
         >
           {{ $t('wrapInstruction', [nativeAsset, `W${nativeAsset}`]) }}
         </router-link>
         <BalTooltip>
           <template v-slot:activator>
-            <BalIcon name="info" size="xs" class="text-gray-400 ml-2" />
+            <BalIcon
+              name="info"
+              size="xs"
+              class="text-gray-400 dark:text-white ml-2"
+            />
           </template>
           <div class="w-52" v-html="$t('ethBufferInstruction')" />
         </BalTooltip>
