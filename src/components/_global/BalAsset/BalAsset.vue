@@ -54,7 +54,6 @@ export default defineComponent({
      */
     const iconSRC = computed(() => {
       if (props.iconURI) return resolve(props.iconURI);
-      console.log('address.value', address.value);
 
       const token = tokens.value[address.value];
       if (!token) return '';
