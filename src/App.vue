@@ -7,40 +7,34 @@
       <router-view :key="$route.path" class="flex-auto" />
     </div>
     <AppFooterNav v-if="upToLargeBreakpoint" />
-    <div class="flex justify-center pb-16">
-      <a href="https://twitter.com/beethoven_x" class="mr-16">
-        <img
-          src="~@/assets/images/twitter-icon.png"
-          width="40"
-          class="mx-auto"
-        />
-        <div class="mt-2 text-green-500 font-book hidden lg:block">
-          twitter.com/beethoven_x
-        </div>
-      </a>
-      <a href="https://beethovenxio.medium.com/" class="mr-16">
-        <img
-          src="~@/assets/images/medium-icon.png"
-          width="40"
-          class="mx-auto"
-        />
-        <div class="mt-2 text-green-500 font-book hidden lg:block">
-          beethovenxio.medium.com
-        </div>
-      </a>
-      <a href="https://discord.gg/jedS4zGk28">
-        <img
-          src="~@/assets/images/discord-icon.png"
-          width="40"
-          class="mx-auto"
-        />
-        <div class="mt-2 text-green-500 font-book hidden lg:block">
-          discord.gg/jedS4zGk28
-        </div>
-      </a>
-    </div>
-    <div class="flex flex-1 items-end">
+
+    <div class="flex flex-1 items-end relative">
       <img src="~@/assets/images/community-image.png" />
+      <div
+        class="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center pb-8 ml-8"
+      >
+        <a href="https://twitter.com/beethoven_x" class="mr-12">
+          <img
+            src="~@/assets/images/twitter-icon.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+        <a href="https://beethovenxio.medium.com/" class="mr-12">
+          <img
+            src="~@/assets/images/medium-icon.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+        <a href="https://discord.gg/jedS4zGk28">
+          <img
+            src="~@/assets/images/discord-icon.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+      </div>
     </div>
     <!--    <BalBtn
       v-else
