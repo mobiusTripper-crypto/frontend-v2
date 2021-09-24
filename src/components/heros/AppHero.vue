@@ -36,7 +36,7 @@
           </BalBtn>
           <BalBtn
             tag="a"
-            :href="EXTERNAL_LINKS.Balancer.Home"
+            href="https://docs.beethovenx.io/"
             target="_blank"
             rel="noreferrer"
             color="white"
