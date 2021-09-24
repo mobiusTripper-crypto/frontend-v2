@@ -11,7 +11,7 @@
     <div class="flex flex-1 items-end relative">
       <img src="~@/assets/images/community-image.png" />
       <div
-        class="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center pb-8 ml-8"
+        class="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center pb-6 ml-8"
       >
         <a href="https://twitter.com/beethoven_x" class="mr-12">
           <img
