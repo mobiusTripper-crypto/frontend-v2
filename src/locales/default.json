@@ -73,7 +73,7 @@
     "effectivePrice": "Effective price:",
     "emptyInvestmentPools": "You have not joined any Bet investment pools.",
     "emptyInvestmentPoolsLink": "View investment pools ->",
-    "ethBufferInstruction": "This pool requires Wrapped Ether (WETH). To maximize your<br>investment, you could wrap some additional ETH. Make sure to keep<br>enough ETH to cover gas costs.",
+    "ethBufferInstruction": "This pool requires Wrapped Fantom (WFTM). To maximize your<br>investment, you could wrap some additional FTM. Make sure to keep<br>enough FTM to cover gas costs.",
     "exceedsBalance": "Exceeds balance",
     "enterAmount": "Enter amount",
     "investmentPoolsAbout": "Stake your assets to get $BEETS tokens for participating in Beethoven X liquidity mining.",
