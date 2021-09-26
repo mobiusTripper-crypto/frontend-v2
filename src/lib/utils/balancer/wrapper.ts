@@ -25,11 +25,27 @@ export const getWrapAction = (tokenIn: string, tokenOut: string): WrapType => {
   const nativeAddress = configService.network.nativeAsset.address;
   const { weth, stETH, wstETH } = configService.network.addresses;
 
-  if (tokenIn === nativeAddress && tokenOut === weth) return WrapType.Wrap;
-  if (tokenIn === stETH && tokenOut === wstETH) return WrapType.Wrap;
+  if (
+    tokenIn.toLowerCase() === nativeAddress.toLowerCase() &&
+    tokenOut.toLowerCase() === weth.toLowerCase()
+  )
+    return WrapType.Wrap;
+  if (
+    tokenIn.toLowerCase() === stETH.toLowerCase() &&
+    tokenOut.toLowerCase() === wstETH.toLowerCase()
+  )
+    return WrapType.Wrap;
 
-  if (tokenOut === nativeAddress && tokenIn === weth) return WrapType.Unwrap;
-  if (tokenOut === stETH && tokenIn === wstETH) return WrapType.Unwrap;
+  if (
+    tokenOut.toLowerCase() === nativeAddress.toLowerCase() &&
+    tokenIn.toLowerCase() === weth.toLowerCase()
+  )
+    return WrapType.Unwrap;
+  if (
+    tokenOut.toLowerCase() === stETH.toLowerCase() &&
+    tokenIn.toLowerCase() === wstETH.toLowerCase()
+  )
+    return WrapType.Unwrap;
 
   return WrapType.NonWrap;
 };
@@ -42,8 +58,8 @@ export const getWrapOutput = (
   if (wrapType === WrapType.NonWrap) throw new Error('Invalid wrap type');
   const { weth, wstETH } = configService.network.addresses;
 
-  if (wrapper === weth) return wrapAmount;
-  if (wrapper === wstETH) {
+  if (wrapper.toLowerCase() === weth.toLowerCase()) return wrapAmount;
+  if (wrapper.toLowerCase() === wstETH.toLowerCase()) {
     return wrapType === WrapType.Wrap
       ? getWstETHByStETH(wrapAmount)
       : getStETHByWstETH(wrapAmount);
@@ -58,9 +74,13 @@ export async function wrap(
   amount: BigNumber
 ): Promise<TransactionResponse> {
   try {
-    if (wrapper === configs[network].addresses.weth) {
+    if (
+      wrapper.toLowerCase() === configs[network].addresses.weth.toLowerCase()
+    ) {
       return wrapNative(network, web3, amount);
-    } else if (wrapper === configs[network].addresses.wstETH) {
+    } else if (
+      wrapper.toLowerCase() === configs[network].addresses.wstETH.toLowerCase()
+    ) {
       return wrapLido(network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');
@@ -77,9 +97,13 @@ export async function unwrap(
   amount: BigNumber
 ): Promise<TransactionResponse> {
   try {
-    if (wrapper === configs[network].addresses.weth) {
+    if (
+      wrapper.toLowerCase() === configs[network].addresses.weth.toLowerCase()
+    ) {
       return unwrapNative(network, web3, amount);
-    } else if (wrapper === configs[network].addresses.wstETH) {
+    } else if (
+      wrapper.toLowerCase() === configs[network].addresses.wstETH.toLowerCase()
+    ) {
       return unwrapLido(network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');

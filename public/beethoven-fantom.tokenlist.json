@@ -40,7 +40,7 @@
     },
     {
       "name": "Wrapped Fantom",
-      "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+      "address": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
       "symbol": "wFTM",
       "decimals": 18,
       "chainId": 250,
@@ -121,7 +121,7 @@
     },
     {
       "name": "Curve DAO Token",
-      "address": "0xf16e81dce15b08f326220742020379b855b87df9",
+      "address": "0x1e4f97b9f9f913c46f1632781732927b9019c68b",
       "symbol": "CRV",
       "decimals": 18,
       "chainId": 250,

@@ -29,7 +29,9 @@ export function isWeighted(pool: AnyPool): boolean {
 }
 
 export function isWeth(pool: AnyPool, networkId: string): boolean {
-  return pool.tokenAddresses.includes(TOKENS.AddressMap[networkId].WETH);
+  return pool.tokenAddresses
+    .map(address => address.toLowerCase())
+    .includes(TOKENS.AddressMap[networkId].WETH);
 }
 
 export function isWstETH(pool: AnyPool): boolean {

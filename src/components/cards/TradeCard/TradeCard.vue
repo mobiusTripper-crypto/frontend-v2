@@ -172,9 +172,14 @@ export default defineComponent({
       }
     });
 
-    const wrapType = computed(() =>
-      getWrapAction(tokenInAddress.value, tokenOutAddress.value)
-    );
+    const wrapType = computed(() => {
+      console.log(
+        'wrap action',
+        getWrapAction(tokenInAddress.value, tokenOutAddress.value)
+      );
+
+      return getWrapAction(tokenInAddress.value, tokenOutAddress.value);
+    });
     const isWrap = computed(() => wrapType.value === WrapType.Wrap);
     const isUnwrap = computed(() => wrapType.value === WrapType.Unwrap);
 

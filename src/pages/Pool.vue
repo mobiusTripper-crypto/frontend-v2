@@ -98,13 +98,16 @@
       </div>
 
       <div class="order-1 lg:order-2 px-1 lg:px-0">
-        <BalLoadingBlock v-if="loadingPool" class="h-96 sticky top-24" />
+        <BalLoadingBlock
+          v-if="loadingPool"
+          :class="['h-96', 'top-24', titleTokens.length > 3 ? '' : 'sticky']"
+        />
         <PoolActionsCard
           v-else-if="!noInitLiquidity"
           :pool="pool"
           :missing-prices="missingPrices"
           @on-tx="onNewTx"
-          class="sticky top-24"
+          :class="['top-24', titleTokens.length > 3 ? '' : 'sticky']"
         />
       </div>
     </div>

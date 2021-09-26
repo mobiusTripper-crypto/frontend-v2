@@ -7,8 +7,48 @@
       <router-view :key="$route.path" class="flex-auto" />
     </div>
     <AppFooterNav v-if="upToLargeBreakpoint" />
-    <div class="flex flex-1 items-end">
+
+    <div class="flex flex-1 items-end relative">
       <img src="~@/assets/images/community-image.png" />
+      <div
+        class="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center pb-6 ml-8"
+      >
+        <a href="https://twitter.com/beethoven_x" class="mr-12">
+          <img
+            src="~@/assets/images/twitter-icon.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+        <a href="https://beethovenxio.medium.com/" class="mr-12">
+          <img
+            src="~@/assets/images/medium-icon.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+        <a href="https://discord.gg/jedS4zGk28" class="mr-12">
+          <img
+            src="~@/assets/images/discord-icon.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+        <a href="https://docs.beethovenx.io/" class="mr-12">
+          <img
+            src="~@/assets/images/gitbook-logo.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+        <a href="https://github.com/beethovenxfi">
+          <img
+            src="~@/assets/images/github-logo.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+      </div>
     </div>
     <!--    <BalBtn
       v-else

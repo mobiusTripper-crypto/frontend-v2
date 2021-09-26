@@ -86,15 +86,15 @@ export default defineComponent({
     } = usePools(selectedTokens);
 
     // COMPUTED
-    const filteredPools = computed(() =>
-      selectedTokens.value.length > 0
+    const filteredPools = computed(() => {
+      return selectedTokens.value.length > 0
         ? pools.value?.filter(pool => {
             return selectedTokens.value.every((selectedToken: string) =>
               pool.tokenAddresses.includes(selectedToken)
             );
           })
-        : pools?.value
-    );
+        : pools?.value;
+    });
 
     const hideV1Links = computed(() => !isV1Supported);
 
