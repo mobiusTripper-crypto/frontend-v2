@@ -386,5 +386,6 @@
     "farmDepositSettled": "Your deposit has settled",
     "farmDepositSuccess": "Your LP tokens have been deposited into this farm. You will now start to accrue farming rewards.",
     "slippageErrorHeadline": "Trade failure",
-    "slippageErrorBody": "Your trade failed because of excessive slippage. You can attempt to increase your slippage and try again."
+    "slippageErrorBody": "Your trade failed because of excessive slippage. You can attempt to increase your slippage and try again.",
+    "inputAmountExceedsPoolBalance": "The amount you've input exceeds the pool balance."
 }
