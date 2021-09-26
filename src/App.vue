@@ -27,9 +27,23 @@
             class="mx-auto"
           />
         </a>
-        <a href="https://discord.gg/jedS4zGk28">
+        <a href="https://discord.gg/jedS4zGk28" class="mr-12">
           <img
             src="~@/assets/images/discord-icon.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+        <a href="https://docs.beethovenx.io/" class="mr-12">
+          <img
+            src="~@/assets/images/gitbook-logo.png"
+            width="40"
+            class="mx-auto"
+          />
+        </a>
+        <a href="https://github.com/beethovenxfi">
+          <img
+            src="~@/assets/images/github-logo.png"
             width="40"
             class="mx-auto"
           />
