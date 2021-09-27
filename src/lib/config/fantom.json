@@ -6,7 +6,7 @@
   "shortName": "Fantom",
   "network": "fantom",
   "unknown": false,
-  "rpc": "https://65.21.199.225:80",
+  "rpc": "http://65.21.199.225:80",
   "ws": "ws://65.21.199.225:18546",
   "loggingRpc": "",
   "explorer": "https://ftmscan.com",
