@@ -26,13 +26,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed } from 'vue';
+import { computed, defineComponent, PropType, ref } from 'vue';
 import numeral from 'numeral';
 import * as echarts from 'echarts/core';
 import ECharts from 'vue-echarts';
 import { last } from 'lodash';
 import useNumbers, { Preset } from '@/composables/useNumbers';
-import { fromUnixTime, format, addHours, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import useTailwind from '@/composables/useTailwind';
 import useDarkMode from '@/composables/useDarkMode';
 
@@ -130,14 +130,7 @@ export default defineComponent({
         top: 0,
         icon: 'roundRect',
         itemHeight: 5,
-        formatter: (legendName: string) => {
-          const latestValue = last(
-            props.data.find(d => d.name === legendName)?.values as any
-          ) as [string | number, string | number];
-          return `${legendName}: ${fNum(latestValue[1], null, {
-            format: props.axisLabelFormatter.yAxis
-          })}`;
-        },
+        formatter: (legendName: string) => `${legendName}`,
         selected: props.legendState,
         textStyle: {
           color: darkMode.value
@@ -158,13 +151,7 @@ export default defineComponent({
           lineStyle: { color: axisColor.value }
         },
         axisLabel: {
-          formatter:
-            props.axisLabelFormatter.xAxis === 'datetime'
-              ? value => format(value, 'HH:mm')
-              : props.axisLabelFormatter.xAxis
-              ? value =>
-                  fNum(value, null, { format: props.axisLabelFormatter.xAxis })
-              : undefined,
+          formatter: value => format(value, 'HH:mm'),
           color: tailwind.theme.colors.gray[400]
         }
       },
@@ -249,37 +236,31 @@ export default defineComponent({
         lineStyle: {
           width: 2
         },
-        // This is a retrofitted option to show the small pill with the
-        // latest value of the series at the end of the line on the RHS
-        // the line is hidden, but the label is shown with extra styles
-        markLine: {
-          symbol: 'roundRect',
-          symbolSize: 0,
-          lineStyle: {
-            color: 'rgba(0, 0, 0, 0)'
-          },
-          precision: 5,
-          label: {
-            backgroundColor: (props.color || [])[i] || 'black',
-            borderRadius: 3,
-            padding: 4,
-            formatter: (params: any) => {
-              return fNum(params.data.yAxis, null, {
-                format: props.axisLabelFormatter.yAxis
-              });
-            },
-            color: '#FFF',
-            fontSize: 10
-          },
-          data: [
-            {
-              name: 'Latest',
-              yAxis: (last(props.data[i].values) || [])[1]
-            }
-          ]
-        }
+
+        markPoint:
+          i === 1
+            ? {
+                symbol: 'circle',
+                symbolSize: 8,
+                itemStyle: {
+                  borderColor: (props.color || [])[i] || 'black',
+                  borderWidth: 2.5,
+                  color: 'white',
+                  shadowColor: 'white',
+                  shadowBlur: 8
+                },
+                label: {
+                  show: false
+                },
+                data: [{ name: 'Latest', coord: last(props.data[i].values) }],
+                animation: true,
+                animationDuration: 10000
+              }
+            : undefined
       }))
     }));
+
+    console.log('latest', (last(props.data[1].values) || [])[1]);
 
     // Triggered when hovering mouse over different xAxis points
     const handleAxisMoved = ({ dataIndex, seriesIndex }: AxisMoveEvent) => {
