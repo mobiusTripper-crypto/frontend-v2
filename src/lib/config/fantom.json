@@ -10,7 +10,7 @@
   "ws": "ws://65.21.199.225:18546",
   "loggingRpc": "",
   "explorer": "https://ftmscan.com",
-  "subgraph": "http://docke-loadb-bzkzm5dure2t-8ad9a2fca2ea4752.elb.eu-central-1.amazonaws.com:8000/subgraphs/name/beethovenx",
+  "subgraph": "https://graph.beethovenx.io/subgraphs/name/beethovenx",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "nativeAsset": {
