@@ -2,7 +2,10 @@
   <BalCard class="relative" :shadow="tradeCardShadow" :no-border="!darkMode">
     <template v-slot:header>
       <div class="w-full flex items-center justify-between">
-        <h4 class="font-bold">Buy {{ lbpTokenName }}</h4>
+        <h4 class="font-bold">
+          {{ lbpTokenAddress === tokenOutAddress ? 'Buy' : 'Sell' }}
+          {{ lbpTokenName }}
+        </h4>
         <TradeSettingsPopover :context="TradeSettingsContext.trade" />
       </div>
     </template>
@@ -110,7 +113,7 @@ import useDarkMode from '@/composables/useDarkMode';
 import { configService } from '@/services/config/config.service';
 
 import { getWrapAction, WrapType } from '@/lib/utils/balancer/wrapper';
-import LbpTradePair from '@/components/cards/LbpTradeCard/LbpTradePair.vue';
+import LbpTradePair from '@/components/cards/LBPTradeCard/LBPTradePair.vue';
 
 const { nativeAsset } = configService.network;
 

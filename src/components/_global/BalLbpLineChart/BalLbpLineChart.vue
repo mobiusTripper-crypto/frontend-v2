@@ -122,20 +122,22 @@ export default defineComponent({
 
     // https://echarts.apache.org/en/option.html
     const chartConfig = computed(() => ({
+      animationDuration: 10000,
       // controls the legend you see at the top
       // formatter allows us to show the latest value for each series
       legend: {
         show: props.showLegend,
-        left: 0,
-        top: 0,
+        left: -4,
+        top: -4,
         icon: 'roundRect',
-        itemHeight: 5,
+        itemHeight: 10,
         formatter: (legendName: string) => `${legendName}`,
         selected: props.legendState,
         textStyle: {
           color: darkMode.value
             ? tailwind.theme.colors.gray['100']
-            : tailwind.theme.colors.gray['800']
+            : tailwind.theme.colors.gray['800'],
+          fontSize: 14
         },
         inactiveColor: darkMode.value
           ? tailwind.theme.colors.gray['700']
@@ -152,7 +154,8 @@ export default defineComponent({
         },
         axisLabel: {
           formatter: value => format(value, 'HH:mm'),
-          color: tailwind.theme.colors.gray[400]
+          color: tailwind.theme.colors.gray[300],
+          fontSize: 14
         }
       },
       // controlling the display of the Y-Axis
@@ -174,15 +177,16 @@ export default defineComponent({
             ? value =>
                 fNum(value, null, { format: props.axisLabelFormatter.yAxis })
             : undefined,
-          color: tailwind.theme.colors.gray[400]
+          color: tailwind.theme.colors.gray[300],
+          fontSize: 14
         },
         nameGap: 25
       },
       color: props.color,
       // Controls the boundaries of the chart from the HTML defined rectangle
       grid: {
-        left: '2.5%',
-        right: 0,
+        left: 0,
+        right: '2.5%',
         top: '10%',
         bottom: '5%',
         containLabel: true
@@ -228,13 +232,14 @@ export default defineComponent({
         type: 'line',
         smooth: 0.3,
         showSymbol: false,
+        symbolSize: 8,
         name: d.name,
-        silent: true,
-        animationEasing: function(k) {
+        //silent: true,
+        /*animationEasing: function(k) {
           return k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
-        },
+        },*/
         lineStyle: {
-          width: 2
+          width: 3
         },
 
         markPoint:
@@ -252,9 +257,9 @@ export default defineComponent({
                 label: {
                   show: false
                 },
-                data: [{ name: 'Latest', coord: last(props.data[i].values) }],
-                animation: true,
-                animationDuration: 10000
+                data: [{ name: 'Latest', coord: last(props.data[i].values) }]
+                //animation: true,
+                //animationDuration: 10000
               }
             : undefined
       }))

@@ -1,7 +1,22 @@
 <template>
   <div class="lg:container lg:mx-auto">
-    <div class="mb-12">
-      <img src="~@/assets/images/masthead-chillin.svg" />
+    <div class="grid grid-cols-1 lg:grid-cols-3 mt-8 mb-4">
+      <div class="col-span-2 order-2 lg:order-1 lg:-ml-6">
+        <img src="~@/assets/images/beets-lbp-headline.svg" />
+        <p class="font-medium pl-4 mr-12">
+          This event is designed to disincentivize bots, front-running and
+          speculation. The price will start high, and then decrease by design.
+          Please, go in Adagio (slow) & Pianissimo (soft).
+        </p>
+        <p class="font-medium pl-4 mr-12 pt-4">
+          Before participating in this event, please read our blog post
+          explaining Liquidity Bootstrap Pools
+          <a href="#" class="text-red-500 underline">here</a>.
+        </p>
+      </div>
+      <div class="order-1 lg:order-2 px-1 lg:px-0">
+        <img src="~@/assets/images/ludwig-says.svg" />
+      </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8">
       <!--      <div class="hidden lg:block" />-->
@@ -13,6 +28,17 @@
           </div>
           <div class="mb-4 px-1 lg:px-0">
             <BeetsLBPStatCards />
+
+            <p class="text-gray-300 mt-4">
+              *The predicted price is an estimation assuming no additional
+              buyers or sellers.
+            </p>
+            <p class="text-gray-300">
+              <span class="font-bold">Note</span>: Users can both
+              <span class="text-green-500">BUY</span> and
+              <span class="text-red-500">SELL</span>
+              during this event. Please be careful.
+            </p>
           </div>
 
           <!--          <div class="mb-4">
@@ -28,10 +54,12 @@
       </div>
 
       <div class="order-1 lg:order-2 px-1 lg:px-0">
-        <LbpTradeCard
+        <LBPTradeCard
           lbp-token-name="BEETS"
           lbp-token-address="0x8850Fd0C65d9B2B168153FAc6bAa269A566c4ef7"
         />
+
+        <!--        <img src="~@/assets/images/chillin-banner.svg" />-->
         <!--        <BalLoadingBlock
           v-if="loadingPool"
           :class="['h-96', 'top-24', titleTokens.length > 3 ? '' : 'sticky']"
@@ -44,6 +72,11 @@
           :class="['top-24', titleTokens.length > 3 ? '' : 'sticky']"
         />-->
       </div>
+    </div>
+
+    <div class="mt-24 mb-24">
+      <h4 class="px-4 lg:px-0 mb-2">Transactions (1,245)</h4>
+      <LBPTable />
     </div>
   </div>
 </template>
@@ -70,7 +103,8 @@ import useApp from '@/composables/useApp';
 import TradeCard from '@/components/cards/TradeCard/TradeCard.vue';
 import BeetsLBPChart from '@/components/pages/lbp/BeetsLBPChart.vue';
 import BeetsLBPStatCards from '@/components/pages/lbp/BeetsLBPStatCards.vue';
-import LbpTradeCard from '@/components/cards/LbpTradeCard/LbpTradeCard.vue';
+import LBPTradeCard from '@/components/cards/LBPTradeCard/LBPTradeCard.vue';
+import LBPTable from '@/components/tables/LBPTable/LBPTable.vue';
 
 interface PoolPageData {
   id: string;
@@ -84,7 +118,8 @@ export default defineComponent({
     ...PoolPageComponents,
     BeetsLBPChart,
     BeetsLBPStatCards,
-    LbpTradeCard
+    LBPTradeCard,
+    LBPTable
   },
 
   setup() {

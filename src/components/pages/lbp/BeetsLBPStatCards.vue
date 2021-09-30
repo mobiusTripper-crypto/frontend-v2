@@ -58,9 +58,9 @@ export default defineComponent({
         },
         {
           id: 'price',
-          label: 'BEETS Price',
+          label: 'Current BEETS Price',
           value: '$0.14',
-          subValue: 'Predicted price: $0.08'
+          subValue: 'Predicted price*: $0.08'
         },
         {
           id: 'tokens_sold',

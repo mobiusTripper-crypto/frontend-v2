@@ -192,7 +192,7 @@ export default defineComponent({
     const series = computed(() => {
       return [
         {
-          name: 'Predicted Price',
+          name: 'Predicted Price*',
           values: zip(times, predicted)
         },
         {
