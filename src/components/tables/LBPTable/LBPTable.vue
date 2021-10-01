@@ -29,13 +29,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import {
   DecoratedPool,
   DecoratedPoolWithShares,
   FarmWithPool,
   FarmWithStatsAndPool,
+  FullPool,
   PoolToken
 } from '@/services/balancer/subgraph/types';
 import { getAddress } from '@ethersproject/address';
@@ -65,26 +66,21 @@ export default defineComponent({
   emits: ['loadMore'],
 
   props: {
-    noPoolsLabel: {
-      type: String,
-      default: 'No pools'
-    }
+    pool: {
+      type: Object as PropType<FullPool>,
+      required: true
+    },
+    loading: { type: Boolean, default: false }
   },
 
-  setup() {
+  setup(props) {
     const { fNum } = useNumbers();
     const router = useRouter();
-    const { trackGoal, Goals } = useFathom();
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
     const { tokens } = useTokens();
     const { isWalletReady } = useWeb3();
-    const { farms, isLoadingFarms } = useFarms();
     const { selectedTokens } = usePoolFilters();
-    const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
-    const { pools, isLoadingPools, isLoadingUserPools } = usePools(
-      selectedTokens
-    );
 
     const columns = ref<ColumnDefinition<FarmWithStatsAndPool>[]>([
       {

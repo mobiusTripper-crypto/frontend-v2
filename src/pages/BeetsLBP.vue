@@ -1,6 +1,6 @@
 <template>
   <div class="lg:container lg:mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-3 mt-8 mb-4">
+    <!--    <div class="grid grid-cols-1 lg:grid-cols-3 mt-8 mb-4">
       <div class="col-span-2 order-2 lg:order-1 lg:-ml-6">
         <img src="~@/assets/images/beets-lbp-headline.svg" />
         <p class="font-medium pl-4 mr-12">
@@ -9,20 +9,32 @@
           Please, go in Adagio (slow) & Pianissimo (soft).
         </p>
         <p class="font-medium pl-4 mr-12 pt-4">
-          Before participating in this event, please read our blog post
-          explaining Liquidity Bootstrap Pools
+          Before participating, please read our blog post explaining Liquidity
+          Bootstrap Pools
           <a href="#" class="text-red-500 underline">here</a>.
         </p>
       </div>
       <div class="order-1 lg:order-2 px-1 lg:px-0">
         <img src="~@/assets/images/ludwig-says.svg" />
       </div>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8">
+    </div>-->
+    <div
+      class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8 mt-8"
+    >
       <!--      <div class="hidden lg:block" />-->
 
       <div class="col-span-2 order-2 lg:order-1">
         <div class="grid grid-cols-1 gap-y-8">
+          <div class="">
+            <div class="lg:-ml-5">
+              <img src="~@/assets/images/beets-lbp-headline.svg" />
+            </div>
+            <p class="font-medium">
+              Before participating, please read our blog post explaining
+              Liquidity Bootstrap Pools
+              <a href="#" class="text-red-500 underline">here</a>.
+            </p>
+          </div>
           <div class="px-1 lg:px-0">
             <BeetsLBPChart :loading="false" />
           </div>
@@ -54,6 +66,9 @@
       </div>
 
       <div class="order-1 lg:order-2 px-1 lg:px-0">
+        <div class="mb-6">
+          <img src="~@/assets/images/ludwig-says.svg" />
+        </div>
         <LBPTradeCard
           lbp-token-name="BEETS"
           lbp-token-address="0x8850Fd0C65d9B2B168153FAc6bAa269A566c4ef7"
@@ -76,7 +91,7 @@
 
     <div class="mt-24 mb-24">
       <h4 class="px-4 lg:px-0 mb-2">Transactions (1,245)</h4>
-      <LBPTable />
+      <LBPTable :pool="pool" />
     </div>
   </div>
 </template>
@@ -105,6 +120,7 @@ import BeetsLBPChart from '@/components/pages/lbp/BeetsLBPChart.vue';
 import BeetsLBPStatCards from '@/components/pages/lbp/BeetsLBPStatCards.vue';
 import LBPTradeCard from '@/components/cards/LBPTradeCard/LBPTradeCard.vue';
 import LBPTable from '@/components/tables/LBPTable/LBPTable.vue';
+import useSwapsQuery from '@/composables/queries/useSwapsQuery';
 
 interface PoolPageData {
   id: string;
@@ -135,6 +151,67 @@ export default defineComponent({
     const queryClient = useQueryClient();
     const { prices } = useTokens();
     const { blockNumber } = useWeb3();
+
+    const swapsQuery = useSwapsQuery();
+
+    const swaps = computed(() => {
+      console.log('ASDFSDFSDFSDFSDFSD');
+      console.log('swaps', swapsQuery.data);
+
+      return swapsQuery.data;
+    });
+
+    const pool = {
+      swaps: [
+        {
+          id:
+            '0x5def03cc7aefb69a799c90bf0990783a32d290c4f3aeb8d033e868e4c97da1c410',
+          timestamp: 1632465434,
+          tokenAmountIn: '0.04415',
+          tokenAmountOut: '1',
+          tokenIn: '0x70b55af71b29c5ca7e67bd1995250364c4be5554',
+          tokenInSym: 'USDC',
+          tokenOut: '0x8850fd0c65d9b2b168153fac6baa269a566c4ef7',
+          tokenOutSym: 'BEETS',
+          userAddress: {
+            id: '0x4fbe899d37fb7514adf2f41b0630e018ec275a0c'
+          }
+        },
+        {
+          id:
+            '0xc5b49c3f9ebc4bec2ee597a5c854c8fc7ae6d819c58c17775da306dab3ebb71b20',
+          timestamp: 1632411692,
+          tokenAmountIn: '0.116131',
+          tokenAmountOut: '1',
+          tokenIn: '0x70b55af71b29c5ca7e67bd1995250364c4be5554',
+          tokenInSym: 'USDC',
+          tokenOut: '0x8850fd0c65d9b2b168153fac6baa269a566c4ef7',
+          tokenOutSym: 'BEETS',
+          userAddress: {
+            id: '0x4fbe899d37fb7514adf2f41b0630e018ec275a0c'
+          }
+        }
+      ],
+      tokens: [
+        {
+          address: '0x70b55af71b29c5ca7e67bd1995250364c4be5554',
+          balance: '42857.300281',
+          id:
+            '0x07d91b61b149a0717952ad33d97cb4293b0bdb1a000200000000000000000025-0x70b55af71b29c5ca7e67bd1995250364c4be5554',
+          symbol: 'USDC',
+          weight: '0.162720277077698642'
+        },
+        {
+          address: '0x8850fd0c65d9b2b168153fac6baa269a566c4ef7',
+          balance: '4999998',
+          id:
+            '0x07d91b61b149a0717952ad33d97cb4293b0bdb1a000200000000000000000025-0x8850fd0c65d9b2b168153fac6baa269a566c4ef7',
+          symbol: 'BEETS',
+          weight: '0.837283515539747542'
+        }
+      ]
+    };
+
     /*
     /!**
      * QUERIES
@@ -298,7 +375,8 @@ export default defineComponent({
       isStableLikePool,
       poolName,*/
       // methods
-      fNum
+      fNum,
+      pool
       //onNewTx
     };
   }

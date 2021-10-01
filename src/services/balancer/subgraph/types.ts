@@ -137,3 +137,20 @@ export interface FarmUser {
   rewardDebt: number;
   beetxHarvested: number;
 }
+
+export interface SubgraphSwap {
+  id: string;
+  tokenIn: string;
+  tokenInSym: string;
+  tokenOut: string;
+  tokenOutString;
+  tokenAmountIn: number;
+  tokenAmountOut: number;
+  poolId: {
+    id: string;
+  };
+  userAddress: {
+    id: string;
+  };
+  timestamp: number;
+}

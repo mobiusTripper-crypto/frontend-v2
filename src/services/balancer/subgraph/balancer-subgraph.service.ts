@@ -4,6 +4,7 @@ import Pools from './entities/pools';
 import PoolShares from './entities/poolShares';
 import PoolActivities from './entities/poolActivities';
 import PoolSnapshots from './entities/poolSnapshots';
+import Swaps from './entities/swaps';
 
 const NETWORK = process.env.VUE_APP_NETWORK || '250';
 
@@ -12,6 +13,7 @@ export default class BalancerSubgraphService {
   poolShares: PoolShares;
   poolActivities: PoolActivities;
   poolSnapshots: PoolSnapshots;
+  swaps: Swaps;
 
   constructor(
     readonly client = balancerSubgraphClient,
@@ -22,6 +24,7 @@ export default class BalancerSubgraphService {
     this.poolShares = new PoolShares(this);
     this.poolActivities = new PoolActivities(this);
     this.poolSnapshots = new PoolSnapshots(this);
+    this.swaps = new Swaps(this);
   }
 
   public get blockTime(): number {
