@@ -67,13 +67,9 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
   },
   '250': {
     Balancer: {
-      Default:
-        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json',
-      Vetted:
-        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json'
+      Default: 'https://app.beethovenx.io/beethoven-fantom.tokenlist.json',
+      Vetted: 'https://app.beethovenx.io/beethoven-fantom.tokenlist.json'
     },
-    External: [
-      'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json'
-    ]
+    External: ['https://app.beethovenx.io/beethoven-fantom.tokenlist.json']
   }
 };
