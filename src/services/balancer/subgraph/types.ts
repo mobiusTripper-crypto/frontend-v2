@@ -143,7 +143,7 @@ export interface SubgraphSwap {
   tokenIn: string;
   tokenInSym: string;
   tokenOut: string;
-  tokenOutString;
+  tokenOutSym: string;
   tokenAmountIn: number;
   tokenAmountOut: number;
   poolId: {
@@ -152,5 +152,15 @@ export interface SubgraphSwap {
   userAddress: {
     id: string;
   };
+  timestamp: number;
+}
+
+export interface SubgraphTokenPrice {
+  id: string;
+  asset: string;
+  amount: string;
+  pricingAsset: string;
+  price: string;
+  block: string;
   timestamp: number;
 }

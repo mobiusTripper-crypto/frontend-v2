@@ -3,7 +3,11 @@
     <template v-slot:header>
       <div class="w-full flex items-center justify-between">
         <h4 class="font-bold">
-          {{ lbpTokenAddress === tokenOutAddress ? 'Buy' : 'Sell' }}
+          {{
+            lbpTokenAddress.toLowerCase() === tokenOutAddress.toLowerCase()
+              ? 'Buy'
+              : 'Sell'
+          }}
           {{ lbpTokenName }}
         </h4>
         <TradeSettingsPopover :context="TradeSettingsContext.trade" />
@@ -174,11 +178,6 @@ export default defineComponent({
     });
 
     const wrapType = computed(() => {
-      console.log(
-        'wrap action',
-        getWrapAction(tokenInAddress.value, tokenOutAddress.value)
-      );
-
       return getWrapAction(tokenInAddress.value, tokenOutAddress.value);
     });
     const isWrap = computed(() => wrapType.value === WrapType.Wrap);

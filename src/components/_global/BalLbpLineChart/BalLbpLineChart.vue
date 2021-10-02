@@ -122,7 +122,7 @@ export default defineComponent({
 
     // https://echarts.apache.org/en/option.html
     const chartConfig = computed(() => ({
-      animationDuration: 10000,
+      //animationDuration: 10000,
       // controls the legend you see at the top
       // formatter allows us to show the latest value for each series
       legend: {
@@ -264,8 +264,6 @@ export default defineComponent({
             : undefined
       }))
     }));
-
-    console.log('latest', (last(props.data[1].values) || [])[1]);
 
     // Triggered when hovering mouse over different xAxis points
     const handleAxisMoved = ({ dataIndex, seriesIndex }: AxisMoveEvent) => {

@@ -32,7 +32,6 @@ export default function useSwapsQuery(
 
   // METHODS
   const queryFn = async ({ pageParam = 0 }) => {
-    console.log('inside USE SWAPS QUERY');
     const queryArgs: any = {
       first: filterOptions?.pageSize || POOLS.Pagination.PerPage,
       skip: pageParam,
@@ -40,7 +39,7 @@ export default function useSwapsQuery(
     };
 
     if (filterOptions?.poolIds?.value.length) {
-      queryArgs.where.id_in = filterOptions.poolIds.value;
+      queryArgs.where.poolId_in = filterOptions.poolIds.value;
     }
 
     const swaps = await balancerSubgraphService.swaps.get(queryArgs);
