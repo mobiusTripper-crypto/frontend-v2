@@ -65,6 +65,7 @@
           <LBPTradeCard
             :lbp-token-name="lbpTokenName"
             :lbp-token-address="lbpTokenAddress"
+            :usdc-address="usdcAddress"
             :swap-enabled="swapEnabled"
             @on-tx="onNewTx"
           />
