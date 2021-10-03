@@ -17,6 +17,8 @@ type FilterOptions = {
   pageSize?: number;
 };
 
+const PAGE_SIZE = 20;
+
 export default function useSwapsQuery(
   options: UseInfiniteQueryOptions<SwapsQueryResponse> = {},
   filterOptions?: FilterOptions
@@ -25,7 +27,7 @@ export default function useSwapsQuery(
   const { appLoading } = useApp();
 
   // DATA
-  const queryKey = QUERY_KEYS.Swaps.All(filterOptions?.poolIds);
+  const queryKey = QUERY_KEYS.Swaps.Current(filterOptions?.poolIds);
 
   // COMPUTED
   const enabled = computed(() => !appLoading.value);
@@ -33,9 +35,11 @@ export default function useSwapsQuery(
   // METHODS
   const queryFn = async ({ pageParam = 0 }) => {
     const queryArgs: any = {
-      first: filterOptions?.pageSize || POOLS.Pagination.PerPage,
+      first: filterOptions?.pageSize || PAGE_SIZE,
       skip: pageParam,
-      where: {}
+      where: {},
+      orderBy: 'timestamp',
+      orderDirection: 'desc'
     };
 
     if (filterOptions?.poolIds?.value.length) {
@@ -46,10 +50,7 @@ export default function useSwapsQuery(
 
     return {
       swaps,
-      skip:
-        swaps.length >= POOLS.Pagination.PerPage
-          ? pageParam + POOLS.Pagination.PerPage
-          : undefined
+      skip: swaps.length >= PAGE_SIZE ? pageParam + PAGE_SIZE : undefined
     };
   };
 

@@ -144,8 +144,8 @@ export interface SubgraphSwap {
   tokenInSym: string;
   tokenOut: string;
   tokenOutSym: string;
-  tokenAmountIn: number;
-  tokenAmountOut: number;
+  tokenAmountIn: string;
+  tokenAmountOut: string;
   poolId: {
     id: string;
   };

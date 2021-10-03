@@ -1,5 +1,5 @@
 <template>
-  <h4 class="px-4 lg:px-0 mb-2">Transactions ({{ (data || []).length }})</h4>
+  <h4 class="px-4 lg:px-0 mb-2">Transactions</h4>
   <BalCard
     shadow="lg"
     class="mt-4"
@@ -14,7 +14,7 @@
       skeleton-class="h-64"
       sticky="both"
       :square="upToLargeBreakpoint"
-      @load-more="loadMore"
+      @load-more="loadMoreSwaps"
       :isSortable="false"
       :is-paginated="hasNextPage"
       :isLoadingMore="isLoadingMore"
@@ -27,7 +27,7 @@ import { computed, defineComponent, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SubgraphSwap } from '@/services/balancer/subgraph/types';
 import { getAddress } from '@ethersproject/address';
-import useNumbers from '@/composables/useNumbers';
+import useNumbers, { roundToNDecimalPlaces } from '@/composables/useNumbers';
 import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';
@@ -37,7 +37,7 @@ import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
 import useWeb3 from '@/services/web3/useWeb3';
 import { format } from 'date-fns';
 import useSwapsQuery from '@/composables/queries/useSwapsQuery';
-import { flatten } from 'lodash';
+import { flatten, orderBy } from 'lodash';
 
 export default defineComponent({
   components: {
@@ -65,7 +65,11 @@ export default defineComponent({
 
     const swaps = computed(() =>
       swapsQuery.data.value
-        ? flatten(swapsQuery.data.value.pages.map(page => page.swaps))
+        ? orderBy(
+            flatten(swapsQuery.data.value.pages.map(page => page.swaps)),
+            'timestamp',
+            'desc'
+          )
         : []
     );
 
@@ -120,9 +124,15 @@ export default defineComponent({
           ' at ' +
           format(swap.timestamp * 1000, 'HH:mm'),
         type: swap.tokenOut === props.lbpTokenAddress ? 'Buy' : 'Sell',
-        input: `${swap.tokenAmountIn} ${swap.tokenInSym}`,
-        output: `${swap.tokenAmountOut} ${swap.tokenOutSym}`,
-        price: `$${(swap.tokenAmountIn / swap.tokenAmountOut).toFixed(2)}`,
+        input: `${roundToNDecimalPlaces(parseFloat(swap.tokenAmountIn), 3)} ${
+          swap.tokenInSym
+        }`,
+        output: `${roundToNDecimalPlaces(parseFloat(swap.tokenAmountOut), 3)} ${
+          swap.tokenOutSym
+        }`,
+        price: `$${(
+          parseFloat(swap.tokenAmountIn) / parseFloat(swap.tokenAmountOut)
+        ).toFixed(2)}`,
         wallet: `${swap.userAddress.id.substr(
           0,
           6

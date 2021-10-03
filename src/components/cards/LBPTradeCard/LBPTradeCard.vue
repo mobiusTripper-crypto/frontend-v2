@@ -130,12 +130,14 @@ export default defineComponent({
     TradeSettingsPopover
   },
 
+  emits: ['onTx'],
+
   props: {
     lbpTokenName: { type: String, required: true },
     lbpTokenAddress: { type: String, required: true }
   },
 
-  setup() {
+  setup(_, { emit }) {
     const highPiAccepted = ref(false);
     const store = useStore();
     const router = useRouter();
@@ -207,6 +209,7 @@ export default defineComponent({
       priceImpact,
       sorReturn,
       latestTxHash,
+      latestTx,
       pools,
       fetchPools,
       poolsLoading,
@@ -317,6 +320,8 @@ export default defineComponent({
       txHash.value = latestTxHash.value;
       tradeSuccess.value = true;
       modalTradePreviewIsOpen.value = false;
+
+      emit('onTx', latestTx.value);
     });
 
     populateInitialTokens();

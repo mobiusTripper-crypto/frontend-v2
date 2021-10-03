@@ -44,16 +44,16 @@ const QUERY_KEYS = {
     ]
   },
   Swaps: {
-    All: (poolIds: Ref<string[]> | undefined) => [
+    Current: (poolIds: Ref<string[]> | undefined) => [
       SWAPS_ROOT_KEY,
-      'all',
+      'current',
       { poolIds }
     ]
   },
   TokenPrices: {
-    All: (poolId: Ref<string>, asset: Ref<string>) => [
+    Current: (poolId: Ref<string>, asset: Ref<string>) => [
       TOKEN_PRICES_ROOT_KEY,
-      'all',
+      'current',
       { poolId, asset }
     ]
   },

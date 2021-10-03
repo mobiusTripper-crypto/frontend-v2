@@ -350,11 +350,15 @@ export default defineComponent({
     );
 
     const tokenInIsLbpToken = computed(
-      () => props.lbpTokenAddress === tokenInAddressInput.value
+      () =>
+        props.lbpTokenAddress.toLowerCase() ===
+        tokenInAddressInput.value.toLowerCase()
     );
 
     const tokenOutIsLbpToken = computed(
-      () => props.lbpTokenAddress === tokenOutAddressInput.value
+      () =>
+        props.lbpTokenAddress.toLowerCase() ===
+        tokenOutAddressInput.value.toLowerCase()
     );
 
     return {

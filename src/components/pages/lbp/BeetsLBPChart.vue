@@ -6,6 +6,7 @@
       :isPeriodSelectionEnabled="false"
       :axisLabelFormatter="{ yAxis: '$0.00', xAxis: 'datetime' }"
       :color="chartColors"
+      :legendState="{}"
       height="96"
       :showLegend="true"
     />
@@ -61,6 +62,35 @@ export default defineComponent({
     const store = useStore();
     const appLoading = computed(() => store.state.app.loading);
     const tailwind = useTailwind();
+    const beets = computed(() =>
+      props.pool?.tokens?.find(
+        token => token.address.toLowerCase() === props.lbpTokenAddress
+      )
+    );
+    const usdc = computed(() =>
+      props.pool?.tokens?.find(
+        token => token.address.toLowerCase() === props.usdcAddress
+      )
+    );
+    const currentBeetsPrice = computed(() => {
+      if (!beets.value || !usdc.value) {
+        return 0;
+      }
+
+      const beetsBalance = parseFloat(beets.value!.balance);
+      const beetsWeight = parseFloat(beets.value!.weight);
+      const usdcBalance = parseFloat(usdc.value!.balance);
+      const usdcWeight = parseFloat(usdc.value!.weight);
+
+      return ((beetsWeight / usdcWeight) * usdcBalance) / beetsBalance;
+    });
+    const beetsBalance = computed(() =>
+      parseFloat(beets.value?.balance || '0')
+    );
+    const beetsWeight = computed(() => parseFloat(beets.value?.weight || '0'));
+    const usdcBalance = computed(() => parseFloat(usdc.value?.balance || '0'));
+    const usdcWeight = computed(() => parseFloat(usdc.value?.weight || '0'));
+
     const lastPrice = computed(() => {
       const prices = props.tokenPrices;
 
@@ -81,68 +111,41 @@ export default defineComponent({
       tailwind.theme.colors.red['500']
     ];
 
-    const times: string[] = [];
-    const predicted: number[] = [];
-    const current: number[] = [];
-    const date = parseISO(props.lbpStartTime);
-
-    const beetsBalance = 5000000;
-    const usdcBalance = 43000;
-    let beetsWeight = 0.95;
-    let usdcWeight = 0.05;
-    const weightStep = 0.00625;
-    const currentHour = 0;
-
-    for (let i = currentHour; i < 24; i++) {
-      times.push(format(addHours(date, i), 'yyyy-MM-dd HH:mm:ss'));
-
-      if (i < 8) {
-        current.push(0.17);
-        predicted.push(0.17);
-      } else {
-        const beetsPrice =
-          ((beetsWeight / usdcWeight) * usdcBalance) / beetsBalance;
-        predicted.push(beetsPrice);
-      }
-
-      beetsWeight -= weightStep;
-      usdcWeight += weightStep;
-    }
-
     const beetsPriceValues = computed(() => {
-      const prices = props.tokenPrices || [];
-
-      return zip(
-        prices.map(price =>
-          format(fromUnixTime(price.timestamp), 'yyyy-MM-dd HH:mm:ss')
-        ),
-        prices.map(price => parseFloat(price.price))
-      );
-    });
-
-    const predictedPriceValues = computed(() => {
-      const tokens = props.pool?.tokens;
-      const beets = tokens?.find(
-        token => token.address.toLowerCase() === props.lbpTokenAddress
-      );
-      const usdc = tokens?.find(
-        token => token.address.toLowerCase() === props.usdcAddress
-      );
-
-      if (!beets || !usdc) {
+      if (!beets.value || !usdc.value) {
         return [];
       }
 
-      const beetsBalance = parseFloat(beets.balance);
-      const usdcBalance = parseFloat(usdc.balance);
-      let beetsWeight = parseFloat(beets.weight);
-      let usdcWeight = parseFloat(usdc.weight);
-      const predicted: number[] = [lastPrice.value];
-      const times: string[] = [
-        format(parseISO(lastPriceTimestamp.value), 'yyyy-MM-dd HH:mm:ss')
+      const tokenPrices = props.tokenPrices || [];
+      const times = [
+        ...tokenPrices.map(price =>
+          format(fromUnixTime(price.timestamp), 'yyyy-MM-dd HH:mm:ss')
+        ),
+        format(parseISO(lastPriceTimestamp.value), 'yyyy-MM-dd HH:mm:ss'),
+        format(new Date(), 'yyyy-MM-dd HH:mm:ss')
       ];
+      const prices = [
+        ...tokenPrices.map(price => parseFloat(price.price)),
+        currentBeetsPrice.value,
+        currentBeetsPrice.value
+      ];
+
+      return zip(times, prices);
+    });
+
+    const predictedPriceValues = computed(() => {
+      if (!beets.value || !usdc.value) {
+        return [];
+      }
+
+      const beetsBalance = parseFloat(beets.value.balance);
+      const usdcBalance = parseFloat(usdc.value.balance);
+      let beetsWeight = parseFloat(beets.value.weight);
+      let usdcWeight = parseFloat(usdc.value.weight);
+      const predicted: number[] = [currentBeetsPrice.value];
+      const times: string[] = [format(new Date(), 'yyyy-MM-dd HH:mm:ss')];
       const endTimestamp = parseISO(props.lbpEndTime);
-      let timestamp = parseISO(lastPriceTimestamp.value);
+      let timestamp = new Date();
 
       while (isBefore(addHours(timestamp, 1), endTimestamp)) {
         const beetsPrice =
@@ -150,18 +153,29 @@ export default defineComponent({
 
         predicted.push(beetsPrice);
         times.push(format(timestamp, 'yyyy-MM-dd HH:mm:ss'));
-
         timestamp = addHours(timestamp, 1);
+
         beetsWeight -= props.weightStep;
         usdcWeight += props.weightStep;
       }
 
-      console.log('predicted prices', zip(times, predicted));
+      times.push(format(endTimestamp, 'yyyy-MM-dd HH:mm:ss'));
+      predicted.push(((80 / 20) * usdcBalance) / beetsBalance);
 
       return zip(times, predicted);
     });
 
     const series = computed(() => {
+      console.log('SERIES', [
+        {
+          name: 'Predicted Price*',
+          values: predictedPriceValues.value
+        },
+        {
+          name: 'BEETS Price',
+          values: beetsPriceValues.value
+        }
+      ]);
       return [
         {
           name: 'Predicted Price*',

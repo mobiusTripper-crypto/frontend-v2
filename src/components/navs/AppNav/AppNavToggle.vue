@@ -38,7 +38,7 @@
       ]"
       @click="trackGoal(Goals.ClickNavBeets)"
     >
-      BEETS
+      Buy BEETS
     </router-link>
   </div>
 </template>

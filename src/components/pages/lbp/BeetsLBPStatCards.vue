@@ -70,9 +70,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const route = useRoute();
     const { fNum } = useNumbers();
-    const { txListener } = useEthers();
     const harvesting = ref(false);
 
     const timeRemaining = differenceInMilliseconds(
@@ -86,6 +84,7 @@ export default defineComponent({
 
     const lbpData = computed(() => {
       const tokens = props.pool?.tokens;
+      console.log('BeetsLBPStatCards tokens', tokens);
       const beets = tokens?.find(
         token => token.address.toLowerCase() === props.lbpTokenAddress
       );

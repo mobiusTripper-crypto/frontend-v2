@@ -17,7 +17,7 @@ export default function useSubgraphTokenPricesQuery(
   const { appLoading } = useApp();
 
   // DATA
-  const queryKey = QUERY_KEYS.TokenPrices.All(poolId, asset);
+  const queryKey = QUERY_KEYS.TokenPrices.Current(poolId, asset);
 
   // COMPUTED
   const enabled = computed(() => !appLoading.value);
