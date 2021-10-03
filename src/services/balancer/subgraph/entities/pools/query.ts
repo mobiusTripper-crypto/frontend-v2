@@ -27,6 +27,7 @@ const defaultAttrs = {
   owner: true,
   factory: true,
   amp: true,
+  swapEnabled: true,
   tokens: {
     address: true,
     balance: true,

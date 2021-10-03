@@ -11,7 +11,7 @@
             </div>
             <p class="font-medium">
               Before participating, please read our blog post explaining
-              Liquidity Bootstrap Pools
+              Liquidity Bootstrapping Pools
               <a href="#" class="text-red-500 underline">here</a>.
             </p>
           </div>
@@ -24,7 +24,6 @@
               :lbp-end-time="lbpEndTime"
               :lbp-start-time="lbpStartTime"
               :token-prices="tokenPrices"
-              :lb-start-price="lbpStartPrice"
               :usdc-address="usdcAddress"
               :weight-step="0.00625"
               :pool="pool"
@@ -48,8 +47,8 @@
             </p>
             <p class="text-gray-300">
               <span class="font-bold">Note</span>: Users can both
-              <span class="text-green-500">BUY</span> and
-              <span class="text-red-500">SELL</span>
+              <span class="font-bold text-green-500">BUY</span> and
+              <span class="font-bold text-red-500">SELL</span>
               during this event. Please be careful.
             </p>
           </div>
@@ -66,6 +65,7 @@
           <LBPTradeCard
             :lbp-token-name="lbpTokenName"
             :lbp-token-address="lbpTokenAddress"
+            :swap-enabled="swapEnabled"
             @on-tx="onNewTx"
           />
         </template>
@@ -110,10 +110,9 @@ const BEETS_ADDRESS = '0xa7d7e5ed1f90af81d7729f4931bbc03344397c4a';
 const BEETS_STARTING_AMOUNT = 5_000_000;
 const USDC_ADDRESS = '0x70b55af71b29c5ca7e67bd1995250364c4be5554';
 const LBP_POOL_ID =
-  '0x3d69152242fcaac39599e61eff842c0eb011f243000200000000000000000026';
-const LBP_START_TIME = '2021-10-02T15:15:00+0000';
-const LBP_END_TIME = '2021-10-03T15:15:00+0000';
-const LBP_START_PRICE = 0.17;
+  '0xb9dc9c0b40b4a78b09dde86551c9e8398cd9d414000200000000000000000027';
+const LBP_START_TIME = '2021-10-03T10:30:00+0000';
+const LBP_END_TIME = '2021-10-04T10:30:00+0000';
 
 interface LbpPageData {
   refetchQueriesOnBlockNumber: number;
@@ -152,9 +151,11 @@ export default defineComponent({
         poolQuery.error.value
     );
     const pool = computed(() => {
+      console.log(poolQuery.data.value);
       return poolQuery.data.value;
     });
     const enabled = computed(() => !!pool.value?.id);
+    const swapEnabled = computed(() => poolQuery.data.value?.swapEnabled);
 
     const tokenPricesQuery = useSubgraphTokenPricesQuery(
       ref(LBP_POOL_ID),
@@ -210,11 +211,11 @@ export default defineComponent({
       lbpStartTime: LBP_START_TIME,
       lbpEndTime: LBP_END_TIME,
       usdcAddress: USDC_ADDRESS,
-      lbpStartPrice: LBP_START_PRICE,
       loadingPool,
       tokenPrices,
       loadingTokenPrices,
       loadingTokenLists,
+      swapEnabled,
       onNewTx
     };
   }

@@ -56,10 +56,14 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
   },
   '4': {
     Balancer: {
-      Default: 'http://localhost:8080/beethoven-rinkeby.tokenlist.json',
-      Vetted: 'http://localhost:8080/beethoven-rinkeby.tokenlist.json'
+      Default:
+        'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-rinkeby.tokenlist.json',
+      Vetted:
+        'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-rinkeby.tokenlist.json'
     },
-    External: ['http://localhost:8080/beethoven-rinkeby.tokenlist.json']
+    External: [
+      'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-rinkeby.tokenlist.json'
+    ]
   },
   '250': {
     Balancer: {

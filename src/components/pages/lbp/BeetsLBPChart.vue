@@ -47,7 +47,6 @@ export default defineComponent({
     lbpPoolId: { type: String, required: true },
     lbpEndTime: { type: String, required: true },
     lbpStartTime: { type: String, required: true },
-    lbpStartPrice: { type: Number, required: true },
     weightStep: { type: Number, required: true },
     loading: { type: Boolean, default: true },
     usdcAddress: { type: String, required: true },
@@ -84,20 +83,7 @@ export default defineComponent({
 
       return ((beetsWeight / usdcWeight) * usdcBalance) / beetsBalance;
     });
-    const beetsBalance = computed(() =>
-      parseFloat(beets.value?.balance || '0')
-    );
-    const beetsWeight = computed(() => parseFloat(beets.value?.weight || '0'));
-    const usdcBalance = computed(() => parseFloat(usdc.value?.balance || '0'));
-    const usdcWeight = computed(() => parseFloat(usdc.value?.weight || '0'));
 
-    const lastPrice = computed(() => {
-      const prices = props.tokenPrices;
-
-      return prices && prices.length > 0
-        ? parseFloat(prices[prices.length - 1].price)
-        : props.lbpStartPrice;
-    });
     const lastPriceTimestamp = computed(() => {
       const prices = props.tokenPrices;
 

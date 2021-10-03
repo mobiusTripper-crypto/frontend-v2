@@ -134,10 +134,11 @@ export default defineComponent({
 
   props: {
     lbpTokenName: { type: String, required: true },
-    lbpTokenAddress: { type: String, required: true }
+    lbpTokenAddress: { type: String, required: true },
+    swapEnabled: { type: Boolean }
   },
 
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const highPiAccepted = ref(false);
     const store = useStore();
     const router = useRouter();
@@ -240,6 +241,15 @@ export default defineComponent({
     });
 
     const error = computed(() => {
+      console.log('swap enabled', props.swapEnabled);
+      if (props.swapEnabled === false) {
+        return {
+          header: 'Swapping disabled',
+          body:
+            'Swapping has not yet been enabled for this Liquidity Bootstrapping Pool.'
+        };
+      }
+
       if (isHighPriceImpact.value) {
         return {
           header: t('highPriceImpact'),
