@@ -3,6 +3,8 @@ export const POOLS_ROOT_KEY = 'pools';
 export const FARMS_ROOT_KEY = 'farms';
 export const BALANCES_ROOT_KEY = 'accountBalances';
 export const CLAIMS_ROOT_KEY = 'claims';
+export const SWAPS_ROOT_KEY = 'swaps';
+export const TOKEN_PRICES_ROOT_KEY = 'tokenPrices';
 
 const QUERY_KEYS = {
   Farms: {
@@ -39,6 +41,20 @@ const QUERY_KEYS = {
       'activities',
       'user',
       { account, id }
+    ]
+  },
+  Swaps: {
+    Current: (poolIds: Ref<string[]> | undefined) => [
+      SWAPS_ROOT_KEY,
+      'current',
+      { poolIds }
+    ]
+  },
+  TokenPrices: {
+    Current: (poolId: Ref<string>, asset: Ref<string>) => [
+      TOKEN_PRICES_ROOT_KEY,
+      'current',
+      { poolId, asset }
     ]
   },
   TokenLists: {

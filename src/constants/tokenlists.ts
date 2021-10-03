@@ -57,23 +57,19 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
   '4': {
     Balancer: {
       Default:
-        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-rinkeby.tokenlist.json',
+        'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-rinkeby.tokenlist.json',
       Vetted:
-        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-rinkeby.tokenlist.json'
+        'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-rinkeby.tokenlist.json'
     },
     External: [
-      'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-rinkeby.tokenlist.json'
+      'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-rinkeby.tokenlist.json'
     ]
   },
   '250': {
     Balancer: {
-      Default:
-        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json',
-      Vetted:
-        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json'
+      Default: 'https://app.beethovenx.io/beethoven-fantom.tokenlist.json',
+      Vetted: 'https://app.beethovenx.io/beethoven-fantom.tokenlist.json'
     },
-    External: [
-      'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-fantom.tokenlist.json'
-    ]
+    External: ['https://app.beethovenx.io/beethoven-fantom.tokenlist.json']
   }
 };

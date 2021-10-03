@@ -120,6 +120,7 @@ export default function useSor({
   const confirming = ref(false);
   const priceImpact = ref(0);
   const latestTxHash = ref('');
+  const latestTx = ref<TransactionResponse | null>(null);
   const poolsLoading = ref(true);
   const slippageError = ref(false);
 
@@ -436,6 +437,7 @@ export default function useSor({
       onTxConfirmed: () => {
         trading.value = false;
         latestTxHash.value = tx.hash;
+        latestTx.value = tx;
         trackGoal(Goals.Swapped);
       },
       onTxFailed: () => {
@@ -663,6 +665,7 @@ export default function useSor({
     trading,
     priceImpact,
     latestTxHash,
+    latestTx,
     fetchPools,
     poolsLoading,
     getQuote,

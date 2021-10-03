@@ -51,6 +51,11 @@ export function fNum(
   );
 }
 
+export function roundToNDecimalPlaces(number: number, decimalPlaces: number) {
+  //@ts-ignore
+  return +(Math.round(number + 'e+' + decimalPlaces) + 'e-' + decimalPlaces);
+}
+
 export default function useNumbers() {
   const { priceFor } = useTokens();
 

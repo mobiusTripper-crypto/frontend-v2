@@ -35,6 +35,7 @@ export interface Pool {
   totalSwapFee: string;
   totalSwapVolume: string;
   hasLiquidityMiningRewards: boolean;
+  swapEnabled?: boolean;
 }
 
 export interface DecoratedPool extends Pool {
@@ -136,4 +137,31 @@ export interface FarmUser {
   amount: number;
   rewardDebt: number;
   beetxHarvested: number;
+}
+
+export interface SubgraphSwap {
+  id: string;
+  tokenIn: string;
+  tokenInSym: string;
+  tokenOut: string;
+  tokenOutSym: string;
+  tokenAmountIn: string;
+  tokenAmountOut: string;
+  poolId: {
+    id: string;
+  };
+  userAddress: {
+    id: string;
+  };
+  timestamp: number;
+}
+
+export interface SubgraphTokenPrice {
+  id: string;
+  asset: string;
+  amount: string;
+  pricingAsset: string;
+  price: string;
+  block: string;
+  timestamp: number;
 }
