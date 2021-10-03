@@ -166,16 +166,6 @@ export default defineComponent({
     });
 
     const series = computed(() => {
-      console.log('SERIES', [
-        {
-          name: 'Predicted Price*',
-          values: predictedPriceValues.value
-        },
-        {
-          name: 'BEETS Price',
-          values: beetsPriceValues.value
-        }
-      ]);
       return [
         {
           name: 'Predicted Price*',

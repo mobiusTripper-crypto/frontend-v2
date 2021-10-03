@@ -84,7 +84,6 @@ export default defineComponent({
 
     const lbpData = computed(() => {
       const tokens = props.pool?.tokens;
-      console.log('BeetsLBPStatCards tokens', tokens);
       const beets = tokens?.find(
         token => token.address.toLowerCase() === props.lbpTokenAddress
       );

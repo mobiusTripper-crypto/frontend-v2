@@ -60,11 +60,15 @@
         <div class="mb-6">
           <img src="~@/assets/images/ludwig-says.svg" />
         </div>
-        <LBPTradeCard
-          :lbp-token-name="lbpTokenName"
-          :lbp-token-address="lbpTokenAddress"
-          @on-tx="onNewTx"
-        />
+
+        <BalLoadingBlock v-if="appLoading || loadingTokenLists" class="h-96" />
+        <template v-else>
+          <LBPTradeCard
+            :lbp-token-name="lbpTokenName"
+            :lbp-token-address="lbpTokenAddress"
+            @on-tx="onNewTx"
+          />
+        </template>
       </div>
     </div>
 
@@ -99,6 +103,7 @@ import {
   SWAPS_ROOT_KEY,
   TOKEN_PRICES_ROOT_KEY
 } from '@/constants/queryKeys';
+import useTokenLists from '@/composables/useTokenLists';
 
 const BEETS_SYMBOL = 'BEETS';
 const BEETS_ADDRESS = '0xa7d7e5ed1f90af81d7729f4931bbc03344397c4a';
@@ -137,6 +142,7 @@ export default defineComponent({
     const { isWalletReady } = useWeb3();
     const queryClient = useQueryClient();
     const { blockNumber } = useWeb3();
+    const { loadingTokenLists } = useTokenLists();
 
     const poolQuery = usePoolQuery(LBP_POOL_ID);
     const loadingPool = computed(
@@ -208,6 +214,7 @@ export default defineComponent({
       loadingPool,
       tokenPrices,
       loadingTokenPrices,
+      loadingTokenLists,
       onNewTx
     };
   }

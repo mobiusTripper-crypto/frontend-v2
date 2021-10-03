@@ -127,6 +127,14 @@
       "decimals": 18,
       "chainId": 4,
       "logoURI": "https://assets.coingecko.com/coins/images/14586/large/ice.png"
+    },
+    {
+      "name": "Beethoven X",
+      "address": "0xa7d7e5eD1f90aF81D7729F4931bbc03344397C4A",
+      "symbol": "BEETS",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/beets-icon-large.png"
     }
   ]
 }

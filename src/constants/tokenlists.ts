@@ -56,14 +56,10 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
   },
   '4': {
     Balancer: {
-      Default:
-        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-rinkeby.tokenlist.json',
-      Vetted:
-        'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-rinkeby.tokenlist.json'
+      Default: 'http://localhost:8080/beethoven-rinkeby.tokenlist.json',
+      Vetted: 'http://localhost:8080/beethoven-rinkeby.tokenlist.json'
     },
-    External: [
-      'https://storageapi.fleek.co/beethovenxfi-team-bucket/beethoven-rinkeby.tokenlist.json'
-    ]
+    External: ['http://localhost:8080/beethoven-rinkeby.tokenlist.json']
   },
   '250': {
     Balancer: {
