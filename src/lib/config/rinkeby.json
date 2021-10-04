@@ -11,6 +11,8 @@
   "loggingRpc": "",
   "explorer": "https://rinkeby.etherscan.io",
   "subgraph": "https://api.studio.thegraph.com/query/8788/beethovenx-rinkeby/v0.0.2",
+  "farmSubgraph": "https://api.studio.thegraph.com/query/8788/beethovenx-farms-rinkeby/0.0.1",
+  "blockSubgraph": "https://api.studio.thegraph.com/query/8788/rinkeby-blocks/v0.0.2",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "nativeAsset": {
