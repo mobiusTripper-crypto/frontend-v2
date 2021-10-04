@@ -67,9 +67,13 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
   },
   '250': {
     Balancer: {
-      Default: 'https://app.beethovenx.io/beethoven-fantom.tokenlist.json',
-      Vetted: 'https://app.beethovenx.io/beethoven-fantom.tokenlist.json'
+      Default:
+        'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-fantom.tokenlist.json',
+      Vetted:
+        'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-fantom.tokenlist.json'
     },
-    External: ['https://app.beethovenx.io/beethoven-fantom.tokenlist.json']
+    External: [
+      'https://beethoven-assets.s3.eu-central-1.amazonaws.com/beethoven-fantom.tokenlist.json'
+    ]
   }
 };
