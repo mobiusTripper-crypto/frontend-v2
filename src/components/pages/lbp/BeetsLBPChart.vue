@@ -93,8 +93,8 @@ export default defineComponent({
     });
 
     const chartColors = [
-      tailwind.theme.colors.green['400'],
-      tailwind.theme.colors.red['500']
+      tailwind.theme.colors.gray['500'],
+      tailwind.theme.colors.green['400']
     ];
 
     const beetsPriceValues = computed(() => {
@@ -134,12 +134,12 @@ export default defineComponent({
       let timestamp = new Date();
 
       while (isBefore(addHours(timestamp, 1), endTimestamp)) {
+        timestamp = addHours(timestamp, 1);
         const beetsPrice =
           ((beetsWeight / usdcWeight) * usdcBalance) / beetsBalance;
 
         predicted.push(beetsPrice);
         times.push(format(timestamp, 'yyyy-MM-dd HH:mm:ss'));
-        timestamp = addHours(timestamp, 1);
 
         beetsWeight -= props.weightStep;
         usdcWeight += props.weightStep;

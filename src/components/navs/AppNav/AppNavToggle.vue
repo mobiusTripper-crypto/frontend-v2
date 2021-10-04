@@ -38,7 +38,7 @@
       ]"
       @click="trackGoal(Goals.ClickNavBeets)"
     >
-      Buy BEETS
+      <span class="hidden lg:inline-block">Buy&nbsp;</span>BEETS
     </router-link>
   </div>
 </template>

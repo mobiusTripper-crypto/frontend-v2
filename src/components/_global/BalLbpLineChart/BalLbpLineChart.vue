@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+//import 'echarts';
 import { computed, defineComponent, PropType, ref } from 'vue';
 import numeral from 'numeral';
 import * as echarts from 'echarts/core';
@@ -227,6 +228,21 @@ export default defineComponent({
           `;
         }
       },
+      /*dataZoom: [
+        {
+          type: 'slider',
+          show: true,
+          xAxisIndex: [0]
+          //start: 1,
+          //end: 35
+        },
+        {
+          type: 'inside',
+          xAxisIndex: [0]
+          //start: 1,
+          //end: 35
+        }
+      ],*/
       series: props.data.map((d, i) => ({
         data: d.values,
         type: 'line',
@@ -239,7 +255,7 @@ export default defineComponent({
           return k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
         },*/
         lineStyle: {
-          width: 3
+          width: 2
         },
 
         markPoint:
