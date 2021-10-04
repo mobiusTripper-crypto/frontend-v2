@@ -42,7 +42,7 @@
         />
       </div>
     </div>
-    <div v-if="!isPolygon" class="mt-6">
+    <!--    <div v-if="!isPolygon" class="mt-6">
       <div class="flex items-baseline">
         <span v-text="$t('transactionType')" class="font-medium mb-2" />
         <BalTooltip>
@@ -59,7 +59,7 @@
           @update:modelValue="setEthereumTxType"
         />
       </div>
-    </div>
+    </div>-->
     <div v-if="appTradeInterface === TradeInterface.GNOSIS" class="mt-6">
       <div class="flex items-baseline">
         <span v-text="$t('transactionDeadline')" class="font-medium mb-2" />
