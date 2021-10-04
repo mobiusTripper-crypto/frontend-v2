@@ -24,7 +24,7 @@ export default class FarmSubgraphClient {
         masterChef {
           id
           totalAllocPoint
-          beetxPerBlock
+          beetsPerBlock
         }
         rewarder {
           id
@@ -49,7 +49,7 @@ export default class FarmSubgraphClient {
         masterChef {
           id
           totalAllocPoint
-          beetxPerBlock
+          beetsPerBlock
         }
         rewarder {
           id
@@ -69,7 +69,7 @@ export default class FarmSubgraphClient {
       user: user(id: "${farmId}-${userAddress.toLowerCase()}") {
         amount
         rewardDebt
-        beetxHarvested
+        beetsHarvested
       }
     }
     `;
@@ -78,7 +78,7 @@ export default class FarmSubgraphClient {
 
     return data.user
       ? data.user
-      : { amount: 0, rewardDebt: 0, beetxHarvested: 0 };
+      : { amount: 0, rewardDebt: 0, beetsHarvested: 0 };
   }
 
   private async get(query) {

@@ -25,7 +25,7 @@ export default function useFarmUserQuery(
         farmId,
         account.value
       );
-      const pendingBeetx = await masterChefContractsService.masterChef.getPendingBeetxForFarm(
+      const pendingBeetx = await masterChefContractsService.masterChef.getPendingBeetsForFarm(
         farmId,
         account.value
       );

@@ -73,6 +73,7 @@ import usePools from '@/composables/pools/usePools';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import useWeb3 from '@/services/web3/useWeb3';
+import useBeetsPrice from '@/composables/useBeetsPrice';
 
 export default defineComponent({
   components: {
@@ -102,6 +103,7 @@ export default defineComponent({
     const { pools, isLoadingPools, isLoadingUserPools } = usePools(
       selectedTokens
     );
+    const beetsPrice = useBeetsPrice();
 
     const decoratedFarms = computed(() =>
       farms.value.length > 0 && pools.value.length > 0
@@ -110,7 +112,12 @@ export default defineComponent({
               pool => pool.address.toLowerCase() === farm.pair.toLowerCase()
             );
             const farmWithPool = { ...farm, pool };
-            const apr = calculateApr(farmWithPool, blocksPerYear.value);
+
+            const apr = calculateApr(
+              farmWithPool,
+              blocksPerYear.value,
+              beetsPrice
+            );
 
             return {
               ...farm,
@@ -124,7 +131,7 @@ export default defineComponent({
                   {
                     forcePreset: true
                   }
-                ) + ' BEETx / day',
+                ) + ' BEETS / day',
               apr: apr === 0 ? '' : fNum(apr, 'percent', { forcePreset: true }),
               pool
             };

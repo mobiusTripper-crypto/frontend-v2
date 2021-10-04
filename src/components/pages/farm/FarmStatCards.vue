@@ -49,6 +49,7 @@ import useFarm from '@/composables/farms/useFarm';
 import useEthers from '@/composables/useEthers';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import { useRoute } from 'vue-router';
+import useBeetsPrice from '@/composables/useBeetsPrice';
 
 export default defineComponent({
   components: {
@@ -94,7 +95,8 @@ export default defineComponent({
       const farm = props.farm;
 
       const tvl = calculateTvl(farm);
-      const apr = calculateApr(farm, blocksPerYear.value);
+      const beetsPrice = useBeetsPrice();
+      const apr = calculateApr(farm, blocksPerYear.value, beetsPrice);
       const userShare = new BigNumber(farmUser.value?.amount || 0)
         .div(farm.slpBalance)
         .toNumber();

@@ -27,30 +27,32 @@ export function calculateRewardsPerDay(
   farm: FarmWithPool,
   blocksPerDay: number
 ) {
-  const totalBeetxPerDay = new BigNumber(
-    farm.masterChef.beetxPerBlock
+  const totalBeetsPerDay = new BigNumber(
+    farm.masterChef.beetsPerBlock
   ).multipliedBy(blocksPerDay);
 
-  return totalBeetxPerDay
+  return totalBeetsPerDay
     .multipliedBy(farm.allocPoint / farm.masterChef.totalAllocPoint)
     .dividedBy(1e18)
     .toNumber();
 }
 
-export function calculateApr(farm: FarmWithPool, blocksPerYear: number) {
+export function calculateApr(
+  farm: FarmWithPool,
+  blocksPerYear: number,
+  beetsPrice: number
+) {
   const tvl = calculateTvl(farm);
 
   if (tvl === 0) {
     return 0;
   }
 
-  //TODO: load the beetxPrice from a subgraph
-  const beetxPrice = 0.01;
-  const beetxPerBlock = Number(parseInt(farm.masterChef.beetxPerBlock) / 1e18);
-  const beetxPerYear = beetxPerBlock * blocksPerYear;
-  const farmBeetxPerYear =
-    (farm.allocPoint / farm.masterChef.totalAllocPoint) * beetxPerYear;
-  const valuePerYear = beetxPrice * farmBeetxPerYear;
+  const beetsPerBlock = Number(parseInt(farm.masterChef.beetsPerBlock) / 1e18);
+  const beetsPerYear = beetsPerBlock * blocksPerYear;
+  const farmBeetsPerYear =
+    (farm.allocPoint / farm.masterChef.totalAllocPoint) * beetsPerYear;
+  const valuePerYear = beetsPrice * farmBeetsPerYear;
 
   return valuePerYear / tvl;
 }

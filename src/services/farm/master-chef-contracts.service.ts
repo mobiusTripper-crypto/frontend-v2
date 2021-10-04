@@ -1,6 +1,6 @@
 import { Config } from '@/lib/config';
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { default as MasterChefAbi } from '@/lib/abi/MasterChefV2.json';
+import { default as MasterChefAbi } from '@/lib/abi/BeethovenxMasterChef.json';
 import { rpcProviderService as _rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
 import { configService as _configService } from '@/services/config/config.service';
 import MasterChef from './contracts/master-chef';
