@@ -90,31 +90,36 @@ export default defineComponent({
         name: 'Type',
         id: 'type',
         accessor: 'type',
-        sortKey: 'type'
+        sortKey: 'type',
+        width: 150
       },
       {
         name: 'Input',
         id: 'input',
         accessor: 'input',
-        sortKey: 'input'
+        sortKey: 'input',
+        width: 150
       },
       {
         name: 'Output',
         id: 'output',
         accessor: 'output',
-        sortKey: 'output'
+        sortKey: 'output',
+        width: 150
       },
       {
         name: 'BEETS Price',
         id: 'price',
         accessor: 'price',
-        sortKey: 'price'
+        sortKey: 'price',
+        width: 150
       },
       {
         name: 'Wallet',
         id: 'wallet',
         accessor: 'wallet',
-        sortKey: 'wallet'
+        sortKey: 'wallet',
+        width: 150
       }
     ]);
 
