@@ -135,14 +135,14 @@ export default defineComponent({
 
       while (isBefore(addHours(timestamp, 1), endTimestamp)) {
         timestamp = addHours(timestamp, 1);
+        beetsWeight -= props.weightStep;
+        usdcWeight += props.weightStep;
+
         const beetsPrice =
           ((beetsWeight / usdcWeight) * usdcBalance) / beetsBalance;
 
         predicted.push(beetsPrice);
         times.push(format(timestamp, 'yyyy-MM-dd HH:mm:ss'));
-
-        beetsWeight -= props.weightStep;
-        usdcWeight += props.weightStep;
       }
 
       times.push(format(endTimestamp, 'yyyy-MM-dd HH:mm:ss'));
