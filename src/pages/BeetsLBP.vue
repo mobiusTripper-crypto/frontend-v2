@@ -26,6 +26,7 @@
               :token-prices="tokenPrices"
               :usdc-address="usdcAddress"
               :weight-step="0.00625"
+              :time-step="60 * 7"
               :pool="pool"
             />
           </div>

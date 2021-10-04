@@ -19,6 +19,7 @@ import { useStore } from 'vuex';
 import { zip } from 'lodash';
 import {
   addHours,
+  addSeconds,
   format,
   formatISO,
   fromUnixTime,
@@ -48,6 +49,7 @@ export default defineComponent({
     lbpEndTime: { type: String, required: true },
     lbpStartTime: { type: String, required: true },
     weightStep: { type: Number, required: true },
+    timeStep: { type: Number, required: true },
     loading: { type: Boolean, default: true },
     usdcAddress: { type: String, required: true },
     tokenPrices: {
@@ -133,8 +135,8 @@ export default defineComponent({
       const endTimestamp = parseISO(props.lbpEndTime);
       let timestamp = new Date();
 
-      while (isBefore(addHours(timestamp, 1), endTimestamp)) {
-        timestamp = addHours(timestamp, 1);
+      while (isBefore(addSeconds(timestamp, props.timeStep), endTimestamp)) {
+        timestamp = addSeconds(timestamp, props.timeStep);
         beetsWeight -= props.weightStep;
         usdcWeight += props.weightStep;
 
