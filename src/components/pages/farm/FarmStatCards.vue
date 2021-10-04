@@ -17,7 +17,7 @@
           Your Pending Rewards
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ fNum(pendingRewards.count, 'token_fixed') }} BEETX
+          {{ fNum(pendingRewards.count, 'token_fixed') }} BEETS
         </div>
         <div class="truncate flex items-center pb-8">
           {{ fNum(pendingRewards.value, 'usd') }}
@@ -126,13 +126,14 @@ export default defineComponent({
     });
 
     const pendingRewards = computed(() => {
-      const count = farmUser.value?.pendingBeetx
-        ? scale(new BigNumber(farmUser.value.pendingBeetx), -18).toNumber()
+      const beetsPrice = useBeetsPrice();
+      const count = farmUser.value?.pendingBeets
+        ? scale(new BigNumber(farmUser.value.pendingBeets), -18).toNumber()
         : 0;
 
       return {
         count: count,
-        value: count * 0.01 //TODO: add the real price of BEETx
+        value: count * beetsPrice
       };
     });
 
