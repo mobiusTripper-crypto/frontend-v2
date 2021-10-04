@@ -38,6 +38,7 @@ import useWeb3 from '@/services/web3/useWeb3';
 import { format } from 'date-fns';
 import useSwapsQuery from '@/composables/queries/useSwapsQuery';
 import { flatten, orderBy } from 'lodash';
+import numeral from 'numeral';
 
 export default defineComponent({
   components: {
@@ -124,12 +125,12 @@ export default defineComponent({
           ' at ' +
           format(swap.timestamp * 1000, 'HH:mm'),
         type: swap.tokenOut === props.lbpTokenAddress ? 'Buy' : 'Sell',
-        input: `${roundToNDecimalPlaces(parseFloat(swap.tokenAmountIn), 3)} ${
+        input: `${numeral(parseFloat(swap.tokenAmountIn)).format('0,0.[00]')} ${
           swap.tokenInSym
         }`,
-        output: `${roundToNDecimalPlaces(parseFloat(swap.tokenAmountOut), 3)} ${
-          swap.tokenOutSym
-        }`,
+        output: `${numeral(parseFloat(swap.tokenAmountOut)).format(
+          '0,0.[00]'
+        )} ${swap.tokenOutSym}`,
         price: `$${
           swap.tokenOut === props.lbpTokenAddress
             ? (
