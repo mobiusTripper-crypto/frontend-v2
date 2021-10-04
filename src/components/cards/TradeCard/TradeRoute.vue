@@ -197,7 +197,7 @@ export default defineComponent({
 
     const label = computed(() => {
       const version = props.sorReturn.isV1swap ? 'V1' : 'V2';
-      return `${t('usingLiquidity', [version])}`;
+      return `Order Routing`;
     });
 
     const input = computed(() => {
