@@ -37,7 +37,9 @@ export default function useSwapsQuery(
     const queryArgs: any = {
       first: filterOptions?.pageSize || PAGE_SIZE,
       skip: pageParam,
-      where: {},
+      where: {
+        tokenAmountIn_gt: 0.01
+      },
       orderBy: 'timestamp',
       orderDirection: 'desc'
     };

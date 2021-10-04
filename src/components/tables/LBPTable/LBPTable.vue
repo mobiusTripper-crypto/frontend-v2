@@ -130,9 +130,15 @@ export default defineComponent({
         output: `${roundToNDecimalPlaces(parseFloat(swap.tokenAmountOut), 3)} ${
           swap.tokenOutSym
         }`,
-        price: `$${(
-          parseFloat(swap.tokenAmountIn) / parseFloat(swap.tokenAmountOut)
-        ).toFixed(2)}`,
+        price: `$${
+          swap.tokenOut === props.lbpTokenAddress
+            ? (
+                parseFloat(swap.tokenAmountIn) / parseFloat(swap.tokenAmountOut)
+              ).toFixed(2)
+            : (
+                parseFloat(swap.tokenAmountOut) / parseFloat(swap.tokenAmountIn)
+              ).toFixed(2)
+        }`,
         wallet: `${swap.userAddress.id.substr(
           0,
           6
