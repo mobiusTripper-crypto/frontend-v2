@@ -64,8 +64,8 @@
         <template v-else>
           <LBPTradeCard
             :lbp-token-name="lbpTokenName"
-            :lbp-token-address="lbpTokenAddress"
-            :usdc-address="usdcAddress"
+            :lbp-token-address="lbpTokenAddressFormatted"
+            :usdc-address="usdcAddressFormatted"
             :swap-enabled="swapEnabled"
             @on-tx="onNewTx"
           />
@@ -114,6 +114,9 @@ const LBP_POOL_ID =
   '0xb9dc9c0b40b4a78b09dde86551c9e8398cd9d414000200000000000000000027';
 const LBP_START_TIME = '2021-10-03T10:19:00+0000';
 const LBP_END_TIME = '2021-10-04T10:19:00+0000';
+
+const BEETS_ADDRESS_FORMATTED = '0xa7d7e5eD1f90aF81D7729F4931bbc03344397C4A';
+const USDC_ADDRESS_FORMATTED = '0x70b55Af71B29c5Ca7e67bD1995250364C4bE5554';
 
 interface LbpPageData {
   refetchQueriesOnBlockNumber: number;
@@ -212,6 +215,9 @@ export default defineComponent({
       lbpStartTime: LBP_START_TIME,
       lbpEndTime: LBP_END_TIME,
       usdcAddress: USDC_ADDRESS,
+
+      lbpTokenAddressFormatted: BEETS_ADDRESS_FORMATTED,
+      usdcAddressFormatted: USDC_ADDRESS_FORMATTED,
       loadingPool,
       tokenPrices,
       loadingTokenPrices,

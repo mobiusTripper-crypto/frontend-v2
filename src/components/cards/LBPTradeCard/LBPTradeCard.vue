@@ -296,10 +296,8 @@ export default defineComponent({
       if (assetOut === nativeAsset.deeplinkId) assetOut = nativeAsset.address;
       else if (isAddress(assetOut)) assetOut = getAddress(assetOut);
 
-      tokenInAddress.value =
-        assetIn || '0x70b55Af71B29c5Ca7e67bD1995250364C4bE5554';
-      tokenOutAddress.value =
-        assetOut || '0xa7d7e5eD1f90aF81D7729F4931bbc03344397C4A';
+      tokenInAddress.value = assetIn || props.usdcAddress;
+      tokenOutAddress.value = assetOut || props.lbpTokenAddress;
     }
 
     function showTradePreviewModal() {
