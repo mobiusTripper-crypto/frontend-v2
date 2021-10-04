@@ -35,13 +35,15 @@
       </BalCard>
       <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
-          Tokens Sold
+          Current Pool Weights
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ lbpData ? fNum(lbpData.percentSold, 'percent') : '' }}
+          {{
+            lbpData ? `${lbpData.beetsWeight}% / ${lbpData.usdcWeight}%` : ''
+          }}
         </div>
         <div class="text-sm text-gray-500 font-medium mt-1">
-          {{ lbpData ? fNum(lbpData.sold, 'token_lg') : '' }} of 5m
+          BEETS / USDC
         </div>
       </BalCard>
     </template>
@@ -55,6 +57,7 @@ import useEthers from '@/composables/useEthers';
 import { useRoute } from 'vue-router';
 import { differenceInMilliseconds, format, parseISO } from 'date-fns';
 import { DecoratedPool } from '@/services/balancer/subgraph/types';
+import numeral from 'numeral';
 
 export default defineComponent({
   components: {},
@@ -107,9 +110,11 @@ export default defineComponent({
       return {
         sold,
         remaining,
-        percentSold: sold / remaining,
+        percentSold: sold / props.lbpTokenStartingAmount,
         tokenPrice,
-        predictedPrice
+        predictedPrice,
+        beetsWeight: numeral(parseFloat(beets.weight) * 100).format('0.[00]'),
+        usdcWeight: numeral(parseFloat(usdc.weight) * 100).format('0.[00]')
       };
     });
 

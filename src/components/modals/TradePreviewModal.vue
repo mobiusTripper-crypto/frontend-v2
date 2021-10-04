@@ -28,7 +28,9 @@
             {{ fNum(amountIn, 'token') }} {{ symbolIn }} ->
             {{ fNum(amountOut, 'token') }} {{ symbolOut }}
           </div>
-          <div class="text-gray-500 text-sm">{{ fNum(valueIn, 'usd') }}</div>
+          <div class="text-gray-500 text-sm">
+            {{ valueIn ? fNum(valueIn, 'usd') : '' }}
+          </div>
         </div>
       </div>
       <div>
@@ -76,7 +78,8 @@
               {{ totalRequiredTransactions }}
             </div>
             <div class="ml-3">
-              {{ $t('trade') }} {{ fNum(valueIn, 'usd') }} {{ symbolIn }} ->
+              {{ $t('trade') }} {{ valueIn ? fNum(valueIn, 'usd') : '' }}
+              {{ symbolIn }} ->
               {{ symbolOut }}
             </div>
           </div>
