@@ -12,7 +12,11 @@
             <p class="font-medium">
               Before participating, please read our blog post explaining
               Liquidity Bootstrapping Pools
-              <a href="#" class="text-red-500 underline">here</a>.
+              <a
+                href="https://beethovenxio.medium.com/drop-the-beets-ebf8c61c898"
+                class="text-red-500 underline"
+                >here</a
+              >.
             </p>
           </div>
           <div class="px-1 lg:px-0">
