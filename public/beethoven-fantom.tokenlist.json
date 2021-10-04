@@ -134,6 +134,14 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/ANY.png"
+    },
+    {
+      "name": "Magic Internet Money",
+      "address": "0x82f0b8b456c1a451378467398982d4834b6829c1",
+      "symbol": "MIM",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/16786/large/mimlogopng.png"
     }
   ]
 }
