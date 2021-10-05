@@ -11,7 +11,7 @@ export default function useBeetsPrice() {
   // );
 
   // if (!beetsReferencePool.value) {
-  return 0;
+  return 0.04;
   // }
   // const tokens = beetsReferencePool.value.tokens;
   // const beets = tokens?.find(
