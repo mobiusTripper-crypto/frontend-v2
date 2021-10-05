@@ -113,7 +113,7 @@ export interface Farm {
   masterChef: {
     id: string;
     totalAllocPoint: number;
-    beetxPerBlock: string;
+    beetsPerBlock: string;
   };
   rewarder: {
     id: string;
@@ -133,10 +133,10 @@ export interface FarmWithStatsAndPool extends FarmWithPool {
 }
 
 export interface FarmUser {
-  pendingBeetx: string;
+  pendingBeets: string;
   amount: number;
   rewardDebt: number;
-  beetxHarvested: number;
+  beetsHarvested: number;
 }
 
 export interface SubgraphSwap {

@@ -11,6 +11,7 @@
   "loggingRpc": "",
   "explorer": "https://ftmscan.com",
   "subgraph": "https://graph.beethovenx.io/subgraphs/name/beethovenx",
+  "blockSubgraph": "https://graph.beethovenx.io/subgraphs/name/fantom-blocks",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "nativeAsset": {
@@ -36,9 +37,12 @@
     "weth": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
     "stETH": "",
     "wstETH": "",
+    "usdc": "",
+    "beets": "",
     "lidoRelayer": "",
     "balancerHelpers": "0xfE18C7C70b0a2c6541bEde0367124278BC345Dc8",
-    "masterChef": ""
+    "masterChef": "",
+    "beetsUsdcReferencePricePool": ""
   },
   "strategies": {
     "0": {

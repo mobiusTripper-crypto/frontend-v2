@@ -38,9 +38,12 @@
     "weth": "0x80dD2B80FbcFB06505A301d732322e987380EcD6",
     "stETH": "",
     "wstETH": "",
+    "usdc": "0x17590C13203315af2082d7Cc8B29ddc56A3Ed7C5",
+    "beets": "0xa7d7e5ed1f90af81d7729f4931bbc03344397c4a",
     "lidoRelayer": "",
     "balancerHelpers": "0x49bf4cB1fF35ceda7BDB33064A9781144EF5d2b7",
-    "masterChef": ""
+    "masterChef": "0xCE08CE827874bef5E6CAE1FcE37640B75a8f4c15",
+    "beetsUsdcReferencePricePool": ""
   },
   "strategies": {
     "0": {

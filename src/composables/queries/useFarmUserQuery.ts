@@ -25,14 +25,14 @@ export default function useFarmUserQuery(
         farmId,
         account.value
       );
-      const pendingBeetx = await masterChefContractsService.masterChef.getPendingBeetxForFarm(
+      const pendingBeets = await masterChefContractsService.masterChef.getPendingBeetsForFarm(
         farmId,
         account.value
       );
 
       return {
         ...userData,
-        pendingBeetx
+        pendingBeets: pendingBeets
       };
     } catch (e) {
       console.log('ERROR', e);

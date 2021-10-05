@@ -38,8 +38,11 @@ export interface Config {
     weth: string;
     stETH: string;
     wstETH: string;
+    usdc: string;
+    beets: string;
     lidoRelayer: string;
     balancerHelpers: string;
+    beetsUsdcReferencePricePool: string;
   };
   strategies: Record<
     string,

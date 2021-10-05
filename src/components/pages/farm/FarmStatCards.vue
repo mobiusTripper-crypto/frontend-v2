@@ -17,7 +17,7 @@
           Your Pending Rewards
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ fNum(pendingRewards.count, 'token_fixed') }} BEETX
+          {{ fNum(pendingRewards.count, 'token_fixed') }} BEETS
         </div>
         <div class="truncate flex items-center pb-8">
           {{ fNum(pendingRewards.value, 'usd') }}
@@ -49,6 +49,7 @@ import useFarm from '@/composables/farms/useFarm';
 import useEthers from '@/composables/useEthers';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import { useRoute } from 'vue-router';
+import useBeetsPrice from '@/composables/useBeetsPrice';
 
 export default defineComponent({
   components: {
@@ -94,7 +95,8 @@ export default defineComponent({
       const farm = props.farm;
 
       const tvl = calculateTvl(farm);
-      const apr = calculateApr(farm, blocksPerYear.value);
+      const beetsPrice = useBeetsPrice();
+      const apr = calculateApr(farm, blocksPerYear.value, beetsPrice);
       const userShare = new BigNumber(farmUser.value?.amount || 0)
         .div(farm.slpBalance)
         .toNumber();
@@ -124,13 +126,14 @@ export default defineComponent({
     });
 
     const pendingRewards = computed(() => {
-      const count = farmUser.value?.pendingBeetx
-        ? scale(new BigNumber(farmUser.value.pendingBeetx), -18).toNumber()
+      const beetsPrice = useBeetsPrice();
+      const count = farmUser.value?.pendingBeets
+        ? scale(new BigNumber(farmUser.value.pendingBeets), -18).toNumber()
         : 0;
 
       return {
         count: count,
-        value: count * 0.01 //TODO: add the real price of BEETx
+        value: count * beetsPrice
       };
     });
 

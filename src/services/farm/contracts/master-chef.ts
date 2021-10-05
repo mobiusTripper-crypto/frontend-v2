@@ -1,7 +1,7 @@
 import Service from '@/services/balancer/contracts/balancer-contracts.service';
 import ConfigService from '@/services/config/config.service';
 import { Multicaller } from '@/lib/utils/balancer/contract';
-import { default as MasterChefAbi } from '@/lib/abi/MasterChefV2.json';
+import { default as MasterChefAbi } from '@/lib/abi/BeethovenxMasterChef.json';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { Web3Provider } from '@ethersproject/providers';
 import { getAddress } from '@ethersproject/address';
@@ -13,7 +13,7 @@ export default class MasterChef {
     this.service = service;
   }
 
-  public async getPendingBeetxForFarm(
+  public async getPendingBeetsForFarm(
     id: string,
     user: string
   ): Promise<string> {
@@ -24,13 +24,13 @@ export default class MasterChef {
       this.service.provider,
       MasterChefAbi
     );
-    masterChefMultiCaller.call('pendingBeetx', this.address, 'pendingBeetx', [
+    masterChefMultiCaller.call('pendingBeets', this.address, 'pendingBeets', [
       id,
       getAddress(user)
     ]);
     result = await masterChefMultiCaller.execute(result);
 
-    return result.pendingBeetx.toString();
+    return result.pendingBeets.toString();
   }
 
   public async withdrawAndHarvest(
