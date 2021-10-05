@@ -40,7 +40,6 @@
           />
         </div>
       </template>
-      <div>abcdefg</div>
     </BalTable>
   </BalCard>
 </template>
