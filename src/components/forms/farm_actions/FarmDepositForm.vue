@@ -191,7 +191,7 @@ export default defineComponent({
 
       txListener(tx, {
         onTxConfirmed: async () => {
-          data.amount = '';
+          await approvalRequiredQuery.refetch.value();
           approving.value = false;
         },
         onTxFailed: () => {
@@ -214,6 +214,7 @@ export default defineComponent({
 
       txListener(tx, {
         onTxConfirmed: async () => {
+          await approvalRequiredQuery.refetch.value();
           emit('success', tx);
           data.amount = '';
           depositing.value = false;
