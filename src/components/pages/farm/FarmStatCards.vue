@@ -126,14 +126,9 @@ export default defineComponent({
     });
 
     const pendingRewards = computed(() => {
-      const beetsPrice = useBeetsPrice();
-      const count = farmUser.value?.pendingBeets
-        ? scale(new BigNumber(farmUser.value.pendingBeets), -18).toNumber()
-        : 0;
-
       return {
-        count: count,
-        value: count * beetsPrice
+        count: farmUser.value?.pendingBeets || 0,
+        value: farmUser.value?.pendingBeetsValue || 0
       };
     });
 
