@@ -111,6 +111,7 @@ export default defineComponent({
             const pool = pools.value.find(
               pool => pool.address.toLowerCase() === farm.pair.toLowerCase()
             );
+
             const farmWithPool = { ...farm, pool };
 
             const apr = calculateApr(

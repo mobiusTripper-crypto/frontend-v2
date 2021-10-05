@@ -1,90 +1,122 @@
 <template>
   <div class="lg:container lg:mx-auto">
-    <div
-      class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8 mt-8"
-    >
-      <div class="col-span-2 order-2 lg:order-1">
-        <div class="grid grid-cols-1 gap-y-8">
-          <div class="">
-            <div class="lg:-ml-5">
-              <img src="~@/assets/images/beets-lbp-headline.svg" />
+    <template v-if="isLbpOver">
+      <div class="mx-8">
+        <div class="lg:-ml-5 mt-8">
+          <img src="~@/assets/images/beets-lbp-headline.svg" class="mx-auto" />
+        </div>
+        <h3 class="text-center mt-8">
+          The event has come to an end, thanks so much for participating!
+        </h3>
+        <div class="flex justify-center mt-12 mb-12">
+          <img src="~@/assets/images/looking-image.png" width="400" />
+        </div>
+        <h3 class="lg:mx-64 text-center">
+          We're migrating liquidity to the permanent 80/20 pool and then locking
+          it. Come join us in
+          <a href="https://discord.gg/jedS4zGk28" class="text-red-500 underline"
+            >Discord</a
+          >
+          or follow us on
+          <a
+            href="https://twitter.com/beethoven_x"
+            class="text-red-500 underline"
+            >Twitter</a
+          >
+          to stay up to date. Farming will begin soon.
+        </h3>
+      </div>
+    </template>
+    <template v-else>
+      <div
+        class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8 mt-8"
+      >
+        <div class="col-span-2 order-2 lg:order-1">
+          <div class="grid grid-cols-1 gap-y-8">
+            <div class="">
+              <div class="lg:-ml-5">
+                <img src="~@/assets/images/beets-lbp-headline.svg" />
+              </div>
+              <p class="font-medium">
+                Before participating, please read our blog post explaining
+                Liquidity Bootstrapping Pools
+                <a
+                  href="https://beethovenxio.medium.com/drop-the-beets-ebf8c61c898"
+                  class="text-red-500 underline"
+                  >here</a
+                >.
+              </p>
             </div>
-            <p class="font-medium">
-              Before participating, please read our blog post explaining
-              Liquidity Bootstrapping Pools
-              <a
-                href="https://beethovenxio.medium.com/drop-the-beets-ebf8c61c898"
-                class="text-red-500 underline"
-                >here</a
-              >.
-            </p>
-          </div>
-          <div class="px-1 lg:px-0">
-            <BeetsLBPChart
-              :loading="loadingTokenPrices || loadingPool"
-              :lbp-token-name="lbpTokenName"
-              :lbp-token-address="lbpTokenAddress"
-              :lbp-pool-id="lbpPoolId"
-              :lbp-end-time="lbpEndTime"
-              :lbp-start-time="lbpStartTime"
-              :token-prices="tokenPrices"
-              :usdc-address="usdcAddress"
-              :weight-step="0.00625"
-              :time-step="60 * 7"
-              :pool="pool"
-            />
-          </div>
-          <div class="mb-4 px-1 lg:px-0">
-            <BeetsLBPStatCards
-              :pool="pool"
-              :lbp-token-address="lbpTokenAddress"
-              :lbp-token-name="lbpTokenName"
-              :lbp-token-starting-amount="lbpTokenStartingAmount"
-              :usdc-address="usdcAddress"
-              :lbp-end-time="lbpEndTime"
-              :loading="loadingPool"
-              :lbp-pool-id="lbpPoolId"
-            />
+            <div class="px-1 lg:px-0">
+              <BeetsLBPChart
+                :loading="loadingTokenPrices || loadingPool"
+                :lbp-token-name="lbpTokenName"
+                :lbp-token-address="lbpTokenAddress"
+                :lbp-pool-id="lbpPoolId"
+                :lbp-end-time="lbpEndTime"
+                :lbp-start-time="lbpStartTime"
+                :token-prices="tokenPrices"
+                :usdc-address="usdcAddress"
+                :weight-step="0.00625"
+                :time-step="60 * 7"
+                :pool="pool"
+              />
+            </div>
+            <div class="mb-4 px-1 lg:px-0">
+              <BeetsLBPStatCards
+                :pool="pool"
+                :lbp-token-address="lbpTokenAddress"
+                :lbp-token-name="lbpTokenName"
+                :lbp-token-starting-amount="lbpTokenStartingAmount"
+                :usdc-address="usdcAddress"
+                :lbp-end-time="lbpEndTime"
+                :loading="loadingPool"
+                :lbp-pool-id="lbpPoolId"
+              />
 
-            <p class="text-gray-300 mt-4">
-              *The predicted price is an estimation assuming no additional
-              buyers or sellers.
-            </p>
-            <p class="text-gray-300">
-              <span class="font-bold">Note</span>: Users can both
-              <span class="font-bold text-green-500">BUY</span> and
-              <span class="font-bold text-red-500">SELL</span>
-              during this event. Please be careful.
-            </p>
+              <p class="text-gray-300 mt-4">
+                *The predicted price is an estimation assuming no additional
+                buyers or sellers.
+              </p>
+              <p class="text-gray-300">
+                <span class="font-bold">Note</span>: Users can both
+                <span class="font-bold text-green-500">BUY</span> and
+                <span class="font-bold text-red-500">SELL</span>
+                during this event. Please be careful.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="order-1 lg:order-2 px-1 lg:px-0">
-        <div class="mb-6">
-          <img src="~@/assets/images/ludwig-says.svg" />
-        </div>
+        <div class="order-1 lg:order-2 px-1 lg:px-0">
+          <div class="mb-6">
+            <img src="~@/assets/images/ludwig-says.svg" />
+          </div>
 
-        <BalLoadingBlock v-if="appLoading || loadingTokenLists" class="h-96" />
-        <template v-else>
-          <LBPTradeCard
-            :lbp-token-name="lbpTokenName"
-            :lbp-token-address="lbpTokenAddressFormatted"
-            :usdc-address="usdcAddressFormatted"
-            :swap-enabled="swapEnabled"
-            @on-tx="onNewTx"
+          <BalLoadingBlock
+            v-if="appLoading || loadingTokenLists"
+            class="h-96"
           />
-        </template>
+          <template v-else>
+            <LBPTradeCard
+              :lbp-token-name="lbpTokenName"
+              :lbp-token-address="lbpTokenAddressFormatted"
+              :usdc-address="usdcAddressFormatted"
+              :swap-enabled="swapEnabled"
+              @on-tx="onNewTx"
+            />
+          </template>
+        </div>
       </div>
-    </div>
 
-    <div class="mt-24 mb-24">
-      <LBPTable
-        :lbp-token-name="lbpTokenName"
-        :lbp-token-address="lbpTokenAddress"
-        :lbp-pool-id="lbpPoolId"
-      />
-    </div>
+      <div class="mt-24 mb-24">
+        <LBPTable
+          :lbp-token-name="lbpTokenName"
+          :lbp-token-address="lbpTokenAddress"
+          :lbp-pool-id="lbpPoolId"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -110,6 +142,7 @@ import {
   TOKEN_PRICES_ROOT_KEY
 } from '@/constants/queryKeys';
 import useTokenLists from '@/composables/useTokenLists';
+import { isAfter, parseISO } from 'date-fns';
 
 const BEETS_SYMBOL = 'BEETS';
 const BEETS_ADDRESS = '0xa7d7e5ed1f90af81d7729f4931bbc03344397c4a';
@@ -151,6 +184,7 @@ export default defineComponent({
     const queryClient = useQueryClient();
     const { blockNumber } = useWeb3();
     const { loadingTokenLists } = useTokenLists();
+    const isLbpOver = ref(isAfter(new Date(), parseISO(LBP_END_TIME)));
 
     const poolQuery = usePoolQuery(LBP_POOL_ID);
     const loadingPool = computed(
@@ -184,6 +218,8 @@ export default defineComponent({
      * METHODS
      */
     function onNewTx(): void {
+      isLbpOver.value = isAfter(new Date(), parseISO(LBP_END_TIME));
+
       queryClient.invalidateQueries([POOLS_ROOT_KEY]);
       queryClient.invalidateQueries([POOLS_ROOT_KEY, 'current', LBP_POOL_ID]);
       queryClient.invalidateQueries([SWAPS_ROOT_KEY]);
@@ -196,6 +232,8 @@ export default defineComponent({
      * WATCHERS
      */
     watch(blockNumber, () => {
+      isLbpOver.value = isAfter(new Date(), parseISO(LBP_END_TIME));
+
       if (data.refetchQueriesOnBlockNumber === blockNumber.value) {
         queryClient.invalidateQueries([POOLS_ROOT_KEY]);
         queryClient.invalidateQueries([POOLS_ROOT_KEY, 'current', LBP_POOL_ID]);
@@ -228,6 +266,7 @@ export default defineComponent({
       loadingTokenPrices,
       loadingTokenLists,
       swapEnabled,
+      isLbpOver,
       onNewTx
     };
   }
