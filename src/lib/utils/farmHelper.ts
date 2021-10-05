@@ -105,3 +105,34 @@ export function calculateApr(
 
   return valuePerYear / tvl;
 }
+
+export function addFarmAprToPool(
+  pool: DecoratedPool,
+  farms: Farm[],
+  blocksPerYear: number,
+  beetsPrice: number
+) {
+  const farm = farms.find(
+    farm => pool.address.toLowerCase() === farm.pair.toLowerCase()
+  );
+
+  const liquidityMiningApr = farm
+    ? `${calculateApr({ ...farm, pool }, blocksPerYear, beetsPrice)}`
+    : '0';
+
+  return {
+    ...pool,
+    hasLiquidityMiningRewards: !!farm,
+    dynamic: {
+      ...pool.dynamic,
+      apr: farm
+        ? {
+            pool: pool.dynamic.apr.pool,
+            liquidityMining: liquidityMiningApr,
+            total: `${parseFloat(pool.dynamic.apr.pool) +
+              parseFloat(liquidityMiningApr)}`
+          }
+        : pool.dynamic.apr
+    }
+  };
+}

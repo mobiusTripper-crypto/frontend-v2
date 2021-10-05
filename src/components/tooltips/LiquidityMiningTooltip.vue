@@ -22,7 +22,7 @@
         <div class="whitespace-nowrap flex items-center">
           {{ fNum(pool.dynamic.apr.liquidityMining, 'percent') }}
           <span class="ml-1 text-gray-500 text-xs flex items-center">
-            {{ $t('liquidityMiningAPR') }}
+            Farm APR
             <StarsIcon class="h-4 text-yellow-300" />
           </span>
         </div>

@@ -115,24 +115,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed, watch } from 'vue';
+import { computed, defineComponent, reactive, toRefs, watch } from 'vue';
 import * as PoolPageComponents from '@/components/pages/pool';
 import GauntletIcon from '@/components/images/icons/GauntletIcon.vue';
 import LiquidityMiningTooltip from '@/components/tooltips/LiquidityMiningTooltip.vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useQueryClient } from 'vue-query';
 import useNumbers from '@/composables/useNumbers';
 import { usePool } from '@/composables/usePool';
 import usePoolQuery from '@/composables/queries/usePoolQuery';
 import usePoolSnapshotsQuery from '@/composables/queries/usePoolSnapshotsQuery';
-import { useRouter } from 'vue-router';
 import { POOLS_ROOT_KEY } from '@/constants/queryKeys';
 import { POOLS } from '@/constants/pools';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useApp from '@/composables/useApp';
+import useFarms from '@/composables/farms/useFarms';
+import useBeetsPrice from '@/composables/useBeetsPrice';
+import useAverageBlockTime from '@/composables/useAverageBlockTime';
+import { addFarmAprToPool } from '@/lib/utils/farmHelper';
 
 interface PoolPageData {
   id: string;
@@ -161,6 +164,9 @@ export default defineComponent({
     const queryClient = useQueryClient();
     const { prices } = useTokens();
     const { blockNumber } = useWeb3();
+    const { farms } = useFarms();
+    const beetsPrice = useBeetsPrice();
+    const { blocksPerYear } = useAverageBlockTime();
 
     /**
      * QUERIES
@@ -182,7 +188,24 @@ export default defineComponent({
     /**
      * COMPUTED
      */
-    const pool = computed(() => poolQuery.data.value);
+    const pool = computed(() => {
+      if (poolQuery.data.value) {
+        const poolWithFarmApr = addFarmAprToPool(
+          poolQuery.data.value,
+          farms.value,
+          blocksPerYear.value,
+          beetsPrice
+        );
+
+        return {
+          ...poolQuery.data.value,
+          dynamic: poolWithFarmApr.dynamic,
+          hasLiquidityMiningRewards: poolWithFarmApr.hasLiquidityMiningRewards
+        };
+      }
+
+      return poolQuery.data.value;
+    });
     const { isStableLikePool } = usePool(poolQuery.data);
 
     const noInitLiquidity = computed(
