@@ -2,7 +2,7 @@
   <div :class="['app-hero', classes]">
     <div class="w-full max-w-3xl mx-auto">
       <template v-if="isWalletReady">
-        <div class="flex justify-center">
+        <div class="flex justify-center mt-8">
           <img
             v-if="darkMode"
             src="~@/assets/images/investments-headline.svg"

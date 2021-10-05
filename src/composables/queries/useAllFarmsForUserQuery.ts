@@ -3,45 +3,47 @@ import { useQuery } from 'vue-query';
 import { QueryObserverOptions } from 'react-query/core';
 import QUERY_KEYS from '@/constants/queryKeys';
 import { farmSubgraphClient } from '@/services/balancer/subgraph/farm-subgraph.client';
-import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import useWeb3 from '@/services/web3/useWeb3';
 import { FarmUser } from '@/services/balancer/subgraph/types';
 import useApp from '@/composables/useApp';
+import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import useBeetsPrice from '@/composables/useBeetsPrice';
-import { scale } from '@/lib/utils';
-import BigNumber from 'bignumber.js';
 
-export default function useFarmUserQuery(
-  farmId: string,
-  options: QueryObserverOptions<FarmUser> = {}
+export default function useAllFarmsForUserQuery(
+  options: QueryObserverOptions<FarmUser[]> = {}
 ) {
   const { account, isWalletReady } = useWeb3();
   const { appLoading } = useApp();
   const beetsPrice = useBeetsPrice();
-
   const enabled = computed(
     () => isWalletReady.value && account.value != null && !appLoading.value
   );
-  const queryKey = QUERY_KEYS.Farms.User(farmId, account);
+  const queryKey = QUERY_KEYS.Farms.UserAllFarms(account);
 
   const queryFn = async () => {
     try {
-      const userData = await farmSubgraphClient.getUserDataForFarm(
-        farmId,
+      const userFarms = await farmSubgraphClient.getUserDataForAllFarms(
         account.value
       );
-      const pendingBeets = await masterChefContractsService.masterChef.getPendingBeetsForFarm(
-        farmId,
-        account.value
-      );
+      const decoratedUserFarms: FarmUser[] = [];
 
-      return {
-        ...userData,
-        pendingBeets,
-        pendingBeetsValue: pendingBeets * beetsPrice
-      };
+      for (const userFarm of userFarms) {
+        const pendingBeets = await masterChefContractsService.masterChef.getPendingBeetsForFarm(
+          userFarm.pool.id,
+          account.value
+        );
+
+        decoratedUserFarms.push({
+          ...userFarm,
+          pendingBeets,
+          pendingBeetsValue: pendingBeets * beetsPrice
+        });
+      }
+
+      return decoratedUserFarms;
     } catch (e) {
       console.log('ERROR', e);
+      return [];
     }
   };
 
@@ -51,5 +53,5 @@ export default function useFarmUserQuery(
     ...options
   });
 
-  return useQuery<FarmUser>(queryKey, queryFn, queryOptions);
+  return useQuery<FarmUser[]>(queryKey, queryFn, queryOptions);
 }

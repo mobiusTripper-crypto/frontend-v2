@@ -67,9 +67,13 @@ export default class FarmSubgraphClient {
     const query = `
     query {
       user: user(id: "${farmId}-${userAddress.toLowerCase()}") {
+        id
         amount
         rewardDebt
         beetsHarvested
+        pool {
+          id
+        }
       }
     }
     `;
@@ -79,6 +83,26 @@ export default class FarmSubgraphClient {
     return data.user
       ? data.user
       : { amount: 0, rewardDebt: 0, beetsHarvested: 0 };
+  }
+
+  public async getUserDataForAllFarms(userAddress: string) {
+    const query = `
+    query {
+      farmData: users(where: { address: "${userAddress.toLowerCase()}" }) {
+        id
+        amount
+        rewardDebt
+        beetsHarvested
+        pool {
+          id
+        }
+      }
+    }
+    `;
+
+    const data = await this.get(query);
+
+    return data.farmData || [];
   }
 
   private async get(query) {

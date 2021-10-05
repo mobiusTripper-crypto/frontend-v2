@@ -14,7 +14,7 @@
     <div class="xl:pl-4 xl:pr-8">
       <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
-          Your Pending Rewards
+          My Pending Rewards
         </div>
         <div class="text-xl font-medium truncate flex items-center">
           {{ fNum(pendingRewards.count, 'token_fixed') }} BEETS
@@ -114,12 +114,12 @@ export default defineComponent({
         },
         {
           id: 'staked',
-          label: 'Staked',
+          label: 'My Balance',
           value: fNum(tvl * userShare, 'usd')
         },
         {
           id: 'your_share',
-          label: 'Your Share',
+          label: 'My Share',
           value: fNum(userShare, 'percent')
         }
       ];

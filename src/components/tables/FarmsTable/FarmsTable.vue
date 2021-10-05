@@ -63,6 +63,7 @@ import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isStableLike } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
+import numeral from 'numeral';
 import {
   calculateApr,
   calculateRewardsPerDay,
@@ -74,6 +75,10 @@ import usePoolFilters from '@/composables/pools/usePoolFilters';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import useWeb3 from '@/services/web3/useWeb3';
 import useBeetsPrice from '@/composables/useBeetsPrice';
+import { useI18n } from 'vue-i18n';
+import useAllFarmsForUserQuery from '@/composables/queries/useAllFarmsForUserQuery';
+import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
+import BigNumber from 'bignumber.js';
 
 export default defineComponent({
   components: {
@@ -99,11 +104,14 @@ export default defineComponent({
     const { isWalletReady } = useWeb3();
     const { farms, isLoadingFarms } = useFarms();
     const { selectedTokens } = usePoolFilters();
+    const { t } = useI18n();
     const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
     const { pools, isLoadingPools, isLoadingUserPools } = usePools(
       selectedTokens
     );
     const beetsPrice = useBeetsPrice();
+    const allFarmsUserQuery = useAllFarmsForUserQuery();
+    const allFarmsForUser = computed(() => allFarmsUserQuery.data.value || []);
 
     const decoratedFarms = computed(() =>
       farms.value.length > 0 && pools.value.length > 0
@@ -111,18 +119,24 @@ export default defineComponent({
             const pool = pools.value.find(
               pool => pool.address.toLowerCase() === farm.pair.toLowerCase()
             );
+            const farmUser = allFarmsForUser.value.find(
+              userFarm => userFarm.pool.id === farm.id
+            );
 
             const farmWithPool = { ...farm, pool };
-
+            const tvl = calculateTvl(farmWithPool);
             const apr = calculateApr(
               farmWithPool,
               blocksPerYear.value,
               beetsPrice
             );
+            const userShare = new BigNumber(farmUser?.amount || 0)
+              .div(farm.slpBalance)
+              .toNumber();
 
             return {
               ...farm,
-              tvl: fNum(calculateTvl(farmWithPool), 'usd', {
+              tvl: fNum(tvl, 'usd', {
                 forcePreset: true
               }),
               rewards:
@@ -133,8 +147,15 @@ export default defineComponent({
                     forcePreset: true
                   }
                 ) + ' BEETS / day',
-              apr: apr === 0 ? '' : fNum(apr, 'percent', { forcePreset: true }),
-              pool
+              apr:
+                apr === 0
+                  ? '0.00%'
+                  : fNum(apr, 'percent', { forcePreset: true }),
+              pool,
+              stake: fNum(tvl * userShare, 'usd'),
+              pendingBeets:
+                numeral(farmUser?.pendingBeets || 0).format('0,0.[00]') +
+                ' BEETS'
             };
           })
         : []
@@ -166,28 +187,48 @@ export default defineComponent({
 
           return '';
         },
-        sortKey: farm => farm.pool?.name
+        sortKey: farm => farm.pool?.name,
+        width: 250
       },
       {
         name: 'TVL',
         id: 'tvl',
         accessor: 'tvl',
         sortKey: 'tvl',
-        align: 'right'
+        align: 'right',
+        width: 150
       },
       {
+        name: t('myBalance'),
+        id: 'stake',
+        accessor: 'stake',
+        sortKey: 'stake',
+        align: 'right',
+        width: 150
+      },
+      {
+        name: 'My Claimable',
+        id: 'pendingBeets',
+        accessor: 'pendingBeets',
+        sortKey: 'pendingBeets',
+        align: 'right',
+        width: 200
+      },
+      /*{
         name: 'Rewards',
         id: 'rewards',
         accessor: 'rewards',
         sortKey: 'rewards',
-        align: 'right'
-      },
+        align: 'right',
+        width: 200
+      },*/
       {
         name: 'Farm APR',
         id: 'apr',
         accessor: 'apr',
         sortKey: 'apr',
-        align: 'right'
+        align: 'right',
+        width: 150
       }
     ]);
 

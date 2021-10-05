@@ -1,7 +1,7 @@
 <template>
   <div class="lg:container lg:mx-auto pt-8">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8">
-      <div class="col-span-2">
+      <div class="col-span-2 mb-4">
         <BalLoadingBlock v-if="loading" class="h-16" />
         <div v-else class="px-4 lg:px-0 flex flex-col">
           <div class="flex flex-wrap items-center -mt-2">

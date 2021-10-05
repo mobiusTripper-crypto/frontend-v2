@@ -13,7 +13,11 @@
     <div class="flex justify-center mt-12">
       <img src="~@/assets/images/looking-image.png" width="400" />
     </div>-->
-    <div class="mt-32">
+
+    <div>
+      <div class="px-4 lg:px-0">
+        <h3 class="mb-3">Farms</h3>
+      </div>
       <FarmsTable
         noPoolsLabel="No farms found"
         :isPaginated="false"

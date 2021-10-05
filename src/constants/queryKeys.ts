@@ -20,6 +20,11 @@ const QUERY_KEYS = {
       'user',
       { id, account }
     ],
+    UserAllFarms: (account: Ref<string>) => [
+      FARMS_ROOT_KEY,
+      'userAllFarms',
+      { account }
+    ],
     TokenBalance: (address: string) => [
       FARMS_ROOT_KEY,
       'token-balance',

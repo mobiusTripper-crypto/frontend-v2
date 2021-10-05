@@ -5,6 +5,8 @@ import { default as MasterChefAbi } from '@/lib/abi/BeethovenxMasterChef.json';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { Web3Provider } from '@ethersproject/providers';
 import { getAddress } from '@ethersproject/address';
+import { scale } from '@/lib/utils';
+import BigNumber from 'bignumber.js';
 
 export default class MasterChef {
   service: Service;
@@ -16,7 +18,7 @@ export default class MasterChef {
   public async getPendingBeetsForFarm(
     id: string,
     user: string
-  ): Promise<string> {
+  ): Promise<number> {
     let result = {} as Record<any, any>;
 
     const masterChefMultiCaller = new Multicaller(
@@ -30,7 +32,11 @@ export default class MasterChef {
     ]);
     result = await masterChefMultiCaller.execute(result);
 
-    return result.pendingBeets.toString();
+    const pendingBeets = result.pendingBeets.toString();
+
+    return pendingBeets
+      ? scale(new BigNumber(pendingBeets), -18).toNumber()
+      : 0;
   }
 
   public async withdrawAndHarvest(

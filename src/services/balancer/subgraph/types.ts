@@ -133,10 +133,15 @@ export interface FarmWithStatsAndPool extends FarmWithPool {
 }
 
 export interface FarmUser {
-  pendingBeets: string;
+  id: string;
+  pendingBeets: number;
+  pendingBeetsValue: number;
   amount: number;
   rewardDebt: number;
   beetsHarvested: number;
+  pool: {
+    id: string;
+  };
 }
 
 export interface SubgraphSwap {
