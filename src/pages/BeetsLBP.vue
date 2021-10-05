@@ -11,7 +11,7 @@
         <div class="flex justify-center mt-12 mb-12">
           <img src="~@/assets/images/looking-image.png" width="400" />
         </div>
-        <h3 class="lg:mx-64 text-center">
+        <h3 class="lg:mx-64 text-center mb-24">
           We're migrating liquidity to the permanent 80/20 pool and then locking
           it. Come join us in
           <a href="https://discord.gg/jedS4zGk28" class="text-red-500 underline"
