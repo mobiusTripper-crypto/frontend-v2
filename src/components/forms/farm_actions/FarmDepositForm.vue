@@ -34,6 +34,19 @@
           </div>
         </template>
       </BalTextInput>
+      <div class="text-right">
+        <router-link
+          :to="{
+            name: 'pool',
+            params: {
+              id: pool.id
+            }
+          }"
+          class="text-xs text-gray-500 dark:text-white underline"
+        >
+          Get BPT
+        </router-link>
+      </div>
     </div>
 
     <div class="p-4">
@@ -49,7 +62,7 @@
           :label="`${$t('approve')}`"
           :loading="approving"
           :loading-label="$t('approving')"
-          :disabled="!validInput || amount === '0' || amount === ''"
+          :disabled="!validInput || parseFloat(amount) === 0 || amount === ''"
           block
           @click.prevent="approveToken"
         />
@@ -58,7 +71,7 @@
             type="submit"
             :loading-label="$t('confirming')"
             color="gradient"
-            :disabled="!validInput || amount === '0' || amount === ''"
+            :disabled="!validInput || parseFloat(amount) === 0 || amount === ''"
             :loading="depositing"
             block
             @click="trackGoal(Goals.ClickFarmDeposit)"
