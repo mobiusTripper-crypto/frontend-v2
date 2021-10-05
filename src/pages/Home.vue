@@ -21,12 +21,12 @@
     </template>
     <div class="px-4 lg:px-0">
       <h3 class="mb-3">{{ $t('investmentPools') }}</h3>
-      <!--<TokenSearchInput
+      <TokenSearchInput
         v-model="selectedTokens"
         :loading="isLoadingPools"
         @add="addSelectedToken"
         @remove="removeSelectedToken"
-      />-->
+      />
     </div>
 
     <PoolsTable
@@ -53,7 +53,7 @@
 import { defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { EXTERNAL_LINKS } from '@/constants/links';
-//import TokenSearchInput from '@/components/inputs/TokenSearchInput.vue';
+import TokenSearchInput from '@/components/inputs/TokenSearchInput.vue';
 import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
@@ -61,7 +61,7 @@ import usePoolFilters from '@/composables/pools/usePoolFilters';
 
 export default defineComponent({
   components: {
-    //TokenSearchInput,
+    TokenSearchInput,
     PoolsTable
   },
 
