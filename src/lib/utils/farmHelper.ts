@@ -1,7 +1,56 @@
-import { FarmWithPool } from '@/services/balancer/subgraph/types';
+import {
+  DecoratedPool,
+  Farm,
+  FarmUser,
+  FarmWithPool,
+  Pool
+} from '@/services/balancer/subgraph/types';
 import { getAddress } from '@ethersproject/address';
 import useTokens from '@/composables/useTokens';
 import BigNumber from 'bignumber.js';
+import { computed } from 'vue';
+import numeral from 'numeral';
+
+export function decorateFarms(
+  pools: DecoratedPool[],
+  farms: Farm[],
+  allFarmsForUser: FarmUser[],
+  blocksPerYear: number,
+  blocksPerDay: number,
+  beetsPrice: number
+) {
+  console.log('inside decorate farms');
+  if (farms.length === 0 || pools.length === 0) {
+    return [];
+  }
+
+  return farms.map(farm => {
+    const pool = pools.find(
+      pool => pool.address.toLowerCase() === farm.pair.toLowerCase()
+    );
+    const farmUser = allFarmsForUser.find(
+      userFarm => userFarm.pool.id === farm.id
+    );
+
+    const farmWithPool: FarmWithPool = { ...farm, pool };
+    const tvl = calculateTvl(farmWithPool);
+    const apr = calculateApr(farmWithPool, blocksPerYear, beetsPrice);
+    const userShare = new BigNumber(farmUser?.amount || 0)
+      .div(farm.slpBalance)
+      .toNumber();
+
+    return {
+      ...farm,
+      pool,
+      tvl,
+      rewards: calculateRewardsPerDay(farmWithPool, blocksPerDay),
+      apr,
+      stake: tvl * userShare,
+      pendingBeets: farmUser?.pendingBeets || 0,
+      pendingBeetsValue: (farmUser?.pendingBeets || 0) * beetsPrice
+    };
+  });
+}
 
 export function calculateTvl(farm: FarmWithPool) {
   const { tokens, priceFor } = useTokens();

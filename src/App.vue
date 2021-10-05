@@ -88,6 +88,7 @@ import Notifications from '@/components/notifications/Notifications.vue';
 import useBreakpoints from './composables/useBreakpoints';
 import { tryPromiseWithTimeout } from './lib/utils/promise';
 import AppFooterNav from '@/components/navs/AppFooterNav/AppFooterNav.vue';
+import FarmsHero from '@/components/heros/FarmsHero.vue';
 
 BigNumber.config({ DECIMAL_PLACES: DEFAULT_TOKEN_DECIMALS });
 
@@ -130,6 +131,7 @@ export default defineComponent({
 
     // COMPUTED
     const isHomePage = computed(() => route.path === '/');
+    const isFarmsPage = computed(() => route.path === '/farm');
 
     // CALLBACKS
     onBeforeMount(async () => {
@@ -148,6 +150,7 @@ export default defineComponent({
       // computed
       isWalletSelectVisible,
       isHomePage,
+      isFarmsPage,
       upToLargeBreakpoint,
       // methods
       toggleWalletSelectModal

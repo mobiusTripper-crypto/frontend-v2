@@ -2,7 +2,7 @@
   <div :class="['app-hero', classes]">
     <div class="w-full max-w-3xl mx-auto">
       <template v-if="isWalletReady">
-        <div class="flex justify-center mt-8">
+        <div class="flex justify-center mt-4">
           <img
             v-if="darkMode"
             src="~@/assets/images/investments-headline.svg"
@@ -19,7 +19,7 @@
         </span>
       </template>
       <template v-else>
-        <div class="flex justify-center">
+        <div class="flex justify-center mt-2">
           <img
             v-if="darkMode"
             src="~@/assets/images/headline.svg"
@@ -110,7 +110,7 @@ export default defineComponent({
 
 <style>
 .app-hero {
-  @apply bg-cover bg-center flex items-center justify-center text-center px-4;
+  @apply bg-cover bg-center flex justify-center text-center px-4;
   transition: all 0.3s ease-in-out;
   background-image: url('/images/backgrounds/banner-medium.svg');
 }

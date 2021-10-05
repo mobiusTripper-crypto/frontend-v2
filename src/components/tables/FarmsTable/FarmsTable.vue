@@ -9,7 +9,7 @@
     <BalTable
       :columns="columns"
       :data="data"
-      :is-loading="isLoading"
+      :is-loading="loading"
       skeleton-class="h-64"
       sticky="both"
       :square="upToLargeBreakpoint"
@@ -33,7 +33,7 @@
         </div>
       </template>
       <template v-slot:iconColumnCell="farm">
-        <div v-if="!isLoading" class="px-6 py-4">
+        <div v-if="!loading" class="px-6 py-4">
           <BalAssetSet
             :addresses="orderedTokenAddressesFor(farm)"
             :width="100"
@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import {
   DecoratedPool,
@@ -64,11 +64,7 @@ import useBreakpoints from '@/composables/useBreakpoints';
 import { isStableLike } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import numeral from 'numeral';
-import {
-  calculateApr,
-  calculateRewardsPerDay,
-  calculateTvl
-} from '@/lib/utils/farmHelper';
+import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
 import useFarms from '@/composables/farms/useFarms';
 import usePools from '@/composables/pools/usePools';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
@@ -77,8 +73,6 @@ import useWeb3 from '@/services/web3/useWeb3';
 import useBeetsPrice from '@/composables/useBeetsPrice';
 import { useI18n } from 'vue-i18n';
 import useAllFarmsForUserQuery from '@/composables/queries/useAllFarmsForUserQuery';
-import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
-import BigNumber from 'bignumber.js';
 
 export default defineComponent({
   components: {
@@ -88,78 +82,47 @@ export default defineComponent({
   emits: ['loadMore'],
 
   props: {
+    decoratedFarms: {
+      type: Array as PropType<any[]>,
+      required: true
+    },
+    loading: {
+      type: Boolean,
+      required: true
+    },
     noPoolsLabel: {
       type: String,
       default: 'No pools'
     }
   },
 
-  setup() {
+  setup(props) {
     const { fNum } = useNumbers();
     const router = useRouter();
     const { trackGoal, Goals } = useFathom();
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
     const { tokens } = useTokens();
-    const { isWalletReady } = useWeb3();
-    const { farms, isLoadingFarms } = useFarms();
-    const { selectedTokens } = usePoolFilters();
     const { t } = useI18n();
-    const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
-    const { pools, isLoadingPools, isLoadingUserPools } = usePools(
-      selectedTokens
-    );
-    const beetsPrice = useBeetsPrice();
-    const allFarmsUserQuery = useAllFarmsForUserQuery();
-    const allFarmsForUser = computed(() => allFarmsUserQuery.data.value || []);
 
-    const decoratedFarms = computed(() =>
-      farms.value.length > 0 && pools.value.length > 0
-        ? farms.value.map(farm => {
-            const pool = pools.value.find(
-              pool => pool.address.toLowerCase() === farm.pair.toLowerCase()
-            );
-            const farmUser = allFarmsForUser.value.find(
-              userFarm => userFarm.pool.id === farm.id
-            );
-
-            const farmWithPool = { ...farm, pool };
-            const tvl = calculateTvl(farmWithPool);
-            const apr = calculateApr(
-              farmWithPool,
-              blocksPerYear.value,
-              beetsPrice
-            );
-            const userShare = new BigNumber(farmUser?.amount || 0)
-              .div(farm.slpBalance)
-              .toNumber();
-
-            return {
-              ...farm,
-              tvl: fNum(tvl, 'usd', {
-                forcePreset: true
-              }),
-              rewards:
-                fNum(
-                  calculateRewardsPerDay(farmWithPool, blocksPerDay.value),
-                  'token_lg',
-                  {
-                    forcePreset: true
-                  }
-                ) + ' BEETS / day',
-              apr:
-                apr === 0
-                  ? '0.00%'
-                  : fNum(apr, 'percent', { forcePreset: true }),
-              pool,
-              stake: fNum(tvl * userShare, 'usd'),
-              pendingBeets:
-                numeral(farmUser?.pendingBeets || 0).format('0,0.[00]') +
-                ' BEETS'
-            };
-          })
-        : []
-    );
+    const decoratedFarms = computed(() => {
+      return (props.decoratedFarms || []).map(item => ({
+        ...item,
+        tvl: fNum(item.tvl, 'usd', {
+          forcePreset: true
+        }),
+        rewards:
+          fNum(item.rewards, 'token_lg', {
+            forcePreset: true
+          }) + ' BEETS / day',
+        apr:
+          item.apr === 0
+            ? '0.00%'
+            : fNum(item.apr, 'percent', { forcePreset: true }),
+        stake: fNum(item.stake, 'usd'),
+        pendingBeets: numeral(item.pendingBeets).format('0,0.[00]') + ' BEETS'
+      }));
+    });
 
     const columns = ref<ColumnDefinition<FarmWithStatsAndPool>[]>([
       {
@@ -207,21 +170,13 @@ export default defineComponent({
         width: 150
       },
       {
-        name: 'My Claimable',
+        name: 'Pending Rewards',
         id: 'pendingBeets',
         accessor: 'pendingBeets',
         sortKey: 'pendingBeets',
         align: 'right',
         width: 200
       },
-      /*{
-        name: 'Rewards',
-        id: 'rewards',
-        accessor: 'rewards',
-        sortKey: 'rewards',
-        align: 'right',
-        width: 200
-      },*/
       {
         name: 'Farm APR',
         id: 'apr',
@@ -254,19 +209,10 @@ export default defineComponent({
       router.push({ name: 'farm-detail', params: { id: pool.id } });
     }
 
-    const isLoading = computed(
-      () =>
-        !isWalletReady.value ||
-        isLoadingFarms.value ||
-        isLoadingPools.value ||
-        isLoadingUserPools.value
-    );
-
     return {
       // data
       columns,
       data: decoratedFarms,
-      isLoading,
 
       // computed
       darkMode,
