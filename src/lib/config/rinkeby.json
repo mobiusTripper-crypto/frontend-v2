@@ -58,5 +58,14 @@
       "type": "2",
       "name": "weightedPool"
     }
+  },
+  "lbp": {
+    "poolId": "0x6e26f6d45f87af6593a892fad86c3843e493c3aa000200000000000000000028",
+    "tokenAddress": "0xa7d7e5eD1f90aF81D7729F4931bbc03344397C4A",
+    "tokenSymbol": "BEETS",
+    "startingAmount": 5000000,
+    "usdcAddress": "0x70b55Af71B29c5Ca7e67bD1995250364C4bE5554",
+    "startTime": "2021-10-04T11:19:00+0000",
+    "endTime": "2021-10-09T14:19:00+0000"
   }
 }

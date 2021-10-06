@@ -144,18 +144,6 @@ import {
 import useTokenLists from '@/composables/useTokenLists';
 import { isAfter, parseISO } from 'date-fns';
 
-const BEETS_SYMBOL = 'BEETS';
-const BEETS_ADDRESS = '0xa7d7e5ed1f90af81d7729f4931bbc03344397c4a';
-const BEETS_STARTING_AMOUNT = 5_000_000;
-const USDC_ADDRESS = '0x70b55af71b29c5ca7e67bd1995250364c4be5554';
-const LBP_POOL_ID =
-  '0x6e26f6d45f87af6593a892fad86c3843e493c3aa000200000000000000000028';
-const LBP_START_TIME = '2021-10-04T11:19:00+0000';
-const LBP_END_TIME = '2021-10-04T14:19:00+0000';
-
-const BEETS_ADDRESS_FORMATTED = '0xa7d7e5eD1f90aF81D7729F4931bbc03344397C4A';
-const USDC_ADDRESS_FORMATTED = '0x70b55Af71B29c5Ca7e67bD1995250364C4bE5554';
-
 interface LbpPageData {
   refetchQueriesOnBlockNumber: number;
 }
@@ -176,17 +164,15 @@ export default defineComponent({
      * COMPOSABLES
      */
     const { appLoading } = useApp();
-    const router = useRouter();
-    const { t } = useI18n();
-    const route = useRoute();
     const { fNum } = useNumbers();
-    const { isWalletReady } = useWeb3();
+    const { appNetworkConfig } = useWeb3();
     const queryClient = useQueryClient();
     const { blockNumber } = useWeb3();
     const { loadingTokenLists } = useTokenLists();
-    const isLbpOver = ref(isAfter(new Date(), parseISO(LBP_END_TIME)));
+    const lbpConfig = appNetworkConfig.lbp;
 
-    const poolQuery = usePoolQuery(LBP_POOL_ID);
+    const isLbpOver = ref(isAfter(new Date(), parseISO(lbpConfig.endTime)));
+    const poolQuery = usePoolQuery(lbpConfig.poolId);
     const loadingPool = computed(
       () =>
         poolQuery.isLoading.value ||
@@ -201,8 +187,8 @@ export default defineComponent({
     const swapEnabled = computed(() => poolQuery.data.value?.swapEnabled);
 
     const tokenPricesQuery = useSubgraphTokenPricesQuery(
-      ref(LBP_POOL_ID),
-      ref(BEETS_ADDRESS)
+      ref(lbpConfig.poolId),
+      ref(lbpConfig.tokenAddress.toLowerCase())
     );
     const tokenPrices = computed(() => tokenPricesQuery.data.value || []);
     const loadingTokenPrices = computed(
@@ -218,10 +204,14 @@ export default defineComponent({
      * METHODS
      */
     function onNewTx(): void {
-      isLbpOver.value = isAfter(new Date(), parseISO(LBP_END_TIME));
+      isLbpOver.value = isAfter(new Date(), parseISO(lbpConfig.endTime));
 
       queryClient.invalidateQueries([POOLS_ROOT_KEY]);
-      queryClient.invalidateQueries([POOLS_ROOT_KEY, 'current', LBP_POOL_ID]);
+      queryClient.invalidateQueries([
+        POOLS_ROOT_KEY,
+        'current',
+        lbpConfig.poolId
+      ]);
       queryClient.invalidateQueries([SWAPS_ROOT_KEY]);
       queryClient.invalidateQueries([TOKEN_PRICES_ROOT_KEY]);
       data.refetchQueriesOnBlockNumber =
@@ -232,11 +222,15 @@ export default defineComponent({
      * WATCHERS
      */
     watch(blockNumber, () => {
-      isLbpOver.value = isAfter(new Date(), parseISO(LBP_END_TIME));
+      isLbpOver.value = isAfter(new Date(), parseISO(lbpConfig.endTime));
 
       if (data.refetchQueriesOnBlockNumber === blockNumber.value) {
         queryClient.invalidateQueries([POOLS_ROOT_KEY]);
-        queryClient.invalidateQueries([POOLS_ROOT_KEY, 'current', LBP_POOL_ID]);
+        queryClient.invalidateQueries([
+          POOLS_ROOT_KEY,
+          'current',
+          lbpConfig.poolId
+        ]);
         queryClient.invalidateQueries([SWAPS_ROOT_KEY]);
         queryClient.invalidateQueries([TOKEN_PRICES_ROOT_KEY]);
       } else {
@@ -251,16 +245,15 @@ export default defineComponent({
       fNum,
       pool,
       enabled,
-      lbpPoolId: LBP_POOL_ID,
-      lbpTokenAddress: BEETS_ADDRESS,
-      lbpTokenName: BEETS_SYMBOL,
-      lbpTokenStartingAmount: BEETS_STARTING_AMOUNT,
-      lbpStartTime: LBP_START_TIME,
-      lbpEndTime: LBP_END_TIME,
-      usdcAddress: USDC_ADDRESS,
-
-      lbpTokenAddressFormatted: BEETS_ADDRESS_FORMATTED,
-      usdcAddressFormatted: USDC_ADDRESS_FORMATTED,
+      lbpPoolId: lbpConfig.poolId,
+      lbpTokenAddress: lbpConfig.tokenAddress.toLowerCase(),
+      lbpTokenName: lbpConfig.tokenSymbol,
+      lbpTokenStartingAmount: lbpConfig.startingAmount,
+      lbpStartTime: lbpConfig.startTime,
+      lbpEndTime: lbpConfig.endTime,
+      usdcAddress: lbpConfig.usdcAddress.toLowerCase(),
+      lbpTokenAddressFormatted: lbpConfig.tokenAddress,
+      usdcAddressFormatted: lbpConfig.usdcAddress,
       loadingPool,
       tokenPrices,
       loadingTokenPrices,

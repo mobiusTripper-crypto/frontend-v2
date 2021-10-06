@@ -51,6 +51,15 @@ export interface Config {
       name: string;
     }
   >;
+  lbp: {
+    poolId: string;
+    tokenAddress: string;
+    tokenSymbol: string;
+    startingAmount: number;
+    usdcAddress: string;
+    startTime: string;
+    endTime: string;
+  };
 }
 
 const config: Record<string, Config> = {

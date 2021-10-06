@@ -68,7 +68,7 @@ export default defineComponent({
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady, isV1Supported } = useWeb3();
+    const { isWalletReady, isV1Supported, appNetworkConfig } = useWeb3();
     const {
       selectedTokens,
       addSelectedToken,
