@@ -63,9 +63,11 @@
     "tokenAddress": "0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
     "tokenSymbol": "BEETS",
     "startingAmount": 5000000,
-    "usdcAddress": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+    "usdcAddress": "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     "startTime": "2021-10-07T14:00:00+0000",
-    "endTime": "2021-10-08T14:00:00+0000"
+    "endTime": "2021-10-08T14:00:00+0000",
+    "weightStep":  0.00625,
+    "timeStep": 3600
   }
 }
 

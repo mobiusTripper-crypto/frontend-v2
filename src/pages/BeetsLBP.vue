@@ -1,4 +1,15 @@
 <template>
+  <div v-if="isBeforeLbpStart" class="app-nav-alert bg-black text-white">
+    <div class="w-8" />
+    <div class="flex-1 text-center flex items-center justify-center">
+      <BalIcon name="clock" class="mr-4" />
+
+      <span class="font-semibold"
+        >BEETS Liquidity Bootstrapping Event starts:
+        {{ startDateTimeFormatted }}</span
+      >
+    </div>
+  </div>
   <div class="lg:container lg:mx-auto">
     <template v-if="isLbpOver">
       <div class="mx-8">
@@ -57,8 +68,8 @@
                 :lbp-start-time="lbpStartTime"
                 :token-prices="tokenPrices"
                 :usdc-address="usdcAddress"
-                :weight-step="0.00625"
-                :time-step="60 * 7"
+                :weight-step="lbpWeightStep"
+                :time-step="lbpTimeStep"
                 :pool="pool"
               />
             </div>
@@ -70,8 +81,10 @@
                 :lbp-token-starting-amount="lbpTokenStartingAmount"
                 :usdc-address="usdcAddress"
                 :lbp-end-time="lbpEndTime"
+                :lbp-start-time="lbpStartTime"
                 :loading="loadingPool"
                 :lbp-pool-id="lbpPoolId"
+                :is-before-lbp-start="isBeforeLbpStart"
               />
 
               <p class="text-gray-300 mt-4">
@@ -123,8 +136,6 @@
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, watch } from 'vue';
 import * as PoolPageComponents from '@/components/pages/pool';
-import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
 import { useQueryClient } from 'vue-query';
 import useNumbers from '@/composables/useNumbers';
 import usePoolQuery from '@/composables/queries/usePoolQuery';
@@ -142,7 +153,13 @@ import {
   TOKEN_PRICES_ROOT_KEY
 } from '@/constants/queryKeys';
 import useTokenLists from '@/composables/useTokenLists';
-import { isAfter, parseISO } from 'date-fns';
+import {
+  differenceInMilliseconds,
+  format,
+  isAfter,
+  isBefore,
+  parseISO
+} from 'date-fns';
 
 interface LbpPageData {
   refetchQueriesOnBlockNumber: number;
@@ -172,6 +189,10 @@ export default defineComponent({
     const lbpConfig = appNetworkConfig.lbp;
 
     const isLbpOver = ref(isAfter(new Date(), parseISO(lbpConfig.endTime)));
+    const isBeforeLbpStart = ref(
+      isBefore(new Date(), parseISO(lbpConfig.startTime))
+    );
+
     const poolQuery = usePoolQuery(lbpConfig.poolId);
     const loadingPool = computed(
       () =>
@@ -180,7 +201,6 @@ export default defineComponent({
         poolQuery.error.value
     );
     const pool = computed(() => {
-      console.log(poolQuery.data.value);
       return poolQuery.data.value;
     });
     const enabled = computed(() => !!pool.value?.id);
@@ -200,11 +220,19 @@ export default defineComponent({
 
     const data = reactive<LbpPageData>({ refetchQueriesOnBlockNumber: 0 });
 
+    const startDateTimeFormatted = computed(() =>
+      format(parseISO(lbpConfig.startTime), 'MMM d, HH:mm')
+    );
+
     /**
      * METHODS
      */
     function onNewTx(): void {
       isLbpOver.value = isAfter(new Date(), parseISO(lbpConfig.endTime));
+      isBeforeLbpStart.value = isBefore(
+        new Date(),
+        parseISO(lbpConfig.startTime)
+      );
 
       queryClient.invalidateQueries([POOLS_ROOT_KEY]);
       queryClient.invalidateQueries([
@@ -223,6 +251,10 @@ export default defineComponent({
      */
     watch(blockNumber, () => {
       isLbpOver.value = isAfter(new Date(), parseISO(lbpConfig.endTime));
+      isBeforeLbpStart.value = isBefore(
+        new Date(),
+        parseISO(lbpConfig.startTime)
+      );
 
       if (data.refetchQueriesOnBlockNumber === blockNumber.value) {
         queryClient.invalidateQueries([POOLS_ROOT_KEY]);
@@ -251,6 +283,8 @@ export default defineComponent({
       lbpTokenStartingAmount: lbpConfig.startingAmount,
       lbpStartTime: lbpConfig.startTime,
       lbpEndTime: lbpConfig.endTime,
+      lbpWeightStep: lbpConfig.weightStep,
+      lbpTimeStep: lbpConfig.timeStep,
       usdcAddress: lbpConfig.usdcAddress.toLowerCase(),
       lbpTokenAddressFormatted: lbpConfig.tokenAddress,
       usdcAddressFormatted: lbpConfig.usdcAddress,
@@ -260,7 +294,9 @@ export default defineComponent({
       loadingTokenLists,
       swapEnabled,
       isLbpOver,
-      onNewTx
+      onNewTx,
+      isBeforeLbpStart,
+      startDateTimeFormatted
     };
   }
 });

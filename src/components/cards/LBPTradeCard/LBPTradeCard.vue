@@ -246,8 +246,7 @@ export default defineComponent({
       if (props.swapEnabled === false) {
         return {
           header: 'Swapping disabled',
-          body:
-            'Swapping has not yet been enabled for this Liquidity Bootstrapping Pool.'
+          body: 'Swapping is disabled for this Event.'
         };
       }
 
@@ -289,15 +288,8 @@ export default defineComponent({
     }
 
     async function populateInitialTokens(): Promise<void> {
-      let assetIn = router.currentRoute.value.params.assetIn as string;
-      if (assetIn === nativeAsset.deeplinkId) assetIn = nativeAsset.address;
-      else if (isAddress(assetIn)) assetIn = getAddress(assetIn);
-      let assetOut = router.currentRoute.value.params.assetOut as string;
-      if (assetOut === nativeAsset.deeplinkId) assetOut = nativeAsset.address;
-      else if (isAddress(assetOut)) assetOut = getAddress(assetOut);
-
-      tokenInAddress.value = assetIn || props.usdcAddress;
-      tokenOutAddress.value = assetOut || props.lbpTokenAddress;
+      tokenInAddress.value = props.usdcAddress;
+      tokenOutAddress.value = props.lbpTokenAddress;
     }
 
     function showTradePreviewModal() {

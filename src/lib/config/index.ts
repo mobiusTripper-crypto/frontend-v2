@@ -59,6 +59,8 @@ export interface Config {
     usdcAddress: string;
     startTime: string;
     endTime: string;
+    weightStep: number;
+    timeStep: number;
   };
 }
 

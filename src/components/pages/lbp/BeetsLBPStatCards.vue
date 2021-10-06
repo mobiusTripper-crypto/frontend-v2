@@ -6,7 +6,7 @@
     <template v-else>
       <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
-          Ends In
+          {{ countdownLabel }}
         </div>
         <div class="text-xl font-medium truncate flex items-center">
           <vue-countdown
@@ -18,7 +18,7 @@
           </vue-countdown>
         </div>
         <div class="text-sm text-gray-500 font-medium mt-1">
-          {{ endDateFormatted }}
+          {{ countdownDateFormatted }}
         </div>
       </BalCard>
       <BalCard>
@@ -55,7 +55,7 @@ import { computed, defineComponent, PropType, ref } from 'vue';
 import useNumbers from '@/composables/useNumbers';
 import useEthers from '@/composables/useEthers';
 import { useRoute } from 'vue-router';
-import { differenceInMilliseconds, format, parseISO } from 'date-fns';
+import { differenceInMilliseconds, format, isBefore, parseISO } from 'date-fns';
 import { DecoratedPool } from '@/services/balancer/subgraph/types';
 import numeral from 'numeral';
 
@@ -67,22 +67,31 @@ export default defineComponent({
     lbpTokenAddress: { type: String, required: true },
     lbpTokenStartingAmount: { type: Number, required: true },
     usdcAddress: { type: String, required: true },
+    lbpStartTime: { type: String, required: true },
     lbpEndTime: { type: String, required: true },
     pool: { type: Object as PropType<DecoratedPool> },
-    loading: { type: Boolean, default: true }
+    loading: { type: Boolean, default: true },
+    isBeforeLbpStart: { type: Boolean, required: true }
   },
 
   setup(props) {
     const { fNum } = useNumbers();
     const harvesting = ref(false);
 
-    const timeRemaining = differenceInMilliseconds(
-      parseISO(props.lbpEndTime),
-      new Date()
+    const timeRemaining = computed(() =>
+      props.isBeforeLbpStart
+        ? differenceInMilliseconds(parseISO(props.lbpStartTime), new Date())
+        : differenceInMilliseconds(parseISO(props.lbpEndTime), new Date())
     );
 
-    const endDateFormatted = computed(() =>
-      format(parseISO(props.lbpEndTime), 'MMM d, HH:mm:ss')
+    const countdownDateFormatted = computed(() =>
+      props.isBeforeLbpStart
+        ? format(parseISO(props.lbpStartTime), 'MMM d, HH:mm')
+        : format(parseISO(props.lbpEndTime), 'MMM d, HH:mm')
+    );
+
+    const countdownLabel = computed(() =>
+      props.isBeforeLbpStart ? 'Starts In' : 'Ends In'
     );
 
     const lbpData = computed(() => {
@@ -135,7 +144,8 @@ export default defineComponent({
       transformTime,
       timeRemaining,
       lbpData,
-      endDateFormatted
+      countdownDateFormatted,
+      countdownLabel
     };
   }
 });

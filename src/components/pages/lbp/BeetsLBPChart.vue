@@ -103,14 +103,16 @@ export default defineComponent({
       if (!beets.value || !usdc.value) {
         return [];
       }
-
+      const fistTime = isBefore(new Date(), parseISO(props.lbpStartTime))
+        ? parseISO(props.lbpStartTime)
+        : new Date();
       const tokenPrices = props.tokenPrices || [];
       const times = [
         ...tokenPrices.map(price =>
           format(fromUnixTime(price.timestamp), 'yyyy-MM-dd HH:mm:ss')
         ),
         format(parseISO(lastPriceTimestamp.value), 'yyyy-MM-dd HH:mm:ss'),
-        format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+        format(fistTime, 'yyyy-MM-dd HH:mm:ss')
       ];
       const prices = [
         ...tokenPrices.map(price => parseFloat(price.price)),
@@ -126,14 +128,17 @@ export default defineComponent({
         return [];
       }
 
+      const fistTime = isBefore(new Date(), parseISO(props.lbpStartTime))
+        ? parseISO(props.lbpStartTime)
+        : new Date();
       const beetsBalance = parseFloat(beets.value.balance);
       const usdcBalance = parseFloat(usdc.value.balance);
       let beetsWeight = parseFloat(beets.value.weight);
       let usdcWeight = parseFloat(usdc.value.weight);
       const predicted: number[] = [currentBeetsPrice.value];
-      const times: string[] = [format(new Date(), 'yyyy-MM-dd HH:mm:ss')];
+      const times: string[] = [format(fistTime, 'yyyy-MM-dd HH:mm:ss')];
       const endTimestamp = parseISO(props.lbpEndTime);
-      let timestamp = new Date();
+      let timestamp = fistTime;
 
       while (isBefore(addSeconds(timestamp, props.timeStep), endTimestamp)) {
         timestamp = addSeconds(timestamp, props.timeStep);

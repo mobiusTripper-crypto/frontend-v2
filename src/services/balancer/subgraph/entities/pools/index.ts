@@ -72,6 +72,13 @@ export default class Pools {
       pool.tokens = this.formatPoolTokens(pool);
       pool.totalLiquidity = getPoolLiquidity(pool, prices, currency);
 
+      if (
+        pool.id ===
+        '0xae1c69eae0f1342425ea3fdb51e9f11223c7ad5b00010000000000000000000b'
+      ) {
+        pool.name = `*PAUSED* ${pool.name} - Please migrate to new pool`;
+      }
+
       const pastPool = pastPools.find(p => p.id === pool.id);
       const volume = this.calcVolume(pool, pastPool);
       const poolAPR = this.calcAPR(pool, pastPool);

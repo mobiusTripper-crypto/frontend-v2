@@ -1,10 +1,10 @@
 {
   "name": "Beethoven X",
-  "timestamp": "2021-02-27T18:18:18.181Z",
+  "timestamp": "2021-10-06T18:18:18.181Z",
   "version": {
     "major": 1,
     "minor": 0,
-    "patch": 0
+    "patch": 2
   },
   "tags": {},
   "logoURI": "https://storageapi.fleek.co/beethovenxfi-team-bucket/bethovenx-icon.png",
@@ -150,6 +150,22 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/beets-icon-large.png"
+    },
+    {
+      "name": "Spell Token",
+      "address": "0x468003b688943977e6130f4f68f23aad939a1040",
+      "symbol": "SPELL",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/15861/large/abracadabra-3.png"
+    },
+    {
+      "name": "BabyBoo",
+      "address": "0x471762a7017a5b1a3e931f1a97aa03ef1e7f4a73",
+      "symbol": "BABYBOO",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/18234/large/babyboo.png"
     }
   ]
 }

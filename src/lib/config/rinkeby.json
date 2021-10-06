@@ -66,6 +66,8 @@
     "startingAmount": 5000000,
     "usdcAddress": "0x70b55Af71B29c5Ca7e67bD1995250364C4bE5554",
     "startTime": "2021-10-04T11:19:00+0000",
-    "endTime": "2021-10-09T14:19:00+0000"
+    "endTime": "2021-10-09T14:19:00+0000",
+    "weightStep":  0.00625,
+    "timeStep": 420
   }
 }
