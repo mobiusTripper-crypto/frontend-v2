@@ -13,6 +13,7 @@
             :time="timeRemaining"
             v-slot="{ hours, minutes, seconds }"
             :transform="transformTime"
+            @end="$emit('lbpStateChange')"
           >
             {{ hours }}:{{ minutes }}:{{ seconds }}
           </vue-countdown>
@@ -62,6 +63,8 @@ import numeral from 'numeral';
 export default defineComponent({
   components: {},
 
+  emits: ['lbpStateChange'],
+
   props: {
     lbpTokenName: { type: String, required: true },
     lbpTokenAddress: { type: String, required: true },
@@ -86,8 +89,12 @@ export default defineComponent({
 
     const countdownDateFormatted = computed(() =>
       props.isBeforeLbpStart
-        ? format(parseISO(props.lbpStartTime), 'MMM d, HH:mm')
-        : format(parseISO(props.lbpEndTime), 'MMM d, HH:mm')
+        ? format(parseISO(props.lbpStartTime), 'MMM d') +
+          ' at ' +
+          format(parseISO(props.lbpStartTime), 'HH:mm')
+        : format(parseISO(props.lbpEndTime), 'MMM d') +
+          ' at ' +
+          format(parseISO(props.lbpEndTime), 'HH:mm')
     );
 
     const countdownLabel = computed(() =>

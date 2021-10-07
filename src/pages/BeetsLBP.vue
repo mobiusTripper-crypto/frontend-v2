@@ -85,6 +85,7 @@
                 :loading="loadingPool"
                 :lbp-pool-id="lbpPoolId"
                 :is-before-lbp-start="isBeforeLbpStart"
+                @lbpStateChange="handleLbpStateChange"
               />
 
               <p class="text-gray-300 mt-4">
@@ -271,6 +272,15 @@ export default defineComponent({
       }
     });
 
+    function handleLbpStateChange() {
+      console.log('!@#!@#!@ HANDLE STATE CHANGE');
+      isLbpOver.value = isAfter(new Date(), parseISO(lbpConfig.endTime));
+      isBeforeLbpStart.value = isBefore(
+        new Date(),
+        parseISO(lbpConfig.startTime)
+      );
+    }
+
     return {
       EXTERNAL_LINKS,
       appLoading,
@@ -296,7 +306,8 @@ export default defineComponent({
       isLbpOver,
       onNewTx,
       isBeforeLbpStart,
-      startDateTimeFormatted
+      startDateTimeFormatted,
+      handleLbpStateChange
     };
   }
 });

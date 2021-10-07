@@ -140,10 +140,10 @@ export default defineComponent({
           swap.tokenOut === props.lbpTokenAddress
             ? (
                 parseFloat(swap.tokenAmountIn) / parseFloat(swap.tokenAmountOut)
-              ).toFixed(2)
+              ).toFixed(4)
             : (
                 parseFloat(swap.tokenAmountOut) / parseFloat(swap.tokenAmountIn)
-              ).toFixed(2)
+              ).toFixed(4)
         }`,
         wallet: `${swap.userAddress.id.substr(
           0,
