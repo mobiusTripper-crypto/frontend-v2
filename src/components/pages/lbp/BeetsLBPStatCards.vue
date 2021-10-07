@@ -26,11 +26,11 @@
           Current BEETS Price
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ lbpData ? fNum(lbpData.tokenPrice, 'usd') : '' }}
+          {{ lbpData ? lbpData.tokenPrice : '' }}
         </div>
         <div class="text-sm text-gray-500 font-medium mt-1">
           Predicted price*:
-          {{ lbpData ? fNum(lbpData.predictedPrice, 'usd') : '' }}
+          {{ lbpData ? lbpData.predictedPrice : '' }}
         </div>
       </BalCard>
       <BalCard>
@@ -120,8 +120,8 @@ export default defineComponent({
         sold,
         remaining,
         percentSold: sold / props.lbpTokenStartingAmount,
-        tokenPrice,
-        predictedPrice,
+        tokenPrice: numeral(tokenPrice).format('$0,0.0000'),
+        predictedPrice: numeral(predictedPrice).format('$0,0.0000'),
         beetsWeight: numeral(parseFloat(beets.weight) * 100).format('0.[00]'),
         usdcWeight: numeral(parseFloat(usdc.weight) * 100).format('0.[00]')
       };

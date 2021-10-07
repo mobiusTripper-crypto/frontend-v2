@@ -4,7 +4,7 @@
     <BalLbpLineChart
       :data="series"
       :isPeriodSelectionEnabled="false"
-      :axisLabelFormatter="{ yAxis: '$0.00', xAxis: 'datetime' }"
+      :axisLabelFormatter="{ yAxis: '$0.000', xAxis: 'datetime' }"
       :color="chartColors"
       :legendState="{}"
       height="96"
