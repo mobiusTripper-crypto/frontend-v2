@@ -42,7 +42,7 @@
     "lidoRelayer": "",
     "balancerHelpers": "0xfE18C7C70b0a2c6541bEde0367124278BC345Dc8",
     "masterChef": "",
-    "beetsUsdcReferencePricePool": ""
+    "beetsUsdcReferencePricePool": "0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015"
   },
   "strategies": {
     "0": {

@@ -43,7 +43,7 @@
     "lidoRelayer": "",
     "balancerHelpers": "0x49bf4cB1fF35ceda7BDB33064A9781144EF5d2b7",
     "masterChef": "0xCE08CE827874bef5E6CAE1FcE37640B75a8f4c15",
-    "beetsUsdcReferencePricePool": ""
+    "beetsUsdcReferencePricePool": "0xc5406e40f6f84468451319ec83038b2c063d280600020000000000000000002a"
   },
   "strategies": {
     "0": {
@@ -60,14 +60,14 @@
     }
   },
   "lbp": {
-    "poolId": "0x6e26f6d45f87af6593a892fad86c3843e493c3aa000200000000000000000028",
-    "tokenAddress": "0xa7d7e5eD1f90aF81D7729F4931bbc03344397C4A",
+    "poolId": "0x49096affb047f312a3def632c07b962f6b2276da000200000000000000000029",
+    "tokenAddress": "0x86B9A6ebCd7B59714d5a566bFfe2683aCFcda0f6",
     "tokenSymbol": "BEETS",
     "startingAmount": 5000000,
     "usdcAddress": "0x70b55Af71B29c5Ca7e67bD1995250364C4bE5554",
-    "startTime": "2021-10-04T11:19:00+0000",
-    "endTime": "2021-10-09T14:19:00+0000",
+    "startTime": "2021-10-07T06:18:00+0000",
+    "endTime": "2021-10-07T08:18:00+0000",
     "weightStep":  0.00625,
-    "timeStep": 420
+    "timeStep": 300
   }
 }
