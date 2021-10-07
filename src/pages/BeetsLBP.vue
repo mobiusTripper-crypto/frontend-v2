@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isBeforeLbpStart" class="app-nav-alert bg-black text-white">
+  <div v-if="isBeforeLbpStart" class="app-nav-alert bg-green-500 text-white">
     <div class="w-8" />
     <div class="flex-1 text-center flex items-center justify-center">
       <BalIcon name="clock" class="mr-4" />

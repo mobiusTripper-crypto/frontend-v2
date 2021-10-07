@@ -87,13 +87,20 @@ export default defineComponent({
 
     // COMPUTED
     const filteredPools = computed(() => {
-      return selectedTokens.value.length > 0
-        ? pools.value?.filter(pool => {
-            return selectedTokens.value.every((selectedToken: string) =>
-              pool.tokenAddresses.includes(selectedToken)
-            );
-          })
-        : pools?.value;
+      const filtered =
+        selectedTokens.value.length > 0
+          ? pools.value?.filter(pool => {
+              return selectedTokens.value.every((selectedToken: string) =>
+                pool.tokenAddresses.includes(selectedToken)
+              );
+            })
+          : pools?.value;
+
+      return filtered?.filter(
+        pool =>
+          pool.id !==
+          '0x5856cee862de908d63062b891d526ce78183eb8c000200000000000000000014'
+      );
     });
 
     const hideV1Links = computed(() => !isV1Supported);
