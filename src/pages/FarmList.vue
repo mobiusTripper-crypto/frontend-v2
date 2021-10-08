@@ -1,10 +1,10 @@
 <template>
-  <!--  <FarmsHero :decorated-farms="decoratedFarms" :loading="isLoading" />-->
+  <FarmsHero :decorated-farms="decoratedFarms" :loading="isLoading" />
   <div class="lg:container lg:mx-auto pt-10 md:pt-12">
     <!--    <div class="px-4 lg:px-0">
       <h3 class="mb-3">Farms</h3>
     </div>-->
-    <h2 class="mb-3 text-center">
+    <!--    <h2 class="mb-3 text-center">
       Farms coming soon. Follow us on
       <a href="https://twitter.com/beethoven_x" class="text-green-500"
         >Twitter</a
@@ -13,9 +13,9 @@
     </h2>
     <div class="flex justify-center mt-12">
       <img src="~@/assets/images/looking-image.png" width="400" />
-    </div>
+    </div>-->
 
-    <!--    <div>
+    <div>
       <div class="px-4 lg:px-0">
         <h3 class="mb-3">Farms</h3>
       </div>
@@ -27,7 +27,7 @@
         :isLoadingMore="false"
         class="mb-8"
       />
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -54,8 +54,8 @@ import { decorateFarms } from '@/lib/utils/farmHelper';
 
 export default defineComponent({
   components: {
-    //FarmsHero,
-    //FarmsTable
+    FarmsHero,
+    FarmsTable
   },
 
   setup() {
@@ -69,7 +69,7 @@ export default defineComponent({
 
     // COMPUTED
 
-    /*const { farms, isLoadingFarms } = useFarms();
+    const { farms, isLoadingFarms } = useFarms();
     const { selectedTokens } = usePoolFilters();
     const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
     const { pools, isLoadingPools } = usePools(selectedTokens);
@@ -78,6 +78,7 @@ export default defineComponent({
     const allFarmsForUser = computed(() => allFarmsUserQuery.data.value || []);
 
     const decoratedFarms = computed(() => {
+      console.log('VARMS', farms.value);
       console.log(
         decorateFarms(
           pools.value,
@@ -97,7 +98,7 @@ export default defineComponent({
         blocksPerDay.value,
         beetsPrice
       );
-    });*/
+    });
 
     return {
       // data
@@ -105,9 +106,9 @@ export default defineComponent({
       // computed
       isWalletReady,
 
-      /*decoratedFarms,
+      decoratedFarms,
       isLoading:
-        isLoadingPools || isLoadingFarms || allFarmsUserQuery.isLoading,*/
+        isLoadingPools || isLoadingFarms || allFarmsUserQuery.isLoading,
 
       //methods
       router,

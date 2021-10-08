@@ -11,7 +11,7 @@
   "loggingRpc": "",
   "explorer": "https://rinkeby.etherscan.io",
   "subgraph": "https://api.studio.thegraph.com/query/8788/beethovenx-rinkeby/v0.0.2",
-  "farmSubgraph": "https://api.studio.thegraph.com/query/8788/beethovenx-farms-rinkeby/0.0.1",
+  "farmSubgraph": "https://api.studio.thegraph.com/query/8788/beethovenx-farms-rinkeby/v0.0.4",
   "blockSubgraph": "https://api.studio.thegraph.com/query/8788/rinkeby-blocks/v0.0.2",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
@@ -39,10 +39,10 @@
     "stETH": "",
     "wstETH": "",
     "usdc": "0x17590C13203315af2082d7Cc8B29ddc56A3Ed7C5",
-    "beets": "0xa7d7e5ed1f90af81d7729f4931bbc03344397c4a",
+    "beets": "0x819091705aAa56f87D02a5bB7a829550C8F5313D",
     "lidoRelayer": "",
     "balancerHelpers": "0x49bf4cB1fF35ceda7BDB33064A9781144EF5d2b7",
-    "masterChef": "0xCE08CE827874bef5E6CAE1FcE37640B75a8f4c15",
+    "masterChef": "0x0e317Aa06F6C759a724ecD43548FB77bF5baC5b9",
     "beetsUsdcReferencePricePool": "0xc5406e40f6f84468451319ec83038b2c063d280600020000000000000000002a"
   },
   "strategies": {
