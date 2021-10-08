@@ -75,10 +75,11 @@ import useTokens from '@/composables/useTokens';
 import numeral from 'numeral';
 import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
 import { useI18n } from 'vue-i18n';
+import LiquidityMiningTooltip from '@/components/tooltips/LiquidityMiningTooltip.vue';
 
 export default defineComponent({
   components: {
-    //LiquidityMiningTooltip,
+    LiquidityMiningTooltip
   },
 
   emits: ['loadMore'],
