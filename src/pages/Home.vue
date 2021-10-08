@@ -19,6 +19,22 @@
       </div>
       <div class="mb-16" />
     </template>
+
+    <template v-if="isWalletReady && userFarms && userFarms.length > 0">
+      <div class="mb-16">
+        <div class="px-4 lg:px-0">
+          <h3 class="mb-3">My Farms</h3>
+        </div>
+        <FarmsTable
+          :decorated-farms="userFarms"
+          :loading="isLoadingDecoratedFarms"
+          :isPaginated="false"
+          :isLoadingMore="false"
+          class="mb-8"
+        />
+      </div>
+    </template>
+
     <div class="px-4 lg:px-0">
       <h3 class="mb-3">{{ $t('investmentPools') }}</h3>
       <TokenSearchInput
@@ -28,7 +44,6 @@
         @remove="removeSelectedToken"
       />
     </div>
-
     <PoolsTable
       :isLoading="isLoadingPools"
       :data="filteredPools"
@@ -59,17 +74,20 @@ import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
+import useDecoratedFarms from '@/composables/farms/useDecoratedFarms';
+import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 
 export default defineComponent({
   components: {
     TokenSearchInput,
-    PoolsTable
+    PoolsTable,
+    FarmsTable
   },
 
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady, isV1Supported, appNetworkConfig } = useWeb3();
+    const { isWalletReady, isV1Supported } = useWeb3();
     const {
       selectedTokens,
       addSelectedToken,
@@ -85,8 +103,7 @@ export default defineComponent({
       poolsHasNextPage,
       poolsIsFetchingNextPage
     } = usePools(selectedTokens);
-
-    useProtocolDataQuery();
+    const { decoratedFarms, isLoadingDecoratedFarms } = useDecoratedFarms();
 
     // COMPUTED
     const filteredPools = computed(() => {
@@ -108,12 +125,18 @@ export default defineComponent({
 
     const hideV1Links = computed(() => !isV1Supported);
 
+    const userFarms = computed(() =>
+      decoratedFarms.value.filter(farm => farm.stake > 0)
+    );
+
     return {
       // data
       filteredPools,
       userPools,
       isLoadingPools,
       isLoadingUserPools,
+      userFarms,
+      isLoadingDecoratedFarms,
 
       // computed
       isWalletReady,

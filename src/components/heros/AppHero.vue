@@ -10,12 +10,12 @@
           />
         </div>
         <BalLoadingBlock
-          v-if="isLoadingUserPools"
+          v-if="isLoadingUserPools || isLoadingDecoratedFarms"
           class="h-10 w-40 mx-auto"
           white
         />
         <span v-else class="text-3xl font-bold text-white">
-          {{ fNum(totalInvestedAmount, 'usd', { forcePreset: true }) }}
+          {{ fNum(totalInvestedAndFarmAmount, 'usd', { forcePreset: true }) }}
         </span>
       </template>
       <template v-else>
@@ -62,6 +62,9 @@ import { EXTERNAL_LINKS } from '@/constants/links';
 import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
 import useDarkMode from '@/composables/useDarkMode';
+import useFarms from '@/composables/farms/useFarms';
+import { sumBy } from 'lodash';
+import useDecoratedFarms from '@/composables/farms/useDecoratedFarms';
 
 export default defineComponent({
   name: 'AppHero',
@@ -73,12 +76,20 @@ export default defineComponent({
     const { trackGoal, Goals } = useFathom();
     const { totalInvestedAmount, isLoadingUserPools } = usePools();
     const { darkMode } = useDarkMode();
+    const { decoratedFarms, isLoadingDecoratedFarms } = useDecoratedFarms();
 
     const classes = computed(() => ({
       ['h-72']: !isWalletReady.value,
       //['h-0']: isWalletReady.value
       ['h-40']: isWalletReady.value
     }));
+
+    const totalInvestedAndFarmAmount = computed(() => {
+      return (
+        sumBy(decoratedFarms.value, farm => farm.stake || 0) +
+        parseFloat(totalInvestedAmount.value || '0')
+      );
+    });
 
     function onClickConnect() {
       toggleWalletSelectModal(true);
@@ -88,7 +99,9 @@ export default defineComponent({
     return {
       // data
       totalInvestedAmount,
+      totalInvestedAndFarmAmount,
       isLoadingUserPools,
+      isLoadingDecoratedFarms,
       Goals,
 
       // computed
