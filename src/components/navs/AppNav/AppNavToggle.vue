@@ -30,7 +30,7 @@
     >
       Farm
     </router-link>
-    <router-link
+    <!--    <router-link
       :to="{ name: 'beets' }"
       :class="[
         'toggle-link px-6 rounded-r-lg',
@@ -39,7 +39,7 @@
       @click="trackGoal(Goals.ClickNavBeets)"
     >
       <span class="hidden lg:inline-block">Buy&nbsp;</span>BEETS
-    </router-link>
+    </router-link>-->
   </div>
 </template>
 
