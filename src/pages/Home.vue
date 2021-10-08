@@ -65,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import TokenSearchInput from '@/components/inputs/TokenSearchInput.vue';
@@ -76,6 +76,7 @@ import usePoolFilters from '@/composables/pools/usePoolFilters';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 import useDecoratedFarms from '@/composables/farms/useDecoratedFarms';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
+import useAverageBlockTime from '@/composables/useAverageBlockTime';
 
 export default defineComponent({
   components: {
@@ -104,6 +105,11 @@ export default defineComponent({
       poolsIsFetchingNextPage
     } = usePools(selectedTokens);
     const { decoratedFarms, isLoadingDecoratedFarms } = useDecoratedFarms();
+    const protocolDataQuery = useProtocolDataQuery();
+    const beetsPrice = computed(
+      () => protocolDataQuery.data?.value?.beetsPrice || 0
+    );
+    const { blocksPerYear } = useAverageBlockTime();
 
     // COMPUTED
     const filteredPools = computed(() => {
@@ -125,9 +131,9 @@ export default defineComponent({
 
     const hideV1Links = computed(() => !isV1Supported);
 
-    const userFarms = computed(() =>
-      decoratedFarms.value.filter(farm => farm.stake > 0)
-    );
+    const userFarms = computed(() => {
+      return decoratedFarms.value.filter(farm => farm.stake > 0);
+    });
 
     return {
       // data

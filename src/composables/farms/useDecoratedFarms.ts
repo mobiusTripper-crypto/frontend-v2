@@ -1,7 +1,12 @@
 import { computed, ComputedRef, ref } from 'vue';
 import { flatten } from 'lodash';
 import useFarmsQuery from '@/composables/queries/useFarmsQuery';
-import { Farm, FarmWithPool, Pool } from '@/services/balancer/subgraph/types';
+import {
+  DecoratedPool,
+  Farm,
+  FarmWithPool,
+  Pool
+} from '@/services/balancer/subgraph/types';
 import BigNumber from 'bignumber.js';
 import {
   calculateApr,
@@ -16,7 +21,7 @@ import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 import useAllFarmsForUserQuery from '@/composables/queries/useAllFarmsForUserQuery';
 
 interface DecoratedFarm extends Farm {
-  pool: Pool | undefined;
+  pool: DecoratedPool | undefined;
   tvl: number;
   rewards: number;
   stake: number;

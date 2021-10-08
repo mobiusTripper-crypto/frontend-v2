@@ -40,6 +40,16 @@
           />
         </div>
       </template>
+      <template v-slot:aprCell="farm">
+        <div class="px-6 py-4 -mt-1 flex justify-end">
+          {{
+            Number(farm.pool.dynamic.apr.pool) > 10000
+              ? '-'
+              : fNum(farm.pool.dynamic.apr.total, 'percent')
+          }}
+          <LiquidityMiningTooltip :pool="farm.pool" />
+        </div>
+      </template>
     </BalTable>
   </BalCard>
 </template>
@@ -170,11 +180,16 @@ export default defineComponent({
         width: 200
       },
       {
-        name: 'Farm APR',
-        id: 'apr',
-        accessor: 'apr',
-        sortKey: 'apr',
+        name: t('apr'),
+        Cell: 'aprCell',
+        accessor: farm => farm.pool?.dynamic.apr.total || '',
         align: 'right',
+        id: 'poolApr',
+        sortKey: farm => {
+          const apr = Number(farm.pool?.dynamic.apr.total || 0);
+          if (apr === Infinity || isNaN(apr)) return 0;
+          return apr;
+        },
         width: 150
       }
     ]);
