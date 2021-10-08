@@ -2,7 +2,10 @@
   <div id="modal" />
   <div id="app" class="flex flex-col">
     <AppNav />
-    <AppHero v-if="isHomePage" />
+    <div class="relative">
+      <AppHero v-if="isHomePage" />
+      <GlobalStats />
+    </div>
     <div class="pb-12">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
@@ -89,6 +92,7 @@ import useBreakpoints from './composables/useBreakpoints';
 import { tryPromiseWithTimeout } from './lib/utils/promise';
 import AppFooterNav from '@/components/navs/AppFooterNav/AppFooterNav.vue';
 import FarmsHero from '@/components/heros/FarmsHero.vue';
+import GlobalStats from '@/components/stats/GlobalStats.vue';
 
 BigNumber.config({ DECIMAL_PLACES: DEFAULT_TOKEN_DECIMALS });
 
@@ -113,7 +117,8 @@ export default defineComponent({
     AppHero,
     VueQueryDevTools,
     WalletSelectModal,
-    Notifications
+    Notifications,
+    GlobalStats
   },
 
   setup() {

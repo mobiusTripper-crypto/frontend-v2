@@ -31,14 +31,15 @@ export default function useProtocolDataQuery(
     }
 
     const balancerData = await balancerSubgraphService.balancers.get();
+    const beetsPrice = await getBeetsPrice(
+      appNetworkConfig.addresses.beetsUsdcReferencePricePool,
+      appNetworkConfig.addresses.beets,
+      appNetworkConfig.addresses.usdc
+    );
 
     return {
       ...balancerData,
-      beetsPrice: calculateBeetsPrice(
-        beetsPool.tokens,
-        appNetworkConfig.addresses.beets,
-        appNetworkConfig.addresses.usdc
-      )
+      beetsPrice
     };
   };
 
@@ -54,15 +55,22 @@ export default function useProtocolDataQuery(
   );
 }
 
-function calculateBeetsPrice(
-  tokens: PoolToken[],
+export async function getBeetsPrice(
+  poolId: string,
   beetsAddress: string,
   usdcAddress: string
 ) {
-  const beets = tokens.find(
+  const [beetsPool] = await balancerSubgraphService.pools.get({
+    where: {
+      id: poolId.toLowerCase(),
+      totalShares_gt: -1 // Avoid the filtering for low liquidity pools
+    }
+  });
+
+  const beets = beetsPool?.tokens.find(
     token => token.address.toLowerCase() === beetsAddress.toLowerCase()
   );
-  const usdc = tokens.find(
+  const usdc = beetsPool?.tokens.find(
     token => token.address.toLowerCase() === usdcAddress.toLowerCase()
   );
 

@@ -7,6 +7,7 @@ import { TokenPrices } from '@/services/coingecko/api/price.service';
 import { sleep } from '@/lib/utils';
 import useUserSettings from '@/composables/useUserSettings';
 import useWeb3 from '@/services/web3/useWeb3';
+import { getBeetsPrice } from '@/composables/queries/useProtocolDataQuery';
 
 /**
  * TYPES
@@ -28,17 +29,6 @@ export default function useTokenPricesQuery(
   const queryKey = reactive(QUERY_KEYS.Tokens.Prices(addresses));
   const { currency } = useUserSettings();
   const { appNetworkConfig } = useWeb3();
-  //const beets = useBeets();
-
-  // TODO: kill this with fire as soon as Coingecko supports BEETS
-  function injectBeetsPrice(prices: TokenPrices): TokenPrices {
-    prices[appNetworkConfig.addresses.beets] = {
-      //[currency.value]: beetsPrice.value.price
-      [currency.value]: 0
-    };
-
-    return prices;
-  }
 
   const queryFn = async () => {
     // Sequential pagination required to avoid coingecko rate limits.
@@ -59,7 +49,17 @@ export default function useTokenPricesQuery(
       };
     }
 
-    prices = injectBeetsPrice(prices);
+    // TODO: kill this with fire as soon as Coingecko supports BEETS
+    const beetsPrice = await getBeetsPrice(
+      appNetworkConfig.addresses.beetsUsdcReferencePricePool,
+      appNetworkConfig.addresses.beets,
+      appNetworkConfig.addresses.usdc
+    );
+
+    prices[appNetworkConfig.addresses.beets] = {
+      [currency.value]: beetsPrice
+    };
+
     return prices;
   };
 
