@@ -58,6 +58,7 @@ import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
+import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default defineComponent({
   components: {
@@ -84,6 +85,8 @@ export default defineComponent({
       poolsHasNextPage,
       poolsIsFetchingNextPage
     } = usePools(selectedTokens);
+
+    useProtocolDataQuery();
 
     // COMPUTED
     const filteredPools = computed(() => {

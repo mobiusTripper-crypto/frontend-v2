@@ -44,12 +44,11 @@ import LiquidityMiningTooltip from '@/components/tooltips/LiquidityMiningTooltip
 import BigNumber from 'bignumber.js';
 import { calculateApr, calculateTvl } from '@/lib/utils/farmHelper';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
-import { scale } from '@/lib/utils';
 import useFarm from '@/composables/farms/useFarm';
 import useEthers from '@/composables/useEthers';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import { useRoute } from 'vue-router';
-import useBeetsPrice from '@/composables/useBeetsPrice';
+import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default defineComponent({
   components: {
@@ -95,8 +94,11 @@ export default defineComponent({
       const farm = props.farm;
 
       const tvl = calculateTvl(farm);
-      const beetsPrice = useBeetsPrice();
-      const apr = calculateApr(farm, blocksPerYear.value, beetsPrice);
+      const protocolDataQuery = useProtocolDataQuery();
+      const beetsPrice = computed(
+        () => protocolDataQuery.data?.value?.beetsPrice || 0
+      );
+      const apr = calculateApr(farm, blocksPerYear.value, beetsPrice.value);
       const userShare = new BigNumber(farmUser.value?.amount || 0)
         .div(farm.slpBalance)
         .toNumber();

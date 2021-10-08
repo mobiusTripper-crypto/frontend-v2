@@ -4,20 +4,21 @@ import { flatten } from 'lodash';
 
 import usePoolsQuery from '@/composables/queries/usePoolsQuery';
 import useUserPoolsQuery from '@/composables/queries/useUserPoolsQuery';
-import useFarmsQuery from '@/composables/queries/useFarmsQuery';
 import useFarms from '@/composables/farms/useFarms';
-import { addFarmAprToPool, calculateApr } from '@/lib/utils/farmHelper';
-import useBeetsPrice from '@/composables/useBeetsPrice';
+import { addFarmAprToPool } from '@/lib/utils/farmHelper';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
-import { DecoratedPool } from '@/services/balancer/subgraph/types';
+import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
   // COMPOSABLES
   const poolsQuery = usePoolsQuery(poolsTokenList);
   const userPoolsQuery = useUserPoolsQuery();
+  const protocolDataQuery = useProtocolDataQuery();
+  const beetsPrice = computed(
+    () => protocolDataQuery.data?.value?.beetsPrice || 0
+  );
 
   const { farms } = useFarms();
-  const beetsPrice = useBeetsPrice();
   const { blocksPerYear } = useAverageBlockTime();
 
   // COMPUTED
@@ -31,7 +32,7 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
     );
 
     return flattened.map(pool =>
-      addFarmAprToPool(pool, farms.value, blocksPerYear.value, beetsPrice)
+      addFarmAprToPool(pool, farms.value, blocksPerYear.value, beetsPrice.value)
     );
   });
 
@@ -43,7 +44,7 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
 
   const userPools = computed(() => {
     return userPoolsQuery.data.value?.pools.map(pool =>
-      addFarmAprToPool(pool, farms.value, blocksPerYear.value, beetsPrice)
+      addFarmAprToPool(pool, farms.value, blocksPerYear.value, beetsPrice.value)
     );
   });
 

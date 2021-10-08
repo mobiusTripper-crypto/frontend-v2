@@ -170,3 +170,10 @@ export interface SubgraphTokenPrice {
   block: string;
   timestamp: number;
 }
+
+export interface SubgraphBalancer {
+  poolCount: number;
+  totalLiquidity: number;
+  totalSwapFee: number;
+  totalSwapVolume: number;
+}

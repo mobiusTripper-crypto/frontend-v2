@@ -89,16 +89,11 @@
 import { computed, defineComponent, PropType } from 'vue';
 
 import useNumbers from '@/composables/useNumbers';
-import usePools from '@/composables/pools/usePools';
 
 import { EXTERNAL_LINKS } from '@/constants/links';
 import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
 import useDarkMode from '@/composables/useDarkMode';
-import useAverageBlockTime from '@/composables/useAverageBlockTime';
-import useBeetsPrice from '@/composables/useBeetsPrice';
-import useAllFarmsForUserQuery from '@/composables/queries/useAllFarmsForUserQuery';
-import useFarms from '@/composables/farms/useFarms';
 import { sumBy } from 'lodash';
 import numeral from 'numeral';
 
@@ -122,11 +117,6 @@ export default defineComponent({
     const { isWalletReady, toggleWalletSelectModal } = useWeb3();
     const { trackGoal, Goals } = useFathom();
     const { darkMode } = useDarkMode();
-    const { farms, isLoadingFarms } = useFarms();
-    const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
-    const beetsPrice = useBeetsPrice();
-    const allFarmsUserQuery = useAllFarmsForUserQuery();
-    const allFarmsForUser = computed(() => allFarmsUserQuery.data.value || []);
 
     const classes = computed(() => ({
       ['h-72']: !isWalletReady.value,
@@ -142,13 +132,13 @@ export default defineComponent({
     const data = computed(() => {
       const farms = props.decoratedFarms;
       const averageApr =
-        sumBy(farms, farm => farm.apr * farm.stake) /
-        sumBy(farms, farm => farm.stake);
+        sumBy(farms, farm => farm.apr * (farm.stake || 0)) /
+        sumBy(farms, farm => farm.stake || 0);
 
       return {
         numFarms: farms.filter(farm => farm.stake > 0).length,
         totalBalance: fNum(
-          sumBy(farms, farm => farm.stake),
+          sumBy(farms, farm => farm.stake || 0),
           'usd'
         ),
         pendingBeets:

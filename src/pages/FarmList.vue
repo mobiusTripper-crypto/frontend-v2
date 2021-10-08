@@ -38,19 +38,13 @@ import { EXTERNAL_LINKS } from '@/constants/links';
 import useWeb3 from '@/services/web3/useWeb3';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import FarmsHero from '@/components/heros/FarmsHero.vue';
-import useNumbers from '@/composables/useNumbers';
-import useFathom from '@/composables/useFathom';
-import useDarkMode from '@/composables/useDarkMode';
-import useBreakpoints from '@/composables/useBreakpoints';
-import useTokens from '@/composables/useTokens';
 import useFarms from '@/composables/farms/useFarms';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
-import { useI18n } from 'vue-i18n';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import usePools from '@/composables/pools/usePools';
-import useBeetsPrice from '@/composables/useBeetsPrice';
 import useAllFarmsForUserQuery from '@/composables/queries/useAllFarmsForUserQuery';
 import { decorateFarms } from '@/lib/utils/farmHelper';
+import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default defineComponent({
   components: {
@@ -73,30 +67,21 @@ export default defineComponent({
     const { selectedTokens } = usePoolFilters();
     const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
     const { pools, isLoadingPools } = usePools(selectedTokens);
-    const beetsPrice = useBeetsPrice();
+    const protocolDataQuery = useProtocolDataQuery();
+    const beetsPrice = computed(
+      () => protocolDataQuery.data?.value?.beetsPrice || 0
+    );
     const allFarmsUserQuery = useAllFarmsForUserQuery();
     const allFarmsForUser = computed(() => allFarmsUserQuery.data.value || []);
 
     const decoratedFarms = computed(() => {
-      console.log('VARMS', farms.value);
-      console.log(
-        decorateFarms(
-          pools.value,
-          farms.value,
-          allFarmsForUser.value,
-          blocksPerYear.value,
-          blocksPerDay.value,
-          beetsPrice
-        )
-      );
-
       return decorateFarms(
         pools.value,
         farms.value,
         allFarmsForUser.value,
         blocksPerYear.value,
         blocksPerDay.value,
-        beetsPrice
+        beetsPrice.value
       );
     });
 

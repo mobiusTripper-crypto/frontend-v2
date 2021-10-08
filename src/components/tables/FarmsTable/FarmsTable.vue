@@ -64,14 +64,7 @@ import { isStableLike } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import numeral from 'numeral';
 import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
-import useFarms from '@/composables/farms/useFarms';
-import usePools from '@/composables/pools/usePools';
-import usePoolFilters from '@/composables/pools/usePoolFilters';
-import useAverageBlockTime from '@/composables/useAverageBlockTime';
-import useWeb3 from '@/services/web3/useWeb3';
-import useBeetsPrice from '@/composables/useBeetsPrice';
 import { useI18n } from 'vue-i18n';
-import useAllFarmsForUserQuery from '@/composables/queries/useAllFarmsForUserQuery';
 
 export default defineComponent({
   components: {

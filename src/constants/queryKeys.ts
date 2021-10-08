@@ -95,6 +95,9 @@ const QUERY_KEYS = {
   },
   App: {
     Chains: ['evm_chains']
+  },
+  ProtocolData: {
+    All: ['protocolData', 'all']
   }
 };
 

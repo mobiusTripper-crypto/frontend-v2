@@ -133,9 +133,9 @@ import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useApp from '@/composables/useApp';
 import useFarms from '@/composables/farms/useFarms';
-import useBeetsPrice from '@/composables/useBeetsPrice';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import { addFarmAprToPool } from '@/lib/utils/farmHelper';
+import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 interface PoolPageData {
   id: string;
@@ -165,7 +165,10 @@ export default defineComponent({
     const { prices } = useTokens();
     const { blockNumber } = useWeb3();
     const { farms } = useFarms();
-    const beetsPrice = useBeetsPrice();
+    const protocolDataQuery = useProtocolDataQuery();
+    const beetsPrice = computed(
+      () => protocolDataQuery.data?.value?.beetsPrice || 0
+    );
     const { blocksPerYear } = useAverageBlockTime();
 
     /**
@@ -194,7 +197,7 @@ export default defineComponent({
           poolQuery.data.value,
           farms.value,
           blocksPerYear.value,
-          beetsPrice
+          beetsPrice.value
         );
 
         return {
@@ -320,8 +323,10 @@ export default defineComponent({
     });
 
     watch(poolQuery.error, () => {
-      console.log('poolQuery.error', poolQuery.error);
-      router.push({ name: 'home' });
+      if (poolQuery.error) {
+        console.log('poolQuery.error', poolQuery.error);
+        router.push({ name: 'home' });
+      }
     });
 
     return {

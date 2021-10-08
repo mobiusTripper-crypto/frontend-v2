@@ -7,14 +7,17 @@ import useWeb3 from '@/services/web3/useWeb3';
 import { FarmUser } from '@/services/balancer/subgraph/types';
 import useApp from '@/composables/useApp';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
-import useBeetsPrice from '@/composables/useBeetsPrice';
+import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default function useAllFarmsForUserQuery(
   options: QueryObserverOptions<FarmUser[]> = {}
 ) {
   const { account, isWalletReady } = useWeb3();
   const { appLoading } = useApp();
-  const beetsPrice = useBeetsPrice();
+  const protocolDataQuery = useProtocolDataQuery();
+  const beetsPrice = computed(
+    () => protocolDataQuery.data?.value?.beetsPrice || 0
+  );
   const enabled = computed(
     () => isWalletReady.value && account.value != null && !appLoading.value
   );
@@ -36,7 +39,7 @@ export default function useAllFarmsForUserQuery(
         decoratedUserFarms.push({
           ...userFarm,
           pendingBeets,
-          pendingBeetsValue: pendingBeets * beetsPrice
+          pendingBeetsValue: pendingBeets * beetsPrice.value
         });
       }
 

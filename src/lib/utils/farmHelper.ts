@@ -19,7 +19,6 @@ export function decorateFarms(
   blocksPerDay: number,
   beetsPrice: number
 ) {
-  console.log('inside decorate farms');
   if (farms.length === 0 || pools.length === 0) {
     return [];
   }

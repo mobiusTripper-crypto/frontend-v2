@@ -134,10 +134,10 @@ export class PriceService {
     const end = now - (now % twentyFourHourseInSecs);
     const start = end - days * twentyFourHourseInSecs;
 
-    // TODO - remove once wsteth is supported
+    // TODO - remove once beets is supported
     addresses = addresses.filter(
       address =>
-        address !== this.configService.network.addresses.wstETH.toLowerCase()
+        address !== this.configService.network.addresses.beets.toLowerCase()
     );
 
     addresses = addresses.map(address => this.addressMapIn(address));
