@@ -75,7 +75,7 @@ export default defineComponent({
     const allFarmsForUser = computed(() => allFarmsUserQuery.data.value || []);
 
     const decoratedFarms = computed(() => {
-      return decorateFarms(
+      const decorated = decorateFarms(
         pools.value,
         farms.value,
         allFarmsForUser.value,
@@ -83,6 +83,8 @@ export default defineComponent({
         blocksPerDay.value,
         beetsPrice.value
       );
+
+      return decorated.filter(farm => farm.pool !== undefined);
     });
 
     return {

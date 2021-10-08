@@ -12,6 +12,7 @@
   "explorer": "https://ftmscan.com",
   "subgraph": "https://graph.beethovenx.io/subgraphs/name/beethovenx",
   "blockSubgraph": "https://graph.beethovenx.io/subgraphs/name/fantom-blocks",
+  "farmSubgraph": "https://graph.beethovenx.io/subgraphs/name/masterchef",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "nativeAsset": {
@@ -37,11 +38,11 @@
     "weth": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
     "stETH": "",
     "wstETH": "",
-    "usdc": "",
-    "beets": "",
+    "usdc": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+    "beets": "0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
     "lidoRelayer": "",
     "balancerHelpers": "0xfE18C7C70b0a2c6541bEde0367124278BC345Dc8",
-    "masterChef": "",
+    "masterChef": "0x8166994d9ebBe5829EC86Bd81258149B87faCfd3",
     "beetsUsdcReferencePricePool": "0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015"
   },
   "strategies": {
