@@ -120,6 +120,7 @@ export default defineComponent({
       isLoadingFarms,
       refetchPools
     } = usePools();
+    const poolQuery = usePoolQuery(route.params.id as string);
 
     /**
      * STATE
@@ -139,7 +140,10 @@ export default defineComponent({
     const { harvest } = useFarm(pool);
 
     const loading = computed(
-      () => isLoadingPools.value || isLoadingFarms.value
+      () =>
+        isLoadingPools.value ||
+        isLoadingFarms.value ||
+        poolQuery.isLoading.value
     );
 
     const titleTokens = computed(() => {

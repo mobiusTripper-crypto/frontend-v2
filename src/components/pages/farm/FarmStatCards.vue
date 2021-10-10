@@ -64,7 +64,7 @@ export default defineComponent({
     const { txListener } = useEthers();
     const { harvest } = useFarm(ref(props.pool));
     const harvesting = ref(false);
-    const farmUserQuery = useFarmUserQuery(route.params.id as string);
+    const farmUserQuery = useFarmUserQuery(props.pool.farm.id);
     const farmUser = computed(() => farmUserQuery.data.value);
 
     async function harvestRewards(): Promise<void> {
