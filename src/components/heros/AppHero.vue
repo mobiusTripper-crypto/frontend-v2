@@ -72,7 +72,11 @@ export default defineComponent({
     const { fNum } = useNumbers();
     const { isWalletReady, toggleWalletSelectModal } = useWeb3();
     const { trackGoal, Goals } = useFathom();
-    const { totalInvestedAmount, isLoadingUserPools } = usePools();
+    const {
+      totalInvestedAmount,
+      isLoadingUserPools,
+      onlyPoolsWithFarms
+    } = usePools();
     const { darkMode } = useDarkMode();
     //const { decoratedFarms, isLoadingDecoratedFarms } = useDecoratedFarms();
 
@@ -83,12 +87,10 @@ export default defineComponent({
     }));
 
     const totalInvestedAndFarmAmount = computed(() => {
-      /*return (
-        sumBy(decoratedFarms.value, farm => farm.stake || 0) +
+      return (
+        sumBy(onlyPoolsWithFarms.value, pool => pool.farm.stake || 0) +
         parseFloat(totalInvestedAmount.value || '0')
-      );*/
-
-      return totalInvestedAmount.value;
+      );
     });
 
     function onClickConnect() {

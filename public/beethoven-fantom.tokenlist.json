@@ -166,6 +166,14 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/18234/large/babyboo.png"
+    },
+    {
+      "name": "yearn.finance",
+      "address": "0x29b0da86e484e1c0029b56e817912d778ac0ec69",
+      "symbol": "YFI",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/11849/large/yfi-192x192.png"
     }
   ]
 }
