@@ -8,11 +8,7 @@
       </div>
 
       <template v-if="activeTab === 'deposit'">
-        <FarmDepositForm
-          :pool="pool"
-          :farm="farm"
-          @success="handleInvestment($event)"
-        />
+        <FarmDepositForm :pool="pool" @success="handleInvestment($event)" />
         <SuccessOverlay
           v-if="investmentSuccess"
           :title="$t('farmDepositSettled')"
@@ -23,11 +19,7 @@
         />
       </template>
       <template v-if="activeTab === 'withdraw'">
-        <FarmWithdrawForm
-          :pool="pool"
-          :farm="farm"
-          @success="handleWithdrawal($event)"
-        />
+        <FarmWithdrawForm :pool="pool" @success="handleWithdrawal($event)" />
         <SuccessOverlay
           v-if="withdrawalSuccess"
           :title="$t('farmWithdrawalSettled')"
@@ -48,7 +40,7 @@ import { useI18n } from 'vue-i18n';
 import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
 import FarmDepositForm from '@/components/forms/farm_actions/FarmDepositForm.vue';
-import { Farm, FullPool } from '@/services/balancer/subgraph/types';
+import { DecoratedPoolWithRequiredFarm } from '@/services/balancer/subgraph/types';
 import FarmWithdrawForm from '@/components/forms/farm_actions/FarmWithdrawForm.vue';
 
 export default defineComponent({
@@ -63,8 +55,10 @@ export default defineComponent({
   },
 
   props: {
-    pool: { type: Object as PropType<FullPool>, required: true },
-    farm: { type: Object as PropType<Farm>, required: true },
+    pool: {
+      type: Object as PropType<DecoratedPoolWithRequiredFarm>,
+      required: true
+    },
     missingPrices: { type: Boolean, default: false }
   },
 

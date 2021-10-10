@@ -31,7 +31,8 @@ const defaultAttrs = {
   tokens: {
     address: true,
     balance: true,
-    weight: true
+    weight: true,
+    symbol: true
   }
 };
 

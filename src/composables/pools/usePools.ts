@@ -1,13 +1,17 @@
-import { computed, Ref, ref } from 'vue';
+import { computed, ComputedRef, Ref, ref } from 'vue';
 
 import { flatten } from 'lodash';
 
 import usePoolsQuery from '@/composables/queries/usePoolsQuery';
 import useUserPoolsQuery from '@/composables/queries/useUserPoolsQuery';
 import useFarms from '@/composables/farms/useFarms';
-import { addFarmAprToPool } from '@/lib/utils/farmHelper';
+import { decorateFarms, getPoolApr } from '@/lib/utils/farmHelper';
 import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
+import {
+  DecoratedPoolWithFarm,
+  DecoratedPoolWithRequiredFarm
+} from '@/services/balancer/subgraph/types';
 
 export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
   // COMPOSABLES
@@ -18,10 +22,11 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
     () => protocolDataQuery.data?.value?.beetsPrice || 0
   );
 
-  const { farms } = useFarms();
-  const { blocksPerYear } = useAverageBlockTime();
+  const { farms, allFarmsForUser, isLoadingFarms } = useFarms();
+  const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
 
   // COMPUTED
+
   const pools = computed(() => {
     if (!poolsQuery.data.value) {
       return [];
@@ -31,10 +36,47 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
       poolsQuery.data.value.pages.map(page => page.pools)
     );
 
-    return flattened.map(pool =>
-      addFarmAprToPool(pool, farms.value, blocksPerYear.value, beetsPrice.value)
+    return flattened;
+  });
+
+  const decoratedFarms = computed(() => {
+    return decorateFarms(
+      pools.value,
+      farms.value,
+      allFarmsForUser.value,
+      blocksPerYear.value,
+      blocksPerDay.value,
+      beetsPrice.value
     );
   });
+
+  const poolsWithFarms: ComputedRef<DecoratedPoolWithFarm[]> = computed(() => {
+    return pools.value.map(pool => {
+      const farm = decoratedFarms.value.find(
+        farm => pool.address.toLowerCase() === farm.pair.toLowerCase()
+      );
+
+      return {
+        ...pool,
+        farm,
+        hasLiquidityMiningRewards: !!farm,
+        dynamic: {
+          ...pool.dynamic,
+          apr: farm
+            ? getPoolApr(pool, farm, blocksPerYear.value, beetsPrice.value)
+            : pool.dynamic.apr
+        }
+      };
+    });
+  });
+
+  const onlyPoolsWithFarms: ComputedRef<DecoratedPoolWithRequiredFarm[]> = computed(
+    () => {
+      return poolsWithFarms.value.filter(
+        pool => !!pool.farm
+      ) as DecoratedPoolWithRequiredFarm[];
+    }
+  );
 
   const tokens = computed(() =>
     poolsQuery.data.value
@@ -43,9 +85,23 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
   );
 
   const userPools = computed(() => {
-    return userPoolsQuery.data.value?.pools.map(pool =>
-      addFarmAprToPool(pool, farms.value, blocksPerYear.value, beetsPrice.value)
-    );
+    return userPoolsQuery.data.value?.pools.map(pool => {
+      const farm = decoratedFarms.value.find(
+        farm => pool.address.toLowerCase() === farm.pair.toLowerCase()
+      );
+
+      return {
+        ...pool,
+        farm,
+        hasLiquidityMiningRewards: !!farm,
+        dynamic: {
+          ...pool.dynamic,
+          apr: farm
+            ? getPoolApr(pool, farm, blocksPerYear.value, beetsPrice.value)
+            : pool.dynamic.apr
+        }
+      };
+    });
   });
 
   const totalInvestedAmount = computed(
@@ -70,6 +126,10 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
     poolsQuery.fetchNextPage.value();
   }
 
+  function refetchPools() {
+    poolsQuery.refetch.value();
+  }
+
   return {
     // computed
     pools,
@@ -80,8 +140,12 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
     isLoadingUserPools,
     poolsHasNextPage,
     poolsIsFetchingNextPage,
+    isLoadingFarms,
+    poolsWithFarms,
+    onlyPoolsWithFarms,
 
     // methods
-    loadMorePools
+    loadMorePools,
+    refetchPools
   };
 }

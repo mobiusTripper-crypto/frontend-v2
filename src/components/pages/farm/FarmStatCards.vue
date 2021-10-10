@@ -7,7 +7,7 @@
         </div>
         <div class="text-xl font-medium truncate flex items-center">
           {{ stat.value }}
-          <LiquidityMiningTooltip :pool="farm.pool" v-if="stat.id === 'apr'" />
+          <LiquidityMiningTooltip :pool="pool" v-if="stat.id === 'apr'" />
         </div>
       </BalCard>
     </div>
@@ -17,17 +17,17 @@
           My Pending Rewards
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ fNum(pendingRewards.count, 'token_fixed') }} BEETS
+          {{ fNum(pool.farm.pendingBeets, 'token_fixed') }} BEETS
         </div>
         <div class="truncate flex items-center pb-8">
-          {{ fNum(pendingRewards.value, 'usd') }}
+          {{ fNum(pool.farm.pendingBeetsValue, 'usd') }}
         </div>
 
         <BalBtn
           label="Harvest"
           block
           color="gradient"
-          :disabled="pendingRewards.count <= 0"
+          :disabled="pool.farm.pendingBeets <= 0"
           :loading="harvesting"
           @click.prevent="harvestRewards"
         />
@@ -39,16 +39,12 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 import useNumbers from '@/composables/useNumbers';
-import { FarmWithPool } from '@/services/balancer/subgraph/types';
+import { DecoratedPoolWithRequiredFarm } from '@/services/balancer/subgraph/types';
 import LiquidityMiningTooltip from '@/components/tooltips/LiquidityMiningTooltip.vue';
-import BigNumber from 'bignumber.js';
-import { calculateApr, calculateTvl } from '@/lib/utils/farmHelper';
-import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import useFarm from '@/composables/farms/useFarm';
 import useEthers from '@/composables/useEthers';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
 import { useRoute } from 'vue-router';
-import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default defineComponent({
   components: {
@@ -56,15 +52,17 @@ export default defineComponent({
   },
 
   props: {
-    farm: { type: Object as PropType<FarmWithPool>, required: true }
+    pool: {
+      type: Object as PropType<DecoratedPoolWithRequiredFarm>,
+      required: true
+    }
   },
 
   setup(props) {
     const route = useRoute();
     const { fNum } = useNumbers();
-    const { blocksPerYear } = useAverageBlockTime();
     const { txListener } = useEthers();
-    const { harvest } = useFarm(ref(props.farm));
+    const { harvest } = useFarm(ref(props.pool));
     const harvesting = ref(false);
     const farmUserQuery = useFarmUserQuery(route.params.id as string);
     const farmUser = computed(() => farmUserQuery.data.value);
@@ -91,38 +89,28 @@ export default defineComponent({
 
     // COMPUTED
     const stats = computed(() => {
-      const farm = props.farm;
-
-      const tvl = calculateTvl(farm);
-      const protocolDataQuery = useProtocolDataQuery();
-      const beetsPrice = computed(
-        () => protocolDataQuery.data?.value?.beetsPrice || 0
-      );
-      const apr = calculateApr(farm, blocksPerYear.value, beetsPrice.value);
-      const userShare = new BigNumber(farmUser.value?.amount || 0)
-        .div(farm.slpBalance)
-        .toNumber();
+      const farm = props.pool.farm;
 
       return [
         {
           id: 'tvl',
           label: 'TVL',
-          value: fNum(tvl, 'usd')
+          value: fNum(farm.tvl, 'usd')
         },
         {
           id: 'apr',
           label: `APR `,
-          value: fNum(apr, 'percent')
+          value: fNum(farm.apr, 'percent')
         },
         {
-          id: 'staked',
+          id: 'stake',
           label: 'My Balance',
-          value: fNum(tvl * userShare, 'usd')
+          value: fNum(farm.stake, 'usd')
         },
         {
           id: 'your_share',
           label: 'My Share',
-          value: fNum(userShare, 'percent')
+          value: fNum(farm.share, 'percent')
         }
       ];
     });

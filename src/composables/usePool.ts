@@ -3,14 +3,19 @@ import {
   Pool,
   DecoratedPoolWithShares,
   FullPool,
-  PoolType
+  PoolType,
+  DecoratedPoolWithRequiredFarm
 } from '@/services/balancer/subgraph/types';
 import { TOKENS } from '@/constants/tokens';
 import useWeb3 from '@/services/web3/useWeb3';
 import { configService } from '@/services/config/config.service';
 import { getAddress } from 'ethers/lib/utils';
 
-type AnyPool = Pool | FullPool | DecoratedPoolWithShares;
+type AnyPool =
+  | Pool
+  | FullPool
+  | DecoratedPoolWithShares
+  | DecoratedPoolWithRequiredFarm;
 
 export function isStable(pool: AnyPool): boolean {
   return pool.poolType === PoolType.Stable;

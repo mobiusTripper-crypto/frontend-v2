@@ -62,9 +62,7 @@ import { EXTERNAL_LINKS } from '@/constants/links';
 import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
 import useDarkMode from '@/composables/useDarkMode';
-import useFarms from '@/composables/farms/useFarms';
 import { sumBy } from 'lodash';
-import useDecoratedFarms from '@/composables/farms/useDecoratedFarms';
 
 export default defineComponent({
   name: 'AppHero',
@@ -76,7 +74,7 @@ export default defineComponent({
     const { trackGoal, Goals } = useFathom();
     const { totalInvestedAmount, isLoadingUserPools } = usePools();
     const { darkMode } = useDarkMode();
-    const { decoratedFarms, isLoadingDecoratedFarms } = useDecoratedFarms();
+    //const { decoratedFarms, isLoadingDecoratedFarms } = useDecoratedFarms();
 
     const classes = computed(() => ({
       ['h-72']: !isWalletReady.value,
@@ -85,10 +83,12 @@ export default defineComponent({
     }));
 
     const totalInvestedAndFarmAmount = computed(() => {
-      return (
+      /*return (
         sumBy(decoratedFarms.value, farm => farm.stake || 0) +
         parseFloat(totalInvestedAmount.value || '0')
-      );
+      );*/
+
+      return totalInvestedAmount.value;
     });
 
     function onClickConnect() {
@@ -101,7 +101,7 @@ export default defineComponent({
       totalInvestedAmount,
       totalInvestedAndFarmAmount,
       isLoadingUserPools,
-      isLoadingDecoratedFarms,
+      isLoadingDecoratedFarms: false,
       Goals,
 
       // computed

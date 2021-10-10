@@ -80,7 +80,11 @@ import {
 } from '@/lib/utils/validations';
 import { useI18n } from 'vue-i18n';
 import { scale } from '@/lib/utils';
-import { Farm, FullPool } from '@/services/balancer/subgraph/types';
+import {
+  DecoratedPoolWithRequiredFarm,
+  Farm,
+  FullPool
+} from '@/services/balancer/subgraph/types';
 import useFathom from '@/composables/useFathom';
 
 import { TOKENS } from '@/constants/tokens';
@@ -105,11 +109,13 @@ export default defineComponent({
   emits: ['success'],
 
   props: {
-    farm: { type: Object as PropType<Farm>, required: true },
-    pool: { type: Object as PropType<FullPool> }
+    pool: {
+      type: Object as PropType<DecoratedPoolWithRequiredFarm>,
+      required: true
+    }
   },
 
-  setup(props: { pool?: FullPool; farm: Farm }, { emit }) {
+  setup(props, { emit }) {
     const data = reactive<DataProps>({
       withdrawForm: {} as FormRef,
       amount: '',
@@ -125,8 +131,8 @@ export default defineComponent({
     const { tokens } = useTokens();
     const { trackGoal, Goals } = useFathom();
     const { amount } = toRefs(data);
-    const { withdrawAndHarvest } = useFarm(toRef(props, 'farm'));
-    const farmUserQuery = useFarmUserQuery(props.farm.id);
+    const { withdrawAndHarvest } = useFarm(toRef(props, 'pool'));
+    const farmUserQuery = useFarmUserQuery(props.pool.farm.id);
     const farmUser = computed(() => {
       return farmUserQuery.data.value;
     });

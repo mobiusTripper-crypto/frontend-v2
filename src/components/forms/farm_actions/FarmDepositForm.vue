@@ -105,7 +105,12 @@ import {
 import { useI18n } from 'vue-i18n';
 import useNumbers from '@/composables/useNumbers';
 import { scale } from '@/lib/utils';
-import { Farm, FarmUser, FullPool } from '@/services/balancer/subgraph/types';
+import {
+  DecoratedPoolWithRequiredFarm,
+  Farm,
+  FarmUser,
+  FullPool
+} from '@/services/balancer/subgraph/types';
 import useFathom from '@/composables/useFathom';
 
 import { TOKENS } from '@/constants/tokens';
@@ -134,11 +139,13 @@ export default defineComponent({
   emits: ['success'],
 
   props: {
-    farm: { type: Object as PropType<Farm>, required: true },
-    pool: { type: Object as PropType<FullPool> }
+    pool: {
+      type: Object as PropType<DecoratedPoolWithRequiredFarm>,
+      required: true
+    }
   },
 
-  setup(props: { pool?: FullPool; farm: Farm; farmUser?: FarmUser }, { emit }) {
+  setup(props, { emit }) {
     const data = reactive<DataProps>({
       depositForm: {} as FormRef,
       loading: false,
@@ -162,10 +169,13 @@ export default defineComponent({
     const depositing = ref(false);
     const approving = ref(false);
 
-    const { approve, deposit } = useFarm(toRef(props, 'farm'));
-
-    const approvalRequiredQuery = useApprovalRequiredQuery(props.farm.pair);
-    const bptBalance = computed(() => balanceFor(getAddress(props.farm.pair)));
+    const { approve, deposit } = useFarm(toRef(props, 'pool'));
+    const approvalRequiredQuery = useApprovalRequiredQuery(
+      props.pool.farm.pair
+    );
+    const bptBalance = computed(() =>
+      balanceFor(getAddress(props.pool.farm.pair))
+    );
     const approvalRequired = computed(() => approvalRequiredQuery.data.value);
     const { txListener } = useEthers();
 

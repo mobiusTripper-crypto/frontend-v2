@@ -34,6 +34,7 @@ export default class PoolShares {
       })
     );
     const data = await this.service.client.get(query);
+
     return this.serialize(data);
   }
 

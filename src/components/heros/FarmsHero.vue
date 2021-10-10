@@ -96,13 +96,14 @@ import useWeb3 from '@/services/web3/useWeb3';
 import useDarkMode from '@/composables/useDarkMode';
 import { sumBy } from 'lodash';
 import numeral from 'numeral';
+import { DecoratedPoolWithRequiredFarm } from '@/services/balancer/subgraph/types';
 
 export default defineComponent({
   name: 'FarmsHero',
 
   props: {
-    decoratedFarms: {
-      type: Array as PropType<any[]>,
+    pools: {
+      type: Array as PropType<DecoratedPoolWithRequiredFarm[]>,
       required: true
     },
     loading: {
@@ -130,7 +131,8 @@ export default defineComponent({
     }
 
     const data = computed(() => {
-      const farms = props.decoratedFarms;
+      const farms = props.pools.map(pool => pool.farm);
+
       const averageApr =
         sumBy(farms, farm => farm.apr * (farm.stake || 0)) /
         sumBy(farms, farm => farm.stake || 0);

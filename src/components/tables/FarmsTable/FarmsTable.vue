@@ -8,14 +8,14 @@
   >
     <BalTable
       :columns="columns"
-      :data="data"
+      :data="pools"
       :is-loading="loading"
       skeleton-class="h-64"
       sticky="both"
       :square="upToLargeBreakpoint"
       :link="{
         to: 'farm-detail',
-        getParams: farm => ({ id: farm.id, poolId: farm.pool?.id })
+        getParams: pool => ({ id: pool.id })
       }"
       :on-row-click="handleRowClick"
       @load-more="$emit('loadMore')"
@@ -32,22 +32,22 @@
           />
         </div>
       </template>
-      <template v-slot:iconColumnCell="farm">
+      <template v-slot:iconColumnCell="pool">
         <div v-if="!loading" class="px-6 py-4">
           <BalAssetSet
-            :addresses="orderedTokenAddressesFor(farm)"
+            :addresses="orderedTokenAddressesFor(pool)"
             :width="100"
           />
         </div>
       </template>
-      <template v-slot:aprCell="farm">
+      <template v-slot:aprCell="pool">
         <div class="px-6 py-4 -mt-1 flex justify-end">
           {{
-            Number(farm.pool.dynamic.apr.pool) > 10000
+            Number(pool.dynamic.apr.pool) > 10000
               ? '-'
-              : fNum(farm.pool.dynamic.apr.total, 'percent')
+              : fNum(pool.dynamic.apr.total, 'percent')
           }}
-          <LiquidityMiningTooltip :pool="farm.pool" />
+          <LiquidityMiningTooltip :pool="pool" />
         </div>
       </template>
     </BalTable>
@@ -55,13 +55,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import {
-  DecoratedPool,
+  DecoratedPoolWithRequiredFarm,
   DecoratedPoolWithShares,
-  FarmWithPool,
-  FarmWithStatsAndPool,
   PoolToken
 } from '@/services/balancer/subgraph/types';
 import { getAddress } from '@ethersproject/address';
@@ -85,8 +83,8 @@ export default defineComponent({
   emits: ['loadMore'],
 
   props: {
-    decoratedFarms: {
-      type: Array as PropType<any[]>,
+    pools: {
+      type: Array as PropType<DecoratedPoolWithRequiredFarm[]>,
       required: true
     },
     loading: {
@@ -99,35 +97,15 @@ export default defineComponent({
     }
   },
 
-  setup(props) {
+  setup() {
     const { fNum } = useNumbers();
     const router = useRouter();
     const { trackGoal, Goals } = useFathom();
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
-    const { tokens } = useTokens();
     const { t } = useI18n();
 
-    const decoratedFarms = computed(() => {
-      return (props.decoratedFarms || []).map(item => ({
-        ...item,
-        tvl: fNum(item.tvl, 'usd', {
-          forcePreset: true
-        }),
-        rewards:
-          fNum(item.rewards, 'token_lg', {
-            forcePreset: true
-          }) + ' BEETS / day',
-        apr:
-          item.apr === 0
-            ? '0.00%'
-            : fNum(item.apr, 'percent', { forcePreset: true }),
-        stake: fNum(item.stake, 'usd'),
-        pendingBeets: numeral(item.pendingBeets).format('0,0.[00]') + ' BEETS'
-      }));
-    });
-
-    const columns = ref<ColumnDefinition<FarmWithStatsAndPool>[]>([
+    const columns = ref<ColumnDefinition<DecoratedPoolWithRequiredFarm>[]>([
       {
         name: 'Icons',
         id: 'icons',
@@ -140,54 +118,46 @@ export default defineComponent({
       {
         name: 'Name',
         id: 'name',
-        accessor: farm => {
-          if (farm.pool) {
-            return farm.pool.name;
-          }
-
-          for (const address of Object.keys(tokens.value)) {
-            if (address.toLowerCase() === farm.pair.toLowerCase()) {
-              return tokens.value[address].symbol;
-            }
-          }
-
-          return '';
-        },
-        sortKey: farm => farm.pool?.name,
+        accessor: pool => pool.name,
+        sortKey: pool => pool.name,
         width: 250
       },
       {
         name: 'TVL',
         id: 'tvl',
-        accessor: 'tvl',
-        sortKey: 'tvl',
+        accessor: pool =>
+          fNum(pool.farm.tvl, 'usd', {
+            forcePreset: true
+          }),
+        sortKey: pool => pool.farm.tvl,
         align: 'right',
         width: 150
       },
       {
         name: t('myBalance'),
         id: 'stake',
-        accessor: 'stake',
-        sortKey: 'stake',
+        accessor: pool => fNum(pool.farm.stake, 'usd'),
+        sortKey: pool => pool.farm.stake,
         align: 'right',
         width: 150
       },
       {
         name: 'Pending Rewards',
         id: 'pendingBeets',
-        accessor: 'pendingBeets',
-        sortKey: 'pendingBeets',
+        accessor: pool =>
+          numeral(pool.farm.pendingBeets).format('0,0.[00]') + ' BEETS',
+        sortKey: pool => pool.farm.pendingBeets,
         align: 'right',
         width: 200
       },
       {
         name: t('apr'),
         Cell: 'aprCell',
-        accessor: farm => farm.pool?.dynamic.apr.total || '',
+        accessor: pool => pool.dynamic.apr.total,
         align: 'right',
         id: 'poolApr',
-        sortKey: farm => {
-          const apr = Number(farm.pool?.dynamic.apr.total || 0);
+        sortKey: pool => {
+          const apr = Number(pool.dynamic.apr.total || 0);
           if (apr === Infinity || isNaN(apr)) return 0;
           return apr;
         },
@@ -195,16 +165,14 @@ export default defineComponent({
       }
     ]);
 
-    function orderedTokenAddressesFor(farm: FarmWithPool) {
-      if (!farm.pool) {
-        return [getAddress(farm.pair)];
-      }
-
-      const sortedTokens = orderedPoolTokens(farm.pool);
+    function orderedTokenAddressesFor(pool: DecoratedPoolWithRequiredFarm) {
+      const sortedTokens = orderedPoolTokens(pool);
       return sortedTokens.map(token => getAddress(token.address));
     }
 
-    function orderedPoolTokens(pool: DecoratedPool): PoolToken[] {
+    function orderedPoolTokens(
+      pool: DecoratedPoolWithRequiredFarm
+    ): PoolToken[] {
       if (isStableLike(pool)) return pool.tokens;
 
       const sortedTokens = pool.tokens.slice();
@@ -220,7 +188,7 @@ export default defineComponent({
     return {
       // data
       columns,
-      data: decoratedFarms,
+      //data: decoratedFarms,
 
       // computed
       darkMode,

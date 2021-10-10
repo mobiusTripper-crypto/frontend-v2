@@ -132,10 +132,8 @@ import { EXTERNAL_LINKS } from '@/constants/links';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useApp from '@/composables/useApp';
-import useFarms from '@/composables/farms/useFarms';
-import useAverageBlockTime from '@/composables/useAverageBlockTime';
-import { addFarmAprToPool } from '@/lib/utils/farmHelper';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
+import usePools from '@/composables/pools/usePools';
 
 interface PoolPageData {
   id: string;
@@ -164,12 +162,8 @@ export default defineComponent({
     const queryClient = useQueryClient();
     const { prices } = useTokens();
     const { blockNumber } = useWeb3();
-    const { farms } = useFarms();
+    const { poolsWithFarms } = usePools();
     const protocolDataQuery = useProtocolDataQuery();
-    const beetsPrice = computed(
-      () => protocolDataQuery.data?.value?.beetsPrice || 0
-    );
-    const { blocksPerYear } = useAverageBlockTime();
 
     /**
      * QUERIES
@@ -192,22 +186,21 @@ export default defineComponent({
      * COMPUTED
      */
     const pool = computed(() => {
-      if (poolQuery.data.value) {
-        const poolWithFarmApr = addFarmAprToPool(
-          poolQuery.data.value,
-          farms.value,
-          blocksPerYear.value,
-          beetsPrice.value
-        );
+      const poolWithFarm = poolsWithFarms.value.find(
+        poolWithFarm => poolWithFarm.id === (route.params.id as string)
+      );
 
-        return {
-          ...poolQuery.data.value,
-          dynamic: poolWithFarmApr.dynamic,
-          hasLiquidityMiningRewards: poolWithFarmApr.hasLiquidityMiningRewards
-        };
+      if (!poolQuery.data.value) {
+        return undefined;
       }
 
-      return poolQuery.data.value;
+      return {
+        ...poolQuery.data.value,
+        dynamic: poolWithFarm
+          ? poolWithFarm.dynamic
+          : poolQuery.data.value.dynamic,
+        hasLiquidityMiningRewards: !!poolWithFarm
+      };
     });
     const { isStableLikePool } = usePool(poolQuery.data);
 

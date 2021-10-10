@@ -9,19 +9,19 @@
               {{ pool?.name }}
             </h3>
             <div
-              v-for="([address, tokenMeta], i) in titleTokens"
+              v-for="(token, i) in titleTokens"
               :key="i"
               class="mt-2 mr-2 flex items-center px-2 h-10 bg-gray-50 dark:bg-gray-850 rounded-lg"
             >
-              <BalAsset :address="address" :size="24" />
+              <BalAsset :address="token.address" :size="24" />
               <span class="ml-2">
-                {{ tokenMeta.symbol }}
+                {{ token.symbol }}
               </span>
               <span
                 v-if="!isStableLikePool"
                 class="font-medium text-gray-400 text-xs mt-px ml-1"
               >
-                {{ fNum(tokenMeta.weight, 'percent_lg') }}
+                {{ fNum(token.weight, 'percent_lg') }}
               </span>
             </div>
           </div>
@@ -34,7 +34,7 @@
         <div class="grid grid-cols-1 gap-y-8">
           <div class="mb-4 px-1 lg:px-0">
             <FarmStatCardsLoading v-if="loading" />
-            <FarmStatCards v-else :farm="{ ...farm, pool }" />
+            <FarmStatCards v-else :pool="pool" />
           </div>
         </div>
       </div>
@@ -44,7 +44,6 @@
         <FarmActionsCard
           v-else
           :pool="pool"
-          :farm="farm"
           :missing-prices="missingPrices"
           @on-tx="onNewTx"
           class="sticky top-24"
@@ -55,7 +54,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, toRefs, watch } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  defineComponent,
+  reactive,
+  toRefs,
+  watch
+} from 'vue';
 import * as PoolPageComponents from '@/components/pages/pool';
 import { useRoute, useRouter } from 'vue-router';
 import { useQueryClient } from 'vue-query';
@@ -69,9 +75,17 @@ import useApp from '@/composables/useApp';
 import useFarmQuery from '@/composables/queries/useFarmQuery';
 import FarmActionsCard from '@/components/pages/farm/FarmActionsCard.vue';
 import { FarmStatCards } from '@/components/pages/farm';
-import { usePool } from '@/composables/usePool';
+import { isStableLike, usePool } from '@/composables/usePool';
 import useFarm from '@/composables/farms/useFarm';
 import FarmStatCardsLoading from '@/components/pages/farm/FarmStatCardsLoading.vue';
+import {
+  DecoratedPoolWithRequiredFarm,
+  DecoratedPoolWithShares,
+  PoolToken
+} from '@/services/balancer/subgraph/types';
+import { decorateFarm } from '@/lib/utils/farmHelper';
+import usePools from '@/composables/pools/usePools';
+import { getAddress } from '@ethersproject/address';
 
 interface PoolPageData {
   id: string;
@@ -100,12 +114,12 @@ export default defineComponent({
     const queryClient = useQueryClient();
     const { prices } = useTokens();
     const { blockNumber } = useWeb3();
-
-    /**
-     * QUERIES
-     */
-    const farmQuery = useFarmQuery(route.params.id as string);
-    const poolQuery = usePoolQuery(route.params.poolId as string);
+    const {
+      onlyPoolsWithFarms,
+      isLoadingPools,
+      isLoadingFarms,
+      refetchPools
+    } = usePools();
 
     /**
      * STATE
@@ -118,28 +132,20 @@ export default defineComponent({
     /**
      * COMPUTED
      */
-    const pool = computed(() => poolQuery.data.value);
-    const { isStableLikePool } = usePool(poolQuery.data);
-    const farm = computed(() => farmQuery.data.value);
-
-    const { harvest } = useFarm(farm);
+    const pool = computed(() =>
+      onlyPoolsWithFarms.value.find(pool => pool.id === route.params.id)
+    );
+    const { isStableLikePool } = usePool(pool);
+    const { harvest } = useFarm(pool);
 
     const loading = computed(
-      () =>
-        poolQuery.isLoading.value ||
-        poolQuery.isIdle.value ||
-        poolQuery.error.value ||
-        farmQuery.isLoading.value ||
-        farmQuery.isIdle.value ||
-        farmQuery.error.value
+      () => isLoadingPools.value || isLoadingFarms.value
     );
 
     const titleTokens = computed(() => {
       if (!pool.value) return [];
 
-      return Object.entries(pool.value.onchain.tokens).sort(
-        ([, a]: any[], [, b]: any[]) => b.weight - a.weight
-      );
+      return orderedPoolTokens(pool.value);
     });
 
     const missingPrices = computed(() => {
@@ -172,13 +178,23 @@ export default defineComponent({
       if (data.refetchQueriesOnBlockNumber === blockNumber.value) {
         queryClient.invalidateQueries([POOLS_ROOT_KEY]);
       } else {
-        poolQuery.refetch.value();
+        refetchPools();
       }
     });
 
-    watch(poolQuery.error, () => {
+    /*watch(poolQuery.error, () => {
       router.push({ name: 'farm' });
-    });
+    });*/
+
+    function orderedPoolTokens(
+      pool: DecoratedPoolWithRequiredFarm
+    ): PoolToken[] {
+      if (isStableLike(pool)) return pool.tokens;
+
+      const sortedTokens = pool.tokens.slice();
+      sortedTokens.sort((a, b) => parseFloat(b.weight) - parseFloat(a.weight));
+      return sortedTokens;
+    }
 
     return {
       // data
@@ -187,7 +203,6 @@ export default defineComponent({
       // computed
       appLoading,
       pool,
-      farm,
       loading,
       titleTokens,
       isWalletReady,

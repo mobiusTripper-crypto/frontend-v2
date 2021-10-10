@@ -14,6 +14,7 @@ export type TimeTravelPeriod = '24h';
 
 export interface PoolToken {
   address: string;
+  symbol: string;
   balance: string;
   weight: string;
   priceRate?: string;
@@ -42,13 +43,15 @@ export interface DecoratedPool extends Pool {
   dynamic: {
     period: TimeTravelPeriod;
     volume: string;
-    apr: {
-      pool: string;
-      liquidityMining: string;
-      total: string;
-    };
+    apr: PoolApr;
     fees: string;
   };
+}
+
+export interface PoolApr {
+  pool: string;
+  liquidityMining: string;
+  total: string;
 }
 
 export interface OnchainTokenData {
@@ -122,16 +125,6 @@ export interface Farm {
   };
 }
 
-export interface FarmWithPool extends Farm {
-  pool?: DecoratedPool;
-}
-
-export interface FarmWithStatsAndPool extends FarmWithPool {
-  tvl: string;
-  apr: string;
-  rewards: string;
-}
-
 export interface FarmUser {
   id: string;
   pendingBeets: number;
@@ -142,6 +135,24 @@ export interface FarmUser {
   pool: {
     id: string;
   };
+}
+
+export interface DecoratedFarm extends Farm {
+  tvl: number;
+  rewards: number;
+  stake: number;
+  pendingBeets: number;
+  pendingBeetsValue: number;
+  apr: number;
+  share: number;
+}
+
+export interface DecoratedPoolWithFarm extends DecoratedPool {
+  farm?: DecoratedFarm;
+}
+
+export interface DecoratedPoolWithRequiredFarm extends DecoratedPool {
+  farm: DecoratedFarm;
 }
 
 export interface SubgraphSwap {

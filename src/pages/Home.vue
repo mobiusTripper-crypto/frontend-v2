@@ -20,14 +20,15 @@
       <div class="mb-16" />
     </template>
 
-    <template v-if="isWalletReady && userFarms && userFarms.length > 0">
+    <template v-if="isWalletReady && poolsWithUserInFarm.length > 0">
       <div class="mb-16">
         <div class="px-4 lg:px-0">
           <h3 class="mb-3">My Farms</h3>
         </div>
         <FarmsTable
-          :decorated-farms="userFarms"
-          :loading="isLoadingDecoratedFarms"
+          :pools="poolsWithUserInFarm"
+          noPoolsLabel="No farms found"
+          :loading="false"
           :isPaginated="false"
           :isLoadingMore="false"
           class="mb-8"
@@ -73,10 +74,7 @@ import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
-import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
-import useDecoratedFarms from '@/composables/farms/useDecoratedFarms';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
-import useAverageBlockTime from '@/composables/useAverageBlockTime';
 
 export default defineComponent({
   components: {
@@ -96,53 +94,43 @@ export default defineComponent({
     } = usePoolFilters();
 
     const {
-      pools,
+      poolsWithFarms,
+      onlyPoolsWithFarms,
       userPools,
       isLoadingPools,
       isLoadingUserPools,
+      isLoadingFarms,
       loadMorePools,
       poolsHasNextPage,
       poolsIsFetchingNextPage
     } = usePools(selectedTokens);
-    const { decoratedFarms, isLoadingDecoratedFarms } = useDecoratedFarms();
-    const protocolDataQuery = useProtocolDataQuery();
-    const beetsPrice = computed(
-      () => protocolDataQuery.data?.value?.beetsPrice || 0
-    );
-    const { blocksPerYear } = useAverageBlockTime();
 
     // COMPUTED
     const filteredPools = computed(() => {
-      const filtered =
-        selectedTokens.value.length > 0
-          ? pools.value?.filter(pool => {
-              return selectedTokens.value.every((selectedToken: string) =>
-                pool.tokenAddresses.includes(selectedToken)
-              );
-            })
-          : pools?.value;
-
-      return filtered?.filter(
-        pool =>
-          pool.id !==
-          '0x5856cee862de908d63062b891d526ce78183eb8c000200000000000000000014'
-      );
+      return selectedTokens.value.length > 0
+        ? poolsWithFarms.value?.filter(pool => {
+            return selectedTokens.value.every((selectedToken: string) =>
+              pool.tokenAddresses.includes(selectedToken)
+            );
+          })
+        : poolsWithFarms?.value;
     });
 
     const hideV1Links = computed(() => !isV1Supported);
 
-    const userFarms = computed(() => {
-      return decoratedFarms.value.filter(farm => farm.stake > 0);
+    const poolsWithUserInFarm = computed(() => {
+      console.log('pools with user in farm', onlyPoolsWithFarms.value);
+      return onlyPoolsWithFarms.value.filter(pool => pool.farm.stake > 0);
     });
 
     return {
       // data
       filteredPools,
+      poolsWithUserInFarm,
       userPools,
       isLoadingPools,
       isLoadingUserPools,
-      userFarms,
-      isLoadingDecoratedFarms,
+      isLoadingFarms,
 
       // computed
       isWalletReady,
