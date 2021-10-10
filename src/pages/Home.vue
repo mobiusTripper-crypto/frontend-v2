@@ -119,7 +119,6 @@ export default defineComponent({
     const hideV1Links = computed(() => !isV1Supported);
 
     const poolsWithUserInFarm = computed(() => {
-      console.log('pools with user in farm', onlyPoolsWithFarms.value);
       return onlyPoolsWithFarms.value.filter(pool => pool.farm.stake > 0);
     });
 

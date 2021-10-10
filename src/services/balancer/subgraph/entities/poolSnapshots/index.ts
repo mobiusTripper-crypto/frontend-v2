@@ -23,6 +23,12 @@ export default class PoolShares {
     const dayTimestamp = currentTimestamp - (currentTimestamp % DAY);
     const timestamps: number[] = [];
     for (let i = 0; i < days; i++) {
+      //TODO: remove this when its no longer relevant
+      //for some reason, snapshot data from the first few days is waaay off filter anything before 2021-09-30
+      if (dayTimestamp - i * DAY < 1632960000) {
+        continue;
+      }
+
       timestamps.push(dayTimestamp - i * DAY);
     }
     attrs = { ...attrs, __aliasFor: 'poolSnapshot' };
