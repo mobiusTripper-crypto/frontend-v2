@@ -9,22 +9,11 @@
             width="236"
           />
         </div>
-        <div class="grid grid-cols-3 sm:grid-cols-3 xl:grid-cols-3 gap-4 pb-12">
+        <div class="grid grid-cols-3 sm:grid-cols-3 xl:grid-cols-3 gap-4">
           <template v-if="loading">
             <BalLoadingBlock v-for="n in 3" :key="n" class="h-28" />
           </template>
-          <template v-else
-            ><BalCard>
-              <div class="text-sm text-gray-500 font-medium mb-2 text-left">
-                Average APR
-              </div>
-              <div class="text-xl font-medium truncate flex items-center">
-                {{ data.apr }}
-              </div>
-              <div class="text-sm text-gray-500 font-medium mt-1 text-left">
-                {{ data.dailyApr }} Daily
-              </div>
-            </BalCard>
+          <template v-else>
             <BalCard>
               <div class="text-sm text-gray-500 font-medium mb-2 text-left">
                 Total Deposit
@@ -48,7 +37,29 @@
                 {{ data.pendingBeetsValue }}
               </div>
             </BalCard>
+            <BalCard>
+              <div class="text-sm text-gray-500 font-medium mb-2 text-left">
+                Average APR
+              </div>
+              <div class="text-xl font-medium truncate flex items-center">
+                {{ data.apr }}
+              </div>
+              <div class="text-sm text-gray-500 font-medium mt-1 text-left">
+                {{ data.dailyApr }} Daily
+              </div>
+            </BalCard>
           </template>
+        </div>
+        <div class="pb-12 pt-4">
+          <BalBtn
+            type="submit"
+            loading-label="Harvesting"
+            :disabled="!hasFarmRewards"
+            :loading="harvesting"
+            @click="harvestAll"
+          >
+            Harvest All Rewards
+          </BalBtn>
         </div>
       </template>
       <template v-else>
@@ -97,10 +108,11 @@ import useDarkMode from '@/composables/useDarkMode';
 import { sumBy } from 'lodash';
 import numeral from 'numeral';
 import { DecoratedPoolWithRequiredFarm } from '@/services/balancer/subgraph/types';
+import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
 
 export default defineComponent({
   name: 'FarmsHero',
-
+  components: { BalBtn },
   props: {
     pools: {
       type: Array as PropType<DecoratedPoolWithRequiredFarm[]>,
@@ -109,6 +121,13 @@ export default defineComponent({
     loading: {
       type: Boolean,
       required: true
+    },
+    harvesting: {
+      type: Boolean,
+      required: true
+    },
+    harvestAll: {
+      type: Function
     }
   },
 
@@ -120,9 +139,10 @@ export default defineComponent({
     const { darkMode } = useDarkMode();
 
     const classes = computed(() => ({
-      ['h-72']: !isWalletReady.value,
+      //['h-72']: !isWalletReady.value,
       //['h-0']: isWalletReady.value
-      ['h-60']: isWalletReady.value
+      //['h-72']: isWalletReady.value
+      ['h-72']: true
     }));
 
     function onClickConnect() {
@@ -155,6 +175,10 @@ export default defineComponent({
       };
     });
 
+    const hasFarmRewards = computed(
+      () => props.pools.filter(pool => pool.farm.stake > 0).length > 0
+    );
+
     return {
       // data
       Goals,
@@ -171,7 +195,9 @@ export default defineComponent({
       onClickConnect,
       trackGoal,
       // constants
-      EXTERNAL_LINKS
+      EXTERNAL_LINKS,
+
+      hasFarmRewards
     };
   }
 });

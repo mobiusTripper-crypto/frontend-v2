@@ -64,6 +64,20 @@ export default class MasterChef {
     );
   }
 
+  public async harvestAll(
+    provider: Web3Provider,
+    farmIds: string[],
+    to: string
+  ) {
+    return sendTransaction(
+      provider,
+      this.configService.network.addresses.masterChef || '',
+      MasterChefAbi,
+      'harvestAll',
+      [farmIds, to]
+    );
+  }
+
   public async deposit(
     provider: Web3Provider,
     pid: string,

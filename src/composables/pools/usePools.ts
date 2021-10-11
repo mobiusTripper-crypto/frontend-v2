@@ -22,7 +22,13 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
     () => protocolDataQuery.data?.value?.beetsPrice || 0
   );
 
-  const { farms, allFarmsForUser, isLoadingFarms } = useFarms();
+  const {
+    farms,
+    allFarmsForUser,
+    isLoadingFarms,
+    harvestAllFarms,
+    refetchFarmsForUser
+  } = useFarms();
   const { blocksPerYear, blocksPerDay } = useAverageBlockTime();
 
   // COMPUTED
@@ -146,6 +152,9 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
 
     // methods
     loadMorePools,
-    refetchPools
+    refetchPools,
+
+    harvestAllFarms,
+    refetchFarmsForUser
   };
 }
