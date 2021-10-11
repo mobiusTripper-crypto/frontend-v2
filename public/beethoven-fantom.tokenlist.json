@@ -174,6 +174,14 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/11849/large/yfi-192x192.png"
+    },
+    {
+      "name": "Geist Finance",
+      "address": "0xd8321aa83fb0a4ecd6348d4577431310a6e0814d",
+      "symbol": "GEIST",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/18832/large/GEIST-token.png"
     }
   ]
 }
