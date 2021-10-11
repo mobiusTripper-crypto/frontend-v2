@@ -33,6 +33,7 @@ export interface Config {
     multicall: string;
     vault: string;
     masterChef: string;
+    beethovenxToken: string;
     weightedPoolFactory: string;
     stablePoolFactory: string;
     weth: string;
@@ -62,6 +63,7 @@ export interface Config {
     weightStep: number;
     timeStep: number;
   };
+  incentivizedPools: string[];
 }
 
 const config: Record<string, Config> = {

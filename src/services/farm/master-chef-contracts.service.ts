@@ -4,9 +4,11 @@ import { default as MasterChefAbi } from '@/lib/abi/BeethovenxMasterChef.json';
 import { rpcProviderService as _rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
 import { configService as _configService } from '@/services/config/config.service';
 import MasterChef from './contracts/master-chef';
+import BeethovenxToken from '@/services/farm/contracts/beethovenx-token';
 
 export default class MasterChefContractsService {
   masterChef: MasterChef;
+  beethovenxToken: BeethovenxToken;
   config: Config;
   provider: JsonRpcProvider;
 
@@ -19,6 +21,7 @@ export default class MasterChefContractsService {
 
     // Init contracts
     this.masterChef = new MasterChef(this);
+    this.beethovenxToken = new BeethovenxToken(this);
   }
 
   // Combine all the ABIs and remove duplicates

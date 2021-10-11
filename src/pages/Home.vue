@@ -37,7 +37,7 @@
     </template>
 
     <div class="px-4 lg:px-0">
-      <h3 class="mb-3">{{ $t('investmentPools') }}</h3>
+      <h3 class="mb-3">Beethoven-X Investment Pools</h3>
       <TokenSearchInput
         v-model="selectedTokens"
         :loading="isLoadingPools"
@@ -48,6 +48,22 @@
     <PoolsTable
       :isLoading="isLoadingPools"
       :data="filteredPools"
+      :noPoolsLabel="$t('noPoolsFound')"
+      :isPaginated="poolsHasNextPage"
+      :isLoadingMore="poolsIsFetchingNextPage"
+      @loadMore="loadMorePools"
+      class="mb-16"
+    />
+    <div class="px-4 lg:px-0 mb-3">
+      <h3>Community Investment Pools</h3>
+      <p>
+        Investment pools created by the community. Please DYOR before investing
+        in any community pool.
+      </p>
+    </div>
+    <PoolsTable
+      :isLoading="isLoadingPools"
+      :data="communityPools"
       :noPoolsLabel="$t('noPoolsFound')"
       :isPaginated="poolsHasNextPage"
       :isLoadingMore="poolsIsFetchingNextPage"
@@ -75,6 +91,7 @@ import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
+import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 
 export default defineComponent({
   components: {
@@ -86,7 +103,7 @@ export default defineComponent({
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady, isV1Supported } = useWeb3();
+    const { isWalletReady, isV1Supported, appNetworkConfig } = useWeb3();
     const {
       selectedTokens,
       addSelectedToken,
@@ -103,17 +120,28 @@ export default defineComponent({
       loadMorePools,
       poolsHasNextPage,
       poolsIsFetchingNextPage
-    } = usePools(selectedTokens);
+    } = usePools();
+
+    //TODO: this will break down once pagination starts happening
+    const communityPools = computed(() => {
+      return poolsWithFarms.value?.filter(
+        pool => !appNetworkConfig.incentivizedPools.includes(pool.id)
+      );
+    });
 
     // COMPUTED
     const filteredPools = computed(() => {
       return selectedTokens.value.length > 0
         ? poolsWithFarms.value?.filter(pool => {
-            return selectedTokens.value.every((selectedToken: string) =>
-              pool.tokenAddresses.includes(selectedToken)
+            return (
+              selectedTokens.value.every((selectedToken: string) =>
+                pool.tokenAddresses.includes(selectedToken)
+              ) && appNetworkConfig.incentivizedPools.includes(pool.id)
             );
           })
-        : poolsWithFarms?.value;
+        : poolsWithFarms?.value.filter(pool =>
+            appNetworkConfig.incentivizedPools.includes(pool.id)
+          );
     });
 
     const hideV1Links = computed(() => !isV1Supported);
@@ -121,6 +149,8 @@ export default defineComponent({
     const poolsWithUserInFarm = computed(() => {
       return onlyPoolsWithFarms.value.filter(pool => pool.farm.stake > 0);
     });
+
+    masterChefContractsService.beethovenxToken.getCirculatingSupply();
 
     return {
       // data
@@ -143,6 +173,7 @@ export default defineComponent({
       loadMorePools,
       addSelectedToken,
       removeSelectedToken,
+      communityPools,
 
       // constants
       EXTERNAL_LINKS

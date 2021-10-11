@@ -1,6 +1,6 @@
 <template>
   <div id="modal" />
-  <div id="app" class="flex flex-col">
+  <div id="app" class="flex flex-col lg:px-16">
     <AppNav />
     <div class="relative">
       <AppHero v-if="isHomePage" />

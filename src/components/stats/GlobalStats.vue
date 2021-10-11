@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute right-4 top-4 float-right flex flex-col items-end hidden md:block"
+    class="absolute right-4 top-2 float-right flex flex-col items-end hidden md:block"
   >
     <div
       v-if="tvl > 0 && beetsPrice > 0"
@@ -10,6 +10,18 @@
     </div>
     <div v-if="beetsPrice > 0" class="text-red-500 font-semibold text-right">
       BEETS: {{ fNum(beetsPrice, 'usd') }}
+    </div>
+    <div
+      v-if="beetsPrice > 0 && marketCap > 0"
+      class="font-semibold text-right"
+    >
+      Market Cap: ${{ fNum(marketCap, 'usd_lg') }}
+    </div>
+    <div
+      v-if="beetsPrice > 0 && circulatingSupply > 0"
+      class="font-semibold text-right"
+    >
+      Circulating: {{ fNum(circulatingSupply, 'token_lg') }}
     </div>
   </div>
 </template>
@@ -33,10 +45,20 @@ export default defineComponent({
     const beetsPrice = computed(
       () => protocolDataQuery.data?.value?.beetsPrice || 0
     );
+    const circulatingSupply = computed(
+      () => protocolDataQuery.data.value?.circulatingSupply || 0
+    );
+    const marketCap = computed(() => {
+      console.log('market cap', beetsPrice.value * circulatingSupply.value);
+
+      return beetsPrice.value * circulatingSupply.value;
+    });
 
     return {
       tvl,
       beetsPrice,
+      circulatingSupply,
+      marketCap,
       fNum
     };
   }

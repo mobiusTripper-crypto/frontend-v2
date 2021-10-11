@@ -5,9 +5,11 @@ import QUERY_KEYS from '@/constants/queryKeys';
 import useWeb3 from '@/services/web3/useWeb3';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 import { SubgraphBalancer } from '@/services/balancer/subgraph/types';
+import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 
 interface ProtocolData extends SubgraphBalancer {
   beetsPrice: number;
+  circulatingSupply: number;
 }
 
 export default function useProtocolDataQuery(
@@ -34,9 +36,12 @@ export default function useProtocolDataQuery(
       appNetworkConfig.addresses.usdc
     );
 
+    const circulatingSupply = await masterChefContractsService.beethovenxToken.getCirculatingSupply();
+
     return {
       ...balancerData,
-      beetsPrice
+      beetsPrice,
+      circulatingSupply
     };
   };
 
