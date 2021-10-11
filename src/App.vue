@@ -1,12 +1,12 @@
 <template>
   <div id="modal" />
-  <div id="app" class="flex flex-col lg:px-16">
+  <div id="app" class="flex flex-col">
     <AppNav />
     <div class="relative">
       <AppHero v-if="isHomePage" />
       <GlobalStats />
     </div>
-    <div class="pb-12">
+    <div class="pb-12 px-16">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
     <AppFooterNav v-if="upToLargeBreakpoint" />
