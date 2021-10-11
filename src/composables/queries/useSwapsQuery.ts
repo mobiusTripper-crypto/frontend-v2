@@ -1,8 +1,7 @@
-import { computed, reactive, ref, Ref } from 'vue';
+import { computed, reactive, Ref } from 'vue';
 import { useInfiniteQuery } from 'vue-query';
 import { UseInfiniteQueryOptions } from 'react-query/types';
 import QUERY_KEYS from '@/constants/queryKeys';
-import { POOLS } from '@/constants/pools';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 import { SubgraphSwap } from '@/services/balancer/subgraph/types';
 import useApp from '../useApp';

@@ -54,9 +54,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 import useNumbers from '@/composables/useNumbers';
-import useEthers from '@/composables/useEthers';
-import { useRoute } from 'vue-router';
-import { differenceInMilliseconds, format, isBefore, parseISO } from 'date-fns';
+import { differenceInMilliseconds, format, parseISO } from 'date-fns';
 import { DecoratedPool } from '@/services/balancer/subgraph/types';
 import numeral from 'numeral';
 

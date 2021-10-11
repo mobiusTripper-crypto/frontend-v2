@@ -163,7 +163,6 @@ export default defineComponent({
     const { prices } = useTokens();
     const { blockNumber } = useWeb3();
     const { poolsWithFarms } = usePools();
-    const protocolDataQuery = useProtocolDataQuery();
 
     /**
      * QUERIES

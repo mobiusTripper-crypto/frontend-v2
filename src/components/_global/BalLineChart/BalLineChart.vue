@@ -26,13 +26,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed } from 'vue';
+import { computed, defineComponent, PropType, ref } from 'vue';
 import numeral from 'numeral';
 import * as echarts from 'echarts/core';
 import ECharts from 'vue-echarts';
 import { last } from 'lodash';
 import useNumbers, { Preset } from '@/composables/useNumbers';
-import { fromUnixTime, format, addHours, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import useTailwind from '@/composables/useTailwind';
 import useDarkMode from '@/composables/useDarkMode';
 

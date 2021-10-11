@@ -27,7 +27,7 @@ import { computed, defineComponent, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SubgraphSwap } from '@/services/balancer/subgraph/types';
 import { getAddress } from '@ethersproject/address';
-import useNumbers, { roundToNDecimalPlaces } from '@/composables/useNumbers';
+import useNumbers from '@/composables/useNumbers';
 import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';

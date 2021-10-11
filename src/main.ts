@@ -55,7 +55,7 @@ registerDirectives(app);
 registerGlobalComponents(app);
 initSentry(app);
 
-app.component(VueCountdown.name!, VueCountdown);
+app.component(VueCountdown.name || '', VueCountdown);
 app.mount('#app');
 
 export default app;

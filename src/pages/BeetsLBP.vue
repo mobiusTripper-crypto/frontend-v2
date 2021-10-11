@@ -154,13 +154,7 @@ import {
   TOKEN_PRICES_ROOT_KEY
 } from '@/constants/queryKeys';
 import useTokenLists from '@/composables/useTokenLists';
-import {
-  differenceInMilliseconds,
-  format,
-  isAfter,
-  isBefore,
-  parseISO
-} from 'date-fns';
+import { format, isAfter, isBefore, parseISO } from 'date-fns';
 
 interface LbpPageData {
   refetchQueriesOnBlockNumber: number;

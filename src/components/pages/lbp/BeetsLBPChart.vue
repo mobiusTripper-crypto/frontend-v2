@@ -18,13 +18,12 @@ import { computed, defineComponent, PropType } from 'vue';
 import { useStore } from 'vuex';
 import { zip } from 'lodash';
 import {
-  addHours,
   addSeconds,
   format,
   formatISO,
   fromUnixTime,
-  parseISO,
-  isBefore
+  isBefore,
+  parseISO
 } from 'date-fns';
 import useTailwind from '@/composables/useTailwind';
 import {
@@ -78,10 +77,10 @@ export default defineComponent({
         return 0;
       }
 
-      const beetsBalance = parseFloat(beets.value!.balance);
-      const beetsWeight = parseFloat(beets.value!.weight);
-      const usdcBalance = parseFloat(usdc.value!.balance);
-      const usdcWeight = parseFloat(usdc.value!.weight);
+      const beetsBalance = parseFloat(beets.value?.balance || '0');
+      const beetsWeight = parseFloat(beets.value?.weight || '0');
+      const usdcBalance = parseFloat(usdc.value?.balance || '0');
+      const usdcWeight = parseFloat(usdc.value?.weight || '0');
 
       return ((beetsWeight / usdcWeight) * usdcBalance) / beetsBalance;
     });

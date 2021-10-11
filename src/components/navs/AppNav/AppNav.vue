@@ -39,7 +39,6 @@ import AppNavToggle from './AppNavToggle.vue';
 import AppNavActions from './AppNavActions.vue';
 import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
-import DarkModeToggle from '@/components/btns/DarkModeToggle.vue';
 
 export default defineComponent({
   components: {

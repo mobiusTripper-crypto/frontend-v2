@@ -69,7 +69,6 @@ import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import useDarkMode from '@/composables/useDarkMode';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isStableLike } from '@/composables/usePool';
-import useTokens from '@/composables/useTokens';
 import numeral from 'numeral';
 import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
 import { useI18n } from 'vue-i18n';

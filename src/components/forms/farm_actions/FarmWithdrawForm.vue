@@ -80,11 +80,7 @@ import {
 } from '@/lib/utils/validations';
 import { useI18n } from 'vue-i18n';
 import { scale } from '@/lib/utils';
-import {
-  DecoratedPoolWithRequiredFarm,
-  Farm,
-  FullPool
-} from '@/services/balancer/subgraph/types';
+import { DecoratedPoolWithRequiredFarm } from '@/services/balancer/subgraph/types';
 import useFathom from '@/composables/useFathom';
 
 import { TOKENS } from '@/constants/tokens';

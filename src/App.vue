@@ -91,7 +91,6 @@ import Notifications from '@/components/notifications/Notifications.vue';
 import useBreakpoints from './composables/useBreakpoints';
 import { tryPromiseWithTimeout } from './lib/utils/promise';
 import AppFooterNav from '@/components/navs/AppFooterNav/AppFooterNav.vue';
-import FarmsHero from '@/components/heros/FarmsHero.vue';
 import GlobalStats from '@/components/stats/GlobalStats.vue';
 
 BigNumber.config({ DECIMAL_PLACES: DEFAULT_TOKEN_DECIMALS });

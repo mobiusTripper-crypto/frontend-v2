@@ -122,15 +122,14 @@
 
 <script lang="ts">
 import BigNumber from 'bignumber.js';
-import { PropType, defineComponent, ref, computed } from 'vue';
+import { computed, defineComponent, PropType, ref } from 'vue';
 import { getAddress } from '@ethersproject/address';
 import { AddressZero } from '@ethersproject/constants';
 import { Pool, Swap } from '@balancer-labs/sor/dist/types';
-import { SwapV2, SubgraphPoolBase } from '@balancer-labs/sor2';
+import { SubgraphPoolBase, SwapV2 } from '@balancer-labs/sor2';
 
 import useNumbers from '@/composables/useNumbers';
 import { SorReturn } from '@/lib/utils/balancer/helpers/sor/sorManager';
-import { useI18n } from 'vue-i18n';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import { NATIVE_ASSET_ADDRESS } from '@/constants/tokens';
@@ -184,7 +183,6 @@ export default defineComponent({
   },
   setup(props) {
     const { fNum } = useNumbers();
-    const { t } = useI18n();
 
     const { appNetworkConfig } = useWeb3();
     const { tokens } = useTokens();
@@ -196,7 +194,6 @@ export default defineComponent({
     }
 
     const label = computed(() => {
-      const version = props.sorReturn.isV1swap ? 'V1' : 'V2';
       return `Order Routing`;
     });
 

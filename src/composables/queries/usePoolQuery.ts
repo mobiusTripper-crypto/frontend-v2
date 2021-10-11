@@ -11,8 +11,6 @@ import useApp from '../useApp';
 import useUserSettings from '../useUserSettings';
 import { forChange } from '@/lib/utils';
 import { isStableLike } from '../usePool';
-import useFarm from '@/composables/farms/useFarm';
-import useFarmQuery from '@/composables/queries/useFarmQuery';
 
 export default function usePoolQuery(
   id: string,

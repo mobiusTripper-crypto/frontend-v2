@@ -7,10 +7,7 @@ import { default as abi } from '@/lib/abi/ERC20.json';
 import { MaxUint256 } from '@ethersproject/constants';
 import { bnum } from '@/lib/utils';
 import { erc20ContractService } from '@/services/erc20/erc20-contracts.service';
-import {
-  DecoratedPoolWithRequiredFarm,
-  Farm
-} from '@/services/balancer/subgraph/types';
+import { DecoratedPoolWithRequiredFarm } from '@/services/balancer/subgraph/types';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import BigNumber from 'bignumber.js';
 

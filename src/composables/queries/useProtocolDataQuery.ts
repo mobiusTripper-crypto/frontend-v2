@@ -4,10 +4,7 @@ import { QueryObserverOptions } from 'react-query/core';
 import QUERY_KEYS from '@/constants/queryKeys';
 import useWeb3 from '@/services/web3/useWeb3';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
-import {
-  PoolToken,
-  SubgraphBalancer
-} from '@/services/balancer/subgraph/types';
+import { SubgraphBalancer } from '@/services/balancer/subgraph/types';
 
 interface ProtocolData extends SubgraphBalancer {
   beetsPrice: number;
