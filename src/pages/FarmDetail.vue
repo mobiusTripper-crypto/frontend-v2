@@ -54,16 +54,9 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  ComputedRef,
-  defineComponent,
-  reactive,
-  toRefs,
-  watch
-} from 'vue';
+import { computed, defineComponent, reactive, toRefs, watch } from 'vue';
 import * as PoolPageComponents from '@/components/pages/pool';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useQueryClient } from 'vue-query';
 import useNumbers from '@/composables/useNumbers';
 import usePoolQuery from '@/composables/queries/usePoolQuery';
@@ -72,7 +65,6 @@ import { EXTERNAL_LINKS } from '@/constants/links';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useApp from '@/composables/useApp';
-import useFarmQuery from '@/composables/queries/useFarmQuery';
 import FarmActionsCard from '@/components/pages/farm/FarmActionsCard.vue';
 import { FarmStatCards } from '@/components/pages/farm';
 import { isStableLike, usePool } from '@/composables/usePool';
@@ -80,12 +72,9 @@ import useFarm from '@/composables/farms/useFarm';
 import FarmStatCardsLoading from '@/components/pages/farm/FarmStatCardsLoading.vue';
 import {
   DecoratedPoolWithRequiredFarm,
-  DecoratedPoolWithShares,
   PoolToken
 } from '@/services/balancer/subgraph/types';
-import { decorateFarm } from '@/lib/utils/farmHelper';
 import usePools from '@/composables/pools/usePools';
-import { getAddress } from '@ethersproject/address';
 
 interface PoolPageData {
   id: string;
@@ -107,7 +96,6 @@ export default defineComponent({
      * COMPOSABLES
      */
     const { appLoading } = useApp();
-    const router = useRouter();
     const route = useRoute();
     const { fNum } = useNumbers();
     const { isWalletReady } = useWeb3();

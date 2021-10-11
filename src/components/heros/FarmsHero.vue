@@ -164,8 +164,9 @@ export default defineComponent({
           'usd'
         ),
         pendingBeets:
-          numeral(sumBy(farms, farm => farm.pendingBeets)).format('0,0.[00]') +
-          ' BEETS',
+          numeral(sumBy(farms, farm => farm.pendingBeets)).format(
+            '0,0.[0000]'
+          ) + ' BEETS',
         pendingBeetsValue: fNum(
           sumBy(farms, farm => farm.pendingBeetsValue),
           'usd'

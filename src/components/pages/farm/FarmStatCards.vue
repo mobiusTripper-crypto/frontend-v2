@@ -44,7 +44,6 @@ import LiquidityMiningTooltip from '@/components/tooltips/LiquidityMiningTooltip
 import useFarm from '@/composables/farms/useFarm';
 import useEthers from '@/composables/useEthers';
 import useFarmUserQuery from '@/composables/queries/useFarmUserQuery';
-import { useRoute } from 'vue-router';
 
 export default defineComponent({
   components: {
@@ -59,7 +58,6 @@ export default defineComponent({
   },
 
   setup(props) {
-    const route = useRoute();
     const { fNum } = useNumbers();
     const { txListener } = useEthers();
     const { harvest } = useFarm(ref(props.pool));

@@ -105,12 +105,7 @@ import {
 import { useI18n } from 'vue-i18n';
 import useNumbers from '@/composables/useNumbers';
 import { scale } from '@/lib/utils';
-import {
-  DecoratedPoolWithRequiredFarm,
-  Farm,
-  FarmUser,
-  FullPool
-} from '@/services/balancer/subgraph/types';
+import { DecoratedPoolWithRequiredFarm } from '@/services/balancer/subgraph/types';
 import useFathom from '@/composables/useFathom';
 
 import { TOKENS } from '@/constants/tokens';
