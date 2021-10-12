@@ -6,7 +6,7 @@
       <AppHero v-if="isHomePage" />
       <GlobalStats />
     </div>
-    <div class="pb-12 px-16">
+    <div class="pb-12 lg:px-12">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
     <AppFooterNav v-if="upToLargeBreakpoint" />
