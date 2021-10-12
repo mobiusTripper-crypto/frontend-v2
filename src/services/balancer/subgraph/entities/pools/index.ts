@@ -77,6 +77,11 @@ export default class Pools {
         '0xae1c69eae0f1342425ea3fdb51e9f11223c7ad5b00010000000000000000000b'
       ) {
         pool.name = `*PAUSED* ${pool.name} - Please migrate to new pool`;
+      } else if (
+        pool.id ===
+        '0xd163415bd34ef06f57c58d2aed5a5478afb464cc00000000000000000000000e'
+      ) {
+        pool.name = `Ziggy Stardust & Magic Internet Money`;
       }
 
       const pastPool = pastPools.find(p => p.id === pool.id);
