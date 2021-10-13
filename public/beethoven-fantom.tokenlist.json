@@ -182,6 +182,14 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/18832/large/GEIST-token.png"
+    },
+    {
+      "name": "MAI",
+      "address": "0xfb98b335551a418cd0737375a2ea0ded62ea213b",
+      "symbol": "MAI",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/15264/large/mimatic-red.png"
     }
   ]
 }
