@@ -10,9 +10,9 @@
   "ws": "wss://wsapi.fantom.network",
   "loggingRpc": "",
   "explorer": "https://ftmscan.com",
-  "subgraph": "https://graph-node.beets-ftm-node.com/subgraphs/name/beethovenx",
-  "blockSubgraph": "https://graph-node.beets-ftm-node.com/subgraphs/name/fantom-blocks",
-  "farmSubgraph": "https://graph-node.beets-ftm-node.com/subgraphs/name/masterchef",
+  "subgraph": "https://graph.beethovenx.io/subgraphs/name/beethovenx",
+  "blockSubgraph": "https://graph.beethovenx.io/subgraphs/name/fantom-blocks",
+  "farmSubgraph": "https://graph.beethovenx.io/subgraphs/name/masterchef",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "nativeAsset": {
