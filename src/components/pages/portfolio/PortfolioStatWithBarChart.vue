@@ -1,0 +1,154 @@
+<template>
+  <BalLoadingBlock v-if="isLoading" class="h-96 mt-16" />
+  <div v-else>
+    <BalCard>
+      <div class="flex">
+        <div class="flex flex-col w-48">
+          <h4 class="mt-1 mb-1">
+            {{ title }}
+            <BalTooltip>
+              <template v-slot:activator>
+                <BalIcon
+                  name="info"
+                  size="sm"
+                  class="ml-1 text-gray-400 -mb-px"
+                />
+              </template>
+              <div v-html="infoText" class="w-52" />
+            </BalTooltip>
+          </h4>
+          <div class="flex-1 ">
+            <h4>{{ stat }}</h4>
+          </div>
+          <div class="text-md text-gray-500 font-medium">
+            {{ subTitle }}
+          </div>
+        </div>
+        <div class="flex-1">
+          <ECharts
+            ref="chartInstance"
+            :class="['w-full', 'h-28']"
+            :option="chartConfig"
+            autoresize
+            :update-options="{ replaceMerge: 'series' }"
+          />
+        </div>
+      </div>
+    </BalCard>
+  </div>
+</template>
+
+<script lang="ts">
+import { computed, defineComponent, PropType, ref } from 'vue';
+import numeral from 'numeral';
+import * as echarts from 'echarts/core';
+import ECharts from 'vue-echarts';
+import useNumbers from '@/composables/useNumbers';
+import useTailwind from '@/composables/useTailwind';
+import { format } from 'date-fns';
+
+export default defineComponent({
+  //emits: ['periodSelected'],
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    stat: {
+      type: String,
+      required: true
+    },
+    subTitle: {
+      type: String,
+      required: true
+    },
+    data: {
+      type: Array as PropType<number[]>,
+      required: true
+    },
+    dates: {
+      type: Array as PropType<number[]>,
+      required: true
+    },
+    barColor: {
+      type: String,
+      required: true
+    },
+    infoText: {
+      type: String,
+      required: true
+    }
+  },
+  components: {
+    ECharts
+  },
+  setup(props) {
+    const chartInstance = ref<echarts.ECharts>();
+    const { fNum } = useNumbers();
+    const tailwind = useTailwind();
+
+    // https://echarts.apache.org/en/option.html
+    const chartConfig = computed(() => ({
+      xAxis: {
+        type: 'category',
+        axisLine: {
+          show: false,
+          onZero: false,
+          lineStyle: { color: tailwind.theme.colors.gray['600'] }
+        },
+        axisLabel: {
+          color: tailwind.theme.colors.gray[300],
+          fontSize: 14,
+          formatter: value => format(value * 1000, 'MMM. dd')
+        },
+        axisTick: {
+          show: false
+        },
+        data: props.dates
+      },
+      yAxis: {
+        type: 'value',
+        show: false
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      series: [
+        {
+          name: props.title,
+          type: 'bar',
+          data: props.data,
+          itemStyle: {
+            borderRadius: 10
+          }
+        }
+      ],
+      width: '100%',
+      grid: {
+        left: 0,
+        right: '2.5%',
+        top: '10%',
+        bottom: '5%',
+        containLabel: true
+      },
+      color: [props.barColor]
+    }));
+
+    return {
+      //refs
+      chartInstance,
+
+      numeral,
+
+      // computed
+      chartConfig
+    };
+  }
+});
+</script>
+
+<style>
+.portfolio-value-line-chart {
+  height: 536px;
+}
+</style>

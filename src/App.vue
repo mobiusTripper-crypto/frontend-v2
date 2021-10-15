@@ -2,10 +2,10 @@
   <div id="modal" />
   <div id="app" class="flex flex-col">
     <AppNav />
-    <div class="relative">
+    <!--    <div class="relative">
       <AppHero v-if="isHomePage" />
       <GlobalStats />
-    </div>
+    </div>-->
     <div class="pb-12 lg:px-12">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
@@ -113,11 +113,11 @@ export default defineComponent({
   components: {
     AppNav,
     AppFooterNav,
-    AppHero,
+    //AppHero,
     VueQueryDevTools,
     WalletSelectModal,
-    Notifications,
-    GlobalStats
+    Notifications
+    //GlobalStats
   },
 
   setup() {

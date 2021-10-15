@@ -1,9 +1,67 @@
 <template>
-  <div class="lg:container lg:mx-auto pt-24 md:pt-16">
+  <div class="lg:container lg:mx-auto pt-12 md:pt-12">
+    <PortfolioHeader />
+    <div
+      class="grid grid-cols-1 xl:grid-cols-4 gap-y-8 gap-x-0 xl:gap-x-8 mb-16"
+    >
+      <div class="col col-span-1">
+        <PortfolioAssetsPieChart :assets="portfolioAssets" />
+      </div>
+      <div class="col col-span-3">
+        <PortfolioValueLineChart :data="portfolioData" />
+      </div>
+    </div>
     <template v-if="isWalletReady && userPools && userPools.length > 0">
       <div class="px-4 lg:px-0">
-        <h3 class="mb-4">My Investments</h3>
+        <h2 class="mb-6 text-green-500">My Investments</h2>
       </div>
+      <div
+        class="grid grid-cols-1 lg:grid-cols-4 gap-y-8 gap-x-0 lg:gap-x-8 mb-12"
+      >
+        <div class="col-span-3">
+          <div class="mb-8">
+            <PortfolioStatWithBarChart
+              title="Volume (24h)"
+              sub-title="Across 5 pools"
+              stat="$1,231,000"
+              info-text="Info text"
+              :dates="[
+                1633651200,
+                1633737600,
+                1633824000,
+                1633910400,
+                1633996800,
+                1634083200,
+                1634169600
+              ]"
+              :data="[150, 220, 315, 412, 222, 582, 322]"
+              :bar-color="chartColors[1]"
+            />
+          </div>
+          <PortfolioStatWithBarChart
+            title="Fees (24h)"
+            sub-title="My Portion: $120.12"
+            stat="$10,523"
+            info-text="Info text"
+            :dates="[
+              1633651200,
+              1633737600,
+              1633824000,
+              1633910400,
+              1633996800,
+              1634083200,
+              1634169600
+            ]"
+            :data="[150, 220, 315, 412, 222, 582, 322]"
+            :bar-color="chartColors[2]"
+          />
+        </div>
+        <div>
+          <PortfolioPoolsPieChart height="60" />
+        </div>
+      </div>
+
+      <h4 class="mb-4">My Investment Pools</h4>
       <PoolsTable
         :isLoading="isLoadingUserPools"
         :data="userPools"
@@ -17,13 +75,13 @@
           $t('goToBalancerV1Site')
         }}</BalLink>
       </div>
-      <div class="mb-16" />
+      <div class="mb-12" />
     </template>
 
     <template v-if="isWalletReady && poolsWithUserInFarm.length > 0">
       <div class="mb-16">
         <div class="px-4 lg:px-0">
-          <h3 class="mb-3">My Farms</h3>
+          <h4 class="mb-4">My Farms</h4>
         </div>
         <FarmsTable
           :pools="poolsWithUserInFarm"
@@ -92,9 +150,23 @@ import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
+import PortfolioAssetsPieChart from '@/components/pages/portfolio/PortfolioAssetsPieChart.vue';
+import PortfolioPoolsPieChart from '@/components/pages/portfolio/PortfolioPoolsPieChart.vue';
+import PortfolioValueLineChart from '@/components/pages/portfolio/PortfolioValueLineChart.vue';
+import PortfolioStatWithBarChart from '@/components/pages/portfolio/PortfolioStatWithBarChart.vue';
+import { chartColors } from '@/constants/colors';
+import PortfolioHeader from '@/components/pages/portfolio/PortfolioHeader.vue';
+import portfolioAssets from '../../assets.json';
+import portfolioData from '../../data.json';
 
 export default defineComponent({
   components: {
+    PortfolioHeader,
+    PortfolioPoolsPieChart,
+    PortfolioStatWithBarChart,
+    PortfolioValueLineChart,
+    //PortfolioPoolsPieChart,
+    PortfolioAssetsPieChart,
     TokenSearchInput,
     PoolsTable,
     FarmsTable
@@ -174,6 +246,9 @@ export default defineComponent({
       addSelectedToken,
       removeSelectedToken,
       communityPools,
+      chartColors,
+      portfolioAssets,
+      portfolioData,
 
       // constants
       EXTERNAL_LINKS
