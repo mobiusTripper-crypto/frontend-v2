@@ -34,11 +34,14 @@
           </div>
           <div class="flex-1">
             <div class="text-md font-medium">{{ asset.symbol }}</div>
-          </div>
-          <div class="text-md font-medium">
-            {{ fNum(asset.totalPrice, 'usd') }}
-            <div class="text-sm text-gray-500 font-medium text-right">
+            <div class="text-sm text-gray-500 font-medium">
               {{ fNum(asset.percentOfPortfolio, 'percent') }}
+            </div>
+          </div>
+          <div class="text-md font-medium text-right">
+            {{ fNum(asset.balance, 'token') }}
+            <div class="text-sm text-gray-500 font-medium text-right">
+              {{ fNum(asset.totalPrice, 'usd') }}
             </div>
           </div>
         </div>
@@ -134,10 +137,14 @@ export default defineComponent({
                 name: asset.symbol,
                 value: Math.round(asset.totalPrice * 100) / 100
               })),
-              {
-                name: 'Other',
-                value: othersValue
-              }
+              ...(othersValue > 0
+                ? [
+                    {
+                      name: 'Other',
+                      value: othersValue
+                    }
+                  ]
+                : [])
             ],
             color: chartColors
           }

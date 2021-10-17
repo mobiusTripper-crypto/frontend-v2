@@ -13,7 +13,7 @@
       <div>
         <ECharts
           ref="chartInstance"
-          :class="[height ? `h-${height}` : '', 'w-full']"
+          class="h-60 w-full"
           :option="chartConfig"
           autoresize
           :update-options="{ replaceMerge: 'series' }"
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, PropType, ref } from 'vue';
 import numeral from 'numeral';
 import * as echarts from 'echarts/core';
 import ECharts from 'vue-echarts';
@@ -33,12 +33,13 @@ import useTailwind from '@/composables/useTailwind';
 import useDarkMode from '@/composables/useDarkMode';
 import BalCard from '@/components/_global/BalCard/BalCard.vue';
 import { chartColors } from '@/constants/colors';
+import { UserPoolData } from '@/services/beethovenx/types';
 
 export default defineComponent({
-  //emits: ['periodSelected'],
   props: {
-    height: {
-      type: String
+    pools: {
+      type: Array as PropType<UserPoolData[]>,
+      required: true
     }
   },
   components: {
@@ -53,21 +54,7 @@ export default defineComponent({
     const tailwind = useTailwind();
     const { darkMode } = useDarkMode();
 
-    // https://echarts.apache.org/en/option.html
     const chartConfig = computed(() => ({
-      /*title: {
-        text: '12',
-        //subtext: 'Assets  ',
-        top: '41%',
-        left: '47%',
-        //right: 'middle',
-        textAlign: 'center',
-        textStyle: {
-          color: tailwind.theme.colors.white,
-          fontSize: 40
-          //lineHeight: 24
-        }
-      },*/
       tooltip: {
         trigger: 'item'
       },
@@ -92,11 +79,10 @@ export default defineComponent({
             show: false
           },
           data: [
-            { value: 1048, name: 'wBTC' },
-            { value: 735, name: 'wETH' },
-            { value: 580, name: 'fUSDT' },
-            { value: 484, name: 'BEETS' },
-            { value: 300, name: 'FTM' }
+            ...props.pools.map(pool => ({
+              name: pool.name,
+              value: Math.round(pool.totalPrice * 100) / 100
+            }))
           ],
           color: chartColors
         }

@@ -5,10 +5,13 @@
       class="grid grid-cols-1 xl:grid-cols-4 gap-y-8 gap-x-0 xl:gap-x-8 mb-16"
     >
       <div class="col col-span-1">
-        <PortfolioAssetsPieChart :assets="portfolioAssets" />
+        <PortfolioAssetsPieChart :assets="currentData.tokens" />
       </div>
       <div class="col col-span-3">
-        <PortfolioValueLineChart :data="portfolioData" />
+        <PortfolioValueLineChart
+          :assets="currentData.tokens"
+          :data="portfolioData"
+        />
       </div>
     </div>
     <template v-if="isWalletReady && userPools && userPools.length > 0">
@@ -22,42 +25,26 @@
           <div class="mb-8">
             <PortfolioStatWithBarChart
               title="Volume (24h)"
-              sub-title="Across 5 pools"
-              stat="$1,231,000"
+              :sub-title="`Across ${currentData.pools.length} pools`"
+              :stat="fNum(currentData.totalVolume, 'usd')"
               info-text="Info text"
-              :dates="[
-                1633651200,
-                1633737600,
-                1633824000,
-                1633910400,
-                1633996800,
-                1634083200,
-                1634169600
-              ]"
-              :data="[150, 220, 315, 412, 222, 582, 322]"
+              :dates="timestamps"
+              :data="volume"
               :bar-color="chartColors[1]"
             />
           </div>
           <PortfolioStatWithBarChart
-            title="Fees (24h)"
-            sub-title="My Portion: $120.12"
-            stat="$10,523"
+            title="My Fees (24h)"
+            :sub-title="`Avg: ${fNum(avgFees, 'usd')}/day`"
+            :stat="fNum(currentData.myFees, 'usd')"
             info-text="Info text"
-            :dates="[
-              1633651200,
-              1633737600,
-              1633824000,
-              1633910400,
-              1633996800,
-              1634083200,
-              1634169600
-            ]"
-            :data="[150, 220, 315, 412, 222, 582, 322]"
+            :dates="timestamps"
+            :data="fees"
             :bar-color="chartColors[2]"
           />
         </div>
         <div>
-          <PortfolioPoolsPieChart height="60" />
+          <PortfolioPoolsPieChart :pools="portfolioPools" />
         </div>
       </div>
 
@@ -158,6 +145,10 @@ import { chartColors } from '@/constants/colors';
 import PortfolioHeader from '@/components/pages/portfolio/PortfolioHeader.vue';
 import portfolioAssets from '../../assets.json';
 import portfolioData from '../../data.json';
+import portfolioPools from '../../pools.json';
+import currentData from '../../currentData.json';
+import { map, sumBy, sortBy, orderBy, sum } from 'lodash';
+import useNumbers from '@/composables/useNumbers';
 
 export default defineComponent({
   components: {
@@ -194,6 +185,8 @@ export default defineComponent({
       poolsIsFetchingNextPage
     } = usePools();
 
+    const { fNum } = useNumbers();
+
     //TODO: this will break down once pagination starts happening
     const communityPools = computed(() => {
       return poolsWithFarms.value?.filter(
@@ -224,6 +217,18 @@ export default defineComponent({
 
     masterChefContractsService.beethovenxToken.getCirculatingSupply();
 
+    const timestamps = computed(() =>
+      orderBy(portfolioData, 'timestamp', 'asc').map(item => item.timestamp)
+    );
+
+    const volume = computed(() =>
+      orderBy(portfolioData, 'timestamp', 'asc').map(item => item.totalVolume)
+    );
+    const fees = computed(() =>
+      orderBy(portfolioData, 'timestamp', 'asc').map(item => item.myFees)
+    );
+    const avgFees = computed(() => sum(fees.value) / fees.value.length);
+
     return {
       // data
       filteredPools,
@@ -249,6 +254,29 @@ export default defineComponent({
       chartColors,
       portfolioAssets,
       portfolioData,
+      portfolioPools,
+      currentData,
+      timestamps,
+      fees,
+      volume,
+      fNum,
+      avgFees,
+      /*portfolioData: map(portfolioData, (item, timestamp) => {
+        const totalValue = sumBy(item.tokens, 'totalPrice');
+
+        return {
+          timestamp: parseInt(timestamp),
+          totalValue: sumBy(item.tokens, 'totalPrice'),
+          totalFees: 0,
+          totalVolume: 0,
+          myFees: 0,
+          tokens: sortBy(item.tokens, 'totalPrice').map(token => ({
+            ...token,
+            percentOfPortfolio: token.totalPrice / totalValue
+          })),
+          pools: item.pools
+        };
+      }),*/
 
       // constants
       EXTERNAL_LINKS

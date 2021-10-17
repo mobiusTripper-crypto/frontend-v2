@@ -8,6 +8,7 @@ export type Preset =
   | 'token_fixed'
   | 'token_lg'
   | 'usd'
+  | 'usd_m'
   | 'usd_lg'
   | 'percent'
   | 'percent_lg';

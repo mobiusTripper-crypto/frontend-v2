@@ -4,7 +4,7 @@
     <BalCard>
       <div class="flex">
         <div class="flex flex-col w-48">
-          <h4 class="mt-1 mb-1">
+          <div class="text-gray-500 font-medium mb-2">
             {{ title }}
             <BalTooltip>
               <template v-slot:activator>
@@ -16,11 +16,12 @@
               </template>
               <div v-html="infoText" class="w-52" />
             </BalTooltip>
-          </h4>
-          <div class="flex-1 ">
+          </div>
+
+          <div class="flex-1">
             <h4>{{ stat }}</h4>
           </div>
-          <div class="text-md text-gray-500 font-medium">
+          <div class="text-gray-500 font-medium">
             {{ subTitle }}
           </div>
         </div>
@@ -111,7 +112,27 @@ export default defineComponent({
         show: false
       },
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        backgroundColor: tailwind.theme.colors.gray['800'],
+        borderColor: tailwind.theme.colors.gray['800'],
+        formatter: params => {
+          return `
+            <div class='flex flex-col font-body bg-white dark:bg-gray-800 dark:text-white'>
+              ${params
+                .map(
+                  param => `
+                <span>
+                ${param.marker} ${
+                    param.seriesName
+                  } <span class='font-medium ml-2'>${fNum(param.value, 'usd')}
+                  </span>
+                </span>
+              `
+                )
+                .join('')}
+            </div>
+          `;
+        }
       },
       series: [
         {

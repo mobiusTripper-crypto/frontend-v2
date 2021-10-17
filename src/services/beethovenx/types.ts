@@ -13,11 +13,14 @@ export interface UserPoolData {
   id: string;
   poolId: string;
   poolAddress: string;
+  name: string;
   shares: number;
   percentShare: number;
   totalPrice: number;
   pricePerShare: number;
   tokens: UserTokenData[];
+  fees: number;
+  volume: number;
 }
 
 export interface UserTokenData {

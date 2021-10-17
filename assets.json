@@ -1,152 +1,52 @@
 [
   {
-    "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+    "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
     "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
     "symbol": "USDC",
     "name": "USD Coin",
-    "pricePerToken": 1.002475464222389,
-    "balance": 33757.47747280403,
-    "totalPrice": 33841.04290052605,
-    "percentOfPortfolio": 0.343451137402801
+    "pricePerToken": 1,
+    "balance": 49389394.5082082,
+    "totalPrice": 49389394.5082082,
+    "percentOfPortfolio": 0.5371730236209609
   },
   {
-    "id": "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
-    "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
-    "symbol": "WFTM",
-    "name": "Wrapped Fantom",
-    "pricePerToken": 2.055324069576146,
-    "balance": 11808.72742045033,
-    "totalPrice": 24270.761698315397,
-    "percentOfPortfolio": 0.24632280794127598
-  },
-  {
-    "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+    "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
     "address": "0x321162cd933e2be498cd2267a90534a804051b11",
     "symbol": "BTC",
     "name": "Bitcoin",
-    "pricePerToken": 57762.51617563078,
-    "balance": 0.33687779894883224,
-    "totalPrice": 19458.909310992814,
-    "percentOfPortfolio": 0.19748754656064538
+    "pricePerToken": 60935,
+    "balance": 562.56271073238,
+    "totalPrice": 34279758.77847758,
+    "percentOfPortfolio": 0.3327331923496802
+  },
+  {
+    "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+    "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+    "symbol": "ETH",
+    "name": "Ethereum",
+    "pricePerToken": 3906.38,
+    "balance": 7711.748288291707,
+    "totalPrice": 30125019.278416954,
+    "percentOfPortfolio": 0.3326908891323002
+  },
+  {
+    "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+    "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+    "symbol": "WFTM",
+    "name": "Wrapped Fantom",
+    "pricePerToken": 1.99,
+    "balance": 13683468.579049125,
+    "totalPrice": 27230102.47230776,
+    "percentOfPortfolio": 0.33457591851801965
   },
   {
     "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
     "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
     "symbol": "DAI",
     "name": "Dai Stablecoin",
-    "pricePerToken": 1.0005895231775004,
-    "balance": 9602.837927455475,
-    "totalPrice": 9608.49902298349,
-    "percentOfPortfolio": 0.09751620030971571
-  },
-  {
-    "id": "0xcde5a11a4acb4ee4c805352cec57e236bdbc3837000200000000000000000019-0xf24bcf4d1e507740041c9cfd2dddb29585adce1e",
-    "address": "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e",
-    "symbol": "BEETS",
-    "name": "BeethovenxToken",
-    "pricePerToken": 2.055324069576146,
-    "balance": 4534.35331217203,
-    "totalPrice": 9319.565502469493,
-    "percentOfPortfolio": 0.09458382773047747
-  },
-  {
-    "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
-    "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
-    "symbol": "ETH",
-    "name": "Ethereum",
-    "pricePerToken": 3643.329638643597,
-    "balance": 0.13582703527981543,
-    "totalPrice": 494.8626633640411,
-    "percentOfPortfolio": 0.005022337671157212
-  },
-  {
-    "id": "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011-0x841fad6eae12c286d1fd18d1d525dffa75c7effe",
-    "address": "0x841fad6eae12c286d1fd18d1d525dffa75c7effe",
-    "symbol": "BOO",
-    "name": "SpookyToken",
-    "pricePerToken": 21.784560262862147,
-    "balance": 14.80477556819563,
-    "totalPrice": 322.5155255435069,
-    "percentOfPortfolio": 0.003273194753588923
-  },
-  {
-    "id": "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011-0xe0654c8e6fd4d733349ac7e09f6f23da256bf475",
-    "address": "0xe0654c8e6fd4d733349ac7e09f6f23da256bf475",
-    "symbol": "SCREAM",
-    "name": "Scream",
-    "pricePerToken": 98.6710798805927,
-    "balance": 3.2480493871573346,
-    "totalPrice": 320.4885405363115,
-    "percentOfPortfolio": 0.003252622979005438
-  },
-  {
-    "id": "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011-0x5cc61a78f164885776aa610fb0fe1257df78e59b",
-    "address": "0x5cc61a78f164885776aa610fb0fe1257df78e59b",
-    "symbol": "SPIRIT",
-    "name": "SpiritSwap Token",
-    "pricePerToken": 0.3673052206304153,
-    "balance": 542.7324141920828,
-    "totalPrice": 199.34844913810093,
-    "percentOfPortfolio": 0.0020231779439309444
-  },
-  {
-    "id": "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011-0x468003b688943977e6130f4f68f23aad939a1040",
-    "address": "0x468003b688943977e6130f4f68f23aad939a1040",
-    "symbol": "SPELL",
-    "name": "Spell Token",
-    "pricePerToken": 0.014335165840637905,
-    "balance": 12577.33915058761,
-    "totalPrice": 180.29824255762128,
-    "percentOfPortfolio": 0.0018298383019743913
-  },
-  {
-    "id": "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011-0xc5e2b037d30a390e62180970b3aa4e91868764cd",
-    "address": "0xc5e2b037d30a390e62180970b3aa4e91868764cd",
-    "symbol": "TAROT",
-    "name": "Tarot",
-    "pricePerToken": 1.7163081662078534,
-    "balance": 71.02872469258523,
-    "totalPrice": 121.90718022521344,
-    "percentOfPortfolio": 0.0012372301831533375
-  },
-  {
-    "id": "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011-0xf16e81dce15b08f326220742020379b855b87df9",
-    "address": "0xf16e81dce15b08f326220742020379b855b87df9",
-    "symbol": "ICE",
-    "name": "IceToken",
-    "pricePerToken": 17.69638136351804,
-    "balance": 6.854852010546095,
-    "totalPrice": 121.30607536910208,
-    "percentOfPortfolio": 0.0012311295985130638
-  },
-  {
-    "id": "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011-0xddcb3ffd12750b45d32e084887fdf1aabab34239",
-    "address": "0xddcb3ffd12750b45d32e084887fdf1aabab34239",
-    "symbol": "ANY",
-    "name": "Anyswap",
-    "pricePerToken": 12.494597310476243,
-    "balance": 9.572326374821857,
-    "totalPrice": 119.60236337784998,
-    "percentOfPortfolio": 0.0012138387064172642
-  },
-  {
-    "id": "0xf0e2c47d4c9fbbbc2f2e19acdaa3c773a3ecd22100010000000000000000000a-0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8",
-    "address": "0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8",
-    "symbol": "LINK",
-    "name": "ChainLink",
-    "pricePerToken": 27.362542006833518,
-    "balance": 2.803886511659981,
-    "totalPrice": 76.72146245769012,
-    "percentOfPortfolio": 0.0007786424792449396
-  },
-  {
-    "id": "0xf0e2c47d4c9fbbbc2f2e19acdaa3c773a3ecd22100010000000000000000000a-0x1e4f97b9f9f913c46f1632781732927b9019c68b",
-    "address": "0x1e4f97b9f9f913c46f1632781732927b9019c68b",
-    "symbol": "CRV",
-    "name": "Curve DAO",
-    "pricePerToken": 3.066409501357276,
-    "balance": 24.950076152141225,
-    "totalPrice": 76.50715057251344,
-    "percentOfPortfolio": 0.0007764674380992151
+    "pricePerToken": 1,
+    "balance": 18514240.940989308,
+    "totalPrice": 18514240.940989308,
+    "percentOfPortfolio": 0.4628269763790391
   }
 ]

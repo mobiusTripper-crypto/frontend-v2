@@ -11,10 +11,10 @@
           <div v-html="$t('portfolioValueInfo')" class="w-52" />
         </BalTooltip>
       </h4>
-      <div class="text-gray-500">Sep. 14 - Oct. 14</div>
+      <div class="text-gray-500">{{ dateLabel }}</div>
       <ECharts
         ref="chartInstance"
-        :class="['w-full', 'portfolio-value-line-chart']"
+        class="w-full portfolio-value-line-chart"
         :option="chartConfig"
         autoresize
         :update-options="{ replaceMerge: 'series' }"
@@ -30,17 +30,19 @@ import * as echarts from 'echarts/core';
 import ECharts from 'vue-echarts';
 import useNumbers from '@/composables/useNumbers';
 import useTailwind from '@/composables/useTailwind';
-import useDarkMode from '@/composables/useDarkMode';
-import { format } from 'date-fns';
 import { chartColors } from '@/constants/colors';
-import { last } from 'lodash';
-import { UserPoolData, UserTokenData } from '@/services/beethovenx/types';
+import { flatMap, groupBy, map } from 'lodash';
+import { UserPortfolioData, UserTokenData } from '@/services/beethovenx/types';
+import { format } from 'date-fns';
 
 export default defineComponent({
-  //emits: ['periodSelected'],
   props: {
     assets: {
-      type: Array as PropType<UserPoolData[]>,
+      type: Array as PropType<UserTokenData[]>,
+      required: true
+    },
+    data: {
+      type: Array as PropType<UserPortfolioData[]>,
       required: true
     },
     isLoading: {
@@ -56,159 +58,136 @@ export default defineComponent({
     const change = ref(0);
     const { fNum } = useNumbers();
     const tailwind = useTailwind();
-    const { darkMode } = useDarkMode();
 
-    // https://echarts.apache.org/en/option.html
-    const chartConfig = computed(() => ({
-      xAxis: {
-        type: 'category',
-        data: [
-          'Sep. 17',
-          'Sep.21',
-          'Sep. 28',
-          'Oct. 3',
-          'Oct. 8',
-          'Oct. 10',
-          'Oct. 14'
-        ],
-        axisLine: {
-          onZero: false,
-          lineStyle: { color: tailwind.theme.colors.gray['600'] }
-        },
-        axisLabel: {
-          color: tailwind.theme.colors.gray[300],
-          fontSize: 14
-        }
-      },
-      yAxis: {
-        type: 'value',
-        axisLine: {
-          onZero: false,
-          lineStyle: { color: tailwind.theme.colors.gray['600'] }
-        },
-        axisLabel: {
-          color: tailwind.theme.colors.gray[300],
-          fontSize: 14
-        },
-        splitLine: {
-          lineStyle: {
-            color: tailwind.theme.colors.gray['700']
-          }
-        }
-      },
-      tooltip: {
-        trigger: 'axis'
-      },
-      series: [
-        {
-          name: 'BTC',
-          type: 'bar',
-          data: [
-            389.6,
-            421.9,
-            237,
-            225.4,
-            28.7,
-            70.7,
-            523.6,
-            182.2,
-            48.7,
-            182.8,
-            6.0,
-            255.3
-          ],
-          itemStyle: {
-            borderRadius: 6
-          }
-        },
-        {
-          name: 'ETH',
-          type: 'bar',
-          data: [
-            100.0,
-            105.9,
-            227.0,
-            308.2,
-            25.6,
-            76.7,
-            115.6,
-            162.2,
-            32.6,
-            20.0,
-            555.4,
-            123.3
-          ],
-          itemStyle: {
-            borderRadius: 6
-          }
-        },
+    const dateLabel = computed(() => {
+      if (props.data.length === 0) {
+        return '';
+      }
 
-        {
-          name: 'FTM',
+      const startDate = format(props.data[0].timestamp * 1000, 'MMM. d');
+      const endDate = format(
+        props.data[props.data.length - 1].timestamp * 1000,
+        'MMM. d'
+      );
+
+      return `${startDate} - ${endDate}`;
+    });
+
+    const chartConfig = computed(() => {
+      const grouped = groupBy(
+        flatMap(props.data, item =>
+          item.tokens
+            .filter(token => token.percentOfPortfolio > 0.05)
+            .map(token => ({
+              ...token,
+              timestamp: item.timestamp
+            }))
+        ),
+        'symbol'
+      );
+
+      const barData = map(grouped, (tokens, symbol) => {
+        return {
+          name: symbol,
           type: 'bar',
-          data: [
-            125.6,
-            382.9,
-            871.0,
-            26.4,
-            28.7,
-            458,
-            175.6,
-            182.2,
-            48.7,
-            18.8,
-            6.0,
-            2.3
-          ],
-          itemStyle: {
-            borderRadius: 6
-          }
-        },
-        {
-          name: 'BEETS',
-          type: 'bar',
-          data: [
-            362,
-            5.9,
-            9.0,
-            26.4,
-            225.7,
-            70.7,
-            350.6,
-            182.2,
-            48.7,
-            892.8,
-            6.0,
-            125
-          ],
-          itemStyle: {
-            borderRadius: 6
-          }
-        },
-        {
-          name: 'My Portfolio Value',
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line',
-          smooth: 0.3,
-          lineStyle: {
-            width: 4
+          data: tokens.map(token => [
+            token.timestamp * 1000,
+            Math.round(token.totalPrice * 100) / 100
+          ]),
+          itemStyle: { borderRadius: 6 }
+        };
+      });
+
+      const sortedBarData = props.assets
+        .map(asset => barData.find(data => data.name === asset.symbol))
+        .filter(item => item !== undefined);
+
+      return {
+        xAxis: {
+          type: 'time',
+          axisLine: {
+            onZero: false,
+            lineStyle: { color: tailwind.theme.colors.gray['600'] }
           },
-          markPoint: {
-            symbol: 'roundRect',
-            symbolSize: 50
+          axisLabel: {
+            color: tailwind.theme.colors.gray[300],
+            fontSize: 14,
+            formatter: value => format(value, 'MMM. d')
           }
-        }
-      ],
-      width: '100%',
-      grid: {
-        left: 0,
-        right: '2.5%',
-        top: '10%',
-        bottom: '5%',
-        containLabel: true
-      },
-      color: chartColors
-    }));
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: {
+            onZero: false,
+            lineStyle: { color: tailwind.theme.colors.gray['600'] }
+          },
+          axisLabel: {
+            color: tailwind.theme.colors.gray[300],
+            fontSize: 14,
+            formatter: value => `${fNum(value, 'usd_m')}`
+          },
+          splitLine: {
+            lineStyle: {
+              color: tailwind.theme.colors.gray['700']
+            }
+          }
+        },
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: tailwind.theme.colors.gray['800'],
+          borderColor: tailwind.theme.colors.gray['800'],
+          formatter: params => {
+            return `
+            <div class='flex flex-col font-body bg-white dark:bg-gray-800 dark:text-white'>
+              ${params
+                .map(
+                  param => `
+                <div class="flex items-center">
+                ${param.marker} <div class="flex-1">${
+                    param.seriesName
+                  }</div> <div class='font-medium ml-4'>${fNum(
+                    param.value[1],
+                    'usd'
+                  )}
+                  </div>
+                </div>
+              `
+                )
+                .join('')}
+            </div>
+          `;
+          }
+        },
+        series: [
+          ...sortedBarData,
+          {
+            name: 'Portfolio Value',
+            data: props.data.map(item => [
+              item.timestamp * 1000,
+              Math.round(item.totalValue * 100) / 100
+            ]),
+            type: 'line',
+            smooth: 0.3,
+            lineStyle: {
+              width: 3
+            },
+            markPoint: {
+              symbol: 'roundRect',
+              symbolSize: 50
+            }
+          }
+        ],
+        width: '100%',
+        grid: {
+          left: 0,
+          right: '2.5%',
+          top: '10%',
+          bottom: '5%',
+          containLabel: true
+        },
+        color: chartColors
+      };
+    });
 
     return {
       //refs
@@ -221,7 +200,8 @@ export default defineComponent({
       change,
 
       // computed
-      chartConfig
+      chartConfig,
+      dateLabel
     };
   }
 });
