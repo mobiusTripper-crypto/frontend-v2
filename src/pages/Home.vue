@@ -22,29 +22,30 @@
         class="grid grid-cols-1 lg:grid-cols-4 gap-y-8 gap-x-0 lg:gap-x-8 mb-12"
       >
         <div class="col-span-3">
+          <PortfolioPoolsStatCards :pools="currentData.pools" />
           <div class="mb-8">
             <PortfolioStatWithBarChart
-              title="Volume (24h)"
-              :sub-title="`Across ${currentData.pools.length} pools`"
-              :stat="fNum(currentData.totalVolume, 'usd')"
+              title="My Fees (24h)"
+              :sub-title="`Avg: ${fNum(avgFees, 'usd')}/day`"
+              :stat="fNum(currentData.myFees, 'usd')"
               info-text="Info text"
               :dates="timestamps"
-              :data="volume"
-              :bar-color="chartColors[1]"
+              :data="fees"
+              :bar-color="chartColors[2]"
             />
           </div>
-          <PortfolioStatWithBarChart
-            title="My Fees (24h)"
-            :sub-title="`Avg: ${fNum(avgFees, 'usd')}/day`"
-            :stat="fNum(currentData.myFees, 'usd')"
+          <!--          <PortfolioStatWithBarChart
+            title="Volume (24h)"
+            :sub-title="`Across ${currentData.pools.length} pools`"
+            :stat="fNum(currentData.totalVolume, 'usd')"
             info-text="Info text"
             :dates="timestamps"
-            :data="fees"
-            :bar-color="chartColors[2]"
-          />
+            :data="volume"
+            :bar-color="chartColors[1]"
+          />-->
         </div>
         <div>
-          <PortfolioPoolsPieChart :pools="portfolioPools" />
+          <PortfolioPoolsPieChart :pools="currentData.pools" />
         </div>
       </div>
 
@@ -143,15 +144,15 @@ import PortfolioValueLineChart from '@/components/pages/portfolio/PortfolioValue
 import PortfolioStatWithBarChart from '@/components/pages/portfolio/PortfolioStatWithBarChart.vue';
 import { chartColors } from '@/constants/colors';
 import PortfolioHeader from '@/components/pages/portfolio/PortfolioHeader.vue';
-import portfolioAssets from '../../assets.json';
 import portfolioData from '../../data.json';
-import portfolioPools from '../../pools.json';
 import currentData from '../../currentData.json';
-import { map, sumBy, sortBy, orderBy, sum } from 'lodash';
+import { orderBy, sum } from 'lodash';
 import useNumbers from '@/composables/useNumbers';
+import PortfolioPoolsStatCards from '@/components/pages/portfolio/PortfolioPoolsStatCards.vue';
 
 export default defineComponent({
   components: {
+    PortfolioPoolsStatCards,
     PortfolioHeader,
     PortfolioPoolsPieChart,
     PortfolioStatWithBarChart,
@@ -252,9 +253,7 @@ export default defineComponent({
       removeSelectedToken,
       communityPools,
       chartColors,
-      portfolioAssets,
       portfolioData,
-      portfolioPools,
       currentData,
       timestamps,
       fees,

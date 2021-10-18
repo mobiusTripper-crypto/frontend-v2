@@ -25,7 +25,7 @@
           :key="asset.address"
         >
           <div class="bg-gray-700 p-2 rounded-lg mr-4 relative">
-            <BalAsset :address="asset.address" :size="30" />
+            <BalAsset :address="asset.address" :size="32" />
             <div
               v-if="i < 4"
               class="rounded-full h-3 w-3 bg-green-500 absolute -top-1 -left-1"
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div class="text-center mt-6">
+        <div class="text-center mt-4">
           <a
             @click="toggleShowAll()"
             class="text-green-500 font-medium underline"
@@ -104,7 +104,20 @@ export default defineComponent({
 
       return {
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          backgroundColor: tailwind.theme.colors.gray['800'],
+          borderColor: tailwind.theme.colors.gray['800'],
+          formatter: param => {
+            return `
+          <div class='flex flex-col font-body bg-white dark:bg-gray-800 dark:text-white'>
+            <span>${param.marker} ${
+              param.name
+            }<span class='font-medium ml-2'>${fNum(param.value, 'usd')}
+                  </span>
+                </span>
+          </div>
+          `;
+          }
         },
         legend: {
           show: false

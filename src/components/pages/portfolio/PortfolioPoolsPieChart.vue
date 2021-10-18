@@ -10,14 +10,38 @@
           <div v-html="$t('portfolioPoolsInfoText')" class="w-52" />
         </BalTooltip>
       </h4>
-      <div>
+      <div class="mb-3">
         <ECharts
           ref="chartInstance"
-          class="h-60 w-full"
+          class="h-44 w-full"
           :option="chartConfig"
           autoresize
           :update-options="{ replaceMerge: 'series' }"
         />
+      </div>
+      <div
+        class="mb-2"
+        v-for="(pool, i) in pools.slice(0, showAll ? pools.length : 3)"
+        :key="pool.poolId"
+      >
+        <div class="flex">
+          <div
+            class="p-2 rounded-lg mr-2 relative w-4 h-4 mt-1"
+            :style="{ backgroundColor: chartColors[i] }"
+          ></div>
+          <div class="text-md font-medium flex-1">{{ pool.name }}</div>
+          <div class="text-md font-medium text-right ml-4">
+            {{ fNum(pool.percentOfPortfolio, 'percent') }}
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <a
+          class="text-green-500 font-medium underline"
+          @click="toggleShowAll()"
+        >
+          {{ showAll ? 'Hide' : `Show all (${pools.length})` }}
+        </a>
       </div>
     </BalCard>
   </div>
@@ -30,7 +54,6 @@ import * as echarts from 'echarts/core';
 import ECharts from 'vue-echarts';
 import useNumbers from '@/composables/useNumbers';
 import useTailwind from '@/composables/useTailwind';
-import useDarkMode from '@/composables/useDarkMode';
 import BalCard from '@/components/_global/BalCard/BalCard.vue';
 import { chartColors } from '@/constants/colors';
 import { UserPoolData } from '@/services/beethovenx/types';
@@ -39,6 +62,10 @@ export default defineComponent({
   props: {
     pools: {
       type: Array as PropType<UserPoolData[]>,
+      required: true
+    },
+    isLoading: {
+      type: Boolean,
       required: true
     }
   },
@@ -52,11 +79,24 @@ export default defineComponent({
     const change = ref(0);
     const { fNum } = useNumbers();
     const tailwind = useTailwind();
-    const { darkMode } = useDarkMode();
+    const showAll = ref(false);
 
     const chartConfig = computed(() => ({
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        backgroundColor: tailwind.theme.colors.gray['800'],
+        borderColor: tailwind.theme.colors.gray['800'],
+        formatter: param => {
+          return `
+          <div class='flex flex-col font-body bg-white dark:bg-gray-800 dark:text-white'>
+            <span>${param.marker} ${
+            param.name
+          }<span class='font-medium ml-2'>${fNum(param.value, 'usd')}
+                  </span>
+                </span>
+          </div>
+          `;
+        }
       },
       legend: {
         show: false
@@ -89,6 +129,10 @@ export default defineComponent({
       ]
     }));
 
+    function toggleShowAll() {
+      showAll.value = !showAll.value;
+    }
+
     return {
       //refs
       chartInstance,
@@ -100,7 +144,11 @@ export default defineComponent({
       change,
 
       // computed
-      chartConfig
+      chartConfig,
+      chartColors,
+      showAll,
+      toggleShowAll,
+      fNum
     };
   }
 });

@@ -19,8 +19,12 @@ export interface UserPoolData {
   totalPrice: number;
   pricePerShare: number;
   tokens: UserTokenData[];
-  fees: number;
-  volume: number;
+  swapFees: number;
+  swapVolume: number;
+  myFees: number;
+  percentOfPortfolio: number;
+  priceChange: number;
+  priceChangePercent: number;
 }
 
 export interface UserTokenData {

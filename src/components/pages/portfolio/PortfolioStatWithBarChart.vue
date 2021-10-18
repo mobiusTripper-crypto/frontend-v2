@@ -28,7 +28,7 @@
         <div class="flex-1">
           <ECharts
             ref="chartInstance"
-            :class="['w-full', 'h-28']"
+            :class="['w-full', 'h-32']"
             :option="chartConfig"
             autoresize
             :update-options="{ replaceMerge: 'series' }"

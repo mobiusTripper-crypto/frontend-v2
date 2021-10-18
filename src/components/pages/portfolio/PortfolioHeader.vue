@@ -11,11 +11,11 @@
       <div class="text-xl font-medium truncate flex items-center">
         $232,820,000
       </div>
-      <div class="text-sm text-gray-500 font-medium mt-1">
+      <!--      <div class="text-sm text-gray-500 font-medium mt-1">
         $454.22
-      </div>
+      </div>-->
     </BalCard>
-    <BalCard class="mr-2 w-48">
+    <!--    <BalCard class="mr-2 w-48">
       <div class="text-sm text-gray-500 font-medium mb-2">
         BEETS Price
       </div>
@@ -36,7 +36,7 @@
       <div class="text-sm text-gray-500 font-medium mt-1">
         5.05 BEETS/block
       </div>
-    </BalCard>
+    </BalCard>-->
   </div>
 </template>
 
