@@ -27,7 +27,7 @@
           <div class="bg-gray-700 p-2 rounded-lg mr-4 relative">
             <BalAsset :address="asset.address" :size="32" />
             <div
-              v-if="i < 4"
+              v-if="asset.percentOfPortfolio >= 0.03"
               class="rounded-full h-3 w-3 bg-green-500 absolute -top-1 -left-1"
               :style="{ backgroundColor: chartColors[i] }"
             ></div>
