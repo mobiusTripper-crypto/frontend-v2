@@ -51,7 +51,7 @@ export default class BeethovenxService {
         {
           headers: {
             'Content-Type': 'application/json',
-            AccountAddress: '0xD111b37e1232D51149F62Ed69F4dcD2976DCbC6f'
+            AccountAddress: address
           }
         }
       );
