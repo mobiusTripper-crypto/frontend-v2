@@ -1,6 +1,6 @@
 <template>
   <div class="lg:container lg:mx-auto pt-12 md:pt-12">
-    <PortfolioHeader />
+    <PortfolioHeader :data="currentData" />
     <div
       class="grid grid-cols-1 xl:grid-cols-4 gap-y-8 gap-x-0 xl:gap-x-8 mb-16"
     >
@@ -19,11 +19,11 @@
         <h2 class="mb-6 text-green-500">My Investments</h2>
       </div>
       <div
-        class="grid grid-cols-1 lg:grid-cols-4 gap-y-8 gap-x-0 lg:gap-x-8 mb-12"
+        class="grid grid-cols-1 xl:grid-cols-4 gap-y-8 gap-x-0 xl:gap-x-8 mb-12"
       >
         <div class="col-span-3">
           <PortfolioPoolsStatCards :pools="currentData.pools" />
-          <div class="mb-8">
+          <div>
             <PortfolioStatWithBarChart
               title="My Fees (24h)"
               :sub-title="`Avg: ${fNum(avgFees, 'usd')}/day`"
@@ -34,15 +34,6 @@
               :bar-color="chartColors[2]"
             />
           </div>
-          <!--          <PortfolioStatWithBarChart
-            title="Volume (24h)"
-            :sub-title="`Across ${currentData.pools.length} pools`"
-            :stat="fNum(currentData.totalVolume, 'usd')"
-            info-text="Info text"
-            :dates="timestamps"
-            :data="volume"
-            :bar-color="chartColors[1]"
-          />-->
         </div>
         <div>
           <PortfolioPoolsPieChart :pools="currentData.pools" />
@@ -57,12 +48,6 @@
         showPoolShares
         class="mb-8"
       />
-      <div class="px-4 lg:px-0" v-if="!hideV1Links">
-        <div class="text-black-600">{{ $t('seeV1BalancerInvestments') }}</div>
-        <BalLink :href="EXTERNAL_LINKS.Balancer.PoolsV1Dashboard" external>{{
-          $t('goToBalancerV1Site')
-        }}</BalLink>
-      </div>
       <div class="mb-12" />
     </template>
 
@@ -81,49 +66,6 @@
         />
       </div>
     </template>
-
-    <div class="px-4 lg:px-0">
-      <h3 class="mb-3">Beethoven-X Investment Pools</h3>
-      <TokenSearchInput
-        v-model="selectedTokens"
-        :loading="isLoadingPools"
-        @add="addSelectedToken"
-        @remove="removeSelectedToken"
-      />
-    </div>
-    <PoolsTable
-      :isLoading="isLoadingPools"
-      :data="filteredPools"
-      :noPoolsLabel="$t('noPoolsFound')"
-      :isPaginated="poolsHasNextPage"
-      :isLoadingMore="poolsIsFetchingNextPage"
-      @loadMore="loadMorePools"
-      class="mb-16"
-    />
-    <div class="px-4 lg:px-0 mb-3">
-      <h3>Community Investment Pools</h3>
-      <p>
-        Investment pools created by the community. Please DYOR before investing
-        in any community pool.
-      </p>
-    </div>
-    <PoolsTable
-      :isLoading="isLoadingPools"
-      :data="communityPools"
-      :noPoolsLabel="$t('noPoolsFound')"
-      :isPaginated="poolsHasNextPage"
-      :isLoadingMore="poolsIsFetchingNextPage"
-      @loadMore="loadMorePools"
-      class="mb-8"
-    />
-    <div class="px-4 lg:px-0" v-if="!hideV1Links">
-      <div class="text-black-600">
-        {{ $t('tableShowsBalancerV2Pools') }}
-      </div>
-      <BalLink :href="EXTERNAL_LINKS.Balancer.PoolsV1Explore" external>{{
-        $t('exploreBalancerV1Pools')
-      }}</BalLink>
-    </div>
   </div>
 </template>
 
@@ -131,11 +73,9 @@
 import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { EXTERNAL_LINKS } from '@/constants/links';
-import TokenSearchInput from '@/components/inputs/TokenSearchInput.vue';
 import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
-import usePoolFilters from '@/composables/pools/usePoolFilters';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import PortfolioAssetsPieChart from '@/components/pages/portfolio/PortfolioAssetsPieChart.vue';
@@ -157,9 +97,7 @@ export default defineComponent({
     PortfolioPoolsPieChart,
     PortfolioStatWithBarChart,
     PortfolioValueLineChart,
-    //PortfolioPoolsPieChart,
     PortfolioAssetsPieChart,
-    TokenSearchInput,
     PoolsTable,
     FarmsTable
   },
@@ -167,15 +105,9 @@ export default defineComponent({
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady, isV1Supported, appNetworkConfig } = useWeb3();
-    const {
-      selectedTokens,
-      addSelectedToken,
-      removeSelectedToken
-    } = usePoolFilters();
+    const { isWalletReady } = useWeb3();
 
     const {
-      poolsWithFarms,
       onlyPoolsWithFarms,
       userPools,
       isLoadingPools,
@@ -187,30 +119,6 @@ export default defineComponent({
     } = usePools();
 
     const { fNum } = useNumbers();
-
-    //TODO: this will break down once pagination starts happening
-    const communityPools = computed(() => {
-      return poolsWithFarms.value?.filter(
-        pool => !appNetworkConfig.incentivizedPools.includes(pool.id)
-      );
-    });
-
-    // COMPUTED
-    const filteredPools = computed(() => {
-      return selectedTokens.value.length > 0
-        ? poolsWithFarms.value?.filter(pool => {
-            return (
-              selectedTokens.value.every((selectedToken: string) =>
-                pool.tokenAddresses.includes(selectedToken)
-              ) && appNetworkConfig.incentivizedPools.includes(pool.id)
-            );
-          })
-        : poolsWithFarms?.value.filter(pool =>
-            appNetworkConfig.incentivizedPools.includes(pool.id)
-          );
-    });
-
-    const hideV1Links = computed(() => !isV1Supported);
 
     const poolsWithUserInFarm = computed(() => {
       return onlyPoolsWithFarms.value.filter(pool => pool.farm.stake > 0);
@@ -232,7 +140,6 @@ export default defineComponent({
 
     return {
       // data
-      filteredPools,
       poolsWithUserInFarm,
       userPools,
       isLoadingPools,
@@ -241,17 +148,12 @@ export default defineComponent({
 
       // computed
       isWalletReady,
-      hideV1Links,
       poolsHasNextPage,
       poolsIsFetchingNextPage,
-      selectedTokens,
 
       //methods
       router,
       loadMorePools,
-      addSelectedToken,
-      removeSelectedToken,
-      communityPools,
       chartColors,
       portfolioData,
       currentData,
@@ -260,22 +162,6 @@ export default defineComponent({
       volume,
       fNum,
       avgFees,
-      /*portfolioData: map(portfolioData, (item, timestamp) => {
-        const totalValue = sumBy(item.tokens, 'totalPrice');
-
-        return {
-          timestamp: parseInt(timestamp),
-          totalValue: sumBy(item.tokens, 'totalPrice'),
-          totalFees: 0,
-          totalVolume: 0,
-          myFees: 0,
-          tokens: sortBy(item.tokens, 'totalPrice').map(token => ({
-            ...token,
-            percentOfPortfolio: token.totalPrice / totalValue
-          })),
-          pools: item.pools
-        };
-      }),*/
 
       // constants
       EXTERNAL_LINKS

@@ -41,12 +41,12 @@
           <div class="text-md font-medium text-right">
             {{ fNum(asset.balance, 'token') }}
             <div class="text-sm text-gray-500 font-medium text-right">
-              {{ fNum(asset.totalPrice, 'usd') }}
+              {{ fNum(asset.totalValue, 'usd') }}
             </div>
           </div>
         </div>
 
-        <div class="text-center mt-4">
+        <div class="text-center mt-6">
           <a
             @click="toggleShowAll()"
             class="text-green-500 font-medium underline"
@@ -100,7 +100,7 @@ export default defineComponent({
       const others = props.assets.filter(
         asset => asset.percentOfPortfolio < 0.03
       );
-      const othersValue = sumBy(others, 'totalPrice');
+      const othersValue = sumBy(others, 'totalValue');
 
       return {
         tooltip: {
@@ -148,7 +148,7 @@ export default defineComponent({
             data: [
               ...majorAssets.map(asset => ({
                 name: asset.symbol,
-                value: Math.round(asset.totalPrice * 100) / 100
+                value: Math.round(asset.totalValue * 100) / 100
               })),
               ...(othersValue > 0
                 ? [

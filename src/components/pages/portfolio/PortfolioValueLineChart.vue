@@ -11,7 +11,7 @@
           <div v-html="$t('portfolioValueInfo')" class="w-52" />
         </BalTooltip>
       </h4>
-      <div class="text-gray-500">{{ dateLabel }}</div>
+      <div class="text-gray-500 mb-2">{{ dateLabel }}</div>
       <ECharts
         ref="chartInstance"
         class="w-full portfolio-value-line-chart"
@@ -92,7 +92,7 @@ export default defineComponent({
           type: 'bar',
           data: tokens.map(token => [
             token.timestamp * 1000,
-            Math.round(token.totalPrice * 100) / 100
+            Math.round(token.totalValue * 100) / 100
           ]),
           itemStyle: { borderRadius: 6 }
         };

@@ -17,21 +17,15 @@
         {{ topPerformer.name }}
       </div>
       <div class="text-xl font-medium mt-4">
-        <div>
-          {{ topPerformer.priceChange >= 0 ? '+' : '-'
-          }}{{ fNum(topPerformer.priceChange, 'usd') }}&nbsp;
-        </div>
+        <div>{{ formatPriceChange(topPerformer.priceChange) }}&nbsp;</div>
       </div>
       <div
         :class="[
           ' text-sm',
-          topPerformer.priceChangePercent >= 0
-            ? 'text-green-500'
-            : 'text-red-500'
+          topPerformerIsNegative ? 'text-red-500' : 'text-green-500'
         ]"
       >
-        {{ topPerformer.priceChangePercent >= 0 ? '+' : '-'
-        }}{{ fNum(topPerformer.priceChangePercent, 'percent') }}
+        {{ formatPriceChangePercent(topPerformer.priceChangePercent) }}
       </div>
     </BalCard>
     <BalCard class="col col-span-1" v-if="topPerformer">
@@ -84,20 +78,16 @@
       </div>
       <div class="text-xl font-medium mt-4">
         <div>
-          -$11,079.74
+          {{ formatPriceChange(worstPerformer.priceChange) }}
         </div>
       </div>
       <div
         :class="[
           ' text-sm',
-          worstPerformer.priceChangePercent >= 0
-            ? 'text-green-500'
-            : 'text-red-500'
+          worstPerformerIsNegative ? 'text-red-500' : 'text-green-500'
         ]"
       >
-        <!--        {{ worstPerformer.priceChange >= 0 ? '+' : '-'
-        }}{{ fNum(worstPerformer.priceChangePercent, 'percent') }}-->
-        -0.05%
+        {{ formatPriceChangePercent(worstPerformer.priceChangePercent) }}
       </div>
     </BalCard>
   </div>
@@ -151,6 +141,32 @@ export default defineComponent({
       return sorted[0];
     });
 
+    const worstPerformerIsNegative = computed(() => {
+      return worstPerformer.value
+        ? worstPerformer.value.priceChange < 0
+        : false;
+    });
+
+    const topPerformerIsNegative = computed(() => {
+      return topPerformer.value ? topPerformer.value.priceChange < 0 : false;
+    });
+
+    function formatPriceChange(priceChange: number) {
+      const sign = priceChange >= 0 ? '+' : '';
+      return (
+        sign +
+        numeral(priceChange).format(
+          Math.abs(priceChange) >= 10_000 ? '$0,0' : '$0,0.[00]'
+        )
+      );
+    }
+
+    function formatPriceChangePercent(priceChangePercent: number) {
+      const sign = priceChangePercent >= 0 ? '+' : '';
+
+      return sign + numeral(priceChangePercent).format('0,0.00%');
+    }
+
     return {
       //refs
 
@@ -159,7 +175,11 @@ export default defineComponent({
       topPerformer,
       topEarner,
       highestVolume,
-      worstPerformer
+      worstPerformer,
+      worstPerformerIsNegative,
+      topPerformerIsNegative,
+      formatPriceChangePercent,
+      formatPriceChange
     };
   }
 });

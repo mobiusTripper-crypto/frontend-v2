@@ -4,7 +4,17 @@
       :to="{ name: 'home' }"
       :class="[
         'toggle-link px-6 rounded-l-lg',
-        { [activeClasses]: !isTradePage && !isFarmPage && !isBeetsPage }
+        { [activeClasses]: isHomePage }
+      ]"
+      @click="trackGoal(Goals.ClickNavHome)"
+    >
+      Home
+    </router-link>
+    <router-link
+      :to="{ name: 'invest' }"
+      :class="[
+        'toggle-link px-6 rounded-l-lg',
+        { [activeClasses]: isInvestPage }
       ]"
       @click="trackGoal(Goals.ClickNavInvest)"
     >
@@ -63,6 +73,16 @@ export default defineComponent({
     const isTradePage = computed(() => route.name === 'trade');
     const isFarmPage = computed(() => String(route.name).startsWith('farm'));
     const isBeetsPage = computed(() => route.name === 'beets');
+    const isInvestPage = computed(
+      () => route.name === 'invest' || String(route.name).startsWith('pool')
+    );
+    const isHomePage = computed(
+      () =>
+        !isTradePage.value &&
+        !isFarmPage.value &&
+        !isBeetsPage.value &&
+        !isInvestPage.value
+    );
     const { trackGoal, Goals } = useFathom();
 
     return {
@@ -71,6 +91,8 @@ export default defineComponent({
       activeClasses,
       trackGoal,
       isBeetsPage,
+      isInvestPage,
+      isHomePage,
       Goals,
       EXTERNAL_LINKS
     };

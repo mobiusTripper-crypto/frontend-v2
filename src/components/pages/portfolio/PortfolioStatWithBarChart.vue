@@ -1,5 +1,5 @@
 <template>
-  <BalLoadingBlock v-if="isLoading" class="h-96 mt-16" />
+  <BalLoadingBlock v-if="isLoading" class="h-48 mt-16" />
   <div v-else>
     <BalCard>
       <div class="flex">
@@ -28,7 +28,7 @@
         <div class="flex-1">
           <ECharts
             ref="chartInstance"
-            :class="['w-full', 'h-32']"
+            :class="['w-full', 'h-36']"
             :option="chartConfig"
             autoresize
             :update-options="{ replaceMerge: 'series' }"

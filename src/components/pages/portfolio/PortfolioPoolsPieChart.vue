@@ -10,7 +10,7 @@
           <div v-html="$t('portfolioPoolsInfoText')" class="w-52" />
         </BalTooltip>
       </h4>
-      <div class="mb-3">
+      <div class="mb-6">
         <ECharts
           ref="chartInstance"
           class="h-44 w-full"
@@ -29,13 +29,13 @@
             class="p-2 rounded-lg mr-2 relative w-4 h-4 mt-1"
             :style="{ backgroundColor: chartColors[i] }"
           ></div>
-          <div class="text-md font-medium flex-1">{{ pool.name }}</div>
+          <div class="text-md font-medium flex-1 truncate">{{ pool.name }}</div>
           <div class="text-md font-medium text-right ml-4">
             {{ fNum(pool.percentOfPortfolio, 'percent') }}
           </div>
         </div>
       </div>
-      <div class="text-center mt-4">
+      <div class="text-center mt-6">
         <a
           class="text-green-500 font-medium underline"
           @click="toggleShowAll()"
@@ -121,7 +121,7 @@ export default defineComponent({
           data: [
             ...props.pools.map(pool => ({
               name: pool.name,
-              value: Math.round(pool.totalPrice * 100) / 100
+              value: Math.round(pool.totalValue * 100) / 100
             }))
           ],
           color: chartColors

@@ -6,9 +6,11 @@ import Trade from '@/pages/Trade.vue';
 import Farm from '@/pages/FarmList.vue';
 import FarmDetail from '@/pages/FarmDetail.vue';
 import BeetsLBP from '@/pages/BeetsLBP.vue';
+import Invest from '@/pages/Invest.vue';
 
 const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', component: Home },
+  { path: '/invest', name: 'invest', component: Invest },
   { path: '/trade/:assetIn?/:assetOut?', name: 'trade', component: Trade },
   {
     path: '/swap/:assetIn?/:assetOut?',
