@@ -1,45 +1,55 @@
 <template>
   <div class="lg:container lg:mx-auto pt-12 md:pt-12">
-    <PortfolioHeader :data="currentData" />
+    <PortfolioHeader :data="portfolio" :is-loading="isLoadingPortfolio" />
     <div
       class="grid grid-cols-1 xl:grid-cols-4 gap-y-8 gap-x-0 xl:gap-x-8 mb-16"
     >
       <div class="col col-span-1">
-        <PortfolioAssetsPieChart :assets="currentData.tokens" />
+        <PortfolioAssetsPieChart
+          :assets="portfolio.tokens"
+          :is-loading="isLoadingPortfolio"
+        />
       </div>
       <div class="col col-span-3">
         <PortfolioValueLineChart
-          :assets="currentData.tokens"
-          :data="portfolioData"
+          :assets="portfolio.tokens"
+          :data="portfolioHistory"
+          :is-loading="isLoadingPortfolio"
+        />
+      </div>
+    </div>
+    <div class="px-4 lg:px-0">
+      <h2 class="mb-6 text-green-500">My Investments</h2>
+    </div>
+    <div
+      class="grid grid-cols-1 xl:grid-cols-4 gap-y-8 gap-x-0 xl:gap-x-8 mb-12"
+    >
+      <div class="col-span-3">
+        <PortfolioPoolsStatCards
+          :pools="portfolio.pools"
+          :is-loading="isLoadingPortfolio"
+        />
+        <div>
+          <PortfolioStatWithBarChart
+            title="My Fees (24h)"
+            :sub-title="`Avg: ${fNum(avgFees, 'usd')}/day`"
+            :stat="fNum(portfolio.myFees, 'usd')"
+            info-text="Info text"
+            :dates="timestamps"
+            :data="fees"
+            :bar-color="chartColors[2]"
+            :is-loading="isLoadingPortfolio"
+          />
+        </div>
+      </div>
+      <div>
+        <PortfolioPoolsPieChart
+          :pools="portfolio.pools"
+          :is-loading="isLoadingPortfolio"
         />
       </div>
     </div>
     <template v-if="isWalletReady && userPools && userPools.length > 0">
-      <div class="px-4 lg:px-0">
-        <h2 class="mb-6 text-green-500">My Investments</h2>
-      </div>
-      <div
-        class="grid grid-cols-1 xl:grid-cols-4 gap-y-8 gap-x-0 xl:gap-x-8 mb-12"
-      >
-        <div class="col-span-3">
-          <PortfolioPoolsStatCards :pools="currentData.pools" />
-          <div>
-            <PortfolioStatWithBarChart
-              title="My Fees (24h)"
-              :sub-title="`Avg: ${fNum(avgFees, 'usd')}/day`"
-              :stat="fNum(currentData.myFees, 'usd')"
-              info-text="Info text"
-              :dates="timestamps"
-              :data="fees"
-              :bar-color="chartColors[2]"
-            />
-          </div>
-        </div>
-        <div>
-          <PortfolioPoolsPieChart :pools="currentData.pools" />
-        </div>
-      </div>
-
       <h4 class="mb-4">My Investment Pools</h4>
       <PoolsTable
         :isLoading="isLoadingUserPools"
@@ -77,18 +87,16 @@ import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
-import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import PortfolioAssetsPieChart from '@/components/pages/portfolio/PortfolioAssetsPieChart.vue';
 import PortfolioPoolsPieChart from '@/components/pages/portfolio/PortfolioPoolsPieChart.vue';
 import PortfolioValueLineChart from '@/components/pages/portfolio/PortfolioValueLineChart.vue';
 import PortfolioStatWithBarChart from '@/components/pages/portfolio/PortfolioStatWithBarChart.vue';
 import { chartColors } from '@/constants/colors';
 import PortfolioHeader from '@/components/pages/portfolio/PortfolioHeader.vue';
-import portfolioData from '../../data.json';
-import currentData from '../../currentData.json';
 import { orderBy, sum } from 'lodash';
 import useNumbers from '@/composables/useNumbers';
 import PortfolioPoolsStatCards from '@/components/pages/portfolio/PortfolioPoolsStatCards.vue';
+import usePortfolio from '@/composables/beethovenx/usePortfolio';
 
 export default defineComponent({
   components: {
@@ -117,6 +125,7 @@ export default defineComponent({
       poolsHasNextPage,
       poolsIsFetchingNextPage
     } = usePools();
+    const { portfolio, portfolioHistory, isLoadingPortfolio } = usePortfolio();
 
     const { fNum } = useNumbers();
 
@@ -124,17 +133,21 @@ export default defineComponent({
       return onlyPoolsWithFarms.value.filter(pool => pool.farm.stake > 0);
     });
 
-    masterChefContractsService.beethovenxToken.getCirculatingSupply();
-
     const timestamps = computed(() =>
-      orderBy(portfolioData, 'timestamp', 'asc').map(item => item.timestamp)
+      orderBy(portfolioHistory.value, 'timestamp', 'asc').map(
+        item => item.timestamp
+      )
     );
 
     const volume = computed(() =>
-      orderBy(portfolioData, 'timestamp', 'asc').map(item => item.totalVolume)
+      orderBy(portfolioHistory.value, 'timestamp', 'asc').map(
+        item => item.totalSwapVolume
+      )
     );
     const fees = computed(() =>
-      orderBy(portfolioData, 'timestamp', 'asc').map(item => item.myFees)
+      orderBy(portfolioHistory.value, 'timestamp', 'asc').map(
+        item => item.myFees
+      )
     );
     const avgFees = computed(() => sum(fees.value) / fees.value.length);
 
@@ -151,12 +164,14 @@ export default defineComponent({
       poolsHasNextPage,
       poolsIsFetchingNextPage,
 
+      portfolio,
+      portfolioHistory,
+      isLoadingPortfolio,
+
       //methods
       router,
       loadMorePools,
       chartColors,
-      portfolioData,
-      currentData,
       timestamps,
       fees,
       volume,

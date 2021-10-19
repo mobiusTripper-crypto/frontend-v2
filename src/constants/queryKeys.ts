@@ -91,6 +91,11 @@ const QUERY_KEYS = {
       'account',
       'profile',
       { account, chainId }
+    ],
+    Portfolio: (account: Ref<string>, chainId: Ref<number | undefined>) => [
+      'account',
+      'portfolio',
+      { account, chainId }
     ]
   },
   App: {

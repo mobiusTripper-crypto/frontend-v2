@@ -2,9 +2,12 @@
   <div class="mb-16 flex">
     <div class="flex-1">
       <h2 class="text-green-500 mb-2">My Portfolio</h2>
-      <h2 class="text-5xl">{{ fNum(data.totalValue, 'usd') }}</h2>
+      <BalLoadingBlock v-if="isLoading" class="h-10 w-40" />
+      <h2 class="text-5xl font-light" v-else>
+        ${{ numeral(data.totalValue).format('0,0.00') }}
+      </h2>
     </div>
-    <BalCard class="w-42" v-if="tvl">
+    <BalCard class="w-44" v-if="tvl">
       <div class="text-sm text-gray-500 font-medium mb-2">
         TVL
       </div>
@@ -41,7 +44,7 @@
 import { computed, defineComponent, PropType } from 'vue';
 import numeral from 'numeral';
 import BalCard from '@/components/_global/BalCard/BalCard.vue';
-import { UserPortfolioData } from '@/services/beethovenx/types';
+import { UserPortfolioData } from '@/services/beethovenx/beethovenx-types';
 import useNumbers from '@/composables/useNumbers';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 

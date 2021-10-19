@@ -10,6 +10,7 @@ interface Env {
   ALCHEMY_KEY: string;
   PORTIS_DAPP_ID: string;
   ENABLE_STABLE_POOLS: boolean;
+  BACKEND_URL: string;
 }
 
 export default class ConfigService {
@@ -22,7 +23,8 @@ export default class ConfigService {
       BLOCKNATIVE_DAPP_ID: process.env.VUE_APP_BLOCKNATIVE_DAPP_ID || 'xxx',
       ALCHEMY_KEY: process.env.VUE_APP_ALCHEMY_KEY || '',
       ENABLE_STABLE_POOLS: process.env.VUE_APP_ENABLE_STABLE_POOLS === 'true',
-      PORTIS_DAPP_ID: process.env.PORTIS_DAPP_ID || ''
+      PORTIS_DAPP_ID: process.env.PORTIS_DAPP_ID || '',
+      BACKEND_URL: process.env.BACKEND_URL || ''
     };
   }
 

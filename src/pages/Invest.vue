@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4 pt-12">
+  <div class="lg:container lg:mx-auto mb-4 pt-12">
     <h2 class="text-green-500">Beethoven-X Investment Pools</h2>
     <!--    <p>
       Investment pools created by the community. Please DYOR before investing in

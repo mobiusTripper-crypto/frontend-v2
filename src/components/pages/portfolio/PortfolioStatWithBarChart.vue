@@ -1,5 +1,5 @@
 <template>
-  <BalLoadingBlock v-if="isLoading" class="h-48 mt-16" />
+  <BalLoadingBlock v-if="isLoading" class="h-44" />
   <div v-else>
     <BalCard>
       <div class="flex">
@@ -77,6 +77,10 @@ export default defineComponent({
     },
     infoText: {
       type: String,
+      required: true
+    },
+    isLoading: {
+      type: Boolean,
       required: true
     }
   },

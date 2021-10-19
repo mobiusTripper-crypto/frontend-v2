@@ -1,5 +1,5 @@
 <template>
-  <BalLoadingBlock v-if="isLoading" :style="{ height: '622px' }" />
+  <BalLoadingBlock v-if="isLoading" :style="{ height: '632px' }" />
   <div v-else>
     <BalCard>
       <h4 class="mb-4 mt-1">
@@ -67,7 +67,7 @@ import ECharts from 'vue-echarts';
 import useTailwind from '@/composables/useTailwind';
 import BalCard from '@/components/_global/BalCard/BalCard.vue';
 import { chartColors } from '@/constants/colors';
-import { UserTokenData } from '@/services/beethovenx/types';
+import { UserTokenData } from '@/services/beethovenx/beethovenx-types';
 import { sumBy } from 'lodash';
 import useNumbers from '@/composables/useNumbers';
 

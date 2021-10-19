@@ -1,5 +1,5 @@
 <template>
-  <BalLoadingBlock v-if="isLoading" class="h-96 mt-16" />
+  <BalLoadingBlock v-if="isLoading" :style="{ height: '632px' }" />
   <div v-else>
     <BalCard>
       <h4 class="mt-1">
@@ -32,8 +32,12 @@ import useNumbers from '@/composables/useNumbers';
 import useTailwind from '@/composables/useTailwind';
 import { chartColors } from '@/constants/colors';
 import { flatMap, groupBy, map } from 'lodash';
-import { UserPortfolioData, UserTokenData } from '@/services/beethovenx/types';
+import {
+  UserPortfolioData,
+  UserTokenData
+} from '@/services/beethovenx/beethovenx-types';
 import { format } from 'date-fns';
+import { orderBy } from 'lodash';
 
 export default defineComponent({
   props: {
@@ -64,9 +68,10 @@ export default defineComponent({
         return '';
       }
 
-      const startDate = format(props.data[0].timestamp * 1000, 'MMM. d');
+      const sorted = orderBy(props.data, 'timestamp', 'asc');
+      const startDate = format(sorted[0].timestamp * 1000, 'MMM. d');
       const endDate = format(
-        props.data[props.data.length - 1].timestamp * 1000,
+        sorted[sorted.length - 1].timestamp * 1000,
         'MMM. d'
       );
 
@@ -124,7 +129,8 @@ export default defineComponent({
           axisLabel: {
             color: tailwind.theme.colors.gray[300],
             fontSize: 14,
-            formatter: value => `${fNum(value, 'usd_m')}`
+            formatter: value =>
+              `$${numeral(value).format(value > 1000 ? '0a' : '0.[00]')}`
           },
           splitLine: {
             lineStyle: {
