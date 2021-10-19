@@ -124,7 +124,7 @@ export default defineComponent({
     const { fNum } = useNumbers();
 
     const topPerformer = computed(() => {
-      const sorted = orderBy(props.pools, 'priceChange', 'desc');
+      const sorted = orderBy(props.pools, 'priceChangePercent', 'desc');
 
       return sorted[0];
     });
@@ -142,7 +142,7 @@ export default defineComponent({
     });
 
     const worstPerformer = computed(() => {
-      const sorted = orderBy(props.pools, 'priceChange', 'asc');
+      const sorted = orderBy(props.pools, 'priceChangePercent', 'asc');
 
       return sorted[0];
     });
