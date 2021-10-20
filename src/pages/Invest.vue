@@ -1,14 +1,43 @@
 <template>
-  <div class="lg:container lg:mx-auto mb-4 pt-12">
-    <h2 class="text-green-500">Beethoven-X Investment Pools</h2>
-    <!--    <p>
-      Investment pools created by the community. Please DYOR before investing in
-      any community pool.
-    </p>-->
-  </div>
-  <div class="lg:container lg:mx-auto pt-8">
+  <div class="lg:container lg:mx-auto pt-24 md:pt-16">
+    <template v-if="isWalletReady && userPools && userPools.length > 0">
+      <div class="px-4 lg:px-0">
+        <h3 class="mb-4">My Investments</h3>
+      </div>
+      <PoolsTable
+        :isLoading="isLoadingUserPools"
+        :data="userPools"
+        :noPoolsLabel="$t('noInvestments')"
+        showPoolShares
+        class="mb-8"
+      />
+      <div class="px-4 lg:px-0" v-if="!hideV1Links">
+        <div class="text-black-600">{{ $t('seeV1BalancerInvestments') }}</div>
+        <BalLink :href="EXTERNAL_LINKS.Balancer.PoolsV1Dashboard" external>{{
+          $t('goToBalancerV1Site')
+        }}</BalLink>
+      </div>
+      <div class="mb-16" />
+    </template>
+
+    <template v-if="isWalletReady && poolsWithUserInFarm.length > 0">
+      <div class="mb-16">
+        <div class="px-4 lg:px-0">
+          <h3 class="mb-3">My Farms</h3>
+        </div>
+        <FarmsTable
+          :pools="poolsWithUserInFarm"
+          noPoolsLabel="No farms found"
+          :loading="false"
+          :isPaginated="false"
+          :isLoadingMore="false"
+          class="mb-8"
+        />
+      </div>
+    </template>
+
     <div class="px-4 lg:px-0">
-      <!--      <h3 class="mb-3">Beethoven-X Investment Pools</h3>-->
+      <h3 class="mb-3">Beethoven-X Investment Pools</h3>
       <TokenSearchInput
         v-model="selectedTokens"
         :loading="isLoadingPools"
@@ -25,7 +54,7 @@
       @loadMore="loadMorePools"
       class="mb-16"
     />
-    <div class="px-4 lg:px-0 pb-2">
+    <div class="px-4 lg:px-0 mb-3">
       <h3>Community Investment Pools</h3>
       <p>
         Investment pools created by the community. Please DYOR before investing
@@ -41,6 +70,14 @@
       @loadMore="loadMorePools"
       class="mb-8"
     />
+    <div class="px-4 lg:px-0" v-if="!hideV1Links">
+      <div class="text-black-600">
+        {{ $t('tableShowsBalancerV2Pools') }}
+      </div>
+      <BalLink :href="EXTERNAL_LINKS.Balancer.PoolsV1Explore" external>{{
+        $t('exploreBalancerV1Pools')
+      }}</BalLink>
+    </div>
   </div>
 </template>
 
@@ -53,18 +90,20 @@ import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
-import AppHero from '@/components/heros/AppHero.vue';
+import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
+import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 
 export default defineComponent({
   components: {
     TokenSearchInput,
-    PoolsTable
+    PoolsTable,
+    FarmsTable
   },
 
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady, appNetworkConfig } = useWeb3();
+    const { isWalletReady, isV1Supported, appNetworkConfig } = useWeb3();
     const {
       selectedTokens,
       addSelectedToken,
@@ -105,9 +144,13 @@ export default defineComponent({
           );
     });
 
+    const hideV1Links = computed(() => !isV1Supported);
+
     const poolsWithUserInFarm = computed(() => {
       return onlyPoolsWithFarms.value.filter(pool => pool.farm.stake > 0);
     });
+
+    masterChefContractsService.beethovenxToken.getCirculatingSupply();
 
     return {
       // data
@@ -120,6 +163,7 @@ export default defineComponent({
 
       // computed
       isWalletReady,
+      hideV1Links,
       poolsHasNextPage,
       poolsIsFetchingNextPage,
       selectedTokens,

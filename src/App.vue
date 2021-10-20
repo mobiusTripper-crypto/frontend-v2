@@ -2,10 +2,10 @@
   <div id="modal" />
   <div id="app" class="flex flex-col">
     <AppNav />
-    <!--    <div class="relative">
-      <AppHero v-if="isHomePage" />
+    <div class="relative">
+      <AppHero v-if="isInvestPage" />
       <GlobalStats />
-    </div>-->
+    </div>
     <div class="pb-12 lg:px-12 px-4">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
@@ -113,11 +113,11 @@ export default defineComponent({
   components: {
     AppNav,
     AppFooterNav,
-    //AppHero,
+    AppHero,
     VueQueryDevTools,
     WalletSelectModal,
-    Notifications
-    //GlobalStats
+    Notifications,
+    GlobalStats
   },
 
   setup() {
@@ -134,8 +134,13 @@ export default defineComponent({
     const { darkMode, toggleDarkMode } = useDarkMode();
 
     // COMPUTED
-    const isHomePage = computed(() => route.path === '/');
+    const isHomePage = computed(() => {
+      return route.path === '/invest';
+    });
     const isFarmsPage = computed(() => route.path === '/farm');
+    const isInvestPage = computed(() => {
+      return route.path === '/invest';
+    });
 
     // CALLBACKS
     onBeforeMount(async () => {
@@ -156,6 +161,7 @@ export default defineComponent({
       isHomePage,
       isFarmsPage,
       upToLargeBreakpoint,
+      isInvestPage,
       // methods
       toggleWalletSelectModal
     };

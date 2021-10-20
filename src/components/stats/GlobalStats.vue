@@ -33,7 +33,7 @@ import useNumbers from '@/composables/useNumbers';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default defineComponent({
-  name: 'AppHero',
+  name: 'GlobalStats',
 
   setup() {
     const protocolDataQuery = useProtocolDataQuery();

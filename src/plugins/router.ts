@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import Home from '@/pages/Home.vue';
+import Portfolio from '@/pages/Portfolio.vue';
 import Pool from '@/pages/Pool.vue';
 import LiquidityMining from '@/pages/LiquidityMining.vue';
 import Trade from '@/pages/Trade.vue';
@@ -9,8 +9,9 @@ import BeetsLBP from '@/pages/BeetsLBP.vue';
 import Invest from '@/pages/Invest.vue';
 
 const routes: RouteRecordRaw[] = [
-  { path: '/', name: 'home', component: Home },
+  { path: '/', name: 'home', redirect: '/trade' },
   { path: '/invest', name: 'invest', component: Invest },
+  { path: '/my-portfolio', name: 'my-portfolio', component: Portfolio },
   { path: '/trade/:assetIn?/:assetOut?', name: 'trade', component: Trade },
   {
     path: '/swap/:assetIn?/:assetOut?',

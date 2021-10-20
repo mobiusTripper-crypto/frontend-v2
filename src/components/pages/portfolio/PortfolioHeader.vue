@@ -7,14 +7,14 @@
         ${{ numeral(data.totalValue).format('0,0.00') }}
       </h2>
     </div>
-    <BalCard class="w-44" v-if="tvl">
+    <!--    <BalCard class="w-44" v-if="tvl">
       <div class="text-sm text-gray-500 font-medium mb-2">
         TVL
       </div>
       <div class="text-xl font-medium truncate flex items-center">
         ${{ fNum(tvl, 'usd_lg') }}
       </div>
-    </BalCard>
+    </BalCard>-->
     <!--    <BalCard class="mr-2 w-48">
       <div class="text-sm text-gray-500 font-medium mb-2">
         BEETS Price
@@ -59,7 +59,7 @@ export default defineComponent({
     }
   },
   components: {
-    BalCard
+    //BalCard
   },
   setup() {
     const { fNum } = useNumbers();

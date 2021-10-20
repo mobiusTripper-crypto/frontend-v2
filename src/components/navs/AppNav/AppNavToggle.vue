@@ -1,16 +1,15 @@
 <template>
   <div :class="`app-nav-toggle bg-gray-50 dark:bg-gray-${darkModeBg}`">
     <router-link
-      :to="{ name: 'home' }"
+      :to="{ name: 'trade' }"
       :class="[
-        'toggle-link px-6 rounded-l-lg',
-        { [activeClasses]: isHomePage }
+        'toggle-link px-6 rounded-r-lg',
+        { [activeClasses]: isTradePage }
       ]"
-      @click="trackGoal(Goals.ClickNavHome)"
+      @click="trackGoal(Goals.ClickNavTrade)"
     >
-      Home
-    </router-link>
-    <router-link
+      {{ $t('trade') }} </router-link
+    ><router-link
       :to="{ name: 'invest' }"
       :class="[
         'toggle-link px-6 rounded-l-lg',
@@ -21,16 +20,6 @@
       {{ $t('invest') }}
     </router-link>
     <router-link
-      :to="{ name: 'trade' }"
-      :class="[
-        'toggle-link px-6 rounded-r-lg',
-        { [activeClasses]: isTradePage }
-      ]"
-      @click="trackGoal(Goals.ClickNavTrade)"
-    >
-      {{ $t('trade') }}
-    </router-link>
-    <router-link
       :to="{ name: 'farm' }"
       :class="[
         'toggle-link px-6 rounded-r-lg',
@@ -39,6 +28,17 @@
       @click="trackGoal(Goals.ClickNavFarm)"
     >
       Farm
+    </router-link>
+    <router-link
+      :to="{ name: 'my-portfolio' }"
+      :class="[
+        'toggle-link px-6 rounded-l-lg',
+        { [activeClasses]: isPortfolioPage }
+      ]"
+      @click="trackGoal(Goals.ClickNavHome)"
+      v-if="isLoggedIn"
+    >
+      Portfolio
     </router-link>
     <!--    <router-link
       :to="{ name: 'beets' }"
@@ -58,6 +58,8 @@ import useFathom from '@/composables/useFathom';
 import { computed, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { EXTERNAL_LINKS } from '@/constants/links';
+import useApp from '@/composables/useApp';
+import useWeb3 from '@/services/web3/useWeb3';
 
 export default defineComponent({
   name: 'AppNavToggle',
@@ -73,6 +75,7 @@ export default defineComponent({
     const isTradePage = computed(() => route.name === 'trade');
     const isFarmPage = computed(() => String(route.name).startsWith('farm'));
     const isBeetsPage = computed(() => route.name === 'beets');
+    const isPortfolioPage = computed(() => route.name === 'my-portfolio');
     const isInvestPage = computed(
       () => route.name === 'invest' || String(route.name).startsWith('pool')
     );
@@ -85,6 +88,13 @@ export default defineComponent({
     );
     const { trackGoal, Goals } = useFathom();
 
+    const { appLoading } = useApp();
+    const { account, isLoadingProfile } = useWeb3();
+
+    const isLoggedIn = computed(
+      () => !appLoading.value && !isLoadingProfile.value && !!account.value
+    );
+
     return {
       isTradePage,
       isFarmPage,
@@ -94,7 +104,9 @@ export default defineComponent({
       isInvestPage,
       isHomePage,
       Goals,
-      EXTERNAL_LINKS
+      EXTERNAL_LINKS,
+      isLoggedIn,
+      isPortfolioPage
     };
   }
 });

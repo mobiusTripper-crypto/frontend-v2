@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-12">
     <div class="trade-container">
       <BalLoadingBlock v-if="appLoading || loadingTokenLists" class="h-96" />
       <template v-else>
