@@ -155,7 +155,14 @@ import {
   TOKEN_PRICES_ROOT_KEY
 } from '@/constants/queryKeys';
 import useTokenLists from '@/composables/useTokenLists';
-import { format, isAfter, isBefore, parseISO } from 'date-fns';
+import {
+  format,
+  isAfter,
+  isBefore,
+  parseISO,
+  getUnixTime,
+  subDays
+} from 'date-fns';
 
 interface LbpPageData {
   refetchQueriesOnBlockNumber: number;
@@ -204,7 +211,8 @@ export default defineComponent({
 
     const tokenPricesQuery = useSubgraphTokenPricesQuery(
       ref(lbpConfig.poolId),
-      ref(lbpConfig.tokenAddress.toLowerCase())
+      ref(lbpConfig.tokenAddress.toLowerCase()),
+      ref(`${getUnixTime(subDays(new Date(), 1))}`)
     );
     const tokenPrices = computed(() => tokenPricesQuery.data.value || []);
     const loadingTokenPrices = computed(

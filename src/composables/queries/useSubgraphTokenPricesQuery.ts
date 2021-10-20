@@ -11,6 +11,7 @@ const PAGE_SIZE = 1000;
 export default function useSubgraphTokenPricesQuery(
   poolId: Ref<string>,
   asset: Ref<string>,
+  minTimestamp: Ref<string>,
   options: QueryObserverOptions<SubgraphTokenPrice[]> = {}
 ) {
   // COMPOSABLES
@@ -35,7 +36,8 @@ export default function useSubgraphTokenPricesQuery(
         skip,
         where: {
           poolId: poolId.value,
-          asset: asset.value
+          asset: asset.value,
+          timestamp_gt: minTimestamp.value
         },
         orderBy: 'timestamp',
         orderDirection: 'asc'
