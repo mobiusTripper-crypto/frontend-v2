@@ -94,7 +94,7 @@ export default defineComponent({
     });
 
     const chartColors = [
-      tailwind.theme.colors.gray['500'],
+      //tailwind.theme.colors.gray['500'],
       tailwind.theme.colors.green['400']
     ];
 
@@ -159,10 +159,10 @@ export default defineComponent({
 
     const series = computed(() => {
       return [
-        {
+        /*{
           name: 'Predicted Price*',
           values: predictedPriceValues.value
-        },
+        },*/
         {
           name: 'BEETS Price',
           values: beetsPriceValues.value

@@ -8,7 +8,7 @@
     >
       TVL: ${{ fNum(tvl, 'usd_lg') }}
     </div>
-    <div v-if="beetsPrice > 0" class="text-red-500 font-semibold text-right">
+    <!--    <div v-if="beetsPrice > 0" class="text-red-500 font-semibold text-right">
       BEETS: {{ fNum(beetsPrice, 'usd') }}
     </div>
     <div
@@ -22,7 +22,7 @@
       class="font-semibold text-right"
     >
       Circulating: {{ fNum(circulatingSupply, 'token_lg') }}
-    </div>
+    </div>-->
   </div>
 </template>
 

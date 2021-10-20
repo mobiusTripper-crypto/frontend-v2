@@ -60,9 +60,18 @@ export default defineComponent({
     const router = useRouter();
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
-    const { tokens } = useTokens();
+    const { tokens, priceFor } = useTokens();
     const { isWalletReady } = useWeb3();
-    const swapsQuery = useSwapsQuery({}, { poolIds: ref([props.lbpPoolId]) });
+
+    const swapsQuery = useSwapsQuery(
+      {},
+      {
+        poolIds: ref([
+          '0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015',
+          '0xcde5a11a4acb4ee4c805352cec57e236bdbc3837000200000000000000000019'
+        ])
+      }
+    );
 
     const swaps = computed(() =>
       swapsQuery.data.value
@@ -124,6 +133,7 @@ export default defineComponent({
     ]);
 
     const data = computed(() => {
+      console.log('swap', swaps.value);
       return (swaps.value || []).map(swap => ({
         timestamp:
           format(swap.timestamp * 1000, 'MMM dd') +
@@ -139,10 +149,14 @@ export default defineComponent({
         price: `$${
           swap.tokenOut === props.lbpTokenAddress
             ? (
-                parseFloat(swap.tokenAmountIn) / parseFloat(swap.tokenAmountOut)
+                (parseFloat(swap.tokenAmountIn) /
+                  parseFloat(swap.tokenAmountOut)) *
+                priceFor(getAddress(swap.tokenIn))
               ).toFixed(4)
             : (
-                parseFloat(swap.tokenAmountOut) / parseFloat(swap.tokenAmountIn)
+                (parseFloat(swap.tokenAmountOut) /
+                  parseFloat(swap.tokenAmountIn)) *
+                priceFor(getAddress(swap.tokenOut))
               ).toFixed(4)
         }`,
         wallet: `${swap.userAddress.id.substr(

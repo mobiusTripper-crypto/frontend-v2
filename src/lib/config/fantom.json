@@ -62,7 +62,7 @@
     }
   },
   "lbp": {
-    "poolId": "0x5856cee862de908d63062b891d526ce78183eb8c000200000000000000000014",
+    "poolId": "0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015",
     "tokenAddress": "0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
     "tokenSymbol": "BEETS",
     "startingAmount": 5000000,
