@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <div class="order-1 lg:order-2 px-1 lg:px-0 pt-20">
+      <div class="order-1 lg:order-2 px-1 lg:px-0 pt-16">
         <!--        <div class="mb-6">
           <img src="~@/assets/images/ludwig-says.svg" />
         </div>-->
