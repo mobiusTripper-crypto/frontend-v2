@@ -190,6 +190,22 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/15264/large/mimatic-red.png"
+    },
+    {
+      "name": "BELUGA",
+      "address": "0x4A13a2cf881f5378DEF61E430139Ed26d843Df9A",
+      "symbol": "BELUGA",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/13790/large/brand-logo-v2.23e5d279.png"
+    },
+    {
+      "name": "wMEMO",
+      "address": "0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
+      "symbol": "wMEMO",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://swap.spiritswap.finance/images/coins/wMEMO.png"
     }
   ]
 }

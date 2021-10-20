@@ -1,7 +1,7 @@
 <template>
   <BalLoadingBlock v-if="isLoading" :style="{ height: '414px' }" />
   <div v-else>
-    <BalCard>
+    <BalCard :style="{ height: '414px' }">
       <h4 class="mb-4 mt-1">
         Pools<BalTooltip>
           <template v-slot:activator>
@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <div class="text-center mt-6">
+      <div v-if="pools.length > 3" class="text-center mt-6">
         <a
           class="text-green-500 font-medium underline"
           @click="toggleShowAll()"

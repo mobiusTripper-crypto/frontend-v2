@@ -21,12 +21,6 @@
         @exact-in-change="value => (exactIn = value)"
         @change="handleAmountChange"
       />
-      <GasReimbursement
-        class="mb-5"
-        :address-in="tokenInAddress"
-        :address-out="tokenOutAddress"
-        :sorReturn="sorReturn"
-      />
       <BalAlert
         v-if="error"
         class="mb-4"
@@ -90,10 +84,10 @@
 
 <script lang="ts">
 import { isRequired } from '@/lib/utils/validations';
-import { ref, defineComponent, computed, watch } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { isAddress, getAddress } from '@ethersproject/address';
+import { getAddress, isAddress } from '@ethersproject/address';
 
 import useTokenApproval from '@/composables/trade/useTokenApproval';
 import useValidation, {
@@ -108,7 +102,6 @@ import TradeRoute from '@/components/cards/TradeCard/TradeRoute.vue';
 import TradeSettingsPopover, {
   TradeSettingsContext
 } from '@/components/popovers/TradeSettingsPopover.vue';
-import GasReimbursement from './GasReimbursement.vue';
 import { useI18n } from 'vue-i18n';
 import useWeb3 from '@/services/web3/useWeb3';
 import useBreakpoints from '@/composables/useBreakpoints';
@@ -126,8 +119,7 @@ export default defineComponent({
     TradePair,
     TradePreviewModal,
     TradeRoute,
-    TradeSettingsPopover,
-    GasReimbursement
+    TradeSettingsPopover
   },
 
   setup() {

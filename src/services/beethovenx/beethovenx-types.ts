@@ -98,3 +98,21 @@ export interface GqlUserTokenData {
   symbol: Scalars['String'];
   totalValue: Scalars['GqlBigNumber'];
 }
+
+export interface GqlHistoricalTokenPrice {
+  __typename?: 'GqlHistoricalTokenPrice';
+  address: Scalars['String'];
+  prices: Array<GqlHistoricalTokenPriceEntry>;
+}
+
+export interface GqlHistoricalTokenPriceEntry {
+  __typename?: 'GqlHistoricalTokenPriceEntry';
+  price: Scalars['Float'];
+  timestamp: Scalars['String'];
+}
+
+export interface GqlTokenPrice {
+  __typename?: 'GqlTokenPrice';
+  address: Scalars['String'];
+  price: Scalars['Float'];
+}

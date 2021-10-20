@@ -1,12 +1,20 @@
 import { configService as _configService } from '@/services/config/config.service';
 import axios from 'axios';
 import {
+  GqlHistoricalTokenPrice,
+  GqlTokenPrice,
   GqlUserPortfolioData,
   GqlUserTokenData,
   UserPortfolio,
   UserPortfolioData,
   UserTokenData
 } from '@/services/beethovenx/beethovenx-types';
+import { getAddress } from '@ethersproject/address';
+import { keyBy } from 'lodash';
+
+export type Price = { [fiat: string]: number };
+export type TokenPrices = { [address: string]: Price };
+export type HistoricalPrices = { [timestamp: string]: number[] };
 
 export default class BeethovenxService {
   private readonly url: string;
@@ -41,7 +49,70 @@ export default class BeethovenxService {
     };
   }
 
-  private async get<T>(query: string, address: string): Promise<T> {
+  public async getTokenPrices(): Promise<TokenPrices> {
+    const query = `
+      query {
+        tokenPrices: tokenPriceGetCurrentPrices {
+          price
+          address
+        }
+      }
+    `;
+
+    const { tokenPrices } = await this.get<{
+      tokenPrices: GqlTokenPrice[];
+    }>(query);
+    const result: TokenPrices = {};
+
+    for (const tokenPrice of tokenPrices) {
+      result[getAddress(tokenPrice.address)] = { usd: tokenPrice.price };
+    }
+
+    return result;
+  }
+
+  public async getHistoricalTokenPrices(
+    addresses: string[]
+  ): Promise<HistoricalPrices> {
+    const lowerCaseAddresses = addresses.map(address => address.toLowerCase());
+
+    const query = `
+      query {
+        tokenPrices: tokenPriceGetHistoricalPrices(addresses: ["${lowerCaseAddresses.join(
+          '","'
+        )}"]) {
+          address
+          prices {
+            timestamp
+            price
+          }
+        }
+      }
+    `;
+
+    const { tokenPrices } = await this.get<{
+      tokenPrices: GqlHistoricalTokenPrice[];
+    }>(query);
+    const timestamps =
+      tokenPrices[0]?.prices.map(price => price.timestamp) || [];
+
+    const result: HistoricalPrices = {};
+    const tokenPricesMap = keyBy(tokenPrices, 'address');
+
+    for (const timestamp of timestamps) {
+      result[timestamp] = lowerCaseAddresses.map(address => {
+        const entry = tokenPricesMap[address].prices.find(
+          price => price.timestamp === timestamp
+        );
+
+        return entry?.price || 0;
+      });
+    }
+
+    return result;
+  }
+
+  private async get<T>(query: string, address?: string): Promise<T> {
     try {
       const {
         data: { data }

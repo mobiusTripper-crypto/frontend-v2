@@ -1,7 +1,7 @@
 <template>
   <BalLoadingBlock v-if="isLoading" :style="{ height: '632px' }" />
   <div v-else>
-    <BalCard>
+    <BalCard :style="{ minHeight: '632px' }">
       <h4 class="mb-4 mt-1">
         Assets
         <BalTooltip>
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div class="text-center mt-6">
+        <div class="text-center mt-6" v-if="assets.length > 4">
           <a
             @click="toggleShowAll()"
             class="text-green-500 font-medium underline"

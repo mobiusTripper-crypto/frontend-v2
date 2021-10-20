@@ -1,14 +1,12 @@
 <template>
-  <div
-    class="grid grid-cols-1 grid-cols-2 xl:grid-cols-4 gap-y-8 gap-x-0 md:gap-x-4 mb-8"
-  >
+  <div class="grid grid-cols-1 grid-cols-2 xl:grid-cols-4 gap-y-8 gap-x-4 mb-8">
     <template v-if="isLoading">
       <BalLoadingBlock v-for="n in 4" :key="n" class="h-52" />
     </template>
     <template v-else>
       <BalCard class="col col-span-1" v-if="topPerformer">
         <div class="text-gray-500 font-medium mb-4">
-          Top Performer (24h)
+          Best Performer (24h)
         </div>
         <BalAssetSet
           :addresses="topPerformer.tokens.map(token => token.address)"
