@@ -1,6 +1,10 @@
 <template>
   <div class="lg:container lg:mx-auto pt-12 md:pt-12">
-    <PortfolioHeader :data="portfolio" :is-loading="isLoadingPortfolio" />
+    <PortfolioHeader
+      :data="portfolio"
+      :is-loading="isLoadingPortfolio || isLoadingPools || isLoadingFarms"
+      :pools="poolsWithUserInFarm"
+    />
     <div
       class="grid grid-cols-1 xl:grid-cols-4 gap-y-8 gap-x-0 xl:gap-x-8 mb-16"
     >
@@ -31,10 +35,10 @@
         />
         <div>
           <PortfolioStatWithBarChart
-            title="My Fees (24h)"
+            title="Fees Earned (24h)"
             :sub-title="`Avg: ${fNum(avgFees, 'usd')}/day`"
             :stat="fNum(portfolio.myFees, 'usd')"
-            info-text="Info text"
+            info-text="The swap fees you've earned as a liquidity provider. 'Fees Earned (24h)' are the fees you've earned in the last 24 hours. The bar chart to the right shows the daily fees you've earned. Daily snapshots are taken at 00:00 UTC."
             :dates="timestamps"
             :data="fees"
             :bar-color="chartColors[2]"

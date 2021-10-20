@@ -5,7 +5,7 @@
     <AppHeaderBg />
     <div class="relative">
       <AppHero v-if="isInvestPage" />
-      <GlobalStats />
+      <GlobalStats v-if="!isPortfolioPage" />
     </div>
     <div class="pb-12 lg:px-12 px-4 relative">
       <router-view :key="$route.path" class="flex-auto" />
@@ -141,6 +141,7 @@ export default defineComponent({
       return route.path === '/invest';
     });
     const isFarmsPage = computed(() => route.path === '/farm');
+    const isPortfolioPage = computed(() => route.path === '/my-portfolio');
     const isInvestPage = computed(() => {
       return route.path === '/invest';
     });
@@ -165,6 +166,7 @@ export default defineComponent({
       isFarmsPage,
       upToLargeBreakpoint,
       isInvestPage,
+      isPortfolioPage,
       // methods
       toggleWalletSelectModal
     };

@@ -7,6 +7,41 @@
         ${{ numeral(data.totalValue).format('0,0.00') }}
       </h2>
     </div>
+
+    <template v-if="isLoading">
+      <BalLoadingBlock
+        v-for="n in 2"
+        :key="n"
+        :class="['h-28', 'w-48', n === 1 ? 'mr-4' : '']"
+      />
+    </template>
+    <template v-else>
+      <BalCard class="w-48 mr-4">
+        <div class="text-sm text-gray-500 font-medium mb-2 text-left">
+          Pending Rewards
+        </div>
+        <div class="text-xl font-medium truncate flex items-center">
+          <div>{{ farmData.pendingBeets }}&nbsp;</div>
+          <div class="text-sm text-gray-500 font-medium mt-1 text-left">
+            BEETS
+          </div>
+        </div>
+        <div class="text-sm text-gray-500 font-medium mt-1 text-left">
+          {{ farmData.pendingBeetsValue }}
+        </div>
+      </BalCard>
+      <BalCard class="w-48">
+        <div class="text-sm text-gray-500 font-medium mb-2 text-left">
+          Average APR
+        </div>
+        <div class="text-xl font-medium truncate flex items-center">
+          {{ farmData.apr }}
+        </div>
+        <div class="text-sm text-gray-500 font-medium mt-1 text-left">
+          {{ farmData.dailyBeets }} BEETS / day
+        </div>
+      </BalCard>
+    </template>
     <!--    <BalCard class="w-44" v-if="tvl">
       <div class="text-sm text-gray-500 font-medium mb-2">
         TVL
@@ -43,15 +78,20 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
 import numeral from 'numeral';
-import BalCard from '@/components/_global/BalCard/BalCard.vue';
 import { UserPortfolioData } from '@/services/beethovenx/beethovenx-types';
 import useNumbers from '@/composables/useNumbers';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
+import { DecoratedPoolWithRequiredFarm } from '@/services/balancer/subgraph/types';
+import { sumBy } from 'lodash';
 
 export default defineComponent({
   props: {
     data: {
       type: Object as PropType<UserPortfolioData>,
+      required: true
+    },
+    pools: {
+      type: Array as PropType<DecoratedPoolWithRequiredFarm[]>,
       required: true
     },
     isLoading: {
@@ -61,7 +101,7 @@ export default defineComponent({
   components: {
     //BalCard
   },
-  setup() {
+  setup(props) {
     const { fNum } = useNumbers();
     const protocolDataQuery = useProtocolDataQuery();
 
@@ -69,12 +109,43 @@ export default defineComponent({
       () => protocolDataQuery.data?.value?.totalLiquidity || 0
     );
 
+    const farmData = computed(() => {
+      const farms = props.pools.map(pool => pool.farm);
+
+      const averageApr =
+        sumBy(farms, farm => farm.apr * (farm.stake || 0)) /
+        sumBy(farms, farm => farm.stake || 0);
+      const dailyApr = averageApr / 365;
+      const totalBalance = sumBy(farms, farm => farm.stake || 0);
+
+      return {
+        numFarms: farms.filter(farm => farm.stake > 0).length,
+        totalBalance: fNum(totalBalance, 'usd'),
+        pendingBeets: numeral(sumBy(farms, farm => farm.pendingBeets)).format(
+          '0,0.[0000]'
+        ),
+        pendingBeetsValue: fNum(
+          sumBy(farms, farm => farm.pendingBeetsValue),
+          'usd'
+        ),
+        apr: fNum(averageApr, 'percent'),
+        dailyApr: fNum(dailyApr, 'percent'),
+        dailyBeets: fNum(dailyApr * totalBalance)
+      };
+    });
+
+    const hasFarmRewards = computed(
+      () => props.pools.filter(pool => pool.farm.stake > 0).length > 0
+    );
+
     return {
       //refs
 
       numeral,
       fNum,
-      tvl
+      tvl,
+      farmData,
+      hasFarmRewards
     };
   }
 });
