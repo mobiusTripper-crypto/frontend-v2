@@ -5,8 +5,10 @@ import QUERY_KEYS from '@/constants/queryKeys';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 import { PoolSnapshots } from '@/services/balancer/subgraph/types';
 import usePoolQuery from './usePoolQuery';
-import { HistoricalPrices } from '@/services/coingecko/api/price.service';
-import { beethovenxService } from '@/services/beethovenx/beethovenx.service';
+import {
+  beethovenxService,
+  HistoricalPrices
+} from '@/services/beethovenx/beethovenx.service';
 
 /**
  * TYPES

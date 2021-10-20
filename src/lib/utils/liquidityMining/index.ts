@@ -4,9 +4,9 @@ import { toUtcTime } from '@/lib/utils/date';
 import { NetworkId } from '@/constants/network';
 import { configService } from '@/services/config/config.service';
 import MultiTokenLiquidityMining from './MultiTokenLiquidityMining.json';
-import { TokenPrices } from '@/services/coingecko/api/price.service';
 import { getAddress } from '@ethersproject/address';
 import { FiatCurrency } from '@/constants/currency';
+import { TokenPrices } from '@/services/beethovenx/beethovenx.service';
 
 type PoolId = string;
 

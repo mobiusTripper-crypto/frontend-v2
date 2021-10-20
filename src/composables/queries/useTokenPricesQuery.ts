@@ -2,8 +2,10 @@ import { reactive, ref, Ref } from 'vue';
 import { useQuery } from 'vue-query';
 import { UseQueryOptions } from 'react-query/types';
 import QUERY_KEYS from '@/constants/queryKeys';
-import { TokenPrices } from '@/services/coingecko/api/price.service';
-import { beethovenxService } from '@/services/beethovenx/beethovenx.service';
+import {
+  beethovenxService,
+  TokenPrices
+} from '@/services/beethovenx/beethovenx.service';
 
 /**
  * Fetches token prices for all provided addresses.
