@@ -127,6 +127,5 @@ export default defineComponent({
 .app-hero {
   @apply bg-cover bg-center flex justify-center text-center px-4;
   transition: all 0.3s ease-in-out;
-  background-image: url('/images/backgrounds/banner-medium.svg');
 }
 </style>

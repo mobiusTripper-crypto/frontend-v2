@@ -1,7 +1,7 @@
 <template>
   <BalLoadingBlock v-if="isLoading" :style="{ height: '414px' }" />
   <div v-else>
-    <BalCard :style="{ height: '414px' }">
+    <BalCard :style="{ minHeight: '414px' }">
       <h4 class="mb-4 mt-1">
         Pools<BalTooltip>
           <template v-slot:activator>
