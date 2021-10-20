@@ -109,6 +109,10 @@ export default defineComponent({
       () => protocolDataQuery.data?.value?.totalLiquidity || 0
     );
 
+    const beetsPrice = computed(
+      () => protocolDataQuery.data?.value?.beetsPrice || 0
+    );
+
     const farmData = computed(() => {
       const farms = props.pools.map(pool => pool.farm);
 
@@ -130,7 +134,9 @@ export default defineComponent({
         ),
         apr: fNum(averageApr, 'percent'),
         dailyApr: fNum(dailyApr, 'percent'),
-        dailyBeets: fNum(dailyApr * totalBalance)
+        dailyBeets: beetsPrice.value
+          ? fNum((dailyApr * totalBalance) / beetsPrice.value)
+          : 0
       };
     });
 
