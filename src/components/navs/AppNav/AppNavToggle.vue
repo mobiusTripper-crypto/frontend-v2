@@ -32,7 +32,7 @@
     <router-link
       :to="{ name: 'my-portfolio' }"
       :class="[
-        'toggle-link px-6 rounded-l-lg',
+        'toggle-link px-4 rounded-l-lg',
         { [activeClasses]: isPortfolioPage }
       ]"
       @click="trackGoal(Goals.ClickNavHome)"
