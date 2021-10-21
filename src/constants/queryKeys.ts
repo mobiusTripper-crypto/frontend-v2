@@ -1,4 +1,5 @@
 import { Ref } from 'vue';
+import { GetAmountsOutInput } from '@/services/dex/dex-contract-types';
 export const POOLS_ROOT_KEY = 'pools';
 export const FARMS_ROOT_KEY = 'farms';
 export const BALANCES_ROOT_KEY = 'accountBalances';
@@ -103,6 +104,13 @@ const QUERY_KEYS = {
   },
   ProtocolData: {
     All: ['protocolData', 'all']
+  },
+  Dexes: {
+    GetAmountsOut: (inputs: Ref<GetAmountsOutInput[]>) => [
+      'dexes',
+      'getAmountsOut',
+      { inputs }
+    ]
   }
 };
 
