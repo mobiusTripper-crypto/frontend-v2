@@ -56,7 +56,8 @@ export function calculateApr(
     return 0;
   }
 
-  const beetsPerBlock = Number(parseInt(farm.masterChef.beetsPerBlock) / 1e18);
+  const beetsPerBlock =
+    Number(parseInt(farm.masterChef.beetsPerBlock) / 1e18) * 0.872;
   const beetsPerYear = beetsPerBlock * blocksPerYear;
   const farmBeetsPerYear =
     (farm.allocPoint / farm.masterChef.totalAllocPoint) * beetsPerYear;
