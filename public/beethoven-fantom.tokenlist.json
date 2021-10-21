@@ -206,6 +206,22 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://swap.spiritswap.finance/images/coins/wMEMO.png"
+    },
+    {
+      "name": "Beefy.Finance",
+      "address": "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
+      "symbol": "BIFI",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/12704/large/token.png"
+    },
+    {
+      "name": "BIFI Maxi",
+      "address": "0xbf07093ccd6adfc3deb259c557b61e94c1f66945",
+      "symbol": "mooBIFI",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/12704/large/token.png"
     }
   ]
 }
