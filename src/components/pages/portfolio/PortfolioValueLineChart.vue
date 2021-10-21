@@ -12,7 +12,7 @@
         </BalTooltip>
       </h4>
       <div class="text-gray-500 mb-2">{{ dateLabel }}</div>
-      <template v-if="data.length > 3">
+      <template v-if="data.length > 2">
         <ECharts
           ref="chartInstance"
           class="w-full portfolio-value-line-chart"
