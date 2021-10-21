@@ -26,13 +26,21 @@
           </div>
         </div>
         <div class="flex-1">
-          <ECharts
-            ref="chartInstance"
-            :class="['w-full', 'h-36']"
-            :option="chartConfig"
-            autoresize
-            :update-options="{ replaceMerge: 'series' }"
-          />
+          <template v-if="dates.length > 2">
+            <ECharts
+              ref="chartInstance"
+              :class="['w-full', 'h-36']"
+              :option="chartConfig"
+              autoresize
+              :update-options="{ replaceMerge: 'series' }"
+            />
+          </template>
+          <BalBlankSlate v-else class="h-36">
+            <BalIcon name="bar-chart" />
+            <span class="dark:text-white">
+              {{ $t('insufficientData') }}
+            </span>
+          </BalBlankSlate>
         </div>
       </div>
     </BalCard>

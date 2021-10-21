@@ -12,13 +12,21 @@
         </BalTooltip>
       </h4>
       <div class="text-gray-500 mb-2">{{ dateLabel }}</div>
-      <ECharts
-        ref="chartInstance"
-        class="w-full portfolio-value-line-chart"
-        :option="chartConfig"
-        autoresize
-        :update-options="{ replaceMerge: 'series' }"
-      />
+      <template v-if="data.length > 3">
+        <ECharts
+          ref="chartInstance"
+          class="w-full portfolio-value-line-chart"
+          :option="chartConfig"
+          autoresize
+          :update-options="{ replaceMerge: 'series' }"
+        />
+      </template>
+      <BalBlankSlate v-else :style="{ height: '562px' }">
+        <BalIcon name="bar-chart" />
+        <span class="dark:text-white">
+          {{ $t('insufficientData') }}
+        </span>
+      </BalBlankSlate>
     </BalCard>
   </div>
 </template>
