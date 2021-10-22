@@ -1,8 +1,8 @@
 <template v-if="!loading">
-  <BalCard shadow="lg" class="mt-2" noPad>
+  <BalCard shadow="lg" class="mt-8" noPad>
     <div class="flex items-center border-gray-700 border-b pt-3 px-4 pb-2">
       <div class="flex-1">
-        <span class="font-medium">Swap rates</span>
+        <span class="font-medium">Live swap rates</span>
       </div>
       <div class="w-20 flex justify-center">
         <img
@@ -85,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import { computed, defineComponent, PropType, ref, watch } from 'vue';
 import useNumbers from '@/composables/useNumbers';
 import numeral from 'numeral';
 import { SorManager } from '@/lib/utils/balancer/helpers/sor/sorManager';
@@ -99,6 +99,8 @@ const ETH = getAddress('0x74b23882a30290451A17c44f4F05243b6b58C76d');
 const DAI = getAddress('0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e');
 const MIM = getAddress('0x82f0b8b456c1a451378467398982d4834b6829c1');
 const SPIRIT = getAddress('0x5cc61a78f164885776aa610fb0fe1257df78e59b');
+const SPELL = getAddress('0x468003b688943977e6130f4f68f23aad939a1040');
+const FUSDT = getAddress('0x049d68029688eabf473097a2fc38ef61633a3c7a');
 
 const SWAPS = [
   {
@@ -116,19 +118,6 @@ const SWAPS = [
   },
   {
     id: '1',
-    amountIn: '100000000',
-    spookyPath: [BTC, WFTM, USDC],
-    spiritPath: [BTC, WFTM, USDC],
-    tokenIn: BTC,
-    tokenInDecimal: 8,
-    tokenOut: USDC,
-    tokenOutDecimal: 6,
-    amountInNumber: 1,
-    amountInNumberFormatted: '1.0',
-    amountOutFormat: '0,0'
-  },
-  {
-    id: '2',
     amountIn: '10000000000',
     spookyPath: [USDC, WFTM, DAI],
     spiritPath: [USDC, WFTM, SPIRIT, DAI],
@@ -141,17 +130,82 @@ const SWAPS = [
     amountOutFormat: '0,0'
   },
   {
-    id: '3',
-    amountIn: '10000000000000000000000',
-    spookyPath: [MIM, WFTM, ETH],
-    spiritPath: [MIM, WFTM, ETH],
-    tokenIn: MIM,
+    id: '2',
+    amountIn: '5000000000000000000000',
+    spookyPath: [WFTM, ETH],
+    spiritPath: [WFTM, ETH],
+    tokenIn: WFTM,
     tokenOut: ETH,
     tokenInDecimal: 18,
     tokenOutDecimal: 18,
+    amountInNumber: 5000,
+    amountInNumberFormatted: '5k',
+    amountOutFormat: '0.[0000]'
+  },
+  {
+    id: '3',
+    amountIn: '1000000000000000000000',
+    spookyPath: [MIM, WFTM, SPELL],
+    spiritPath: [MIM, WFTM, FUSDT, SPELL],
+    tokenIn: MIM,
+    tokenOut: SPELL,
+    tokenInDecimal: 18,
+    tokenOutDecimal: 18,
+    amountInNumber: 1000,
+    amountInNumberFormatted: '1k',
+    amountOutFormat: '0,0'
+  },
+  {
+    id: '4',
+    amountIn: '100000000',
+    spookyPath: [BTC, WFTM, USDC],
+    spiritPath: [BTC, WFTM, USDC],
+    tokenIn: BTC,
+    tokenInDecimal: 8,
+    tokenOut: USDC,
+    tokenOutDecimal: 6,
+    amountInNumber: 1,
+    amountInNumberFormatted: '1.0',
+    amountOutFormat: '0,0'
+  },
+  {
+    id: '5',
+    amountIn: '10000000000000000000000',
+    spookyPath: [DAI, WFTM, USDC],
+    spiritPath: [DAI, SPIRIT, WFTM, USDC],
+    tokenIn: DAI,
+    tokenOut: USDC,
+    tokenInDecimal: 18,
+    tokenOutDecimal: 6,
     amountInNumber: 10000,
     amountInNumberFormatted: '10k',
+    amountOutFormat: '0,0'
+  },
+  {
+    id: '6',
+    amountIn: '5000000000000000000000',
+    spookyPath: [WFTM, ETH],
+    spiritPath: [WFTM, ETH],
+    tokenIn: WFTM,
+    tokenOut: ETH,
+    tokenInDecimal: 18,
+    tokenOutDecimal: 18,
+    amountInNumber: 5000,
+    amountInNumberFormatted: '5k',
     amountOutFormat: '0.[0000]'
+  },
+  {
+    id: '7',
+    amountIn: '50000000000000000000000',
+    spookyPath: [SPELL, WFTM, MIM],
+    spiritPath: [SPELL, FUSDT, WFTM, MIM],
+    tokenIn: SPELL,
+    tokenOut: MIM,
+    tokenInDecimal: 18,
+    tokenOutDecimal: 18,
+    amountInNumber: 50000,
+    amountInNumberFormatted: '50k',
+    amountOutFormat: '0,0'
   }
 ];
 
@@ -169,14 +223,49 @@ export default defineComponent({
     const { fNum } = useNumbers();
     const { isLoading, data, isIdle } = useDexesQuery(props.sorManager, SWAPS);
 
-    const spooky = computed(() => data.value?.spooky || []);
-    const spirit = computed(() => data.value?.spirit || []);
-    const beets = computed(() => data.value?.beets || []);
+    setInterval(() => {
+      toggle.value = !toggle.value;
+    }, 7500);
+
+    const toggle = ref(false);
+    const spooky = computed(() => {
+      if (!data.value?.spooky) {
+        return [];
+      }
+
+      return toggle.value
+        ? data.value.spooky.slice(0, 4)
+        : data.value.spooky.slice(4, 8);
+    });
+
+    const spirit = computed(() => {
+      if (!data.value?.spirit) {
+        return [];
+      }
+
+      return toggle.value
+        ? data.value.spirit.slice(0, 4)
+        : data.value.spirit.slice(4, 8);
+    });
+
+    const beets = computed(() => {
+      if (!data.value?.beets) {
+        return [];
+      }
+
+      return toggle.value
+        ? data.value.beets.slice(0, 4)
+        : data.value.beets.slice(4, 8);
+    });
     const loading = computed(() => isLoading.value || isIdle.value);
+
+    const items = computed(() =>
+      toggle.value ? SWAPS.slice(0, 4) : SWAPS.slice(4, 8)
+    );
 
     return {
       // data
-      items: SWAPS,
+      items,
       spooky,
       spirit,
       beets,
@@ -184,7 +273,8 @@ export default defineComponent({
 
       // methods
       fNum,
-      numeral
+      numeral,
+      toggle
     };
   }
 });

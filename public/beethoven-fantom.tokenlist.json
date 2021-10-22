@@ -220,7 +220,15 @@
       "symbol": "mooBIFI",
       "decimals": 18,
       "chainId": 250,
-      "logoURI": "https://assets.coingecko.com/coins/images/12704/large/token.png"
+      "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/mooBIFI.png"
+    },
+    {
+      "name": "Paint Swap",
+      "address": "0x85dec8c4b2680793661bca91a8f129607571863d",
+      "symbol": "BRUSH",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/18579/large/sDYeBj9T_400x400.png"
     }
   ]
 }
