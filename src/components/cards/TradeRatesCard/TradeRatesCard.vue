@@ -118,19 +118,6 @@ const SWAPS = [
   },
   {
     id: '1',
-    amountIn: '10000000000',
-    spookyPath: [USDC, WFTM, DAI],
-    spiritPath: [USDC, WFTM, SPIRIT, DAI],
-    tokenIn: USDC,
-    tokenOut: DAI,
-    tokenInDecimal: 6,
-    tokenOutDecimal: 18,
-    amountInNumber: 10000,
-    amountInNumberFormatted: '10k',
-    amountOutFormat: '0,0'
-  },
-  {
-    id: '2',
     amountIn: '5000000000000000000000',
     spookyPath: [WFTM, ETH],
     spiritPath: [WFTM, ETH],
@@ -141,6 +128,19 @@ const SWAPS = [
     amountInNumber: 5000,
     amountInNumberFormatted: '5k',
     amountOutFormat: '0.[0000]'
+  },
+  {
+    id: '2',
+    amountIn: '10000000000',
+    spookyPath: [USDC, WFTM, DAI],
+    spiritPath: [USDC, WFTM, SPIRIT, DAI],
+    tokenIn: USDC,
+    tokenOut: DAI,
+    tokenInDecimal: 6,
+    tokenOutDecimal: 18,
+    amountInNumber: 10000,
+    amountInNumberFormatted: '10k',
+    amountOutFormat: '0,0'
   },
   {
     id: '3',
@@ -170,19 +170,6 @@ const SWAPS = [
   },
   {
     id: '5',
-    amountIn: '10000000000000000000000',
-    spookyPath: [DAI, WFTM, USDC],
-    spiritPath: [DAI, SPIRIT, WFTM, USDC],
-    tokenIn: DAI,
-    tokenOut: USDC,
-    tokenInDecimal: 18,
-    tokenOutDecimal: 6,
-    amountInNumber: 10000,
-    amountInNumberFormatted: '10k',
-    amountOutFormat: '0,0'
-  },
-  {
-    id: '6',
     amountIn: '5000000000000000000000',
     spookyPath: [WFTM, ETH],
     spiritPath: [WFTM, ETH],
@@ -193,6 +180,19 @@ const SWAPS = [
     amountInNumber: 5000,
     amountInNumberFormatted: '5k',
     amountOutFormat: '0.[0000]'
+  },
+  {
+    id: '6',
+    amountIn: '10000000000000000000000',
+    spookyPath: [DAI, WFTM, USDC],
+    spiritPath: [DAI, SPIRIT, WFTM, USDC],
+    tokenIn: DAI,
+    tokenOut: USDC,
+    tokenInDecimal: 18,
+    tokenOutDecimal: 6,
+    amountInNumber: 10000,
+    amountInNumberFormatted: '10k',
+    amountOutFormat: '0,0'
   },
   {
     id: '7',
