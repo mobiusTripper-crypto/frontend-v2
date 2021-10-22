@@ -2,12 +2,11 @@ import { Config } from '@/lib/config';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { rpcProviderService as _rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
 import { configService as _configService } from '@/services/config/config.service';
-import SpookySwap from '@/services/dex/contracts/spooky-swap';
-import SpiritSwap from '@/services/dex/contracts/spirit-swap';
+import UniSwapRouter from '@/services/dex/contracts/uni-swap-router';
 
 export default class DexContractsService {
-  public readonly spookySwap: SpookySwap;
-  public readonly spiritSwap: SpiritSwap;
+  public readonly spookySwap: UniSwapRouter;
+  public readonly spiritSwap: UniSwapRouter;
   private readonly config: Config;
   private readonly provider: JsonRpcProvider;
 
@@ -18,8 +17,14 @@ export default class DexContractsService {
     this.provider = this.rpcProviderService.jsonProvider;
     this.config = this.configService.network;
 
-    this.spookySwap = new SpookySwap(this);
-    this.spiritSwap = new SpiritSwap(this);
+    this.spookySwap = new UniSwapRouter(
+      this,
+      '0xF491e7B69E4244ad4002BC14e878a34207E38c29'
+    );
+    this.spiritSwap = new UniSwapRouter(
+      this,
+      '0x16327e3fbdaca3bcf7e38f5af2599d2ddc33ae52'
+    );
   }
 }
 

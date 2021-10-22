@@ -1,8 +1,8 @@
-<template>
-  <BalCard shadow="lg" class="mt-4" noPad>
+<template v-if="!loading">
+  <BalCard shadow="lg" class="mt-2" noPad>
     <div class="flex items-center border-gray-700 border-b pt-3 px-4 pb-2">
       <div class="flex-1">
-        <span class="font-medium">Swap Rates</span>
+        <span class="font-medium">Swap rates</span>
       </div>
       <div class="w-20 flex justify-center">
         <img
@@ -23,225 +23,168 @@
         />
       </div>
     </div>
-    <div class="flex items-center border-gray-700 border-b pt-2 px-3 pb-2">
+    <div
+      v-for="(item, idx) in items"
+      :key="item.id"
+      :class="[
+        'flex items-center border-gray-700 pt-2 px-3',
+        idx === items.length - 1 ? 'pb-4' : 'pb-2 border-b'
+      ]"
+    >
       <div class="flex items-center flex-1">
-        <BalAsset
-          address="0x04068da6c83afcfa0e13ba15a6696662335d5b75"
-          :size="24"
-        />
-        <div class="ml-2 font-medium w-8">10k</div>
+        <BalAsset :address="item.tokenIn" :size="24" />
+        <div class="ml-2 font-medium w-8">
+          {{ item.amountInNumberFormatted }}
+        </div>
         <BalIcon
           name="arrow-right"
           size="sm"
           class="ml-1 mr-2 flex items-center"
         />
-        <BalAsset
-          address="0x321162Cd933E2Be498Cd2267a90534A804051b11"
-          :size="24"
-        />
+        <BalAsset :address="item.tokenOut" :size="24" />
       </div>
-      <div class="w-20 flex justify-center">
-        0.221
+      <div
+        :class="[
+          'w-20 flex justify-center',
+          spooky[idx] > beets[idx] && spooky[idx] > spirit[idx]
+            ? 'text-green-500'
+            : ''
+        ]"
+      >
+        {{
+          spooky[idx] ? numeral(spooky[idx]).format(item.amountOutFormat) : ''
+        }}
+        <BalLoadingBlock v-if="!spooky[idx]" class="h-4 w-12 mx-auto" white />
       </div>
-      <div class="w-20 flex justify-center">
-        0.231
+      <div
+        :class="[
+          'w-20 flex justify-center',
+          spirit[idx] > spooky[idx] && spirit[idx] > beets[idx]
+            ? 'text-green-500'
+            : ''
+        ]"
+      >
+        {{
+          spirit[idx] ? numeral(spirit[idx]).format(item.amountOutFormat) : ''
+        }}
+        <BalLoadingBlock v-if="!spirit[idx]" class="h-4 w-12 mx-auto" white />
       </div>
-      <div class="w-20 flex justify-center text-green-500">
-        0.234
-      </div>
-    </div>
-    <div class="flex items-center border-gray-700 border-b pt-2 px-3 pb-2">
-      <div class="flex items-center flex-1">
-        <BalAsset
-          address="0x321162Cd933E2Be498Cd2267a90534A804051b11"
-          :size="24"
-        />
-        <span class="ml-2 font-medium w-8">0.5</span>
-        <BalIcon
-          name="arrow-right"
-          size="sm"
-          class="ml-1 mr-2 flex items-center"
-        />
-        <BalAsset
-          address="0x04068da6c83afcfa0e13ba15a6696662335d5b75"
-          :size="24"
-        />
-      </div>
-      <div class="w-20 flex justify-center text-green-500">
-        0.234
-      </div>
-      <div class="w-20 flex justify-center">
-        0.221
-      </div>
-      <div class="w-20 flex justify-center">
-        0.231
-      </div>
-    </div>
-    <div class="flex items-center border-gray-700 border-b pt-2 px-3 pb-2">
-      <div class="flex items-center flex-1">
-        <BalAsset
-          address="0x04068da6c83afcfa0e13ba15a6696662335d5b75"
-          :size="24"
-        />
-        <div class="ml-2 font-medium w-8">10k</div>
-        <BalIcon
-          name="arrow-right"
-          size="sm"
-          class="ml-1 mr-2 flex items-center"
-        />
-        <BalAsset
-          address="0x321162Cd933E2Be498Cd2267a90534A804051b11"
-          :size="24"
-        />
-      </div>
-      <div class="w-20 flex justify-center">
-        0.221
-      </div>
-      <div class="w-20 flex justify-center text-green-500">
-        0.234
-      </div>
-      <div class="w-20 flex justify-center">
-        0.231
-      </div>
-    </div>
-    <div class="flex items-center pt-2 px-3 pb-4">
-      <div class="flex items-center flex-1">
-        <BalAsset
-          address="0x321162Cd933E2Be498Cd2267a90534A804051b11"
-          :size="24"
-        />
-        <span class="ml-2 font-medium w-8">0.5</span>
-        <BalIcon
-          name="arrow-right"
-          size="sm"
-          class="ml-1 mr-2 flex items-center"
-        />
-        <BalAsset
-          address="0x04068da6c83afcfa0e13ba15a6696662335d5b75"
-          :size="24"
-        />
-      </div>
-      <div class="w-20 flex justify-center">
-        0.221
-      </div>
-      <div class="w-20 flex justify-center">
-        0.231
-      </div>
-      <div class="w-20 flex justify-center text-green-500">
-        0.234
+      <div
+        :class="[
+          'w-20 flex justify-center',
+          beets[idx] > spooky[idx] && beets[idx] > spirit[idx]
+            ? 'text-green-500'
+            : ''
+        ]"
+      >
+        {{ beets[idx] ? numeral(beets[idx]).format(item.amountOutFormat) : '' }}
+        <BalLoadingBlock v-if="!beets[idx]" class="h-4 w-12 mx-auto" white />
       </div>
     </div>
   </BalCard>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { SubgraphSwap } from '@/services/balancer/subgraph/types';
-import { getAddress } from '@ethersproject/address';
+import { computed, defineComponent, PropType } from 'vue';
 import useNumbers from '@/composables/useNumbers';
-import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
-import useDarkMode from '@/composables/useDarkMode';
-import useBreakpoints from '@/composables/useBreakpoints';
-import { isStableLike } from '@/composables/usePool';
-import useTokens from '@/composables/useTokens';
-import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
-import useWeb3 from '@/services/web3/useWeb3';
-import { format } from 'date-fns';
-import useSwapsQuery from '@/composables/queries/useSwapsQuery';
-import { flatten, orderBy } from 'lodash';
 import numeral from 'numeral';
+import { SorManager } from '@/lib/utils/balancer/helpers/sor/sorManager';
+import useDexesQuery from '@/composables/queries/useDexesQuery';
+import { getAddress } from '@ethersproject/address';
+
+const WFTM = getAddress('0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83');
+const USDC = getAddress('0x04068DA6C83AFCFA0e13ba15A6696662335D5B75');
+const BTC = getAddress('0x321162Cd933E2Be498Cd2267a90534A804051b11');
+const ETH = getAddress('0x74b23882a30290451A17c44f4F05243b6b58C76d');
+const DAI = getAddress('0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e');
+const MIM = getAddress('0x82f0b8b456c1a451378467398982d4834b6829c1');
+const SPIRIT = getAddress('0x5cc61a78f164885776aa610fb0fe1257df78e59b');
+
+const SWAPS = [
+  {
+    id: '0',
+    amountIn: '60000000000',
+    spookyPath: [USDC, WFTM, BTC],
+    spiritPath: [USDC, WFTM, BTC],
+    tokenIn: USDC,
+    tokenInDecimal: 6,
+    tokenOut: BTC,
+    tokenOutDecimal: 8,
+    amountInNumber: 60000,
+    amountInNumberFormatted: '60k',
+    amountOutFormat: '0.0000'
+  },
+  {
+    id: '1',
+    amountIn: '100000000',
+    spookyPath: [BTC, WFTM, USDC],
+    spiritPath: [BTC, WFTM, USDC],
+    tokenIn: BTC,
+    tokenInDecimal: 8,
+    tokenOut: USDC,
+    tokenOutDecimal: 6,
+    amountInNumber: 1,
+    amountInNumberFormatted: '1.0',
+    amountOutFormat: '0,0'
+  },
+  {
+    id: '2',
+    amountIn: '10000000000',
+    spookyPath: [USDC, WFTM, DAI],
+    spiritPath: [USDC, WFTM, SPIRIT, DAI],
+    tokenIn: USDC,
+    tokenOut: DAI,
+    tokenInDecimal: 6,
+    tokenOutDecimal: 18,
+    amountInNumber: 10000,
+    amountInNumberFormatted: '10k',
+    amountOutFormat: '0,0'
+  },
+  {
+    id: '3',
+    amountIn: '10000000000000000000000',
+    spookyPath: [MIM, WFTM, ETH],
+    spiritPath: [MIM, WFTM, ETH],
+    tokenIn: MIM,
+    tokenOut: ETH,
+    tokenInDecimal: 18,
+    tokenOutDecimal: 18,
+    amountInNumber: 10000,
+    amountInNumberFormatted: '10k',
+    amountOutFormat: '0.[0000]'
+  }
+];
 
 export default defineComponent({
   components: {},
 
-  props: {},
+  props: {
+    sorManager: {
+      type: Object as PropType<SorManager>,
+      required: true
+    }
+  },
 
   setup(props) {
     const { fNum } = useNumbers();
-    const router = useRouter();
-    const { darkMode } = useDarkMode();
-    const { upToLargeBreakpoint } = useBreakpoints();
-    const { tokens, priceFor } = useTokens();
-    const { isWalletReady } = useWeb3();
+    const { isLoading, data, isIdle } = useDexesQuery(props.sorManager, SWAPS);
 
-    const swapsQuery = useSwapsQuery(
-      {},
-      {
-        poolIds: ref([
-          '0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015',
-          '0xcde5a11a4acb4ee4c805352cec57e236bdbc3837000200000000000000000019'
-        ])
-      }
-    );
-
-    const swaps = computed(() =>
-      swapsQuery.data.value
-        ? orderBy(
-            flatten(swapsQuery.data.value.pages.map(page => page.swaps)),
-            'timestamp',
-            'desc'
-          )
-        : []
-    );
-
-    function loadMoreSwaps() {
-      swapsQuery.fetchNextPage.value();
-    }
-
-    const columns = ref<ColumnDefinition<SubgraphSwap>[]>([
-      {
-        name: 'Swap',
-        id: 'timestamp',
-        accessor: 'timestamp',
-        sortKey: 'timestamp',
-        width: 150
-      },
-      {
-        name: 'Type',
-        id: 'type',
-        accessor: 'type',
-        sortKey: 'type',
-        width: 50
-      },
-      {
-        name: 'Input',
-        id: 'input',
-        accessor: 'input',
-        sortKey: 'input',
-        width: 50
-      },
-      {
-        name: 'Input',
-        id: 'input',
-        accessor: 'input',
-        sortKey: 'input',
-        width: 50
-      }
-    ]);
-
-    const data = computed(() => {
-      return [];
-    });
+    const spooky = computed(() => data.value?.spooky || []);
+    const spirit = computed(() => data.value?.spirit || []);
+    const beets = computed(() => data.value?.beets || []);
+    const loading = computed(() => isLoading.value || isIdle.value);
 
     return {
       // data
-      columns,
-      data,
-
-      // computed
-      darkMode,
-      upToLargeBreakpoint,
+      items: SWAPS,
+      spooky,
+      spirit,
+      beets,
+      loading,
 
       // methods
-      getAddress,
       fNum,
-      isStableLike,
-      calculateRewardsPerDay,
-      loadMoreSwaps,
-      isLoading: swapsQuery.isLoading,
-      isLoadingMore: swapsQuery.isFetchingNextPage,
-      hasNextPage: swapsQuery.hasNextPage
+      numeral
     };
   }
 });

@@ -123,6 +123,8 @@ export default function useSor({
   const latestTx = ref<TransactionResponse | null>(null);
   const poolsLoading = ref(true);
   const slippageError = ref(false);
+  const sorManagerInitialized = ref(false);
+  const sorManagerRef = ref<SorManager | null>(null);
 
   // COMPOSABLES
   const store = useStore();
@@ -189,6 +191,9 @@ export default function useSor({
       poolsUrlV2,
       subgraphUrl
     );
+
+    sorManagerInitialized.value = true;
+    sorManagerRef.value = sorManager;
 
     fetchPools();
   }
@@ -288,8 +293,6 @@ export default function useSor({
         tokenInAmountNormalised,
         tokenInDecimals
       );
-
-      console.log('[SOR Manager] swapExactIn');
 
       const swapReturn: SorReturn = await sorManager.getBestSwap(
         tokenInAddress,
@@ -671,6 +674,8 @@ export default function useSor({
     getQuote,
     resetState,
     confirming,
-    slippageError
+    slippageError,
+    sorManagerInitialized,
+    sorManagerRef
   };
 }

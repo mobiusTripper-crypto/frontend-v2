@@ -52,7 +52,7 @@
       "symbol": "DAI",
       "decimals": 18,
       "chainId": 250,
-      "logoURI": "https://assets.coingecko.com/coins/images/9956/large/dai-multi-collateral-mcd.png"
+      "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/multi-collateral-dai-dai-logo-2.png"
     },
     {
       "name": "USDC",

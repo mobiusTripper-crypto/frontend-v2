@@ -106,11 +106,7 @@ const QUERY_KEYS = {
     All: ['protocolData', 'all']
   },
   Dexes: {
-    GetAmountsOut: (inputs: Ref<GetAmountsOutInput[]>) => [
-      'dexes',
-      'getAmountsOut',
-      { inputs }
-    ]
+    GetAmountsOut: ['Dexes', 'GetAmountsOut', 'all']
   }
 };
 

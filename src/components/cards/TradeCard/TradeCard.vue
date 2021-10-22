@@ -66,6 +66,7 @@
       @close="tradeSuccess = false"
     />
   </BalCard>
+  <TradeRatesCard :sor-manager="sorManagerRef" v-if="sorManagerIsInitialized" />
   <teleport to="#modal">
     <TradePreviewModal
       v-if="modalTradePreviewIsOpen"
@@ -110,11 +111,13 @@ import useDarkMode from '@/composables/useDarkMode';
 import { configService } from '@/services/config/config.service';
 
 import { getWrapAction, WrapType } from '@/lib/utils/balancer/wrapper';
+import TradeRatesCard from '@/components/cards/TradeRatesCard/TradeRatesCard.vue';
 
 const { nativeAsset } = configService.network;
 
 export default defineComponent({
   components: {
+    TradeRatesCard,
     SuccessOverlay,
     TradePair,
     TradePreviewModal,
@@ -202,7 +205,10 @@ export default defineComponent({
       pools,
       fetchPools,
       poolsLoading,
-      slippageError
+      slippageError,
+      sorManager,
+      sorManagerInitialized,
+      sorManagerRef
     } = useSor({
       exactIn,
       tokenInAddressInput: tokenInAddress,
@@ -221,6 +227,8 @@ export default defineComponent({
       tokenOutAddress,
       tokenOutAmount
     );
+
+    const sorManagerIsInitialized = computed(() => sorManagerInitialized.value);
 
     const title = computed(() => {
       if (isWrap.value) return t('wrap');
@@ -343,7 +351,10 @@ export default defineComponent({
       darkMode,
       tradeCardShadow,
       explorer: explorerLinks,
-      slippageError
+      slippageError,
+      sorManager,
+      sorManagerIsInitialized,
+      sorManagerRef
     };
   }
 });
