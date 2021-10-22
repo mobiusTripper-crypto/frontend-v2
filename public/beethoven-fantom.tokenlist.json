@@ -190,6 +190,14 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/15264/large/mimatic-red.png"
+    },
+    {
+      "name": "Paint Swap",
+      "address": "0x85dec8c4b2680793661bca91a8f129607571863d",
+      "symbol": "BRUSH",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/18579/large/sDYeBj9T_400x400.png"
     }
   ]
 }
