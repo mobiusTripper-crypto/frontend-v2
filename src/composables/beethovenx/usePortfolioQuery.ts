@@ -22,8 +22,6 @@ export default function usePortfolioQuery(
   const queryFn = async () => {
     const response = await beethovenxService.getUserPortfolio(account.value);
 
-    console.log('portfolio query response', response);
-
     return response;
   };
 

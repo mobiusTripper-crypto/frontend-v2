@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
@@ -117,7 +117,7 @@ export default defineComponent({
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady } = useWeb3();
+    const { isWalletReady, account } = useWeb3();
 
     const {
       onlyPoolsWithFarms,
@@ -154,6 +154,12 @@ export default defineComponent({
       )
     );
     const avgFees = computed(() => sum(fees.value) / fees.value.length);
+
+    watch(account, () => {
+      if (!account.value) {
+        router.push({ name: 'home' });
+      }
+    });
 
     return {
       // data

@@ -92,8 +92,6 @@ export default function useDexesQuery(
       )
     };
 
-    console.log('result', result);
-
     return result;
   };
 
