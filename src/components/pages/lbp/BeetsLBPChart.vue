@@ -105,7 +105,9 @@ export default defineComponent({
       const fistTime = isBefore(new Date(), parseISO(props.lbpStartTime))
         ? parseISO(props.lbpStartTime)
         : new Date();
-      const tokenPrices = props.tokenPrices || [];
+      const tokenPrices = (props.tokenPrices || []).filter(
+        tokenPrice => tokenPrice.amount > '0.0001'
+      );
       const times = [
         ...tokenPrices.map(price =>
           format(fromUnixTime(price.timestamp), 'yyyy-MM-dd HH:mm:ss')

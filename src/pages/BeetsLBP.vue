@@ -276,7 +276,6 @@ export default defineComponent({
     });
 
     function handleLbpStateChange() {
-      console.log('!@#!@#!@ HANDLE STATE CHANGE');
       isLbpOver.value = isAfter(new Date(), parseISO(lbpConfig.endTime));
       isBeforeLbpStart.value = isBefore(
         new Date(),
