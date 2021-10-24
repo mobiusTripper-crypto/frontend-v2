@@ -34,7 +34,7 @@
           validate-on="input"
           prepend-border
           :no-margin="true"
-          :rules="[maxChar(7)]"
+          :rules="[maxChar(7), isSymbol()]"
         >
           <template v-slot:prepend>
             <div class="flex items-center h-full ml-2">
@@ -105,7 +105,8 @@ import {
   isLessThanOrEqualTo,
   isValidAddress,
   maxChar,
-  minChar
+  minChar,
+  isSymbol
 } from '@/lib/utils/validations';
 
 export default defineComponent({
@@ -191,6 +192,7 @@ export default defineComponent({
       isGreaterThanOrEqualTo,
       isLessThanOrEqualTo,
       isValidAddress,
+      isSymbol,
       poolSymbolValid,
       poolOwnerValid,
       swapFeePercentageValid,

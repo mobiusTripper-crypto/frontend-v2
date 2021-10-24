@@ -54,3 +54,9 @@ export function maxChar(maxLength: number, field = '') {
 export function isValidAddress() {
   return v => !v || isAddress(v) || i18n.global.t('mustBeValidAddress');
 }
+
+export function isSymbol() {
+  const regex = /^[0-9A-Z-]+$/;
+
+  return v => !v || regex.test(v) || 'Must be valid symbol';
+}

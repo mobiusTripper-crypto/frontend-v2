@@ -47,7 +47,7 @@ export function getTokensErrorFromInputs(
       };
     }
 
-    if (tokens[poolToken.address]) {
+    /*if (tokens[poolToken.address]) {
       const tokenInDecimals = tokens[poolToken.address].decimals;
       const tokenInAmountDenorm = parseUnits(poolToken.amount, tokenInDecimals);
 
@@ -62,7 +62,7 @@ export function getTokensErrorFromInputs(
           body: 'One or more of your tokens requires an approval'
         };
       }
-    }
+    }*/
   }
 
   return undefined;

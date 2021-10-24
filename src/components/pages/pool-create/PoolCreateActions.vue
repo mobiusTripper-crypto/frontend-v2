@@ -22,6 +22,7 @@
           :disabled="!canCreatePool"
           size="sm"
           :loading="creating"
+          loading-label="Creating..."
         >
           Create Pool
         </BalBtn>
@@ -43,6 +44,7 @@
           :disabled="poolAddress === ''"
           size="sm"
           :loading="joining"
+          loading-label="Joining..."
         >
           Join Pool
         </BalBtn>
@@ -64,6 +66,7 @@
           :disabled="!joined"
           size="sm"
           :loading="verifying"
+          loading-label="Verifying..."
         >
           Verify Pool
         </BalBtn>
