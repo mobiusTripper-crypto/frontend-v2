@@ -45,6 +45,7 @@ export interface Config {
     lidoRelayer: string;
     balancerHelpers: string;
     beetsUsdcReferencePricePool: string;
+    defaultPoolOwner: string;
   };
   strategies: Record<
     string,
@@ -65,6 +66,10 @@ export interface Config {
     timeStep: number;
   };
   incentivizedPools: string[];
+  etherscan: {
+    apiKey: string;
+    apiUrl: string;
+  };
 }
 
 const config: Record<string, Config> = {

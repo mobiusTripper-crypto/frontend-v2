@@ -7,6 +7,7 @@ import Farm from '@/pages/FarmList.vue';
 import FarmDetail from '@/pages/FarmDetail.vue';
 import BeetsLBP from '@/pages/BeetsLBP.vue';
 import Invest from '@/pages/Invest.vue';
+import PoolCreate from '@/pages/PoolCreate.vue';
 
 const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', redirect: '/trade' },
@@ -28,6 +29,8 @@ const routes: RouteRecordRaw[] = [
     component: LiquidityMining
   },
   { path: '/beets', name: 'beets', component: BeetsLBP },
+
+  { path: '/pool-create', name: 'pool-create', component: PoolCreate },
   { path: '/:pathMatch(.*)*', name: 'not-found', redirect: '/' }
 ];
 

@@ -51,6 +51,11 @@
         "type": "uint256"
       },
       {
+        "internalType": "bool",
+        "name": "oracleEnabled",
+        "type": "bool"
+      },
+      {
         "internalType": "address",
         "name": "owner",
         "type": "address"

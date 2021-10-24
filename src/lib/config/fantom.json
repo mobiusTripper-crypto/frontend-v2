@@ -45,7 +45,8 @@
     "balancerHelpers": "0xfE18C7C70b0a2c6541bEde0367124278BC345Dc8",
     "masterChef": "0x8166994d9ebBe5829EC86Bd81258149B87faCfd3",
     "beetsUsdcReferencePricePool": "0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015",
-    "beethovenxToken": "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e"
+    "beethovenxToken": "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e",
+    "defaultPoolOwner": "0xCd983793ADb846dcE4830c22F30C7Ef0C864a776"
   },
   "strategies": {
     "0": {
@@ -86,7 +87,11 @@
     "0xd163415bd34ef06f57c58d2aed5a5478afb464cc00000000000000000000000e",
     "0x2ed55f12e700cde978e1f0491d681919814ca44b000200000000000000000021",
     "0x6d12d3fe16dd83115254a32b273b05ac5444c349000100000000000000000029"
-  ]
+  ],
+  "etherscan": {
+    "apiKey": "6BBVB2S3S5I1JJIYZJUVU21WVEB5CEVPYU",
+    "apiUrl": "https://api-rinkeby.etherscan.io/api"
+  }
 }
 
 

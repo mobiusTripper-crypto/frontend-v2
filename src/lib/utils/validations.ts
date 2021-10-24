@@ -1,4 +1,5 @@
 import i18n from '@/plugins/i18n';
+import { isAddress } from '@ethersproject/address';
 
 export function isRequired(field = '') {
   const _field = field ? `${field} ` : 'Input ';
@@ -27,6 +28,13 @@ export function isLessThanOrEqualTo(max: number, msg = '') {
     (msg ? msg : i18n.global.t('mustBeLessThan', [max]));
 }
 
+export function isGreaterThanOrEqualTo(min: number, msg = '') {
+  return v =>
+    !v ||
+    parseFloat(v) >= min ||
+    (msg ? msg : i18n.global.t('mustBeGreaterThan', [min]));
+}
+
 export const isEmailCheck = email => {
   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regex.test(String(email).toLowerCase());
@@ -34,4 +42,15 @@ export const isEmailCheck = email => {
 
 export function isEmail() {
   return v => !v || isEmailCheck(v) || i18n.global.t('mustBeValidEmail');
+}
+
+export function maxChar(maxLength: number, field = '') {
+  const _field = field ? `${field} ` : '';
+  return v =>
+    (v || '').length <= maxLength ||
+    `${_field}${i18n.global.t('mustBeLessThanChars', [maxLength])}`;
+}
+
+export function isValidAddress() {
+  return v => !v || isAddress(v) || i18n.global.t('mustBeValidAddress');
 }

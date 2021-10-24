@@ -137,11 +137,14 @@
     "month": "month",
     "months": "months",
     "mustBeAtLeast": "must be at least {0} characters",
+    "mustBeLessThanChars": "can be no more than {0} characters",
     "mustBeInt": "must be an integer",
     "mustBeLessThan": "must be less than {0}",
+    "mustBeGreaterThan": "must be greater than {0}",
     "mustBePositive": "must be a positive number",
     "mustBeSame": "must be the same as {0}",
     "mustBeValidEmail": "must be a valid email",
+    "mustBeValidAddress": "must be a valid address",
     "mustBeValidNum": "must be a valid number",
     "myBalance": "My Balance",
     "myInvestments": "My Beethoven X investments",
@@ -218,7 +221,8 @@
         "invest": "Invest",
         "withdraw": "Withdraw",
         "wrap": "Wrap",
-        "unwrap": "Unwrap"
+        "unwrap": "Unwrap",
+        "create": "Create"
     },
     "transactionStatus": {
         "pending": "Pending",
