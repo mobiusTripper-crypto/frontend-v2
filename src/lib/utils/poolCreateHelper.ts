@@ -45,11 +45,9 @@ export function getTokensErrorFromInputs(
     }
 
     if (tokens[poolToken.address]) {
-      const tokenInDecimals = tokens[poolToken.address].decimals;
-      const tokenInAmountDenorm = parseUnits(poolToken.amount, tokenInDecimals);
       const requiresApproval = approvalRequired(
         poolToken.address,
-        tokenInAmountDenorm.toString()
+        poolToken.amount
       );
 
       if (requiresApproval && !approvedTokens.includes(poolToken.address)) {
