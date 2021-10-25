@@ -89,8 +89,8 @@
     "0x6d12d3fe16dd83115254a32b273b05ac5444c349000100000000000000000029"
   ],
   "etherscan": {
-    "apiKey": "6BBVB2S3S5I1JJIYZJUVU21WVEB5CEVPYU",
-    "apiUrl": "https://api-rinkeby.etherscan.io/api"
+    "apiKey": "PKKV6JBSI4B1251AXR1PCDZBPWQBXBFERB",
+    "apiUrl": "https://api.ftmscan.com/api"
   }
 }
 
