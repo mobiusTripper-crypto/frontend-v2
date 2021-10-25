@@ -111,7 +111,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, toRefs } from 'vue';
+import { computed, defineComponent, ref, toRefs, watch } from 'vue';
 import { NATIVE_ASSET_ADDRESS } from '@/constants/tokens';
 import useTokens from '@/composables/useTokens';
 import useNumbers from '@/composables/useNumbers';
@@ -119,8 +119,6 @@ import SelectTokenModal from '@/components/modals/SelectTokenModal/SelectTokenMo
 import BalIcon from '@/components/_global/BalIcon/BalIcon.vue';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokenApproval from '@/composables/trade/useTokenApproval';
-import { isLessThanOrEqualTo, isPositive } from '@/lib/utils/validations';
-import { useI18n } from 'vue-i18n';
 
 const ETH_BUFFER = 0.1;
 
@@ -148,7 +146,8 @@ export default defineComponent({
     'tokenAddressChange',
     'tokenAmountChange',
     'tokenWeightChange',
-    'tokenDelete'
+    'tokenDelete',
+    'tokenApproved'
   ],
 
   setup(props, { emit }) {
@@ -226,6 +225,12 @@ export default defineComponent({
     const balanceLabel = computed(
       () => balances.value[tokenAddressInput.value]
     );
+
+    watch(isUnlockedV2, newVal => {
+      if (newVal) {
+        emit('tokenApproved', props.tokenAddressInput);
+      }
+    });
 
     return {
       fNum,

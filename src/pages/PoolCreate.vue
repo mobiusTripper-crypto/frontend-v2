@@ -1,7 +1,7 @@
 <template>
   <div class="mt-12">
     <div class="mb-4">
-      <h2>Create an Investment Pool</h2>
+      <h2>Compose your Investment Pool</h2>
       <ul class="list-disc list-inside ml-2">
         <li>An investment pool can be created with 2-8 tokens.</li>
         <li>The weights should add up to 100%.</li>
@@ -11,7 +11,7 @@
         </li>
       </ul>
     </div>
-    <BalCard class="pt-2">
+    <BalCard class="pt-2 relative">
       <PoolCreateDefinitionFields
         :pool-name="poolName"
         :pool-symbol="poolSymbol"
@@ -36,6 +36,7 @@
             @token-address-change="value => tokenAddressChange(value, idx)"
             @token-amount-change="value => tokenAmountChange(value, idx)"
             @token-weight-change="value => tokenWeightChange(value, idx)"
+            @token-approved="address => handleTokenApproved(address)"
           />
         </div>
       </div>
@@ -65,7 +66,17 @@
           </BalBtn>
         </div>
       </div>
+      <div v-if="editingDisabled" class="w-full h-full absolute top-0 left-0">
+        <div
+          class="bg-gray-850 w-full h-full absolute top-0 left-0 rounded-lg opacity-25"
+        />
+        <div class="text-white absolute left-4 bottom-4 text-yellow-500">
+          Editing is disabled during pool creation
+        </div>
+      </div>
+      <PoolCreateSuccessOverlay v-if="poolCreateComplete" :pool-id="poolId" />
     </BalCard>
+
     <PoolCreateActions
       :pool-name="poolName"
       :pool-symbol="poolSymbol"
@@ -73,6 +84,10 @@
       :swap-fee-percentage="swapFeePercentage"
       :can-create-pool="canCreatePool"
       :pool-tokens="poolTokens"
+      @create-pool-triggered="handlePoolCreateTriggered"
+      @create-pool-error="handlePoolCreateError"
+      @created-pool="handlePoolCreated"
+      @verified-pool="handlePoolVerified"
     />
   </div>
 </template>
@@ -87,7 +102,6 @@ import BalCard from '@/components/_global/BalCard/BalCard.vue';
 import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
 import BalIcon from '@/components/_global/BalIcon/BalIcon.vue';
 import { remove } from 'lodash';
-import { ZERO_ADDRESS } from '@balancer-labs/sor2';
 import { PoolTokenInput } from '@/services/pool/creator/pool-creator.service';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
@@ -95,6 +109,7 @@ import PoolCreateDefinitionFields from '@/components/pages/pool-create/PoolCreat
 import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
 import { getTokensErrorFromInputs } from '@/lib/utils/poolCreateHelper';
 import PoolCreateActions from '@/components/pages/pool-create/PoolCreateActions.vue';
+import PoolCreateSuccessOverlay from '@/components/pages/pool-create/PoolCreateSuccessOverlay.vue';
 
 export default defineComponent({
   components: {
@@ -104,21 +119,25 @@ export default defineComponent({
     BalBtn,
     BalCard,
     PoolCreateTokenRow,
-    BalAlert
+    BalAlert,
+    PoolCreateSuccessOverlay
   },
 
   setup() {
-    // COMPOSABLES
     const store = useStore();
     const { loadingTokenLists, tokenListsLoaded } = useTokenLists();
     const { appNetworkConfig } = useWeb3();
-    const { tokens, balances, approvalsRequired } = useTokens();
+    const { tokens, balances, approvalRequired } = useTokens();
     const appLoading = computed(() => store.state.app.loading);
     const poolName = ref('');
     const poolSymbol = ref('');
     const swapFeePercentage = ref('0.25');
     const isDefinitionInputValid = ref(false);
+    const editingDisabled = ref(false);
+    const poolId = ref('');
+    const poolCreateComplete = ref(false);
     const poolOwner = ref(appNetworkConfig.addresses.defaultPoolOwner);
+    const approvedTokens = ref<string[]>([]);
 
     const poolTokens = ref<PoolTokenInput[]>([
       {
@@ -138,7 +157,8 @@ export default defineComponent({
         poolTokens.value,
         tokens.value,
         balances.value,
-        approvalsRequired
+        approvedTokens.value,
+        approvalRequired
       )
     );
 
@@ -190,6 +210,27 @@ export default defineComponent({
       isDefinitionInputValid.value = valid;
     }
 
+    function handleTokenApproved(tokenAddress: string) {
+      approvedTokens.value.push(tokenAddress);
+    }
+
+    function handlePoolCreateTriggered() {
+      editingDisabled.value = true;
+    }
+
+    function handlePoolCreated(id: string) {
+      editingDisabled.value = true;
+      poolId.value = id;
+    }
+
+    function handlePoolCreateError() {
+      editingDisabled.value = false;
+    }
+
+    function handlePoolVerified() {
+      poolCreateComplete.value = true;
+    }
+
     return {
       appLoading,
       loadingTokenLists,
@@ -210,7 +251,15 @@ export default defineComponent({
       handleSwapFeePercentageChange,
       handleIsInputValid,
       tokensError,
-      canCreatePool
+      canCreatePool,
+      handleTokenApproved,
+      handlePoolCreateTriggered,
+      handlePoolCreated,
+      handlePoolCreateError,
+      handlePoolVerified,
+      poolCreateComplete,
+      editingDisabled,
+      poolId
     };
   }
 });

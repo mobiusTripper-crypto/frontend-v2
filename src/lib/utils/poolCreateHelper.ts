@@ -1,5 +1,5 @@
 import { PoolTokenInput } from '@/services/pool/creator/pool-creator.service';
-import { sumBy } from 'lodash';
+import { sumBy, uniqBy } from 'lodash';
 import { BalanceMap } from '@/services/token/concerns/balances.concern';
 import { TokenInfoMap } from '@/types/TokenList';
 import { parseUnits } from '@ethersproject/units';
@@ -8,11 +8,8 @@ export function getTokensErrorFromInputs(
   poolTokens: PoolTokenInput[],
   tokens: TokenInfoMap,
   balances: BalanceMap,
-  approvalsRequired: (
-    tokenAddresses: string[],
-    amounts: string[],
-    contractAddress?: string
-  ) => string[]
+  approvedTokens: string[],
+  approvalRequired: (tokenAddress: string, amount: string) => boolean
 ) {
   const totalWeight = sumBy(poolTokens, token => parseFloat(token.weight));
 
@@ -47,22 +44,28 @@ export function getTokensErrorFromInputs(
       };
     }
 
-    /*if (tokens[poolToken.address]) {
+    if (tokens[poolToken.address]) {
       const tokenInDecimals = tokens[poolToken.address].decimals;
       const tokenInAmountDenorm = parseUnits(poolToken.amount, tokenInDecimals);
-
-      const requiredAllowances = approvalsRequired(
-        [poolToken.address],
-        [tokenInAmountDenorm.toString()]
+      const requiresApproval = approvalRequired(
+        poolToken.address,
+        tokenInAmountDenorm.toString()
       );
 
-      if (requiredAllowances.length > 0) {
+      if (requiresApproval && !approvedTokens.includes(poolToken.address)) {
         return {
           header: 'A token requires approval',
           body: 'One or more of your tokens requires an approval'
         };
       }
-    }*/
+    }
+  }
+
+  if (uniqBy(poolTokens, token => token.address).length !== poolTokens.length) {
+    return {
+      header: 'You have duplicate tokens',
+      body: 'Each token can only appear once in your pool.'
+    };
   }
 
   return undefined;

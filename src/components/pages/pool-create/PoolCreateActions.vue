@@ -133,11 +133,14 @@ export default defineComponent({
     'poolSymbolChange',
     'poolOwnerChange',
     'poolSwapFeePercentageChange',
-    'isInputValid'
+    'isInputValid',
+    'createPoolTriggered',
+    'createPoolError',
+    'createdPool',
+    'verifiedPool'
   ],
 
-  setup(props) {
-    // COMPOSABLES
+  setup(props, { emit }) {
     const store = useStore();
     const { loadingTokenLists, tokenListsLoaded } = useTokenLists();
     const { appNetworkConfig, getProvider, account } = useWeb3();
@@ -147,9 +150,6 @@ export default defineComponent({
     const appLoading = computed(() => store.state.app.loading);
     const poolCreatorService = computed(
       () => new PoolCreatorService(appNetworkConfig.key)
-    );
-    const poolVerifierService = computed(
-      () => new PoolVerifierService(appNetworkConfig.key)
     );
 
     const verifying = ref(false);
@@ -171,6 +171,7 @@ export default defineComponent({
       } = props;
 
       try {
+        emit('createPoolTriggered');
         creating.value = true;
         const tx = await poolCreatorService.value.createWeightedPool(
           getProvider(),
@@ -199,18 +200,18 @@ export default defineComponent({
             blockHash.value = data.blockHash;
             poolId.value = data.poolId;
 
-            console.log(' data.poolAddress', data.poolAddress);
-            console.log('data.blockHash', data.blockHash);
-
+            emit('createdPool', data.poolId);
             creating.value = false;
           },
           onTxFailed: () => {
             creating.value = false;
+            emit('createPoolError');
           }
         });
       } catch (error) {
         console.error(error);
         creating.value = false;
+        emit('createPoolError');
       }
     }
 
@@ -272,6 +273,7 @@ export default defineComponent({
 
         verifying.value = false;
         verified.value = true;
+        emit('verifiedPool');
       } catch {
         verifying.value = false;
       }

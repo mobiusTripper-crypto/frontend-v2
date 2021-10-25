@@ -103,10 +103,10 @@ import BalTextInput from '@/components/_global/BalTextInput/BalTextInput.vue';
 import {
   isGreaterThanOrEqualTo,
   isLessThanOrEqualTo,
+  isSymbol,
   isValidAddress,
   maxChar,
-  minChar,
-  isSymbol
+  minChar
 } from '@/lib/utils/validations';
 
 export default defineComponent({
