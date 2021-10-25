@@ -300,9 +300,7 @@ export default {
     ): boolean {
       if (!amount || bnum(amount).eq(0)) return false;
 
-      const allowance = bnum(
-        allowances.value[contractAddress][getAddress(tokenAddress)]
-      );
+      const allowance = bnum(allowances.value[contractAddress][tokenAddress]);
       return allowance.lt(amount);
     }
 
