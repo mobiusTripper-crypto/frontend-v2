@@ -104,10 +104,6 @@ export default defineComponent({
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
     const { t } = useI18n();
-    const { useNftImage } = useNft();
-    useNftImage().then(image => {
-      console.log('setup image', image);
-    });
 
     const columns = ref<ColumnDefinition<DecoratedPoolWithRequiredFarm>[]>([
       {
