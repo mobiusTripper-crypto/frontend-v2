@@ -66,7 +66,10 @@
           </BalBtn>
         </div>
       </div>
-      <div v-if="editingDisabled" class="w-full h-full absolute top-0 left-0">
+      <div
+        v-if="editingDisabled && !poolCreateComplete"
+        class="w-full h-full absolute top-0 left-0"
+      >
         <div
           class="bg-gray-850 w-full h-full absolute top-0 left-0 rounded-lg opacity-25"
         />
