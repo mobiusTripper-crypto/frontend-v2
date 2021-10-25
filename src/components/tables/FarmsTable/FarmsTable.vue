@@ -73,6 +73,7 @@ import numeral from 'numeral';
 import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
 import { useI18n } from 'vue-i18n';
 import LiquidityMiningTooltip from '@/components/tooltips/LiquidityMiningTooltip.vue';
+import useNft from '@/composables/nft/useNft';
 
 export default defineComponent({
   components: {
@@ -103,6 +104,10 @@ export default defineComponent({
     const { darkMode } = useDarkMode();
     const { upToLargeBreakpoint } = useBreakpoints();
     const { t } = useI18n();
+    const { useNftImage } = useNft();
+    useNftImage().then(image => {
+      console.log('setup image', image);
+    });
 
     const columns = ref<ColumnDefinition<DecoratedPoolWithRequiredFarm>[]>([
       {

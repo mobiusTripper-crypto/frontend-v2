@@ -45,6 +45,7 @@ export interface Config {
     lidoRelayer: string;
     balancerHelpers: string;
     beetsUsdcReferencePricePool: string;
+    earlyLudwigNft: string;
   };
   strategies: Record<
     string,

@@ -45,7 +45,8 @@
     "balancerHelpers": "0xfE18C7C70b0a2c6541bEde0367124278BC345Dc8",
     "masterChef": "0x8166994d9ebBe5829EC86Bd81258149B87faCfd3",
     "beetsUsdcReferencePricePool": "0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015",
-    "beethovenxToken": "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e"
+    "beethovenxToken": "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e",
+    "earlyLudwigNft": "0xf2558d6a252C1041a3902870B1FdB0B7524B3098"
   },
   "strategies": {
     "0": {
