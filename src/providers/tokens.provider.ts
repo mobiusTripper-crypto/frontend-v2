@@ -300,6 +300,8 @@ export default {
     ): boolean {
       if (!amount || bnum(amount).eq(0)) return false;
 
+      console.log(tokenAddress, allowances.value[contractAddress]);
+      console.log('approval amount', amount);
       const allowance = bnum(allowances.value[contractAddress][tokenAddress]);
       return allowance.lt(amount);
     }
