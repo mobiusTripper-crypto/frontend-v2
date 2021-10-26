@@ -3,7 +3,7 @@ import axios from 'axios';
 import { nftContractService } from '@/services/nft/nft-contracts.service';
 
 export default function useNft() {
-  async function useNftImage() {
+  async function useNftImageUrl() {
     const { account } = useWeb3();
     if (!account.value) {
       return null;
@@ -29,13 +29,11 @@ export default function useNft() {
       `https://ipfs.io/ipfs/${metadataCid}`
     );
     const ipfsImageUri = metadataResponse.data.image;
-    // resolve image ipfs
     const imageCid = ipfsImageUri.replace('ipfs://', '');
 
-    const imageResponse = await axios.get(`https://ipfs.io/ipfs/${imageCid}`);
-    return imageResponse.data;
+    return `https://ipfs.io/ipfs/${imageCid}`;
   }
   return {
-    useNftImage
+    useNftImage: useNftImageUrl
   };
 }
