@@ -12,6 +12,7 @@ import { bnToNormalizedWeights } from '@/lib/utils/numbers';
 import { parseUnits } from '@ethersproject/units';
 import { encodeJoinWeightedPool } from '@/lib/utils/balancer/weightedPoolEncoding';
 import { PoolVerifierService } from '@/services/pool/creator/pool-verifier.service';
+import { sleep } from '@/lib/utils';
 
 export interface PoolTokenInput {
   address: string;
@@ -100,14 +101,26 @@ export class PoolCreatorService {
     const poolCreatedEvent = receipt.events.find(
       (e: { event: string }) => e.event === 'PoolCreated'
     );
+    let poolId = '';
 
-    const poolId = await callStatic(
-      provider,
-      poolCreatedEvent.args.pool,
-      weightedPoolAbi,
-      'getPoolId',
-      []
-    );
+    for (let i = 0; i < 20; i++) {
+      try {
+        await sleep(1000);
+        poolId = await callStatic(
+          provider,
+          poolCreatedEvent.args.pool,
+          weightedPoolAbi,
+          'getPoolId',
+          []
+        );
+      } catch {
+        //
+      }
+    }
+
+    if (poolId === '') {
+      throw new Error('Failed to retrieve the pool id');
+    }
 
     return {
       poolAddress: poolCreatedEvent.args.pool,
