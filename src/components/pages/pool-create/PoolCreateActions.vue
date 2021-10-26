@@ -1,7 +1,7 @@
 <template>
   <BalCard class="mt-4 mb-3">
     <div class="mt-2 mb-3">
-      Pool creation requires 3 transactions:
+      Pool creation requires 2 transactions:
     </div>
     <div>
       <div class="card-container">
@@ -52,7 +52,7 @@
           Joined
         </div>
       </div>
-      <div class="card-container mt-3">
+      <!--      <div class="card-container mt-3">
         <div class="card-step text-green-500">
           <BalIcon v-if="verified" name="check" class="text-green-500" />
           <span v-else class="text-gray-500 dark:text-gray-400">3</span>
@@ -61,9 +61,9 @@
           <span>Verify Pool</span>
         </div>
         <BalBtn
-          v-if="!verified"
+          v-if="true"
           @click="verifyPool"
-          :disabled="!joined"
+          :disabled="poolAddress === ''"
           size="sm"
           :loading="verifying"
           loading-label="Verifying..."
@@ -73,6 +73,14 @@
         <div v-else class="ml-4 text-sm">
           Verified
         </div>
+      </div>-->
+      <div v-if="joined" class="mt-6 mb-2">
+        <p class="text-yellow-500">
+          We're still looking for the magic recipe that allows us to verify
+          factory created contracts through the ftmscan API. Until then, please
+          reach out to us on discord and someone from the team will manually
+          verify your contract.
+        </p>
       </div>
     </div>
   </BalCard>
@@ -249,6 +257,7 @@ export default defineComponent({
           onTxConfirmed: async (tx: TransactionResponse) => {
             joining.value = false;
             joined.value = true;
+            emit('verifiedPool');
           },
           onTxFailed: () => {
             joining.value = false;
@@ -284,7 +293,7 @@ export default defineComponent({
 
         verifying.value = false;
         verified.value = true;
-        emit('verifiedPool');
+        //emit('verifiedPool');
       } catch {
         verifying.value = false;
       }

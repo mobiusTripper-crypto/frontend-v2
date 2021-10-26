@@ -11,8 +11,8 @@
           <BalIcon name="check-circle" size="xl" />
         </div>
         <p class="text-gray-300">
-          Your investment pool has been successfully created, joined and
-          verified. You're good to go!
+          Your investment pool has been successfully created and joined. You're
+          good to go!
         </p>
       </div>
       <div class="grid grid-cols-1 gap-4 mt-4 w-full">
