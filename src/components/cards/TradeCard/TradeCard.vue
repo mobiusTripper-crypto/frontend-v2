@@ -21,12 +21,6 @@
         @exact-in-change="value => (exactIn = value)"
         @change="handleAmountChange"
       />
-      <GasReimbursement
-        class="mb-5"
-        :address-in="tokenInAddress"
-        :address-out="tokenOutAddress"
-        :sorReturn="sorReturn"
-      />
       <BalAlert
         v-if="error"
         class="mb-4"
@@ -72,6 +66,7 @@
       @close="tradeSuccess = false"
     />
   </BalCard>
+  <TradeRatesCard :sor-manager="sorManagerRef" v-if="sorManagerIsInitialized" />
   <teleport to="#modal">
     <TradePreviewModal
       v-if="modalTradePreviewIsOpen"
@@ -90,10 +85,10 @@
 
 <script lang="ts">
 import { isRequired } from '@/lib/utils/validations';
-import { ref, defineComponent, computed, watch } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { isAddress, getAddress } from '@ethersproject/address';
+import { getAddress, isAddress } from '@ethersproject/address';
 
 import useTokenApproval from '@/composables/trade/useTokenApproval';
 import useValidation, {
@@ -108,7 +103,6 @@ import TradeRoute from '@/components/cards/TradeCard/TradeRoute.vue';
 import TradeSettingsPopover, {
   TradeSettingsContext
 } from '@/components/popovers/TradeSettingsPopover.vue';
-import GasReimbursement from './GasReimbursement.vue';
 import { useI18n } from 'vue-i18n';
 import useWeb3 from '@/services/web3/useWeb3';
 import useBreakpoints from '@/composables/useBreakpoints';
@@ -117,17 +111,18 @@ import useDarkMode from '@/composables/useDarkMode';
 import { configService } from '@/services/config/config.service';
 
 import { getWrapAction, WrapType } from '@/lib/utils/balancer/wrapper';
+import TradeRatesCard from '@/components/cards/TradeRatesCard/TradeRatesCard.vue';
 
 const { nativeAsset } = configService.network;
 
 export default defineComponent({
   components: {
+    TradeRatesCard,
     SuccessOverlay,
     TradePair,
     TradePreviewModal,
     TradeRoute,
-    TradeSettingsPopover,
-    GasReimbursement
+    TradeSettingsPopover
   },
 
   setup() {
@@ -210,7 +205,10 @@ export default defineComponent({
       pools,
       fetchPools,
       poolsLoading,
-      slippageError
+      slippageError,
+      sorManager,
+      sorManagerInitialized,
+      sorManagerRef
     } = useSor({
       exactIn,
       tokenInAddressInput: tokenInAddress,
@@ -229,6 +227,8 @@ export default defineComponent({
       tokenOutAddress,
       tokenOutAmount
     );
+
+    const sorManagerIsInitialized = computed(() => sorManagerInitialized.value);
 
     const title = computed(() => {
       if (isWrap.value) return t('wrap');
@@ -351,7 +351,10 @@ export default defineComponent({
       darkMode,
       tradeCardShadow,
       explorer: explorerLinks,
-      slippageError
+      slippageError,
+      sorManager,
+      sorManagerIsInitialized,
+      sorManagerRef
     };
   }
 });

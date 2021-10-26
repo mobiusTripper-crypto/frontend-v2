@@ -181,7 +181,9 @@ export default defineComponent({
           color: tailwind.theme.colors.gray[300],
           fontSize: 14
         },
-        nameGap: 25
+        nameGap: 25,
+        min: value => value.min * 0.99,
+        max: value => value.max * 1.01
       },
       color: props.color,
       // Controls the boundaries of the chart from the HTML defined rectangle
@@ -228,21 +230,7 @@ export default defineComponent({
           `;
         }
       },
-      /*dataZoom: [
-        {
-          type: 'slider',
-          show: true,
-          xAxisIndex: [0]
-          //start: 1,
-          //end: 35
-        },
-        {
-          type: 'inside',
-          xAxisIndex: [0]
-          //start: 1,
-          //end: 35
-        }
-      ],*/
+
       series: props.data.map((d, i) => ({
         data: d.values,
         type: 'line',
@@ -250,16 +238,12 @@ export default defineComponent({
         showSymbol: false,
         symbolSize: 8,
         name: d.name,
-        //silent: true,
-        /*animationEasing: function(k) {
-          return k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
-        },*/
         lineStyle: {
           width: 2
         },
 
         markPoint:
-          i === 1
+          i === 0
             ? {
                 symbol: 'circle',
                 symbolSize: 8,

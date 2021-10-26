@@ -10,7 +10,7 @@ import registerDirectives from '@/plugins/directives';
 import { registerGlobalComponents } from '@/plugins/components';
 import Web3Plugin from '@/services/web3/web3.plugin';
 import { use } from 'echarts/core';
-import { LineChart } from 'echarts/charts';
+import { LineChart, PieChart, BarChart } from 'echarts/charts';
 import {
   TitleComponent,
   TooltipComponent,
@@ -34,6 +34,8 @@ use([
   TooltipComponent,
   CanvasRenderer,
   LineChart,
+  PieChart,
+  BarChart,
   GridComponent,
   LegendComponent,
   ToolboxComponent,

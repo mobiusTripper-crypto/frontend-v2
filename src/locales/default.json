@@ -387,5 +387,10 @@
     "farmDepositSuccess": "Your LP tokens have been deposited into this farm. You will now start to accrue farming rewards.",
     "slippageErrorHeadline": "Trade failure",
     "slippageErrorBody": "Your trade failed because of excessive slippage. You can attempt to increase your slippage and try again.",
-    "inputAmountExceedsPoolBalance": "The amount you've input exceeds the pool balance."
+    "inputAmountExceedsPoolBalance": "The amount you've input exceeds the pool balance.",
+    "portfolioAssetsPieChartInfo": "A break down of your assets in all investment pools.",
+    "portfolioValueInfo": "A view of your portfolio value over time.",
+    "portfolioVolumeInfo": "Info text",
+    "portfolioFeesInfo": "Info text",
+    "portfolioPoolsInfoText": "A break down of your investment pools."
 }

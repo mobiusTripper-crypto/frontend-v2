@@ -1,50 +1,34 @@
 <template>
-  <div class="grid grid-cols-3 sm:grid-cols-3 xl:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <template v-if="loading">
       <BalLoadingBlock v-for="n in 3" :key="n" class="h-28" />
     </template>
     <template v-else>
       <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
-          {{ countdownLabel }}
+          BEETS Price
         </div>
-        <div class="text-xl font-medium truncate flex items-center">
-          <vue-countdown
-            :time="timeRemaining"
-            v-slot="{ hours, minutes, seconds }"
-            :transform="transformTime"
-            @end="$emit('lbpStateChange')"
-          >
-            {{ hours }}:{{ minutes }}:{{ seconds }}
-          </vue-countdown>
-        </div>
-        <div class="text-sm text-gray-500 font-medium mt-1">
-          {{ countdownDateFormatted }}
+        <div class="text-xl font-medium flex items-center">
+          ${{ numeral(beetsPrice).format('0.[0000]') }}
         </div>
       </BalCard>
       <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
-          Current BEETS Price
+          Market Cap
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ lbpData ? lbpData.tokenPrice : '' }}
-        </div>
-        <div class="text-sm text-gray-500 font-medium mt-1">
-          Predicted price*:
-          {{ lbpData ? lbpData.predictedPrice : '' }}
+          ${{ fNum(marketCap, 'usd_lg') }}
         </div>
       </BalCard>
       <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
-          Current Pool Weights
+          Circulating Supply
         </div>
-        <div class="text-xl font-medium truncate flex items-center">
-          {{
-            lbpData ? `${lbpData.beetsWeight}% / ${lbpData.usdcWeight}%` : ''
-          }}
-        </div>
-        <div class="text-sm text-gray-500 font-medium mt-1">
-          BEETS / USDC
+        <div class="text-xl font-medium flex items-end relative">
+          <div>{{ fNum(circulatingSupply, 'token_lg') }}&nbsp;</div>
+          <div class="text-sm text-gray-500" :style="{ paddingBottom: '2px' }">
+            BEETS
+          </div>
         </div>
       </BalCard>
     </template>
@@ -57,6 +41,7 @@ import useNumbers from '@/composables/useNumbers';
 import { differenceInMilliseconds, format, parseISO } from 'date-fns';
 import { DecoratedPool } from '@/services/balancer/subgraph/types';
 import numeral from 'numeral';
+import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default defineComponent({
   components: {},
@@ -143,6 +128,21 @@ export default defineComponent({
       };
     }
 
+    const protocolDataQuery = useProtocolDataQuery();
+    const tvl = computed(
+      () => protocolDataQuery.data?.value?.totalLiquidity || 0
+    );
+
+    const beetsPrice = computed(
+      () => protocolDataQuery.data?.value?.beetsPrice || 0
+    );
+    const circulatingSupply = computed(
+      () => protocolDataQuery.data.value?.circulatingSupply || 0
+    );
+    const marketCap = computed(() => {
+      return beetsPrice.value * circulatingSupply.value;
+    });
+
     return {
       fNum,
       harvesting,
@@ -150,7 +150,12 @@ export default defineComponent({
       timeRemaining,
       lbpData,
       countdownDateFormatted,
-      countdownLabel
+      countdownLabel,
+      tvl,
+      beetsPrice,
+      marketCap,
+      circulatingSupply,
+      numeral
     };
   }
 });

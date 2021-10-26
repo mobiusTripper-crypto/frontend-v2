@@ -11,7 +11,7 @@
     <div v-if="beetsPrice > 0" class="text-red-500 font-semibold text-right">
       BEETS: {{ fNum(beetsPrice, 'usd') }}
     </div>
-    <div
+    <!-- <div
       v-if="beetsPrice > 0 && marketCap > 0"
       class="font-semibold text-right"
     >
@@ -22,7 +22,7 @@
       class="font-semibold text-right"
     >
       Circulating: {{ fNum(circulatingSupply, 'token_lg') }}
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -33,7 +33,7 @@ import useNumbers from '@/composables/useNumbers';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 
 export default defineComponent({
-  name: 'AppHero',
+  name: 'GlobalStats',
 
   setup() {
     const protocolDataQuery = useProtocolDataQuery();
@@ -49,8 +49,6 @@ export default defineComponent({
       () => protocolDataQuery.data.value?.circulatingSupply || 0
     );
     const marketCap = computed(() => {
-      console.log('market cap', beetsPrice.value * circulatingSupply.value);
-
       return beetsPrice.value * circulatingSupply.value;
     });
 

@@ -51,18 +51,15 @@ export default function useTokenApproval(
         approvedSpenders: {}
       };
 
-    const tokenInDecimals = tokens.value[tokenInAddress.value].decimals;
-    const tokenInAmountDenorm = parseUnits(amount.value, tokenInDecimals);
-
     const requiredAllowancesV1 = approvalsRequired(
       [tokenInAddress.value],
-      [tokenInAmountDenorm.toString()],
+      [amount.value],
       configService.network.addresses.exchangeProxy
     );
 
     const requiredAllowancesV2 = approvalsRequired(
       [tokenInAddress.value],
-      [tokenInAmountDenorm.toString()]
+      [amount.value]
     );
 
     return {

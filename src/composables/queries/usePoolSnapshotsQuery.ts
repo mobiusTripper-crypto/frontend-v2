@@ -5,8 +5,10 @@ import QUERY_KEYS from '@/constants/queryKeys';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 import { PoolSnapshots } from '@/services/balancer/subgraph/types';
 import usePoolQuery from './usePoolQuery';
-import { coingeckoService } from '@/services/coingecko/coingecko.service';
-import { HistoricalPrices } from '@/services/coingecko/api/price.service';
+import {
+  beethovenxService,
+  HistoricalPrices
+} from '@/services/beethovenx/beethovenx.service';
 
 /**
  * TYPES
@@ -40,9 +42,8 @@ export default function usePoolSnapshotsQuery(
   const queryFn = async () => {
     if (!pool.value) throw new Error('No pool');
 
-    const prices = await coingeckoService.prices.getTokensHistorical(
-      pool.value.tokensList,
-      days
+    const prices = await beethovenxService.getHistoricalTokenPrices(
+      pool.value.tokensList
     );
     const snapshots = await balancerSubgraphService.poolSnapshots.get(id, days);
 

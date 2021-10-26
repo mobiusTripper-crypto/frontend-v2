@@ -50,7 +50,7 @@
             </BalCard>
           </template>
         </div>
-        <div class="pb-12 pt-4">
+        <div class="pb-12 pt-4 flex justify-center">
           <BalBtn
             type="submit"
             loading-label="Harvesting"

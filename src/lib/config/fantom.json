@@ -13,6 +13,7 @@
   "subgraph": "https://graph-node.beets-ftm-node.com/subgraphs/name/beethovenx",
   "blockSubgraph": "https://graph-node.beets-ftm-node.com/subgraphs/name/fantom-blocks",
   "farmSubgraph": "https://graph-node.beets-ftm-node.com/subgraphs/name/masterchef",
+  "backendUrl": "https://backend.beets-ftm-node.com/graphql",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "nativeAsset": {
@@ -61,7 +62,7 @@
     }
   },
   "lbp": {
-    "poolId": "0x5856cee862de908d63062b891d526ce78183eb8c000200000000000000000014",
+    "poolId": "0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015",
     "tokenAddress": "0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
     "tokenSymbol": "BEETS",
     "startingAmount": 5000000,
@@ -84,8 +85,9 @@
     "0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011",
     "0xd163415bd34ef06f57c58d2aed5a5478afb464cc00000000000000000000000e",
     "0x2ed55f12e700cde978e1f0491d681919814ca44b000200000000000000000021",
-    "0x2975035545008935152fdf48ca13406cc5d4e47500010000000000000000002a",
-    "0x7ca132d9e8c420b84578a6618f10b2354551305800010000000000000000002b"
+    "0x6d12d3fe16dd83115254a32b273b05ac5444c349000100000000000000000029",
+    "0x7ca132d9e8c420b84578a6618f10b2354551305800010000000000000000002b",
+    "0x2975035545008935152fdf48ca13406cc5d4e47500010000000000000000002a"
   ]
 }
 

@@ -2,11 +2,12 @@
   <div id="modal" />
   <div id="app" class="flex flex-col">
     <AppNav />
+    <AppHeaderBg />
     <div class="relative">
-      <AppHero v-if="isHomePage" />
-      <GlobalStats />
+      <AppHero v-if="isInvestPage" />
+      <GlobalStats v-if="!isPortfolioPage" />
     </div>
-    <div class="pb-12 lg:px-12">
+    <div class="pb-12 lg:px-12 px-4 relative">
       <router-view :key="$route.path" class="flex-auto" />
     </div>
     <AppFooterNav v-if="upToLargeBreakpoint" />
@@ -92,6 +93,7 @@ import useBreakpoints from './composables/useBreakpoints';
 import { tryPromiseWithTimeout } from './lib/utils/promise';
 import AppFooterNav from '@/components/navs/AppFooterNav/AppFooterNav.vue';
 import GlobalStats from '@/components/stats/GlobalStats.vue';
+import AppHeaderBg from '@/components/heros/AppHeaderBg.vue';
 
 BigNumber.config({ DECIMAL_PLACES: DEFAULT_TOKEN_DECIMALS });
 
@@ -111,6 +113,7 @@ const isGnosisSafeApp = async (): Promise<boolean> => {
 
 export default defineComponent({
   components: {
+    AppHeaderBg,
     AppNav,
     AppFooterNav,
     AppHero,
@@ -134,8 +137,14 @@ export default defineComponent({
     const { darkMode, toggleDarkMode } = useDarkMode();
 
     // COMPUTED
-    const isHomePage = computed(() => route.path === '/');
+    const isHomePage = computed(() => {
+      return route.path === '/invest';
+    });
     const isFarmsPage = computed(() => route.path === '/farm');
+    const isPortfolioPage = computed(() => route.path === '/my-portfolio');
+    const isInvestPage = computed(() => {
+      return route.path === '/invest';
+    });
 
     // CALLBACKS
     onBeforeMount(async () => {
@@ -156,6 +165,8 @@ export default defineComponent({
       isHomePage,
       isFarmsPage,
       upToLargeBreakpoint,
+      isInvestPage,
+      isPortfolioPage,
       // methods
       toggleWalletSelectModal
     };

@@ -94,7 +94,7 @@ export default defineComponent({
     });
 
     const chartColors = [
-      tailwind.theme.colors.gray['500'],
+      //tailwind.theme.colors.gray['500'],
       tailwind.theme.colors.green['400']
     ];
 
@@ -105,7 +105,9 @@ export default defineComponent({
       const fistTime = isBefore(new Date(), parseISO(props.lbpStartTime))
         ? parseISO(props.lbpStartTime)
         : new Date();
-      const tokenPrices = props.tokenPrices || [];
+      const tokenPrices = (props.tokenPrices || []).filter(
+        tokenPrice => tokenPrice.amount > '0.0001'
+      );
       const times = [
         ...tokenPrices.map(price =>
           format(fromUnixTime(price.timestamp), 'yyyy-MM-dd HH:mm:ss')
@@ -159,10 +161,10 @@ export default defineComponent({
 
     const series = computed(() => {
       return [
-        {
+        /*{
           name: 'Predicted Price*',
           values: predictedPriceValues.value
-        },
+        },*/
         {
           name: 'BEETS Price',
           values: beetsPriceValues.value

@@ -105,5 +105,6 @@ export default defineComponent({
   @apply bg-white dark:bg-gray-900;
   @apply border-b border-transparent;
   transition: all 0.2s ease-in-out;
+  z-index: 100;
 }
 </style>

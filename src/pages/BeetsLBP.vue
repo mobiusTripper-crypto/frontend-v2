@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isBeforeLbpStart" class="app-nav-alert bg-green-500 text-white">
+  <!--  <div v-if="isBeforeLbpStart" class="app-nav-alert bg-green-500 text-white">
     <div class="w-8" />
     <div class="flex-1 text-center flex items-center justify-center">
       <BalIcon name="clock" class="mr-4" />
@@ -9,9 +9,9 @@
         {{ startDateTimeFormatted }}</span
       >
     </div>
-  </div>
-  <div class="lg:container lg:mx-auto">
-    <template v-if="isLbpOver">
+  </div>-->
+  <div class="lg:container lg:mx-auto mt-12">
+    <!--    <template v-if="isLbpOver">
       <div class="mx-8">
         <div class="lg:-ml-5 mt-8">
           <img src="~@/assets/images/beets-lbp-headline.svg" class="mx-auto" />
@@ -37,76 +37,77 @@
           to stay up to date. Farming will begin soon.
         </h3>
       </div>
-    </template>
-    <template v-else>
-      <div
-        class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8 mt-8"
-      >
-        <div class="col-span-2 order-2 lg:order-1">
-          <div class="grid grid-cols-1 gap-y-8">
-            <div class="">
-              <div class="lg:-ml-5">
-                <img src="~@/assets/images/beets-lbp-headline.svg" />
-              </div>
-              <p class="font-medium">
-                Before participating, please read our blog post explaining
-                Liquidity Bootstrapping Pools
-                <a
-                  href="https://beethovenxio.medium.com/drop-the-beets-ebf8c61c898"
-                  class="text-red-500 underline"
-                  >here</a
-                >.
-              </p>
-            </div>
-            <div class="px-1 lg:px-0">
-              <BeetsLBPChart
-                :loading="loadingTokenPrices || loadingPool"
-                :lbp-token-name="lbpTokenName"
-                :lbp-token-address="lbpTokenAddress"
-                :lbp-pool-id="lbpPoolId"
-                :lbp-end-time="lbpEndTime"
-                :lbp-start-time="lbpStartTime"
-                :token-prices="tokenPrices"
-                :usdc-address="usdcAddress"
-                :weight-step="lbpWeightStep"
-                :time-step="lbpTimeStep"
-                :pool="pool"
-              />
-            </div>
-            <div class="mb-4 px-1 lg:px-0">
-              <BeetsLBPStatCards
-                :pool="pool"
-                :lbp-token-address="lbpTokenAddress"
-                :lbp-token-name="lbpTokenName"
-                :lbp-token-starting-amount="lbpTokenStartingAmount"
-                :usdc-address="usdcAddress"
-                :lbp-end-time="lbpEndTime"
-                :lbp-start-time="lbpStartTime"
-                :loading="loadingPool"
-                :lbp-pool-id="lbpPoolId"
-                :is-before-lbp-start="isBeforeLbpStart"
-                @lbpStateChange="handleLbpStateChange"
-              />
+    </template>-->
+    <div
+      class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-0 lg:gap-x-8 mt-8"
+    >
+      <div class="col-span-2 order-2 lg:order-1">
+        <div class="grid grid-cols-1 gap-y-8">
+          <div>
+            <h2 class="text-red-500 mb-2">BEETS</h2>
+            <!--            <div class="lg:-ml-5 lg:-mt-4">
+              <img src="~@/assets/images/beets-headline.svg" />
+            </div>-->
+            <!--            <p class="font-medium">
+              Before participating, please read our blog post explaining
+              Liquidity Bootstrapping Pools
+              <a
+                href="https://beethovenxio.medium.com/drop-the-beets-ebf8c61c898"
+                class="text-red-500 underline"
+                >here</a
+              >.
+            </p>-->
+          </div>
+          <div class="px-1 lg:px-0">
+            <BeetsLBPChart
+              :loading="loadingTokenPrices || loadingPool"
+              :lbp-token-name="lbpTokenName"
+              :lbp-token-address="lbpTokenAddress"
+              :lbp-pool-id="lbpPoolId"
+              :lbp-end-time="lbpEndTime"
+              :lbp-start-time="lbpStartTime"
+              :token-prices="tokenPrices"
+              :usdc-address="usdcAddress"
+              :weight-step="lbpWeightStep"
+              :time-step="lbpTimeStep"
+              :pool="pool"
+            />
+          </div>
+          <div class="mb-4 px-1 lg:px-0">
+            <BeetsLBPStatCards
+              :pool="pool"
+              :lbp-token-address="lbpTokenAddress"
+              :lbp-token-name="lbpTokenName"
+              :lbp-token-starting-amount="lbpTokenStartingAmount"
+              :usdc-address="usdcAddress"
+              :lbp-end-time="lbpEndTime"
+              :lbp-start-time="lbpStartTime"
+              :loading="loadingPool"
+              :lbp-pool-id="lbpPoolId"
+              :is-before-lbp-start="isBeforeLbpStart"
+              @lbpStateChange="handleLbpStateChange"
+            />
 
-              <p class="text-gray-300 mt-4">
-                *The predicted price is an estimation assuming no additional
-                buyers or sellers.
-              </p>
-              <p class="text-gray-300">
-                <span class="font-bold">Note</span>: Users can both
-                <span class="font-bold text-green-500">BUY</span> and
-                <span class="font-bold text-red-500">SELL</span>
-                during this event. Please be careful.
-              </p>
-            </div>
+            <!--            <p class="text-gray-300 mt-4">
+              *The predicted price is an estimation assuming no additional
+              buyers or sellers.
+            </p>
+            <p class="text-gray-300">
+              <span class="font-bold">Note</span>: Users can both
+              <span class="font-bold text-green-500">BUY</span> and
+              <span class="font-bold text-red-500">SELL</span>
+              during this event. Please be careful.
+            </p>-->
           </div>
         </div>
+      </div>
 
-        <div class="order-1 lg:order-2 px-1 lg:px-0">
-          <div class="mb-6">
-            <img src="~@/assets/images/ludwig-says.svg" />
-          </div>
+      <div class="order-1 lg:order-2 px-1 lg:px-0 pt-16">
+        <!--        <div class="mb-6">
+          <img src="~@/assets/images/ludwig-says.svg" />
+        </div>-->
 
+        <div class="pt-2">
           <BalLoadingBlock
             v-if="appLoading || loadingTokenLists"
             class="h-96"
@@ -122,15 +123,15 @@
           </template>
         </div>
       </div>
+    </div>
 
-      <div class="mt-24 mb-24">
-        <LBPTable
-          :lbp-token-name="lbpTokenName"
-          :lbp-token-address="lbpTokenAddress"
-          :lbp-pool-id="lbpPoolId"
-        />
-      </div>
-    </template>
+    <div class="mt-24 mb-24">
+      <LBPTable
+        :lbp-token-name="lbpTokenName"
+        :lbp-token-address="lbpTokenAddress"
+        :lbp-pool-id="lbpPoolId"
+      />
+    </div>
   </div>
 </template>
 
@@ -154,7 +155,14 @@ import {
   TOKEN_PRICES_ROOT_KEY
 } from '@/constants/queryKeys';
 import useTokenLists from '@/composables/useTokenLists';
-import { format, isAfter, isBefore, parseISO } from 'date-fns';
+import {
+  format,
+  isAfter,
+  isBefore,
+  parseISO,
+  getUnixTime,
+  subDays
+} from 'date-fns';
 
 interface LbpPageData {
   refetchQueriesOnBlockNumber: number;
@@ -203,7 +211,8 @@ export default defineComponent({
 
     const tokenPricesQuery = useSubgraphTokenPricesQuery(
       ref(lbpConfig.poolId),
-      ref(lbpConfig.tokenAddress.toLowerCase())
+      ref(lbpConfig.tokenAddress.toLowerCase()),
+      ref(`${getUnixTime(subDays(new Date(), 1))}`)
     );
     const tokenPrices = computed(() => tokenPricesQuery.data.value || []);
     const loadingTokenPrices = computed(
@@ -267,7 +276,6 @@ export default defineComponent({
     });
 
     function handleLbpStateChange() {
-      console.log('!@#!@#!@ HANDLE STATE CHANGE');
       isLbpOver.value = isAfter(new Date(), parseISO(lbpConfig.endTime));
       isBeforeLbpStart.value = isBefore(
         new Date(),

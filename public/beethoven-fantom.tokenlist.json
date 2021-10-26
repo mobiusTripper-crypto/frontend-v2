@@ -52,7 +52,7 @@
       "symbol": "DAI",
       "decimals": 18,
       "chainId": 250,
-      "logoURI": "https://assets.coingecko.com/coins/images/9956/large/dai-multi-collateral-mcd.png"
+      "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/multi-collateral-dai-dai-logo-2.png"
     },
     {
       "name": "USDC",
@@ -62,7 +62,6 @@
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png"
     },
-
     {
       "name": "Frapped USDT",
       "address": "0x049d68029688eabf473097a2fc38ef61633a3c7a",
@@ -190,6 +189,38 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/15264/large/mimatic-red.png"
+    },
+    {
+      "name": "BELUGA",
+      "address": "0x4A13a2cf881f5378DEF61E430139Ed26d843Df9A",
+      "symbol": "BELUGA",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/13790/large/brand-logo-v2.23e5d279.png"
+    },
+    {
+      "name": "wMEMO",
+      "address": "0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
+      "symbol": "wMEMO",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://swap.spiritswap.finance/images/coins/wMEMO.png"
+    },
+    {
+      "name": "Beefy.Finance",
+      "address": "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
+      "symbol": "BIFI",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/12704/large/token.png"
+    },
+    {
+      "name": "BIFI Maxi",
+      "address": "0xbf07093ccd6adfc3deb259c557b61e94c1f66945",
+      "symbol": "mooBIFI",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/mooBIFI.png"
     },
     {
       "name": "Paint Swap",

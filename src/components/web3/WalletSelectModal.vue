@@ -11,7 +11,7 @@
       <h6>New to Fantom?</h6>
       <p class="text-sm">
         Beethovenx is a DeFi app on Fantom Opera. To invest and trade here,
-        you'll first need to set up an Ethereum compatible wallet.
+        you'll first need to set up a Fantom compatible wallet.
         <BalLink :href="EXTERNAL_LINKS.Ethereum.Wallets" external>
           Learn More
           <span class="align-middle"

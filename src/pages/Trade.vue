@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-16">
     <div class="trade-container">
       <BalLoadingBlock v-if="appLoading || loadingTokenLists" class="h-96" />
       <template v-else>
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 import TradeCard from '@/components/cards/TradeCard/TradeCard.vue';
@@ -19,6 +19,7 @@ import TradeCardGP from '@/components/cards/TradeCardGP/TradeCardGP.vue';
 import useTokenLists from '@/composables/useTokenLists';
 import { TradeInterface } from '@/store/modules/app';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
+import TradeRatesCard from '@/components/cards/TradeRatesCard/TradeRatesCard.vue';
 
 export default defineComponent({
   components: {

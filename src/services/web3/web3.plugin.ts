@@ -36,10 +36,10 @@ export type Wallet =
   | 'walletlink'
   | 'portis';
 export const SupportedWallets = [
-  'metamask'
-  //'walletconnect',
+  'metamask',
+  'walletconnect',
   //'gnosis',
-  //'walletlink',
+  'walletlink'
   //'portis'
 ] as Wallet[];
 export const WalletNameMap: Record<Wallet, string> = {

@@ -15,8 +15,9 @@ export interface Config {
   loggingRpc: string;
   explorer: string;
   subgraph: string;
-  farmSubgraph?: string;
-  blockSubgraph?: string;
+  farmSubgraph: string;
+  blockSubgraph: string;
+  backendUrl: string;
   poolsUrlV1: string;
   poolsUrlV2: string;
   nativeAsset: {

@@ -1,0 +1,2474 @@
+[
+    {
+        "tokens": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "symbol": "USDC",
+                "name": "USD Coin",
+                "pricePerToken": 1.0007212704949022,
+                "balance": 47500682.31516808,
+                "totalValue": 47534943.15580973,
+                "percentOfPortfolio": 0.480874360467185
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "pricePerToken": 61982.08028189971,
+                "balance": 561.6316485355277,
+                "totalValue": 34811097.92838476,
+                "percentOfPortfolio": 0.334056828161683
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "symbol": "ETH",
+                "name": "Ethereum",
+                "pricePerToken": 3748.962485778668,
+                "balance": 8043.728310341325,
+                "totalValue": 30155635.68126546,
+                "percentOfPortfolio": 0.3332093058328722
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "symbol": "WFTM",
+                "name": "Wrapped Fantom",
+                "pricePerToken": 2.2206728223565406,
+                "balance": 12953287.99519615,
+                "totalValue": 28765014.61108933,
+                "percentOfPortfolio": 0.33273386600544486
+            },
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "symbol": "DAI",
+                "name": "Dai Stablecoin",
+                "pricePerToken": 1.0008396847244365,
+                "balance": 20766203.604184926,
+                "totalValue": 20783640.6681359,
+                "percentOfPortfolio": 0.5191256395328151
+            }
+        ],
+        "pools": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolId": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolAddress": "0xd41bf724b6e31311db582c5388af6b316e812fe4",
+                "name": "Steady Beets",
+                "shares": 39714744.34956822,
+                "percentShare": 0.9655139322138568,
+                "totalValue": 40035858.53867678,
+                "pricePerShare": 1.0080855157037427,
+                "tokens": [
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "symbol": "DAI",
+                        "name": "Dai Stablecoin",
+                        "pricePerToken": 1.0008396847244365,
+                        "balance": 20766203.604184926,
+                        "totalValue": 20783640.6681359,
+                        "percentOfPortfolio": 0.5191256395328151
+                    },
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0007212704949022,
+                        "balance": 19238341.82221368,
+                        "totalValue": 19252217.870540887,
+                        "percentOfPortfolio": 0.480874360467185
+                    }
+                ],
+                "swapFees": 946.3881860987676,
+                "swapVolume": 1577313.6434979448,
+                "myFees": 913.7509789609604,
+                "priceChange": -120525.32150517404,
+                "priceChangePercent": -0.0030013987794524463,
+                "percentOfPortfolio": 0.24705817034448868
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolId": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolAddress": "0xd47d2791d3b46f9452709fa41855a045304d6f9d",
+                "name": "The Grand Orchestra",
+                "shares": 42604.22663311332,
+                "percentShare": 0.6561853696815256,
+                "totalValue": 34367118.75053409,
+                "pricePerShare": 806.6598426134299,
+                "tokens": [
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61982.08028189971,
+                        "balance": 185.22402976222673,
+                        "totalValue": 11480570.682859318,
+                        "percentOfPortfolio": 0.334056828161683
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3748.962485778668,
+                        "balance": 3054.563449429358,
+                        "totalValue": 11451443.78234135,
+                        "percentOfPortfolio": 0.3332093058328722
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.2206728223565406,
+                        "balance": 5149387.235350898,
+                        "totalValue": 11435104.285333421,
+                        "percentOfPortfolio": 0.33273386600544486
+                    }
+                ],
+                "swapFees": 7214.817409262985,
+                "swapVolume": 2885926.9637051933,
+                "myFees": 4734.257628881939,
+                "priceChange": -647.4898584336042,
+                "priceChangePercent": -0.00001884003324232949,
+                "percentOfPortfolio": 0.2120768178435907
+            },
+            {
+                "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolId": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolAddress": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226",
+                "name": "Fantom of the Opera",
+                "shares": 15160262.75894094,
+                "percentShare": 0.5731434153021651,
+                "totalValue": 24763581.2297949,
+                "pricePerShare": 1.6334532998242588,
+                "tokens": [
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.2206728223565406,
+                        "balance": 7803900.759845253,
+                        "totalValue": 17329910.32575591,
+                        "percentOfPortfolio": 0.6998143832647682
+                    },
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0007212704949022,
+                        "balance": 7428313.080986779,
+                        "totalValue": 7433670.904038991,
+                        "percentOfPortfolio": 0.30018561673523175
+                    }
+                ],
+                "swapFees": 14650.978766841872,
+                "swapVolume": 5860391.506736748,
+                "myFees": 8397.112007947253,
+                "priceChange": 446606.05795614794,
+                "priceChangePercent": 0.01836602023072993,
+                "percentOfPortfolio": 0.1528141344564871
+            },
+            {
+                "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolId": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolAddress": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363",
+                "name": "The Classic Trio",
+                "shares": 7725.417306725143,
+                "percentShare": 0.8783709168512108,
+                "totalValue": 21246509.59243238,
+                "pricePerShare": 2750.208661729747,
+                "tokens": [
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61982.08028189971,
+                        "balance": 171.74322072218314,
+                        "totalValue": 10645002.094674377,
+                        "percentOfPortfolio": 0.5010235704064038
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3748.962485778668,
+                        "balance": 1698.156834916109,
+                        "totalValue": 6366326.2690691305,
+                        "percentOfPortfolio": 0.2996410418084249
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0007212704949022,
+                        "balance": 4232128.719113147,
+                        "totalValue": 4235181.2286888715,
+                        "percentOfPortfolio": 0.19933538778517135
+                    }
+                ],
+                "swapFees": 1632.9418763264584,
+                "swapVolume": 653176.7505305829,
+                "myFees": 1434.3286530736077,
+                "priceChange": 14522.933517023921,
+                "priceChangePercent": 0.0006840119933348635,
+                "percentOfPortfolio": 0.13111055882670872
+            },
+            {
+                "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolId": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolAddress": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a",
+                "name": "The B Major",
+                "shares": 28596.667797104616,
+                "percentShare": 0.9417847732654555,
+                "totalValue": 21097571.31144754,
+                "pricePerShare": 737.7632758171792,
+                "tokens": [
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61982.08028189971,
+                        "balance": 204.6643980511178,
+                        "totalValue": 12685525.150851062,
+                        "percentOfPortfolio": 0.6012789322327304
+                    },
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0007212704949022,
+                        "balance": 8405983.172953183,
+                        "totalValue": 8412046.160596479,
+                        "percentOfPortfolio": 0.3987210677672697
+                    }
+                ],
+                "swapFees": 1605.7596021321806,
+                "swapVolume": 642303.8408528734,
+                "myFees": 1512.2799428128837,
+                "priceChange": 98234.00181755796,
+                "priceChangePercent": 0.004677957231179353,
+                "percentOfPortfolio": 0.13019147227436664
+            },
+            {
+                "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolId": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolAddress": "0xa07de66aef84e2c01d88a48d57d1463377ee602b",
+                "name": "The E Major",
+                "shares": 149743.01587272124,
+                "percentShare": 0.8103843261098104,
+                "totalValue": 20539692.621799488,
+                "pricePerShare": 137.16628119242532,
+                "tokens": [
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3748.962485778668,
+                        "balance": 3291.0080259958577,
+                        "totalValue": 12337865.629854977,
+                        "percentOfPortfolio": 0.6006840441594716
+                    },
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0007212704949022,
+                        "balance": 8195915.519901294,
+                        "totalValue": 8201826.9919445105,
+                        "percentOfPortfolio": 0.39931595584052837
+                    }
+                ],
+                "swapFees": 1736.7482680038556,
+                "swapVolume": 694699.3072015429,
+                "myFees": 1407.4335747886848,
+                "priceChange": 21352.362012621015,
+                "priceChangePercent": 0.0010406476226768066,
+                "percentOfPortfolio": 0.12674884625435814
+            }
+        ],
+        "timestamp": 1634601600,
+        "totalValue": 162050332.04468518,
+        "totalSwapFees": 27787.63410866612,
+        "totalSwapVolume": 12313812.012524884,
+        "myFees": 18399.162786465327
+    },
+    {
+        "tokens": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "symbol": "USDC",
+                "name": "USD Coin",
+                "pricePerToken": 1.002153190024478,
+                "balance": 48622775.296412304,
+                "totalValue": 48727469.371142976,
+                "percentOfPortfolio": 0.5025182891018146
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "pricePerToken": 62107.77606531923,
+                "balance": 568.0803170125478,
+                "totalValue": 35282205.11613087,
+                "percentOfPortfolio": 0.3356063791232224
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "symbol": "ETH",
+                "name": "Ethereum",
+                "pricePerToken": 3841.781647567198,
+                "balance": 7964.972668102266,
+                "totalValue": 30599685.819689617,
+                "percentOfPortfolio": 0.33301937684606325
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "symbol": "WFTM",
+                "name": "Wrapped Fantom",
+                "pricePerToken": 2.2909317115958383,
+                "balance": 12798826.633213308,
+                "totalValue": 29321237.805245765,
+                "percentOfPortfolio": 0.33137424403071425
+            },
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "symbol": "DAI",
+                "name": "Dai Stablecoin",
+                "pricePerToken": 1.0047036120874975,
+                "balance": 19875644.21972708,
+                "totalValue": 19969131.540125787,
+                "percentOfPortfolio": 0.49748171089818544
+            }
+        ],
+        "pools": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolId": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolAddress": "0xd41bf724b6e31311db582c5388af6b316e812fe4",
+                "name": "Steady Beets",
+                "shares": 39714744.34956822,
+                "percentShare": 0.9625909214074156,
+                "totalValue": 40140433.5127662,
+                "pricePerShare": 1.0107186680959361,
+                "tokens": [
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.002153190024478,
+                        "balance": 20127962.64426172,
+                        "totalValue": 20171301.97264041,
+                        "percentOfPortfolio": 0.5025182891018146
+                    },
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "symbol": "DAI",
+                        "name": "Dai Stablecoin",
+                        "pricePerToken": 1.0047036120874975,
+                        "balance": 19875644.21972708,
+                        "totalValue": 19969131.540125787,
+                        "percentOfPortfolio": 0.49748171089818544
+                    }
+                ],
+                "swapFees": 958.0097829692313,
+                "swapVolume": 1596682.9716153853,
+                "myFees": 922.1715197056707,
+                "priceChange": 408540.3771800995,
+                "priceChangePercent": 0.010282429175623347,
+                "percentOfPortfolio": 0.24490847909213945
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolId": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolAddress": "0xd47d2791d3b46f9452709fa41855a045304d6f9d",
+                "name": "The Grand Orchestra",
+                "shares": 42604.22663311332,
+                "percentShare": 0.6561937716856491,
+                "totalValue": 35029842.242989086,
+                "pricePerShare": 822.2151887569486,
+                "tokens": [
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 62107.77606531923,
+                        "balance": 189.2877069702695,
+                        "totalValue": 11756238.516427265,
+                        "percentOfPortfolio": 0.3356063791232224
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3841.781647567198,
+                        "balance": 3036.5120417927346,
+                        "totalValue": 11665616.234776128,
+                        "percentOfPortfolio": 0.33301937684606325
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.2909317115958383,
+                        "balance": 5066928.635642173,
+                        "totalValue": 11607987.491785688,
+                        "percentOfPortfolio": 0.33137424403071425
+                    }
+                ],
+                "swapFees": 10303.947724685218,
+                "swapVolume": 4121579.0898740888,
+                "myFees": 6761.386320712955,
+                "priceChange": 47174.77535279095,
+                "priceChangePercent": 0.0013485185312536274,
+                "percentOfPortfolio": 0.21372727287161836
+            },
+            {
+                "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolId": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolAddress": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226",
+                "name": "Fantom of the Opera",
+                "shares": 15160262.75894094,
+                "percentShare": 0.5835315766905808,
+                "totalValue": 25311809.38596341,
+                "pricePerShare": 1.6696154801825898,
+                "tokens": [
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.2909317115958383,
+                        "balance": 7731897.997571135,
+                        "totalValue": 17713250.313460074,
+                        "percentOfPortfolio": 0.6998018214882301
+                    },
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.002153190024478,
+                        "balance": 7582233.083863892,
+                        "totalValue": 7598559.072503335,
+                        "percentOfPortfolio": 0.30019817851176983
+                    }
+                ],
+                "swapFees": 16010.294239484414,
+                "swapVolume": 6404117.695793763,
+                "myFees": 9342.512240846463,
+                "priceChange": 1296642.57716557,
+                "priceChangePercent": 0.05399265337147487,
+                "percentOfPortfolio": 0.15443472322776222
+            },
+            {
+                "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolId": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolAddress": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363",
+                "name": "The Classic Trio",
+                "shares": 7725.417306725143,
+                "percentShare": 0.8789953333227998,
+                "totalValue": 21429618.381481163,
+                "pricePerShare": 2773.9107844473615,
+                "tokens": [
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 62107.77606531923,
+                        "balance": 173.5274599944049,
+                        "totalValue": 10777404.626516141,
+                        "percentOfPortfolio": 0.5029209776236451
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3841.781647567198,
+                        "balance": 1666.1691082312109,
+                        "totalValue": 6401057.90174607,
+                        "percentOfPortfolio": 0.2987014415187941
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.002153190024478,
+                        "balance": 4242021.973821302,
+                        "totalValue": 4251155.85321895,
+                        "percentOfPortfolio": 0.1983775808575608
+                    }
+                ],
+                "swapFees": 1584.7187862412302,
+                "swapVolume": 633887.5144964922,
+                "myFees": 1392.960417735013,
+                "priceChange": 19014.118465147913,
+                "priceChangePercent": 0.0008880701465297869,
+                "percentOfPortfolio": 0.13074834489927337
+            },
+            {
+                "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolId": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolAddress": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a",
+                "name": "The B Major",
+                "shares": 28596.667797104616,
+                "percentShare": 0.9461375626943098,
+                "totalValue": 21134175.81879843,
+                "pricePerShare": 739.0433028332848,
+                "tokens": [
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 62107.77606531923,
+                        "balance": 205.2651500478733,
+                        "totalValue": 12748561.973187467,
+                        "percentOfPortfolio": 0.6032202098862012
+                    },
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.002153190024478,
+                        "balance": 8367596.819610126,
+                        "totalValue": 8385613.845610965,
+                        "percentOfPortfolio": 0.3967797901137989
+                    }
+                ],
+                "swapFees": 1808.6350810998083,
+                "swapVolume": 723454.0324399229,
+                "myFees": 1711.217587435198,
+                "priceChange": -329204.9771688394,
+                "priceChangePercent": -0.015337983344669232,
+                "percentOfPortfolio": 0.12894576375219383
+            },
+            {
+                "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolId": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolAddress": "0xa07de66aef84e2c01d88a48d57d1463377ee602b",
+                "name": "The E Major",
+                "shares": 149743.01587272124,
+                "percentShare": 0.8112065344093267,
+                "totalValue": 20853850.31033674,
+                "pricePerShare": 139.26426009786073,
+                "tokens": [
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3841.781647567198,
+                        "balance": 3262.2915180783198,
+                        "totalValue": 12533011.683167422,
+                        "percentOfPortfolio": 0.6009926942342689
+                    },
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.002153190024478,
+                        "balance": 8302960.774855267,
+                        "totalValue": 8320838.627169318,
+                        "percentOfPortfolio": 0.3990073057657311
+                    }
+                ],
+                "swapFees": 2621.8847980711816,
+                "swapVolume": 1048753.9192284727,
+                "myFees": 2126.8900806638203,
+                "priceChange": -2599871.3465662897,
+                "priceChangePercent": -0.11085112139552834,
+                "percentOfPortfolio": 0.1272354161570128
+            }
+        ],
+        "timestamp": 1634515200,
+        "totalValue": 163899729.65233502,
+        "totalSwapFees": 33287.49041255109,
+        "totalSwapVolume": 14528475.223448124,
+        "myFees": 22257.13816709912
+    },
+    {
+        "tokens": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "symbol": "USDC",
+                "name": "USD Coin",
+                "pricePerToken": 1.0024479734992968,
+                "balance": 49503460.32064476,
+                "totalValue": 49624643.47963319,
+                "percentOfPortfolio": 0.5326618216241497
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "pricePerToken": 61146.87448147167,
+                "balance": 565.8996824366823,
+                "totalValue": 34602996.85106049,
+                "percentOfPortfolio": 0.33337484553381436
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "symbol": "ETH",
+                "name": "Ethereum",
+                "pricePerToken": 3849.318698906373,
+                "balance": 7863.220325501581,
+                "totalValue": 30268041.032573894,
+                "percentOfPortfolio": 0.3329879157078872
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "symbol": "WFTM",
+                "name": "Wrapped Fantom",
+                "pricePerToken": 2.1529483359800734,
+                "balance": 13161586.70753707,
+                "totalValue": 28336216.20084939,
+                "percentOfPortfolio": 0.3336372387582982
+            },
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "symbol": "DAI",
+                "name": "Dai Stablecoin",
+                "pricePerToken": 1.0028508267767997,
+                "balance": 18690782.92942075,
+                "totalValue": 18744067.113875296,
+                "percentOfPortfolio": 0.46733817837585034
+            }
+        ],
+        "pools": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolId": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolAddress": "0xd41bf724b6e31311db582c5388af6b316e812fe4",
+                "name": "Steady Beets",
+                "shares": 39714744.34956822,
+                "percentShare": 0.9723932015170984,
+                "totalValue": 40108144.33996581,
+                "pricePerShare": 1.0099056407598874,
+                "tokens": [
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0024479734992968,
+                        "balance": 21311906.244384766,
+                        "totalValue": 21364077.226090517,
+                        "percentOfPortfolio": 0.5326618216241497
+                    },
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "symbol": "DAI",
+                        "name": "Dai Stablecoin",
+                        "pricePerToken": 1.0028508267767997,
+                        "balance": 18690782.92942075,
+                        "totalValue": 18744067.113875296,
+                        "percentOfPortfolio": 0.46733817837585034
+                    }
+                ],
+                "swapFees": 404.24408264253043,
+                "swapVolume": 673740.1377375508,
+                "myFees": 393.0841977151127,
+                "priceChange": -2465311.3331003413,
+                "priceChangePercent": -0.05790724041835312,
+                "percentOfPortfolio": 0.24823088272997826
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolId": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolAddress": "0xd47d2791d3b46f9452709fa41855a045304d6f9d",
+                "name": "The Grand Orchestra",
+                "shares": 42604.22663311332,
+                "percentShare": 0.6571974863480918,
+                "totalValue": 34149325.05753423,
+                "pricePerShare": 801.5478218067764,
+                "tokens": [
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.1529483359800734,
+                        "balance": 5292038.980800112,
+                        "totalValue": 11393486.517655285,
+                        "percentOfPortfolio": 0.3336372387582982
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61146.87448147167,
+                        "balance": 186.18328512586783,
+                        "totalValue": 11384525.966139492,
+                        "percentOfPortfolio": 0.33337484553381436
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3849.318698906373,
+                        "balance": 2954.1104447834223,
+                        "totalValue": 11371312.57373945,
+                        "percentOfPortfolio": 0.3329879157078872
+                    }
+                ],
+                "swapFees": 5823.053442140263,
+                "swapVolume": 2329221.3768561073,
+                "myFees": 3826.8960850451845,
+                "priceChange": 2528235.2513001263,
+                "priceChangePercent": 0.07995408339157507,
+                "percentOfPortfolio": 0.2113515158370928
+            },
+            {
+                "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolId": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolAddress": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226",
+                "name": "Fantom of the Opera",
+                "shares": 15160262.75894094,
+                "percentShare": 0.6150169370876782,
+                "totalValue": 24227218.09988496,
+                "pricePerShare": 1.598073759348048,
+                "tokens": [
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.1529483359800734,
+                        "balance": 7869547.726736959,
+                        "totalValue": 16942729.683194105,
+                        "percentOfPortfolio": 0.699326254188241
+                    },
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0024479734992968,
+                        "balance": 7266699.728328561,
+                        "totalValue": 7284488.416690857,
+                        "percentOfPortfolio": 0.300673745811759
+                    }
+                ],
+                "swapFees": 7996.833879657293,
+                "swapVolume": 3198733.551862918,
+                "myFees": 4918.188279065804,
+                "priceChange": 2333719.205065448,
+                "priceChangePercent": 0.10659416369567395,
+                "percentOfPortfolio": 0.14994320565046806
+            },
+            {
+                "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolId": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolAddress": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363",
+                "name": "The Classic Trio",
+                "shares": 7725.417306725143,
+                "percentShare": 0.8797416844546139,
+                "totalValue": 21275172.310689747,
+                "pricePerShare": 2753.9188455449844,
+                "tokens": [
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61146.87448147167,
+                        "balance": 174.14822126232514,
+                        "totalValue": 10648619.426698951,
+                        "percentOfPortfolio": 0.5005185984486026
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3849.318698906373,
+                        "balance": 1655.3690295142633,
+                        "totalValue": 6372042.958899749,
+                        "percentOfPortfolio": 0.2995060564420484
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0024479734992968,
+                        "balance": 4244120.4307487495,
+                        "totalValue": 4254509.925091047,
+                        "percentOfPortfolio": 0.19997534510934895
+                    }
+                ],
+                "swapFees": 1214.9950786180725,
+                "swapVolume": 485998.0314472299,
+                "myFees": 1068.881817067529,
+                "priceChange": -45347.37990540266,
+                "priceChangePercent": -0.0021269359548213157,
+                "percentOfPortfolio": 0.13167287816037138
+            },
+            {
+                "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolId": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolAddress": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a",
+                "name": "The B Major",
+                "shares": 28596.667797104616,
+                "percentShare": 0.9315610656716629,
+                "totalValue": 20937638.982453715,
+                "pricePerShare": 732.1705847341287,
+                "tokens": [
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61146.87448147167,
+                        "balance": 205.5681760484893,
+                        "totalValue": 12569851.458222046,
+                        "percentOfPortfolio": 0.600347129337549
+                    },
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0024479734992968,
+                        "balance": 8347353.424259817,
+                        "totalValue": 8367787.5242316695,
+                        "percentOfPortfolio": 0.39965287066245114
+                    }
+                ],
+                "swapFees": 1154.3863814657234,
+                "swapVolume": 461754.55258629005,
+                "myFees": 1075.381407715064,
+                "priceChange": -1991876.0402362682,
+                "priceChangePercent": -0.08686952333118254,
+                "percentOfPortfolio": 0.1295838711170979
+            },
+            {
+                "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolId": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolAddress": "0xa07de66aef84e2c01d88a48d57d1463377ee602b",
+                "name": "The E Major",
+                "shares": 149743.01587272124,
+                "percentShare": 0.7212015954654901,
+                "totalValue": 20878465.887463793,
+                "pricePerShare": 139.42864557509714,
+                "tokens": [
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3849.318698906373,
+                        "balance": 3253.740851203896,
+                        "totalValue": 12524685.499934696,
+                        "percentOfPortfolio": 0.599885334844213
+                    },
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0024479734992968,
+                        "balance": 8333380.492922864,
+                        "totalValue": 8353780.387529097,
+                        "percentOfPortfolio": 0.400114665155787
+                    }
+                ],
+                "swapFees": 1669.7820125757007,
+                "swapVolume": 667912.8050302807,
+                "myFees": 1204.2494515491724,
+                "priceChange": 810838.7110566646,
+                "priceChangePercent": 0.040405310699111546,
+                "percentOfPortfolio": 0.12921764650499146
+            }
+        ],
+        "timestamp": 1634428800,
+        "totalValue": 161575964.67799222,
+        "totalSwapFees": 18263.29487709958,
+        "totalSwapVolume": 7817360.455520377,
+        "myFees": 12486.681238157866
+    },
+    {
+        "tokens": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "symbol": "USDC",
+                "name": "USD Coin",
+                "pricePerToken": 1.0052069403859873,
+                "balance": 49378260.881104484,
+                "totalValue": 49635370.54187613,
+                "percentOfPortfolio": 0.5418631568579878
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "pricePerToken": 61194.17649954326,
+                "balance": 557.6661662662137,
+                "totalValue": 34125921.80631832,
+                "percentOfPortfolio": 0.33184844506727645
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "symbol": "ETH",
+                "name": "Ethereum",
+                "pricePerToken": 3866.7124781114408,
+                "balance": 7771.790572441683,
+                "totalValue": 30051279.583729118,
+                "percentOfPortfolio": 0.33415188645607613
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "symbol": "WFTM",
+                "name": "Wrapped Fantom",
+                "pricePerToken": 1.9416672975570717,
+                "balance": 13813565.773559054,
+                "totalValue": 26821348.925173268,
+                "percentOfPortfolio": 0.3339996684766473
+            },
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "symbol": "DAI",
+                "name": "Dai Stablecoin",
+                "pricePerToken": 1.0048906157272426,
+                "balance": 18329634.98044814,
+                "totalValue": 18419278.181558136,
+                "percentOfPortfolio": 0.4581368431420122
+            }
+        ],
+        "pools": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolId": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolAddress": "0xd41bf724b6e31311db582c5388af6b316e812fe4",
+                "name": "Steady Beets",
+                "shares": 39714744.34956822,
+                "percentShare": 0.9160714628227109,
+                "totalValue": 40204752.04577374,
+                "pricePerShare": 1.0123381807998684,
+                "tokens": [
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0052069403859873,
+                        "balance": 21672625.793699995,
+                        "totalValue": 21785473.8642156,
+                        "percentOfPortfolio": 0.5418631568579878
+                    },
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "symbol": "DAI",
+                        "name": "Dai Stablecoin",
+                        "pricePerToken": 1.0048906157272426,
+                        "balance": 18329634.98044814,
+                        "totalValue": 18419278.181558136,
+                        "percentOfPortfolio": 0.4581368431420122
+                    }
+                ],
+                "swapFees": 332.46290057815077,
+                "swapVolume": 554104.8342969175,
+                "myFees": 304.5597756669081,
+                "priceChange": -233641.06977384537,
+                "priceChangePercent": -0.005777704101798646,
+                "percentOfPortfolio": 0.2527755008310314
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolId": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolAddress": "0xd47d2791d3b46f9452709fa41855a045304d6f9d",
+                "name": "The Grand Orchestra",
+                "shares": 42604.22663311332,
+                "percentShare": 0.7106148037897436,
+                "totalValue": 33048314.636095397,
+                "pricePerShare": 775.7050707830294,
+                "tokens": [
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3866.7124781114408,
+                        "balance": 2855.9549597643913,
+                        "totalValue": 11043156.679845229,
+                        "percentOfPortfolio": 0.33415188645607613
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 1.9416672975570717,
+                        "balance": 5684869.980586027,
+                        "totalValue": 11038126.132167794,
+                        "percentOfPortfolio": 0.3339996684766473
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61194.17649954326,
+                        "balance": 179.21691983491644,
+                        "totalValue": 10967031.824082373,
+                        "percentOfPortfolio": 0.33184844506727645
+                    }
+                ],
+                "swapFees": 7106.395214731841,
+                "swapVolume": 2842558.085892735,
+                "myFees": 5049.909641169041,
+                "priceChange": 1872279.2129452825,
+                "priceChangePercent": 0.06005507716208843,
+                "percentOfPortfolio": 0.20778151483808638
+            },
+            {
+                "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolId": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolAddress": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226",
+                "name": "Fantom of the Opera",
+                "shares": 15160262.75894094,
+                "percentShare": 0.6812157147880243,
+                "totalValue": 22551193.13668623,
+                "pricePerShare": 1.4875199391505534,
+                "tokens": [
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 1.9416672975570717,
+                        "balance": 8128695.792973028,
+                        "totalValue": 15783222.793005476,
+                        "percentOfPortfolio": 0.6998841567867806
+                    },
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0052069403859873,
+                        "balance": 6732912.469826298,
+                        "totalValue": 6767970.343680754,
+                        "percentOfPortfolio": 0.30011584321321944
+                    }
+                ],
+                "swapFees": 8626.344314242102,
+                "swapVolume": 3450537.725696843,
+                "myFees": 5876.401308034043,
+                "priceChange": 320112.3170527555,
+                "priceChangePercent": 0.014399314169648781,
+                "percentOfPortfolio": 0.1417839645665069
+            },
+            {
+                "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolId": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolAddress": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363",
+                "name": "The Classic Trio",
+                "shares": 7725.417306725143,
+                "percentShare": 0.8778289839442536,
+                "totalValue": 21323025.888675146,
+                "pricePerShare": 2760.1131488538476,
+                "tokens": [
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61194.17649954326,
+                        "balance": 173.493273439782,
+                        "totalValue": 10616777.996357542,
+                        "percentOfPortfolio": 0.497902035657904
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3866.7124781114408,
+                        "balance": 1661.8265153780728,
+                        "totalValue": 6425805.323468848,
+                        "percentOfPortfolio": 0.3013552277719483
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0052069403859873,
+                        "balance": 4258270.010755316,
+                        "totalValue": 4280442.568848757,
+                        "percentOfPortfolio": 0.20074273657014782
+                    }
+                ],
+                "swapFees": 1960.0431133440106,
+                "swapVolume": 784017.2453376036,
+                "myFees": 1720.5826546737044,
+                "priceChange": -2434904.2279379405,
+                "priceChangePercent": -0.10248806255370276,
+                "percentOfPortfolio": 0.13406222583107538
+            },
+            {
+                "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolId": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolAddress": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a",
+                "name": "The B Major",
+                "shares": 28596.667797104616,
+                "percentShare": 0.8505838821951857,
+                "totalValue": 20969160.806765325,
+                "pricePerShare": 733.2728748518186,
+                "tokens": [
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 61194.17649954326,
+                        "balance": 204.95597299151532,
+                        "totalValue": 12542111.98587841,
+                        "percentOfPortfolio": 0.5981217894915433
+                    },
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0052069403859873,
+                        "balance": 8383396.972618424,
+                        "totalValue": 8427048.820886916,
+                        "percentOfPortfolio": 0.40187821050845673
+                    }
+                ],
+                "swapFees": 2599.4927364403593,
+                "swapVolume": 1039797.0945761427,
+                "myFees": 2211.0866234996274,
+                "priceChange": -2945375.6233986616,
+                "priceChangePercent": -0.12316256399114589,
+                "percentOfPortfolio": 0.13183740367063698
+            },
+            {
+                "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolId": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolAddress": "0xa07de66aef84e2c01d88a48d57d1463377ee602b",
+                "name": "The E Major",
+                "shares": 149743.01587272124,
+                "percentShare": 0.7502953222897707,
+                "totalValue": 20956752.524659142,
+                "pricePerShare": 139.95145217638725,
+                "tokens": [
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3866.7124781114408,
+                        "balance": 3254.00909729922,
+                        "totalValue": 12582317.580415038,
+                        "percentOfPortfolio": 0.6003944344721267
+                    },
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0052069403859873,
+                        "balance": 8331055.634204457,
+                        "totalValue": 8374434.9442441035,
+                        "percentOfPortfolio": 0.39960556552787335
+                    }
+                ],
+                "swapFees": 2634.8072242981907,
+                "swapVolume": 1053922.8897192758,
+                "myFees": 1976.8835355262272,
+                "priceChange": -1482905.5387857147,
+                "priceChangePercent": -0.06608414150487568,
+                "percentOfPortfolio": 0.1317593902626629
+            }
+        ],
+        "timestamp": 1634342400,
+        "totalValue": 159053199.03865498,
+        "totalSwapFees": 23259.545503634654,
+        "totalSwapVolume": 9724937.875519518,
+        "myFees": 17139.42353856955
+    },
+    {
+        "tokens": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "symbol": "USDC",
+                "name": "USD Coin",
+                "pricePerToken": 1.0013608362328688,
+                "balance": 48823934.94753203,
+                "totalValue": 48890376.327239856,
+                "percentOfPortfolio": 0.536293000392347
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "pricePerToken": 57568.16362956114,
+                "balance": 577.6425495724768,
+                "totalValue": 33253820.81318523,
+                "percentOfPortfolio": 0.3331646601972468
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "symbol": "ETH",
+                "name": "Ethereum",
+                "pricePerToken": 3788.8939620875153,
+                "balance": 7775.439996772529,
+                "totalValue": 29460317.656345207,
+                "percentOfPortfolio": 0.3333889112212368
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "symbol": "WFTM",
+                "name": "Wrapped Fantom",
+                "pricePerToken": 2.032290865429012,
+                "balance": 13369919.488057032,
+                "totalValue": 27171565.247099645,
+                "percentOfPortfolio": 0.33344642858151635
+            },
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "symbol": "DAI",
+                "name": "Dai Stablecoin",
+                "pricePerToken": 1.001887089707892,
+                "balance": 18543939.750458613,
+                "totalValue": 18578933.82830547,
+                "percentOfPortfolio": 0.46370699960765305
+            }
+        ],
+        "pools": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolId": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolAddress": "0xd41bf724b6e31311db582c5388af6b316e812fe4",
+                "name": "Steady Beets",
+                "shares": 39714744.34956822,
+                "percentShare": 0.9107691769771631,
+                "totalValue": 40066106.0627191,
+                "pricePerShare": 1.0088471352115025,
+                "tokens": [
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013608362328688,
+                        "balance": 21457971.449381445,
+                        "totalValue": 21487172.234413628,
+                        "percentOfPortfolio": 0.536293000392347
+                    },
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "symbol": "DAI",
+                        "name": "Dai Stablecoin",
+                        "pricePerToken": 1.001887089707892,
+                        "balance": 18543939.750458613,
+                        "totalValue": 18578933.82830547,
+                        "percentOfPortfolio": 0.46370699960765305
+                    }
+                ],
+                "swapFees": 123.32867792784873,
+                "swapVolume": 205547.79654641543,
+                "myFees": 112.3239584940284,
+                "priceChange": 124021.20931897312,
+                "priceChangePercent": 0.0031050259337781073,
+                "percentOfPortfolio": 0.25462236681740624
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolId": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolAddress": "0xd47d2791d3b46f9452709fa41855a045304d6f9d",
+                "name": "The Grand Orchestra",
+                "shares": 42604.22663311332,
+                "percentShare": 0.7538855948074303,
+                "totalValue": 32651144.730671912,
+                "pricePerShare": 766.3827584959478,
+                "tokens": [
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.032290865429012,
+                        "balance": 5357209.336884186,
+                        "totalValue": 10887407.599540746,
+                        "percentOfPortfolio": 0.33344642858151635
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3788.8939620875153,
+                        "balance": 2873.0098284113183,
+                        "totalValue": 10885529.591885732,
+                        "percentOfPortfolio": 0.3333889112212368
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57568.16362956114,
+                        "balance": 188.96221198307416,
+                        "totalValue": 10878207.539245432,
+                        "percentOfPortfolio": 0.3331646601972468
+                    }
+                ],
+                "swapFees": 5520.744304616761,
+                "swapVolume": 2208297.7218467034,
+                "myFees": 4162.00960386574,
+                "priceChange": -3765571.6701471284,
+                "priceChangePercent": -0.10340228450861752,
+                "percentOfPortfolio": 0.20749986878203636
+            },
+            {
+                "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolId": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolAddress": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226",
+                "name": "Fantom of the Opera",
+                "shares": 15160262.75894094,
+                "percentShare": 0.6910109373242072,
+                "totalValue": 23250127.18890067,
+                "pricePerShare": 1.5336229693768755,
+                "tokens": [
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.032290865429012,
+                        "balance": 8012710.1511728475,
+                        "totalValue": 16284157.647558898,
+                        "percentOfPortfolio": 0.7003900458373733
+                    },
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013608362328688,
+                        "balance": 6956502.88016838,
+                        "totalValue": 6965969.5413417695,
+                        "percentOfPortfolio": 0.2996099541626267
+                    }
+                ],
+                "swapFees": 7917.9423821043165,
+                "swapVolume": 3167176.952841729,
+                "myFees": 5471.384787136969,
+                "priceChange": -6697434.223607574,
+                "priceChangePercent": -0.22363871740188657,
+                "percentOfPortfolio": 0.14775587136859522
+            },
+            {
+                "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolId": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolAddress": "0xa07de66aef84e2c01d88a48d57d1463377ee602b",
+                "name": "The E Major",
+                "shares": 149743.01587272124,
+                "percentShare": 0.7006456504812394,
+                "totalValue": 20668208.184917137,
+                "pricePerShare": 138.0245219749329,
+                "tokens": [
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3788.8939620875153,
+                        "balance": 3274.357656904061,
+                        "totalValue": 12406193.95595882,
+                        "percentOfPortfolio": 0.6002549347752547
+                    },
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013608362328688,
+                        "balance": 8250786.260065961,
+                        "totalValue": 8262014.228958314,
+                        "percentOfPortfolio": 0.39974506522474523
+                    }
+                ],
+                "swapFees": 1486.6019045407356,
+                "swapVolume": 594640.7618162939,
+                "myFees": 1041.5811584135931,
+                "priceChange": -1129638.6600611433,
+                "priceChangePercent": -0.051823405682905145,
+                "percentOfPortfolio": 0.1313476302808285
+            },
+            {
+                "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolId": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolAddress": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363",
+                "name": "The Classic Trio",
+                "shares": 7725.417306725143,
+                "percentShare": 0.7880198266502612,
+                "totalValue": 20538280.49490487,
+                "pricePerShare": 2658.533471975145,
+                "tokens": [
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57568.16362956114,
+                        "balance": 178.3108443478051,
+                        "totalValue": 10265027.864339652,
+                        "percentOfPortfolio": 0.49979976984374114
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3788.8939620875153,
+                        "balance": 1628.0725114571508,
+                        "totalValue": 6168594.108500656,
+                        "percentOfPortfolio": 0.30034618088067105
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013608362328688,
+                        "balance": 4099080.345009631,
+                        "totalValue": 4104658.52206456,
+                        "percentOfPortfolio": 0.19985404927558775
+                    }
+                ],
+                "swapFees": 1454.6371908635756,
+                "swapVolume": 581854.8763454305,
+                "myFees": 1146.2829469833378,
+                "priceChange": -3503930.5787242465,
+                "priceChangePercent": -0.14574077933154658,
+                "percentOfPortfolio": 0.1305219324729543
+            },
+            {
+                "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolId": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolAddress": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a",
+                "name": "The B Major",
+                "shares": 28596.667797104616,
+                "percentShare": 0.7460296179246396,
+                "totalValue": 20181147.21006173,
+                "pricePerShare": 705.7167413087566,
+                "tokens": [
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57568.16362956114,
+                        "balance": 210.36949324159758,
+                        "totalValue": 12110585.409600146,
+                        "percentOfPortfolio": 0.6000940027612585
+                    },
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013608362328688,
+                        "balance": 8059594.012906609,
+                        "totalValue": 8070561.800461585,
+                        "percentOfPortfolio": 0.39990599723874165
+                    }
+                ],
+                "swapFees": 1102.700778714845,
+                "swapVolume": 441080.31148593826,
+                "myFees": 822.6474406298383,
+                "priceChange": 805584.7483999729,
+                "priceChangePercent": 0.04157736065696033,
+                "percentOfPortfolio": 0.1282523302781793
+            }
+        ],
+        "timestamp": 1634256000,
+        "totalValue": 157355013.87217543,
+        "totalSwapFees": 17605.95523876808,
+        "totalSwapVolume": 7198598.42088251,
+        "myFees": 12756.229895523507
+    },
+    {
+        "tokens": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "symbol": "USDC",
+                "name": "USD Coin",
+                "pricePerToken": 1.0030415741778713,
+                "balance": 48465747.25188959,
+                "totalValue": 48613159.41724217,
+                "percentOfPortfolio": 0.5356056399556351
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "pricePerToken": 57719.35632301863,
+                "balance": 570.437018032399,
+                "totalValue": 32925257.503652245,
+                "percentOfPortfolio": 0.3329244204764026
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "symbol": "ETH",
+                "name": "Ethereum",
+                "pricePerToken": 3605.771558762982,
+                "balance": 8009.259120073257,
+                "totalValue": 28879558.741923176,
+                "percentOfPortfolio": 0.334205525087853
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "symbol": "WFTM",
+                "name": "Wrapped Fantom",
+                "pricePerToken": 2.016983099439455,
+                "balance": 13313518.905427158,
+                "totalValue": 26853142.626314245,
+                "percentOfPortfolio": 0.3328700544357444
+            },
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "symbol": "DAI",
+                "name": "Dai Stablecoin",
+                "pricePerToken": 1.0050930602189247,
+                "balance": 18556266.370952893,
+                "totalValue": 18650774.553018566,
+                "percentOfPortfolio": 0.4643943600443649
+            }
+        ],
+        "pools": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolId": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolAddress": "0xd41bf724b6e31311db582c5388af6b316e812fe4",
+                "name": "Steady Beets",
+                "shares": 39714744.34956822,
+                "percentShare": 0.9135939426254579,
+                "totalValue": 40161500.995052576,
+                "pricePerShare": 1.0112491381425501,
+                "tokens": [
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0030415741778713,
+                        "balance": 21445498.367966425,
+                        "totalValue": 21510726.442034014,
+                        "percentOfPortfolio": 0.5356056399556351
+                    },
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "symbol": "DAI",
+                        "name": "Dai Stablecoin",
+                        "pricePerToken": 1.0050930602189247,
+                        "balance": 18556266.370952893,
+                        "totalValue": 18650774.553018566,
+                        "percentOfPortfolio": 0.4643943600443649
+                    }
+                ],
+                "swapFees": 784.8966237696338,
+                "swapVolume": 1308161.0396160558,
+                "myFees": 717.0768010631105,
+                "priceChange": -11212702.668661192,
+                "priceChangePercent": -0.21825550313261327,
+                "percentOfPortfolio": 0.2575744833710466
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolId": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolAddress": "0xd47d2791d3b46f9452709fa41855a045304d6f9d",
+                "name": "The Grand Orchestra",
+                "shares": 42604.22663311332,
+                "percentShare": 0.6760347518664133,
+                "totalValue": 32058936.58411351,
+                "pricePerShare": 752.482537946043,
+                "tokens": [
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3605.771558762982,
+                        "balance": 2971.423330691404,
+                        "totalValue": 10714273.734851835,
+                        "percentOfPortfolio": 0.334205525087853
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57719.35632301863,
+                        "balance": 184.91548699234593,
+                        "totalValue": 10673202.883355731,
+                        "percentOfPortfolio": 0.3329244204764026
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.016983099439455,
+                        "balance": 5290802.867347612,
+                        "totalValue": 10671459.965905942,
+                        "percentOfPortfolio": 0.3328700544357444
+                    }
+                ],
+                "swapFees": 6169.226671176213,
+                "swapVolume": 2467690.668470487,
+                "myFees": 4170.61162185627,
+                "priceChange": -789177.5336804092,
+                "priceChangePercent": -0.024025048465504125,
+                "percentOfPortfolio": 0.2056089494537422
+            },
+            {
+                "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolId": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolAddress": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226",
+                "name": "Fantom of the Opera",
+                "shares": 15160262.75894094,
+                "percentShare": 0.5363342128350158,
+                "totalValue": 23132900.911727745,
+                "pricePerShare": 1.5258904993638616,
+                "tokens": [
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.016983099439455,
+                        "balance": 8022716.038079545,
+                        "totalValue": 16181682.660408305,
+                        "percentOfPortfolio": 0.6995094442394225
+                    },
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0030415741778713,
+                        "balance": 6930139.717306241,
+                        "totalValue": 6951218.25131944,
+                        "percentOfPortfolio": 0.3004905557605775
+                    }
+                ],
+                "swapFees": 12475.195924122701,
+                "swapVolume": 4990078.369649079,
+                "myFees": 6690.874385926947,
+                "priceChange": -913037.6807670742,
+                "priceChangePercent": -0.037970556951020834,
+                "percentOfPortfolio": 0.14836210932320226
+            },
+            {
+                "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolId": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolAddress": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363",
+                "name": "The Classic Trio",
+                "shares": 7725.417306725143,
+                "percentShare": 0.6733681284621905,
+                "totalValue": 20267628.16030287,
+                "pricePerShare": 2623.499463603016,
+                "tokens": [
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57719.35632301863,
+                        "balance": 175.28722749385975,
+                        "totalValue": 10117465.942592118,
+                        "percentOfPortfolio": 0.4991933867431347
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3605.771558762982,
+                        "balance": 1692.2298863463361,
+                        "totalValue": 6101794.395076332,
+                        "percentOfPortfolio": 0.3010610983591851
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0030415741778713,
+                        "balance": 4036091.7501875325,
+                        "totalValue": 4048367.822634422,
+                        "percentOfPortfolio": 0.19974551489768033
+                    }
+                ],
+                "swapFees": 1539.2321232335153,
+                "swapVolume": 615692.8492934057,
+                "myFees": 1036.4698540906359,
+                "priceChange": 1460569.7074348815,
+                "priceChangePercent": 0.07766072036704663,
+                "percentOfPortfolio": 0.12998577551146762
+            },
+            {
+                "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolId": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolAddress": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a",
+                "name": "The B Major",
+                "shares": 28596.667797104616,
+                "percentShare": 0.7770144979292622,
+                "totalValue": 20225632.1030422,
+                "pricePerShare": 707.2723383907696,
+                "tokens": [
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57719.35632301863,
+                        "balance": 210.23430354619333,
+                        "totalValue": 12134588.677704392,
+                        "percentOfPortfolio": 0.599960911771909
+                    },
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0030415741778713,
+                        "balance": 8066508.541253152,
+                        "totalValue": 8091043.425337806,
+                        "percentOfPortfolio": 0.4000390882280909
+                    }
+                ],
+                "swapFees": 2157.759839917888,
+                "swapVolume": 863103.9359671553,
+                "myFees": 1676.6106786657228,
+                "priceChange": -2259727.5221740305,
+                "priceChangePercent": -0.10049772651356026,
+                "percentOfPortfolio": 0.1297164351610193
+            },
+            {
+                "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolId": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolAddress": "0xa07de66aef84e2c01d88a48d57d1463377ee602b",
+                "name": "The E Major",
+                "shares": 149743.01587272124,
+                "percentShare": 0.6645388335965968,
+                "totalValue": 20075294.087911498,
+                "pricePerShare": 134.06497772807728,
+                "tokens": [
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3605.771558762982,
+                        "balance": 3345.605903035517,
+                        "totalValue": 12063490.61199501,
+                        "percentOfPortfolio": 0.6009122735222663
+                    },
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0030415741778713,
+                        "balance": 7987508.875176235,
+                        "totalValue": 8011803.475916489,
+                        "percentOfPortfolio": 0.3990877264777337
+                    }
+                ],
+                "swapFees": 2009.0813176204065,
+                "swapVolume": 803632.5270481631,
+                "myFees": 1335.1125554121788,
+                "priceChange": -1412363.8519299515,
+                "priceChangePercent": -0.0657290736796033,
+                "percentOfPortfolio": 0.12875224717952205
+            }
+        ],
+        "timestamp": 1634169600,
+        "totalValue": 155921892.8421504,
+        "totalSwapFees": 25135.392499840356,
+        "totalSwapVolume": 11048359.390044345,
+        "myFees": 15626.755897014864
+    },
+    {
+        "tokens": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "symbol": "USDC",
+                "name": "USD Coin",
+                "pricePerToken": 1.0013218239043915,
+                "balance": 49361145.09293901,
+                "totalValue": 49426391.83447099,
+                "percentOfPortfolio": 0.5608811261270077
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "pricePerToken": 56330.89673987672,
+                "balance": 576.3227753264828,
+                "totalValue": 32464778.74575527,
+                "percentOfPortfolio": 0.3328994833213981
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "symbol": "ETH",
+                "name": "Ethereum",
+                "pricePerToken": 3501.2500016696326,
+                "balance": 8115.068315019871,
+                "totalValue": 28412882.951512508,
+                "percentOfPortfolio": 0.3334288052047783
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "symbol": "WFTM",
+                "name": "Wrapped Fantom",
+                "pricePerToken": 2.1009820749100787,
+                "balance": 12998669.824227944,
+                "totalValue": 27309972.298377454,
+                "percentOfPortfolio": 0.33367171147382363
+            },
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "symbol": "DAI",
+                "name": "Dai Stablecoin",
+                "pricePerToken": 0.9997093170308461,
+                "balance": 17580913.29616414,
+                "totalValue": 17575802.824086774,
+                "percentOfPortfolio": 0.43911887387299237
+            }
+        ],
+        "pools": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolId": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolAddress": "0xd41bf724b6e31311db582c5388af6b316e812fe4",
+                "name": "Steady Beets",
+                "shares": 39714744.34956822,
+                "percentShare": 0.714141298041993,
+                "totalValue": 40025159.17630604,
+                "pricePerShare": 1.0078161104099161,
+                "tokens": [
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013218239043915,
+                        "balance": 22419721.428505268,
+                        "totalValue": 22449356.352219265,
+                        "percentOfPortfolio": 0.5608811261270077
+                    },
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "symbol": "DAI",
+                        "name": "Dai Stablecoin",
+                        "pricePerToken": 0.9997093170308461,
+                        "balance": 17580913.29616414,
+                        "totalValue": 17575802.824086774,
+                        "percentOfPortfolio": 0.43911887387299237
+                    }
+                ],
+                "swapFees": 785.9459020605714,
+                "swapVolume": 1309909.836767619,
+                "myFees": 561.2764266883215,
+                "priceChange": -5394323.972936682,
+                "priceChangePercent": -0.11876674059041163,
+                "percentOfPortfolio": 0.25791096957450016
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolId": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolAddress": "0xd47d2791d3b46f9452709fa41855a045304d6f9d",
+                "name": "The Grand Orchestra",
+                "shares": 42604.22663311332,
+                "percentShare": 0.6600199062029766,
+                "totalValue": 31916169.348061636,
+                "pricePerShare": 749.1315268531457,
+                "tokens": [
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.1009820749100787,
+                        "balance": 5068830.89448153,
+                        "totalValue": 10649522.850056116,
+                        "percentOfPortfolio": 0.33367171147382363
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3501.2500016696326,
+                        "balance": 3039.420266294279,
+                        "totalValue": 10641770.212437559,
+                        "percentOfPortfolio": 0.3334288052047783
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 56330.89673987672,
+                        "balance": 188.61542955069982,
+                        "totalValue": 10624876.285567963,
+                        "percentOfPortfolio": 0.3328994833213981
+                    }
+                ],
+                "swapFees": 10066.762083386882,
+                "swapVolume": 4026704.8333547534,
+                "myFees": 6644.263366044691,
+                "priceChange": -1233454.403447263,
+                "priceChangePercent": -0.03720869994462965,
+                "percentOfPortfolio": 0.20565889932888493
+            },
+            {
+                "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolId": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolAddress": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226",
+                "name": "Fantom of the Opera",
+                "shares": 15160262.75894094,
+                "percentShare": 0.5159047677778137,
+                "totalValue": 23783871.510678697,
+                "pricePerShare": 1.5688297682473797,
+                "tokens": [
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.1009820749100787,
+                        "balance": 7929838.929746415,
+                        "totalValue": 16660449.44832134,
+                        "percentOfPortfolio": 0.7004935862036162
+                    },
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013218239043915,
+                        "balance": 7114018.582538671,
+                        "totalValue": 7123422.062357356,
+                        "percentOfPortfolio": 0.2995064137963837
+                    }
+                ],
+                "swapFees": 21609.965188503105,
+                "swapVolume": 8643986.075401241,
+                "myFees": 11148.684072261332,
+                "priceChange": 4265208.570221331,
+                "priceChangePercent": 0.21851950531819508,
+                "percentOfPortfolio": 0.15325663876899034
+            },
+            {
+                "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolId": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolAddress": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a",
+                "name": "The B Major",
+                "shares": 28596.667797104616,
+                "percentShare": 0.6988937211254092,
+                "totalValue": 19916999.297004603,
+                "pricePerShare": 696.4797240824394,
+                "tokens": [
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 56330.89673987672,
+                        "balance": 211.7211011769106,
+                        "totalValue": 11926439.488049543,
+                        "percentOfPortfolio": 0.5988070446858532
+                    },
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013218239043915,
+                        "balance": 7980011.638813556,
+                        "totalValue": 7990559.808955062,
+                        "percentOfPortfolio": 0.4011929553141469
+                    }
+                ],
+                "swapFees": 2933.187370283069,
+                "swapVolume": 1173274.9481132277,
+                "myFees": 2049.9862359751874,
+                "priceChange": -2376937.1941166595,
+                "priceChangePercent": -0.10661810196971241,
+                "percentOfPortfolio": 0.1283395920320529
+            },
+            {
+                "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolId": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolAddress": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363",
+                "name": "The Classic Trio",
+                "shares": 7725.417306725143,
+                "percentShare": 0.7256514018404685,
+                "totalValue": 19838451.007535405,
+                "pricePerShare": 2567.945551661734,
+                "tokens": [
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 56330.89673987672,
+                        "balance": 175.98624459887233,
+                        "totalValue": 9913462.972137764,
+                        "percentOfPortfolio": 0.4997095271385982
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3501.2500016696326,
+                        "balance": 1700.108822426793,
+                        "totalValue": 5952506.017360366,
+                        "percentOfPortfolio": 0.3000489309926151
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013218239043915,
+                        "balance": 3967238.0279774843,
+                        "totalValue": 3972482.018037276,
+                        "percentOfPortfolio": 0.20024154186878676
+                    }
+                ],
+                "swapFees": 2397.207647083039,
+                "swapVolume": 958883.0588332159,
+                "myFees": 1739.5370896084983,
+                "priceChange": -2757764.9418421797,
+                "priceChangePercent": -0.12204543220955288,
+                "percentOfPortfolio": 0.12783344874837016
+            },
+            {
+                "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolId": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolAddress": "0xa07de66aef84e2c01d88a48d57d1463377ee602b",
+                "name": "The E Major",
+                "shares": 149743.01587272124,
+                "percentShare": 0.6208671280778324,
+                "totalValue": 19709178.314616617,
+                "pricePerShare": 131.62001713234525,
+                "tokens": [
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3501.2500016696326,
+                        "balance": 3375.5392262987993,
+                        "totalValue": 11818606.721714582,
+                        "percentOfPortfolio": 0.5996498957518553
+                    },
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0013218239043915,
+                        "balance": 7880155.415104029,
+                        "totalValue": 7890571.592902034,
+                        "percentOfPortfolio": 0.4003501042481446
+                    }
+                ],
+                "swapFees": 2962.9512562118152,
+                "swapVolume": 1185180.5024847258,
+                "myFees": 1839.5990370788354,
+                "priceChange": -1079227.586658474,
+                "priceChangePercent": -0.0519148794661681,
+                "percentOfPortfolio": 0.12700045154720155
+            }
+        ],
+        "timestamp": 1634083200,
+        "totalValue": 155189828.654203,
+        "totalSwapFees": 40756.01944752848,
+        "totalSwapVolume": 17297939.25495478,
+        "myFees": 23983.346227656864
+    },
+    {
+        "tokens": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                "symbol": "USDC",
+                "name": "USD Coin",
+                "pricePerToken": 1.0061372445556045,
+                "balance": 48494044.596941754,
+                "totalValue": 48791664.40812358,
+                "percentOfPortfolio": 0.5913885089769206
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "pricePerToken": 57571.66071827042,
+                "balance": 578.898649939433,
+                "totalValue": 33328156.66457783,
+                "percentOfPortfolio": 0.3339377323082083
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                "symbol": "ETH",
+                "name": "Ethereum",
+                "pricePerToken": 3543.8581363236,
+                "balance": 8210.271958890205,
+                "totalValue": 29096039.082942553,
+                "percentOfPortfolio": 0.3338968532719812
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                "symbol": "WFTM",
+                "name": "Wrapped Fantom",
+                "pricePerToken": 2.3160581479626763,
+                "balance": 9665571.74108307,
+                "totalValue": 22386026.18565324,
+                "percentOfPortfolio": 0.3321654144198105
+            },
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                "symbol": "DAI",
+                "name": "Dai Stablecoin",
+                "pricePerToken": 1.0073081651886058,
+                "balance": 16333156.940169072,
+                "totalValue": 16452522.34913925,
+                "percentOfPortfolio": 0.4086114910230794
+            }
+        ],
+        "pools": [
+            {
+                "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolId": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
+                "poolAddress": "0xd41bf724b6e31311db582c5388af6b316e812fe4",
+                "name": "Steady Beets",
+                "shares": 39714744.34956822,
+                "percentShare": 0.629344336950643,
+                "totalValue": 40264463.21405575,
+                "pricePerShare": 1.0138416820626848,
+                "tokens": [
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0061372445556045,
+                        "balance": 23666692.584701873,
+                        "totalValue": 23811940.8649165,
+                        "percentOfPortfolio": 0.5913885089769206
+                    },
+                    {
+                        "id": "0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003-0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "address": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+                        "symbol": "DAI",
+                        "name": "Dai Stablecoin",
+                        "pricePerToken": 1.0073081651886058,
+                        "balance": 16333156.940169072,
+                        "totalValue": 16452522.34913925,
+                        "percentOfPortfolio": 0.4086114910230794
+                    }
+                ],
+                "swapFees": 163.8445487148084,
+                "swapVolume": 273074.24785801396,
+                "myFees": 103.11463887389841,
+                "priceChange": 21462712.582291055,
+                "priceChangePercent": 1.141527350438889,
+                "percentOfPortfolio": 0.26833242398843266
+            },
+            {
+                "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolId": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
+                "poolAddress": "0xd47d2791d3b46f9452709fa41855a045304d6f9d",
+                "name": "The Grand Orchestra",
+                "shares": 42604.22663311332,
+                "percentShare": 0.6358338219324021,
+                "totalValue": 33336932.917177487,
+                "pricePerShare": 782.4794756693692,
+                "tokens": [
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57571.66071827042,
+                        "balance": 193.36700803109224,
+                        "totalValue": 11132459.780473113,
+                        "percentOfPortfolio": 0.3339377323082083
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3543.8581363236,
+                        "balance": 3140.9544543258994,
+                        "totalValue": 11131096.998784691,
+                        "percentOfPortfolio": 0.3338968532719812
+                    },
+                    {
+                        "id": "0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.3160581479626763,
+                        "balance": 4781130.45117645,
+                        "totalValue": 11073376.137919683,
+                        "percentOfPortfolio": 0.3321654144198105
+                    }
+                ],
+                "swapFees": 11253.444719894354,
+                "swapVolume": 4501377.887957741,
+                "myFees": 7155.320766155438,
+                "priceChange": 20617501.119955264,
+                "priceChangePercent": 1.6209451372236523,
+                "percentOfPortfolio": 0.22216563450629345
+            },
+            {
+                "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolId": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
+                "poolAddress": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a",
+                "name": "The B Major",
+                "shares": 28596.667797104616,
+                "percentShare": 0.6243387072066968,
+                "totalValue": 20215704.06223044,
+                "pricePerShare": 706.9251636471178,
+                "tokens": [
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57571.66071827042,
+                        "balance": 210.55927396739614,
+                        "totalValue": 12122247.08193628,
+                        "percentOfPortfolio": 0.5996450603263731
+                    },
+                    {
+                        "id": "0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0061372445556045,
+                        "balance": 8044088.442296875,
+                        "totalValue": 8093456.980294162,
+                        "percentOfPortfolio": 0.4003549396736269
+                    }
+                ],
+                "swapFees": 2485.8134963916978,
+                "swapVolume": 994325.3985566788,
+                "myFees": 1551.9895846941515,
+                "priceChange": 13395719.271925298,
+                "priceChangePercent": 1.9641860918763048,
+                "percentOfPortfolio": 0.13472249325200178
+            },
+            {
+                "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolId": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
+                "poolAddress": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363",
+                "name": "The Classic Trio",
+                "shares": 7725.417306725143,
+                "percentShare": 0.6370508317889874,
+                "totalValue": 20146275.00573061,
+                "pricePerShare": 2607.791165946834,
+                "tokens": [
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x321162cd933e2be498cd2267a90534a804051b11",
+                        "address": "0x321162cd933e2be498cd2267a90534a804051b11",
+                        "symbol": "BTC",
+                        "name": "Bitcoin",
+                        "pricePerToken": 57571.66071827042,
+                        "balance": 174.97236794094462,
+                        "totalValue": 10073449.80216844,
+                        "percentOfPortfolio": 0.5000155015903955
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3543.8581363236,
+                        "balance": 1704.0135089666378,
+                        "totalValue": 6038782.1381567465,
+                        "percentOfPortfolio": 0.29974683341903224
+                    },
+                    {
+                        "id": "0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0061372445556045,
+                        "balance": 4009436.1750689396,
+                        "totalValue": 4034043.065405425,
+                        "percentOfPortfolio": 0.20023766499057224
+                    }
+                ],
+                "swapFees": 2073.986040950921,
+                "swapVolume": 829594.4163803684,
+                "myFees": 1321.234532506533,
+                "priceChange": 13085876.742077645,
+                "priceChangePercent": 1.8534190641119965,
+                "percentOfPortfolio": 0.1342598007053065
+            },
+            {
+                "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolId": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
+                "poolAddress": "0xa07de66aef84e2c01d88a48d57d1463377ee602b",
+                "name": "The E Major",
+                "shares": 149743.01587272124,
+                "percentShare": 0.588586480239802,
+                "totalValue": 19889057.685459636,
+                "pricePerShare": 132.82127095907407,
+                "tokens": [
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "address": "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+                        "symbol": "ETH",
+                        "name": "Ethereum",
+                        "pricePerToken": 3543.8581363236,
+                        "balance": 3365.3039955976683,
+                        "totalValue": 11926159.946001116,
+                        "percentOfPortfolio": 0.5996342378110762
+                    },
+                    {
+                        "id": "0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0061372445556045,
+                        "balance": 7914325.5878333105,
+                        "totalValue": 7962897.739458522,
+                        "percentOfPortfolio": 0.4003657621889239
+                    }
+                ],
+                "swapFees": 2844.295020077361,
+                "swapVolume": 1137718.0080309445,
+                "myFees": 1674.113594630931,
+                "priceChange": 11699261.486711422,
+                "priceChangePercent": 1.4285168034461735,
+                "percentOfPortfolio": 0.13254564033830513
+            },
+            {
+                "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolId": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
+                "poolAddress": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226",
+                "name": "Fantom of the Opera",
+                "shares": 9636696.121179793,
+                "percentShare": 0.39985487384107277,
+                "totalValue": 16201975.805782525,
+                "pricePerShare": 1.6812791025103906,
+                "tokens": [
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+                        "symbol": "WFTM",
+                        "name": "Wrapped Fantom",
+                        "pricePerToken": 2.3160581479626763,
+                        "balance": 4884441.289906621,
+                        "totalValue": 11312650.047733555,
+                        "percentOfPortfolio": 0.6982265733106479
+                    },
+                    {
+                        "id": "0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008-0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+                        "symbol": "USDC",
+                        "name": "USD Coin",
+                        "pricePerToken": 1.0061372445556045,
+                        "balance": 4859501.807040759,
+                        "totalValue": 4889325.75804897,
+                        "percentOfPortfolio": 0.30177342668935214
+                    }
+                ],
+                "swapFees": 15148.182564092622,
+                "swapVolume": 6059273.025637048,
+                "myFees": 6057.074628086793,
+                "priceChange": 7103054.509551797,
+                "priceChangePercent": 0.7806479777437213,
+                "percentOfPortfolio": 0.10797400720966048
+            }
+        ],
+        "timestamp": 1633996800,
+        "totalValue": 150054408.69043645,
+        "totalSwapFees": 33969.56639012176,
+        "totalSwapVolume": 13795362.984420795,
+        "myFees": 17862.847744947743
+    }
+]
