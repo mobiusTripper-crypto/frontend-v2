@@ -1,10 +1,25 @@
+import { computed, reactive } from 'vue';
+import { useQuery } from 'vue-query';
+import { QueryObserverOptions } from 'react-query/core';
+import QUERY_KEYS from '@/constants/queryKeys';
+import useApp from '../useApp';
 import useWeb3 from '@/services/web3/useWeb3';
-import axios from 'axios';
 import { nftContractService } from '@/services/nft/nft-contracts.service';
+import axios from 'axios';
 
-export default function useNft() {
-  async function useNftImageUrl() {
-    const { account } = useWeb3();
+export default function useNftQuery(
+  options: QueryObserverOptions<string | null> = {}
+) {
+  /**
+   * COMPOSABLES
+   */
+  const { appLoading } = useApp();
+  const { account } = useWeb3();
+
+  const enabled = computed(() => !appLoading.value);
+  const queryKey = QUERY_KEYS.Account.Nft(account);
+
+  const queryFn = async () => {
     if (!account.value) {
       return null;
     }
@@ -32,8 +47,12 @@ export default function useNft() {
     const imageCid = ipfsImageUri.replace('ipfs://', '');
 
     return `https://ipfs.io/ipfs/${imageCid}`;
-  }
-  return {
-    useNftImage: useNftImageUrl
   };
+
+  const queryOptions = reactive({
+    enabled,
+    ...options
+  });
+
+  return useQuery<string | null>(queryKey, queryFn, queryOptions);
 }

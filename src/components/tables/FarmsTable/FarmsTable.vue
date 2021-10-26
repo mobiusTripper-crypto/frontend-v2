@@ -73,7 +73,6 @@ import numeral from 'numeral';
 import { calculateRewardsPerDay } from '@/lib/utils/farmHelper';
 import { useI18n } from 'vue-i18n';
 import LiquidityMiningTooltip from '@/components/tooltips/LiquidityMiningTooltip.vue';
-import useNft from '@/composables/nft/useNft';
 
 export default defineComponent({
   components: {

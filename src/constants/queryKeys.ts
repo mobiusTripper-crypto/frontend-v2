@@ -97,7 +97,8 @@ const QUERY_KEYS = {
       'account',
       'portfolio',
       { account, chainId }
-    ]
+    ],
+    Nft: (account: Ref<string>) => ['account', 'nft', { account }]
   },
   App: {
     Chains: ['evm_chains']
