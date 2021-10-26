@@ -54,10 +54,11 @@ export class PoolCreatorService {
         name,
         symbol,
         sorted.map(token => token.address),
+        //weights and swap fee come in as 1 = 1%, so its base 16
         bnToNormalizedWeights(
-          sorted.map(token => BigNumber.from(token.weight))
+          sorted.map(token => parseUnits(token.weight, 16))
         ),
-        parseUnits(swapFeePercentage, 18),
+        parseUnits(swapFeePercentage, 16),
         owner
       ]
     );
@@ -133,8 +134,9 @@ export class PoolCreatorService {
       symbol,
       owner,
       sorted.map(token => token.address),
-      bnToNormalizedWeights(sorted.map(token => BigNumber.from(token.weight))),
-      parseUnits(swapFeePercentage, 18),
+      //weights and swap fee come in as 1 = 1%, so its base 16
+      bnToNormalizedWeights(sorted.map(token => parseUnits(token.weight, 16))),
+      parseUnits(swapFeePercentage, 16),
       poolAddress,
       blockHash
     );

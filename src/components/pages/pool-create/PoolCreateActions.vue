@@ -178,7 +178,7 @@ export default defineComponent({
           props.poolName,
           `BPT-${poolSymbol}`,
           poolOwner,
-          `${parseFloat(swapFeePercentage) / 100}`,
+          swapFeePercentage,
           poolTokens
         );
 
@@ -265,7 +265,7 @@ export default defineComponent({
           poolName,
           `BPT-${poolSymbol}`,
           poolOwner,
-          `${parseFloat(swapFeePercentage) / 100}`,
+          swapFeePercentage,
           poolTokens,
           poolAddress.value,
           blockHash.value
