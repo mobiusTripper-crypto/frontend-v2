@@ -170,16 +170,16 @@ const SWAPS = [
   },
   {
     id: '5',
-    amountIn: '5000000000000000000000',
-    spookyPath: [WFTM, ETH],
-    spiritPath: [WFTM, ETH],
-    tokenIn: WFTM,
-    tokenOut: ETH,
+    amountIn: '3000000000000000000',
+    spookyPath: [ETH, WFTM],
+    spiritPath: [ETH, WFTM],
+    tokenIn: ETH,
+    tokenOut: WFTM,
     tokenInDecimal: 18,
     tokenOutDecimal: 18,
-    amountInNumber: 5000,
-    amountInNumberFormatted: '5k',
-    amountOutFormat: '0.[0000]'
+    amountInNumber: 3,
+    amountInNumberFormatted: '3.0',
+    amountOutFormat: '0,0'
   },
   {
     id: '6',

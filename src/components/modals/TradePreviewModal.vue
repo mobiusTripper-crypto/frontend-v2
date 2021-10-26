@@ -189,6 +189,8 @@ export default defineComponent({
 
     const tokenApproval = useTokenApproval(addressIn, amountIn, tokens);
 
+    console.log('use token approval', addressIn.value);
+
     const lidoRelayerApproval = useRelayerApproval(Relayer.LIDO, isStETHTrade);
 
     const valueIn = computed(() => toFiat(amountIn.value, addressIn.value));
@@ -234,6 +236,9 @@ export default defineComponent({
       }
 
       const { isUnlockedV1, isUnlockedV2 } = tokenApproval.allowanceState.value;
+
+      console.log('locked values', { isUnlockedV1, isUnlockedV2 });
+
       if (isWrap.value && !isEthTrade.value) {
         // If we're wrapping a token other than native ETH
         // we need to approve the underlying on the wrapper
