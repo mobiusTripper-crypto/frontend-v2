@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-12">
-    <div class="mb-4">
-      <h2>Compose your Investment Pool</h2>
+  <div class="mt-6">
+    <div class="mb-8">
+      <img src="~@/assets/images/pool-composer.svg" class="-ml-4" />
       <ul class="list-disc list-inside ml-2">
         <li>An investment pool can be created with 2-8 tokens.</li>
         <li>The weights should add up to 100%.</li>

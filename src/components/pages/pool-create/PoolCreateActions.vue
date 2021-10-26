@@ -18,7 +18,7 @@
         </div>
         <BalBtn
           v-if="poolAddress === ''"
-          @click="createPool"
+          @click="createModalVisible = true"
           :disabled="!canCreatePool"
           size="sm"
           :loading="creating"
@@ -76,6 +76,13 @@
       </div>
     </div>
   </BalCard>
+  <teleport to="#modal">
+    <PoolCreateConfirmModal
+      v-if="createModalVisible"
+      @create="createPool"
+      @close="createModalVisible = false"
+    />
+  </teleport>
 </template>
 
 <script lang="ts">
@@ -94,10 +101,11 @@ import useTokens from '@/composables/useTokens';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 import useEthers from '@/composables/useEthers';
 import useTransactions from '@/composables/useTransactions';
-import { PoolVerifierService } from '@/services/pool/creator/pool-verifier.service';
+import PoolCreateConfirmModal from '@/components/pages/pool-create/PoolCreateConfirmModal.vue';
 
 export default defineComponent({
   components: {
+    PoolCreateConfirmModal,
     BalIcon,
     BalBtn,
     BalCard
@@ -157,11 +165,14 @@ export default defineComponent({
     const creating = ref(false);
     const joining = ref(false);
     const joined = ref(false);
+    const createModalVisible = ref(false);
     const blockHash = ref('');
     const poolAddress = ref('');
     const poolId = ref('');
 
     async function createPool(): Promise<void> {
+      createModalVisible.value = false;
+
       const {
         poolName,
         poolSymbol,
@@ -293,7 +304,8 @@ export default defineComponent({
       joined,
       verifyPool,
       verifying,
-      verified
+      verified,
+      createModalVisible
     };
   }
 });
