@@ -54,12 +54,15 @@
       @loadMore="loadMorePools"
       class="mb-16"
     />
-    <div class="px-4 lg:px-0 mb-3">
-      <h3>Community Investment Pools</h3>
-      <p>
-        Investment pools created by the community. Please DYOR before investing
-        in any community pool.
-      </p>
+    <div class="px-4 lg:px-0 mb-3 flex">
+      <div class="flex-1">
+        <h3>Community Investment Pools</h3>
+        <p>
+          Investment pools created by the community. Please DYOR before
+          investing in any community pool.
+        </p>
+      </div>
+      <BalBtn label="Compose a pool" @click="goToPoolCreate" />
     </div>
     <PoolsTable
       :isLoading="isLoadingPools"
@@ -92,9 +95,11 @@ import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
+import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
 
 export default defineComponent({
   components: {
+    BalBtn,
     TokenSearchInput,
     PoolsTable,
     FarmsTable
@@ -152,6 +157,10 @@ export default defineComponent({
 
     masterChefContractsService.beethovenxToken.getCirculatingSupply();
 
+    function goToPoolCreate() {
+      router.push({ name: 'pool-create' });
+    }
+
     return {
       // data
       filteredPools,
@@ -174,6 +183,7 @@ export default defineComponent({
       addSelectedToken,
       removeSelectedToken,
       communityPools,
+      goToPoolCreate,
 
       // constants
       EXTERNAL_LINKS
