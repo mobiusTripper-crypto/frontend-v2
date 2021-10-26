@@ -103,6 +103,7 @@ export class PoolCreatorService {
     );
     let poolId = '';
 
+    //generous amount of retries, to give the rpc time to catch up.
     for (let i = 0; i < 20; i++) {
       try {
         await sleep(1000);
