@@ -46,7 +46,8 @@
     "masterChef": "0x0e317Aa06F6C759a724ecD43548FB77bF5baC5b9",
     "beetsUsdcReferencePricePool": "0xc5406e40f6f84468451319ec83038b2c063d280600020000000000000000002a",
     "beethovenxToken": "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e",
-    "defaultPoolOwner": "0xCd983793ADb846dcE4830c22F30C7Ef0C864a776"
+    "defaultPoolOwner": "0xCd983793ADb846dcE4830c22F30C7Ef0C864a776",
+    "earlyLudwigNft": "0x4Cb35E11e28Ac1AA33a0F5De0B266E9193a48E84"
   },
   "strategies": {
     "0": {
