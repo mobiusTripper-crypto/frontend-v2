@@ -40,7 +40,7 @@
     >
       Portfolio
     </router-link>
-    <router-link
+    <!--    <router-link
       :to="{ name: 'beets' }"
       :class="[
         'toggle-link px-6 rounded-r-lg',
@@ -49,7 +49,7 @@
       @click="trackGoal(Goals.ClickNavBeets)"
     >
       BEETS
-    </router-link>
+    </router-link>-->
   </div>
 </template>
 

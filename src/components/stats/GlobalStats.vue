@@ -11,7 +11,7 @@
     <div v-if="beetsPrice > 0" class="text-red-500 font-semibold text-right">
       BEETS: {{ fNum(beetsPrice, 'usd') }}
     </div>
-    <!-- <div
+    <div
       v-if="beetsPrice > 0 && marketCap > 0"
       class="font-semibold text-right"
     >
@@ -22,7 +22,7 @@
       class="font-semibold text-right"
     >
       Circulating: {{ fNum(circulatingSupply, 'token_lg') }}
-    </div>-->
+    </div>
   </div>
 </template>
 
