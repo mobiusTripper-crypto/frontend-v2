@@ -44,7 +44,7 @@ export class PoolCreatorService {
     swapFeePercentage: string,
     tokens: PoolTokenInput[]
   ): Promise<TransactionResponse> {
-    const sorted = orderBy(tokens, 'address', 'asc');
+    const sorted = this.sortTokens(tokens);
 
     return await sendTransaction(
       provider,
@@ -72,7 +72,7 @@ export class PoolCreatorService {
     address: string,
     tokenInfoMap: TokenInfoMap
   ): Promise<TransactionResponse> {
-    const sorted = orderBy(tokens, 'address', 'asc');
+    const sorted = this.sortTokens(tokens);
     const amountsIn = sorted.map(token =>
       parseUnits(token.amount, tokenInfoMap[token.address].decimals)
     );
@@ -140,7 +140,7 @@ export class PoolCreatorService {
     poolAddress: string,
     blockHash: string
   ) {
-    const sorted = orderBy(tokens, 'address', 'asc');
+    const sorted = this.sortTokens(tokens);
 
     await this.poolVerifier.verifyPool(
       provider,
@@ -154,5 +154,9 @@ export class PoolCreatorService {
       poolAddress,
       blockHash
     );
+  }
+
+  private sortTokens(tokens: PoolTokenInput[]): PoolTokenInput[] {
+    return orderBy(tokens, token => token.address.toLowerCase(), 'asc');
   }
 }
