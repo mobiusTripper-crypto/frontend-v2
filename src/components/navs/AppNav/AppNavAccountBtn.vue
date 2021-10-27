@@ -60,7 +60,6 @@ export default defineComponent({
     const nftQuery = useNftQuery();
 
     const nftImage = computed(() => {
-      console.log('nft query', nftQuery.data.value);
       return nftQuery.data.value || null;
     });
 
