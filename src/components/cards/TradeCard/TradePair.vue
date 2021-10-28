@@ -150,6 +150,12 @@
       include-ether
     />
   </teleport>
+  <teleport to="#modal">
+    <TradeEthBufferModal
+      v-if="modalEthBufferIsOpen"
+      @close="modalEthBufferIsOpen = false"
+    />
+  </teleport>
 </template>
 
 <script lang="ts">
@@ -161,13 +167,16 @@ import TradePairToggle from '@/components/cards/TradeCard/TradePairToggle.vue';
 import SelectTokenModal from '@/components/modals/SelectTokenModal/SelectTokenModal.vue';
 import useTokens from '@/composables/useTokens';
 import { NATIVE_ASSET_ADDRESS } from '@/constants/tokens';
+import TradeEthBufferModal from '@/components/cards/TradeCard/TradeEthBufferModal.vue';
 
 const ETH_BUFFER = 0.3;
+const ETH_MODAL_MESSAGE_BUFFER = 1;
 
 export default defineComponent({
   components: {
     TradePairToggle,
-    SelectTokenModal
+    SelectTokenModal,
+    TradeEthBufferModal
   },
   props: {
     tokenInAmountInput: {
@@ -252,6 +261,7 @@ export default defineComponent({
     const isInRate = ref(true);
     const modalSelectTokenType = ref('input');
     const modalSelectTokenIsOpen = ref(false);
+    const modalEthBufferIsOpen = ref(false);
 
     function handleMax(): void {
       const balance = balances.value[tokenInAddressInput.value] || '0';
@@ -263,6 +273,13 @@ export default defineComponent({
           ? (balanceNumber - ETH_BUFFER).toString()
           : '0';
       handleInAmountChange(maxAmount);
+
+      if (
+        tokenInAddressInput.value === NATIVE_ASSET_ADDRESS &&
+        balanceNumber < ETH_MODAL_MESSAGE_BUFFER
+      ) {
+        modalEthBufferIsOpen.value = true;
+      }
     }
 
     function handleInAmountChange(value: string): void {
@@ -356,7 +373,8 @@ export default defineComponent({
       openModalSelectToken,
       handleSelectToken,
       tokenInDecimals,
-      tokenOutDecimals
+      tokenOutDecimals,
+      modalEthBufferIsOpen
     };
   }
 });
