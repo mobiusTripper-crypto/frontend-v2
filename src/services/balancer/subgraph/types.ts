@@ -84,6 +84,7 @@ export interface PoolShare {
 
 export interface DecoratedPoolWithShares extends DecoratedPool {
   shares: string;
+  farm?: DecoratedFarm;
 }
 
 export type PoolActivityType = 'Join' | 'Exit';

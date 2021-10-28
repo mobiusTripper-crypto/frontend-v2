@@ -1,6 +1,6 @@
 <template>
   <BalForm ref="depositForm" @on-submit="submit">
-    <div class="px-4 pt-6 pb-20 border-b dark:border-gray-900">
+    <div class="px-4 pt-6">
       <BalTextInput
         name="Deposit"
         v-model="amount"
@@ -34,22 +34,9 @@
           </div>
         </template>
       </BalTextInput>
-      <div class="text-right">
-        <router-link
-          :to="{
-            name: 'pool',
-            params: {
-              id: pool.id
-            }
-          }"
-          class="text-xs text-gray-500 dark:text-white underline"
-        >
-          Get BPT
-        </router-link>
-      </div>
     </div>
 
-    <div class="p-4">
+    <div class="p-4 pb-8 border-b dark:border-gray-700">
       <BalBtn
         v-if="!isWalletReady"
         :label="$t('connectWallet')"
@@ -59,7 +46,7 @@
       <template v-else>
         <BalBtn
           v-if="approvalRequired"
-          :label="`${$t('approve')}`"
+          label="Approve BPT"
           :loading="approving"
           :loading-label="$t('approving')"
           :disabled="!validInput || parseFloat(amount) === 0 || amount === ''"
@@ -76,7 +63,7 @@
             block
             @click="trackGoal(Goals.ClickFarmDeposit)"
           >
-            {{ $t('deposit') }}
+            Deposit BPT
           </BalBtn>
         </template>
       </template>

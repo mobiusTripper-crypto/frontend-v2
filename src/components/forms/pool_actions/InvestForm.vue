@@ -229,6 +229,7 @@
             <div v-html="$t('customAmountsTip')" class="w-52" />
           </BalTooltip>
         </div>
+
         <BalBtn
           v-if="requireApproval"
           :label="`${$t('approve')} ${symbolFor(requiredAllowances[0])}`"
@@ -260,6 +261,14 @@
             {{ $t('invest') }}
             {{ missingPrices || total.length > 15 ? '' : total }}
           </BalBtn>
+          <BalAlert
+            v-if="hasUnstakedBpt"
+            title="You have unstaked BPT in your wallet"
+            description="If you deposit your BPT into the farm, you will earn additional rewards paid out in BEETS."
+            type="warning"
+            size="sm"
+            class="mt-4"
+          />
         </template>
       </template>
     </div>
@@ -307,6 +316,7 @@ import { TransactionResponse } from '@ethersproject/abstract-provider';
 import useEthers from '@/composables/useEthers';
 import useTransactions from '@/composables/useTransactions';
 import { usePool } from '@/composables/usePool';
+import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
 
 export enum FormTypes {
   proportional = 'proportional',
@@ -329,6 +339,7 @@ export default defineComponent({
   name: 'InvestForm',
 
   components: {
+    BalAlert,
     FormTypeToggle
   },
 
@@ -336,7 +347,8 @@ export default defineComponent({
 
   props: {
     pool: { type: Object as PropType<FullPool>, required: true },
-    missingPrices: { type: Boolean, default: false }
+    missingPrices: { type: Boolean, default: false },
+    hasUnstakedBpt: { type: Boolean, default: false }
   },
 
   setup(props: { pool: FullPool }, { emit }) {

@@ -179,6 +179,14 @@
           {{ $t('withdraw') }}
           {{ missingPrices || total.length > 15 ? '' : total }}
         </BalBtn>
+        <BalAlert
+          v-if="hasStakedBpt"
+          title="You have BPT staked in the farm"
+          description="To withdraw your funds, you need to first unstake your BPT from the farm."
+          type="warning"
+          size="sm"
+          class="mt-4"
+        />
       </template>
     </div>
   </BalForm>
@@ -222,6 +230,7 @@ import useTokens from '@/composables/useTokens';
 import useEthers from '@/composables/useEthers';
 import useTransactions from '@/composables/useTransactions';
 import { usePool } from '@/composables/usePool';
+import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
 
 export enum FormTypes {
   proportional = 'proportional',
@@ -232,14 +241,16 @@ export default defineComponent({
   name: 'WithdrawalForm',
 
   components: {
-    FormTypeToggle
+    FormTypeToggle,
+    BalAlert
   },
 
   emits: ['success'],
 
   props: {
     pool: { type: Object as PropType<FullPool>, required: true },
-    missingPrices: { type: Boolean, default: false }
+    missingPrices: { type: Boolean, default: false },
+    hasStakedBpt: { type: Boolean }
   },
 
   setup(props: { pool: FullPool }, { emit }) {

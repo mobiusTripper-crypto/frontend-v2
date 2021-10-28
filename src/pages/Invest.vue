@@ -20,22 +20,6 @@
       <div class="mb-16" />
     </template>
 
-    <template v-if="isWalletReady && poolsWithUserInFarm.length > 0">
-      <div class="mb-16">
-        <div class="px-4 lg:px-0">
-          <h3 class="mb-3">My Farms</h3>
-        </div>
-        <FarmsTable
-          :pools="poolsWithUserInFarm"
-          noPoolsLabel="No farms found"
-          :loading="false"
-          :isPaginated="false"
-          :isLoadingMore="false"
-          class="mb-8"
-        />
-      </div>
-    </template>
-
     <div class="px-4 lg:px-0">
       <h3 class="mb-3">Beethoven-X Investment Pools</h3>
       <TokenSearchInput
@@ -93,7 +77,6 @@ import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
-import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
 
@@ -101,8 +84,7 @@ export default defineComponent({
   components: {
     BalBtn,
     TokenSearchInput,
-    PoolsTable,
-    FarmsTable
+    PoolsTable
   },
 
   setup() {

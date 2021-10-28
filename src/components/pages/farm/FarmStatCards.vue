@@ -11,7 +11,7 @@
         </div>
       </BalCard>
     </div>
-    <div class="xl:pl-4 xl:pr-8">
+    <div>
       <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
           My Pending Rewards
@@ -96,9 +96,9 @@ export default defineComponent({
           value: fNum(farm.tvl, 'usd')
         },
         {
-          id: 'apr',
-          label: `APR `,
-          value: fNum(farm.apr, 'percent')
+          id: 'beets',
+          label: 'BEETS',
+          value: `${fNum(farm.rewards, 'token_lg')} / day`
         },
         {
           id: 'stake',

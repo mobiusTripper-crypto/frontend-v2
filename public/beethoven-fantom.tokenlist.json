@@ -229,6 +229,46 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/18579/large/sDYeBj9T_400x400.png"
+    },
+    {
+      "name": "Sushi",
+      "address": "0xae75a438b2e0cb8bb01ec1e1e376de11d44477cc",
+      "symbol": "SUSHI",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png"
+    },
+    {
+      "name": "Statera",
+      "address": "0xCEeBDE49eC95E21F7eE63C5c6f98CaB3519570de",
+      "symbol": "WSTA",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/13599/large/wsta_logo.png"
+    },
+    {
+      "name": "LiquidDriver",
+      "address": "0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9",
+      "symbol": "LQDR",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/15782/large/LQDR_Glowing_Icon.png"
+    },
+    {
+      "name": "Tomb",
+      "address": "0x6c021ae822bea943b2e66552bde1d2696a53fbb7",
+      "symbol": "TOMB",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/16133/large/tomb_icon_noBG.png"
+    },
+    {
+      "name": "Tomb Shares",
+      "address": "0x4cdf39285d7ca8eb3f090fda0c069ba5f4145b37",
+      "symbol": "TSHARE",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/16405/large/crypto_tomb_share.bf1a6c52.png"
     }
   ]
 }

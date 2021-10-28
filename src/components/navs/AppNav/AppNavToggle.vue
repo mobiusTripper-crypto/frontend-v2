@@ -19,7 +19,7 @@
     >
       {{ $t('invest') }}
     </router-link>
-    <router-link
+    <!--    <router-link
       :to="{ name: 'farm' }"
       :class="[
         'toggle-link px-6 rounded-r-lg',
@@ -28,7 +28,7 @@
       @click="trackGoal(Goals.ClickNavFarm)"
     >
       Farm
-    </router-link>
+    </router-link>-->
     <router-link
       :to="{ name: 'my-portfolio' }"
       :class="[

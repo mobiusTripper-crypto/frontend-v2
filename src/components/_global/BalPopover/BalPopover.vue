@@ -38,14 +38,17 @@ export default defineComponent({
 
     // METHODS
     function togglePopover() {
+      console.log('toggle popover');
       popoverOpened.value = !popoverOpened.value;
     }
 
     function showPopover() {
+      console.log('showPopover popover');
       popoverOpened.value = true;
     }
 
     function hidePopover() {
+      console.log('hidePopover popover');
       popoverOpened.value = false;
     }
 

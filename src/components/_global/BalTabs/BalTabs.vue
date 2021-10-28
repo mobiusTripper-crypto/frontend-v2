@@ -4,10 +4,14 @@
       <div
         v-for="(tab, i) in tabs"
         :key="i"
-        :class="['bal-tab', stateClasses(tab)]"
+        :class="['bal-tab', 'relative', stateClasses(tab)]"
         @click="onClick(tab)"
       >
         {{ tab.label }}
+        <div
+          v-if="tab.alert"
+          class="rounded-full h-2 w-2 flex bg-yellow-500 absolute top-4 -right-2"
+        />
       </div>
     </div>
   </div>
@@ -19,6 +23,7 @@ import { defineComponent, ref, PropType, computed } from 'vue';
 interface Tab {
   value: string;
   label: string;
+  alert?: boolean;
 }
 
 export default defineComponent({

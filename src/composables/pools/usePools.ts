@@ -12,6 +12,7 @@ import {
   DecoratedPoolWithFarm,
   DecoratedPoolWithRequiredFarm
 } from '@/services/balancer/subgraph/types';
+import { uniqBy } from 'lodash';
 
 export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
   // COMPOSABLES
@@ -91,7 +92,12 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
   );
 
   const userPools = computed(() => {
-    return userPoolsQuery.data.value?.pools.map(pool => {
+    const userPools = userPoolsQuery.data.value?.pools || [];
+    const userFarmPools = onlyPoolsWithFarms.value.filter(
+      pool => pool.farm.stake > 0
+    );
+
+    return uniqBy([...userPools, ...userFarmPools], 'id').map(pool => {
       const farm = decoratedFarms.value.find(
         farm => pool.address.toLowerCase() === farm.pair.toLowerCase()
       );
