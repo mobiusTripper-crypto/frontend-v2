@@ -97,7 +97,7 @@ export default defineComponent({
     // sorted by biggest bag balance, limited to biggest 5
     const sortedBalances = computed(() => {
       const addressesWithBalance = Object.entries(balances.value)
-        .filter(balance => balance[1] !== '0.0')
+        .filter(balance => balance[1] !== '0.0' && balance[1] !== '0')
         .map(balance => balance[0]);
       const tokensWithBalance = Object.values(
         pick(tokens.value, addressesWithBalance)
