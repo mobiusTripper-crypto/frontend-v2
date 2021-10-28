@@ -162,7 +162,7 @@ import SelectTokenModal from '@/components/modals/SelectTokenModal/SelectTokenMo
 import useTokens from '@/composables/useTokens';
 import { NATIVE_ASSET_ADDRESS } from '@/constants/tokens';
 
-const ETH_BUFFER = 0.1;
+const ETH_BUFFER = 0.3;
 
 export default defineComponent({
   components: {
