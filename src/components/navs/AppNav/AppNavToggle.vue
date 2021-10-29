@@ -17,7 +17,7 @@
       ]"
       @click="trackGoal(Goals.ClickNavInvest)"
     >
-      Invest / Farm
+      Invest<span class="hidden lg:inline"> / Farm</span>
     </router-link>
     <!--    <router-link
       :to="{ name: 'farm' }"
