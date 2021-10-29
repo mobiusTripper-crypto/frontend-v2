@@ -10,7 +10,8 @@ import useAverageBlockTime from '@/composables/useAverageBlockTime';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 import {
   DecoratedPoolWithFarm,
-  DecoratedPoolWithRequiredFarm
+  DecoratedPoolWithRequiredFarm,
+  DecoratedPoolWithShares
 } from '@/services/balancer/subgraph/types';
 import { uniqBy } from 'lodash';
 
@@ -91,11 +92,11 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
       : []
   );
 
-  const userPools = computed(() => {
+  const userPools = computed<DecoratedPoolWithShares[]>(() => {
     const userPools = userPoolsQuery.data.value?.pools || [];
-    const userFarmPools = onlyPoolsWithFarms.value.filter(
-      pool => pool.farm.stake > 0
-    );
+    const userFarmPools = onlyPoolsWithFarms.value
+      .filter(pool => pool.farm.stake > 0)
+      .map(pool => ({ ...pool, shares: '0' }));
 
     return uniqBy([...userPools, ...userFarmPools], 'id').map(pool => {
       const farm = decoratedFarms.value.find(

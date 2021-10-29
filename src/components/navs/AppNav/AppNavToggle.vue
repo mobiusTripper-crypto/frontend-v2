@@ -17,7 +17,7 @@
       ]"
       @click="trackGoal(Goals.ClickNavInvest)"
     >
-      {{ $t('invest') }}
+      Invest / Farm
     </router-link>
     <!--    <router-link
       :to="{ name: 'farm' }"

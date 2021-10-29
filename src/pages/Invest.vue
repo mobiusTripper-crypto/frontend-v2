@@ -2,7 +2,15 @@
   <div class="lg:container lg:mx-auto pt-24 md:pt-16">
     <template v-if="isWalletReady && userPools && userPools.length > 0">
       <div class="px-4 lg:px-0">
-        <h3 class="mb-4">My Investments</h3>
+        <h3 class="mb-2">My Investments</h3>
+        <BalAlert
+          v-if="hasUnstakedBpt"
+          title="You have unstaked BPT in your wallet"
+          description="If you deposit your BPT into the farm, you will earn additional rewards paid out in BEETS."
+          type="warning"
+          size="sm"
+          class=""
+        />
       </div>
       <PoolsTable
         :isLoading="isLoadingUserPools"
@@ -79,9 +87,11 @@ import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
+import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
 
 export default defineComponent({
   components: {
+    BalAlert,
     BalBtn,
     TokenSearchInput,
     PoolsTable
@@ -137,6 +147,10 @@ export default defineComponent({
       return onlyPoolsWithFarms.value.filter(pool => pool.farm.stake > 0);
     });
 
+    const hasUnstakedBpt = computed(() =>
+      userPools.value.find(pool => pool.farm && parseFloat(pool.shares) > 0)
+    );
+
     masterChefContractsService.beethovenxToken.getCirculatingSupply();
 
     function goToPoolCreate() {
@@ -158,6 +172,7 @@ export default defineComponent({
       poolsHasNextPage,
       poolsIsFetchingNextPage,
       selectedTokens,
+      hasUnstakedBpt,
 
       //methods
       router,
