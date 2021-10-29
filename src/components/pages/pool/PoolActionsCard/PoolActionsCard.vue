@@ -115,7 +115,9 @@ export default defineComponent({
      * STATE
      */
     const hasUnstakedBpt = computed(() => {
-      const balance = balanceFor(getAddress(props.pool.farm.pair));
+      const balance = props.pool.farm
+        ? balanceFor(getAddress(props.pool.farm.pair))
+        : '0';
       return props.pool.farm && parseFloat(balance) > 0;
     });
     const hasStakedBpt = computed(
@@ -123,11 +125,20 @@ export default defineComponent({
     );
 
     const tabs = computed(() => {
-      return [
+      const tabs = [
         { value: 'invest', label: t('invest') },
-        { value: 'withdraw', label: t('withdraw') },
-        { value: 'farm', label: 'Farm', alert: hasUnstakedBpt.value }
+        { value: 'withdraw', label: t('withdraw') }
       ];
+
+      if (props.pool.farm) {
+        tabs.push({
+          value: 'farm',
+          label: 'Farm',
+          alert: hasUnstakedBpt.value
+        });
+      }
+
+      return tabs;
     });
     const activeTab = ref(tabs.value[0].value);
     const investmentSuccess = ref(false);
