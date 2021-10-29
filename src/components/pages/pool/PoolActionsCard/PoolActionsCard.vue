@@ -125,7 +125,7 @@ export default defineComponent({
     );
 
     const tabs = computed(() => {
-      const tabs = [
+      const tabs: { value: string; label: string; alert?: boolean }[] = [
         { value: 'invest', label: t('invest') },
         { value: 'withdraw', label: t('withdraw') }
       ];
