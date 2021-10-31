@@ -229,6 +229,14 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/18579/large/sDYeBj9T_400x400.png"
+    },
+    {
+      "name": "Balancer",
+      "address": "0x58a547ed09684ac2a688610d5caf8e8968b51908",
+      "symbol": "BAL",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png"
     }
   ]
 }
