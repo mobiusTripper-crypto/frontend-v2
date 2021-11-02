@@ -35,7 +35,8 @@ export const TOKENS = {
       '0x514910771af9ca656af840dff83e8264ecf986ca': 'ethereum',
       '0x6b175474e89094c44da98b954eedeac495271d0f': 'ethereum',
       '0xdac17f958d2ee523a2206206994597c13d831ec7': 'ethereum',
-      '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3': 'ethereum'
+      '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3': 'ethereum',
+      '0xba100000625a3754423978a60c9317c58a424e3d': 'ethereum'
     },
     ChainMap: {
       '42': {
@@ -92,7 +93,9 @@ export const TOKENS = {
         '0x82f0b8b456c1a451378467398982d4834b6829c1':
           '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3',
         '0x049d68029688eabf473097a2fc38ef61633a3c7a':
-          '0xdac17f958d2ee523a2206206994597c13d831ec7'
+          '0xdac17f958d2ee523a2206206994597c13d831ec7',
+        '0x58a547ed09684ac2a688610d5caf8e8968b51908':
+          '0xba100000625a3754423978a60c9317c58a424e3d'
       }
     }
   }
