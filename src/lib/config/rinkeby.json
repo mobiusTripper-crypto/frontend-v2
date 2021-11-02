@@ -11,7 +11,7 @@
   "loggingRpc": "",
   "explorer": "https://rinkeby.etherscan.io",
   "subgraph": "https://api.studio.thegraph.com/query/8788/beethovenx-rinkeby/v0.0.2",
-  "farmSubgraph": "https://api.studio.thegraph.com/query/8788/beethovenx-farms-rinkeby/v0.0.4",
+  "farmSubgraph": "https://api.studio.thegraph.com/query/8788/beethovenx-farms-rinkeby/v0.0.5",
   "blockSubgraph": "https://api.studio.thegraph.com/query/8788/rinkeby-blocks/v0.0.2",
   "backendUrl": "https://backend.beets-ftm-node.com/graphql",
   "poolsUrlV1": "https://storageapi.fleek.co/balancer-bucket/balancer-exchange-rinkeby/pools",
@@ -40,13 +40,14 @@
     "stETH": "",
     "wstETH": "",
     "usdc": "0x70b55af71b29c5ca7e67bd1995250364c4be5554",
-    "beets": "0x86B9A6ebCd7B59714d5a566bFfe2683aCFcda0f6",
+    "beets": "0x2f2B2cCDb702064B0C045542cF25cff2C1a3ea19",
     "lidoRelayer": "",
     "balancerHelpers": "0x49bf4cB1fF35ceda7BDB33064A9781144EF5d2b7",
-    "masterChef": "0x0e317Aa06F6C759a724ecD43548FB77bF5baC5b9",
+    "masterChef": "0xb1F6129b70CddC0A10c3bbef8e93c1EF2f61f6F3",
     "beetsUsdcReferencePricePool": "0xc5406e40f6f84468451319ec83038b2c063d280600020000000000000000002a",
     "beethovenxToken": "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e",
-    "defaultPoolOwner": "0xCd983793ADb846dcE4830c22F30C7Ef0C864a776"
+    "defaultPoolOwner": "0xCd983793ADb846dcE4830c22F30C7Ef0C864a776",
+    "earlyLudwigNft": "0x4Cb35E11e28Ac1AA33a0F5De0B266E9193a48E84"
   },
   "strategies": {
     "0": {
@@ -64,7 +65,7 @@
   },
   "lbp": {
     "poolId": "0x49096affb047f312a3def632c07b962f6b2276da000200000000000000000029",
-    "tokenAddress": "0x86B9A6ebCd7B59714d5a566bFfe2683aCFcda0f6",
+    "tokenAddress": "0x2f2B2cCDb702064B0C045542cF25cff2C1a3ea19",
     "tokenSymbol": "BEETS",
     "startingAmount": 5000000,
     "usdcAddress": "0x70b55Af71B29c5Ca7e67bD1995250364C4bE5554",
