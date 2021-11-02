@@ -43,9 +43,9 @@ export default function usePoolQuery(
       }
     });
 
-    if (isStableLike(pool) && !POOLS.Stable.AllowList.includes(id)) {
+    /*if (isStableLike(pool) && !POOLS.Stable.AllowList.includes(id)) {
       throw new Error('Pool not allowed');
-    }
+    }*/
 
     await injectTokens([
       ...pool.tokensList,
