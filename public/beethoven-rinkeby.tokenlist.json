@@ -135,6 +135,14 @@
       "decimals": 18,
       "chainId": 4,
       "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/beets-icon-large.png"
+    },
+    {
+      "name": "Beethoven X",
+      "address": "0x76227eFa96fF24738c28dEf07208E704a92cD31A",
+      "symbol": "BEETS",
+      "decimals": 18,
+      "chainId": 4,
+      "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/beets-icon-large.png"
     }
   ]
 }
