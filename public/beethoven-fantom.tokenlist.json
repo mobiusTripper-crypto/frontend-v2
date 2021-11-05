@@ -285,6 +285,14 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/18445/large/hnd.PNG"
+    },
+    {
+      "name": "Wrapped Statera",
+      "address": "0xCEeBDE49eC95E21F7eE63C5c6f98CaB3519570de",
+      "symbol": "wSTA",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://assets.coingecko.com/coins/images/13599/large/wsta_logo.png"
     }
   ]
 }
