@@ -19,15 +19,28 @@
         <div class="text-xl font-medium truncate flex items-center">
           {{ fNum(pool.farm.pendingBeets, 'token_fixed') }} BEETS
         </div>
+        <div
+          v-if="pool.farm.pendingRewardToken > 0"
+          class="text-xl font-medium truncate flex items-center"
+        >
+          {{ fNum(pool.farm.pendingRewardToken, 'token_fixed') }} HND
+        </div>
         <div class="truncate flex items-center pb-8">
-          {{ fNum(pool.farm.pendingBeetsValue, 'usd') }}
+          {{
+            fNum(
+              pool.farm.pendingBeetsValue + pool.farm.pendingRewardTokenValue,
+              'usd'
+            )
+          }}
         </div>
 
         <BalBtn
           label="Harvest"
           block
           color="gradient"
-          :disabled="pool.farm.pendingBeets <= 0"
+          :disabled="
+            pool.farm.pendingBeets <= 0 && pool.farm.pendingRewardToken <= 0
+          "
           :loading="harvesting"
           @click.prevent="harvestRewards"
         />

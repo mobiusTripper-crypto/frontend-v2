@@ -14,14 +14,21 @@ import {
   DecoratedPoolWithShares
 } from '@/services/balancer/subgraph/types';
 import { uniqBy } from 'lodash';
+import useTokens from '@/composables/useTokens';
+import useWeb3 from '@/services/web3/useWeb3';
 
 export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
   // COMPOSABLES
   const poolsQuery = usePoolsQuery(poolsTokenList);
   const userPoolsQuery = useUserPoolsQuery();
   const protocolDataQuery = useProtocolDataQuery();
+  const { priceFor, dynamicDataLoaded } = useTokens();
+  const { appNetworkConfig } = useWeb3();
   const beetsPrice = computed(
     () => protocolDataQuery.data?.value?.beetsPrice || 0
+  );
+  const rewardTokenPrice = computed(() =>
+    dynamicDataLoaded.value ? priceFor(appNetworkConfig.addresses.hnd) : 0
   );
 
   const {
@@ -54,7 +61,8 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
       allFarmsForUser.value,
       blocksPerYear.value,
       blocksPerDay.value,
-      beetsPrice.value
+      beetsPrice.value,
+      rewardTokenPrice.value
     );
   });
 
@@ -71,7 +79,13 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
         dynamic: {
           ...pool.dynamic,
           apr: farm
-            ? getPoolApr(pool, farm, blocksPerYear.value, beetsPrice.value)
+            ? getPoolApr(
+                pool,
+                farm,
+                blocksPerYear.value,
+                beetsPrice.value,
+                rewardTokenPrice.value
+              )
             : pool.dynamic.apr
         }
       };
@@ -110,7 +124,13 @@ export default function usePools(poolsTokenList: Ref<string[]> = ref([])) {
         dynamic: {
           ...pool.dynamic,
           apr: farm
-            ? getPoolApr(pool, farm, blocksPerYear.value, beetsPrice.value)
+            ? getPoolApr(
+                pool,
+                farm,
+                blocksPerYear.value,
+                beetsPrice.value,
+                rewardTokenPrice.value
+              )
             : pool.dynamic.apr
         }
       };

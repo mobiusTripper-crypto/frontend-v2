@@ -47,6 +47,8 @@ export interface Config {
     beetsUsdcReferencePricePool: string;
     defaultPoolOwner: string;
     earlyLudwigNft: string;
+    hnd: string;
+    hndRewarder: string;
   };
   strategies: Record<
     string,

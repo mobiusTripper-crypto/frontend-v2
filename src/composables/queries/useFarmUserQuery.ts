@@ -8,20 +8,27 @@ import useWeb3 from '@/services/web3/useWeb3';
 import { FarmUser } from '@/services/balancer/subgraph/types';
 import useApp from '@/composables/useApp';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
+import useTokens from '@/composables/useTokens';
 
 export default function useFarmUserQuery(
   farmId: string,
   options: QueryObserverOptions<FarmUser> = {}
 ) {
-  const { account, isWalletReady } = useWeb3();
+  const { account, isWalletReady, appNetworkConfig } = useWeb3();
   const { appLoading } = useApp();
   const protocolDataQuery = useProtocolDataQuery();
   const beetsPrice = computed(
     () => protocolDataQuery.data?.value?.beetsPrice || 0
   );
+  const { priceFor, dynamicDataLoading, loading } = useTokens();
 
   const enabled = computed(
-    () => isWalletReady.value && account.value != null && !appLoading.value
+    () =>
+      isWalletReady.value &&
+      account.value != null &&
+      !appLoading.value &&
+      !loading.value &&
+      !dynamicDataLoading.value
   );
   const queryKey = QUERY_KEYS.Farms.User(farmId, account);
 
@@ -36,10 +43,19 @@ export default function useFarmUserQuery(
         account.value
       );
 
+      const pendingRewardToken = await masterChefContractsService.hndRewarder.getPendingReward(
+        farmId,
+        account.value
+      );
+
+      const hndPrice = priceFor(appNetworkConfig.addresses.hnd);
+
       return {
         ...userData,
         pendingBeets,
-        pendingBeetsValue: pendingBeets * beetsPrice.value
+        pendingBeetsValue: pendingBeets * beetsPrice.value,
+        pendingRewardToken,
+        pendingRewardTokenValue: hndPrice * pendingRewardToken
       };
     } catch (e) {
       console.log('ERROR', e);

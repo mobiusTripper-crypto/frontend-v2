@@ -17,7 +17,9 @@
           size="sm"
           v-if="harvesting || isLoadingPools || isLoadingFarms"
         />
-        <span class="hidden lg:block" v-else>{{ data.pendingBeetsValue }}</span>
+        <span class="hidden lg:block" v-else>{{
+          data.pendingRewardValue
+        }}</span>
       </BalBtn>
     </template>
     <div class="w-80 sm:w-96">
@@ -31,8 +33,14 @@
         <div class="text-xl font-medium truncate flex items-center">
           {{ data.pendingBeets }}
         </div>
+        <div
+          v-if="data.hasPendingRewardToken"
+          class="text-xl font-medium truncate flex items-center"
+        >
+          {{ data.pendingRewardToken }}
+        </div>
         <div class="text-sm text-gray-500 font-medium mt-1 text-left">
-          {{ data.pendingBeetsValue }}
+          {{ data.pendingRewardValue }}
         </div>
       </BalCard>
       <div class="grid grid-cols-2 gap-x-2 gap-y-2 px-2">
@@ -109,6 +117,12 @@ export default defineComponent({
 
     const data = computed(() => {
       const farms = onlyPoolsWithFarms.value.map(pool => pool.farm);
+      const pendingRewardToken = sumBy(farms, farm => farm.pendingRewardToken);
+      const pendingRewardTokenValue = sumBy(
+        farms,
+        farm => farm.pendingRewardTokenValue
+      );
+      const pendingBeetsValue = sumBy(farms, farm => farm.pendingBeetsValue);
 
       const averageApr =
         sumBy(farms, farm => farm.apr * (farm.stake || 0)) /
@@ -124,8 +138,11 @@ export default defineComponent({
           numeral(sumBy(farms, farm => farm.pendingBeets)).format(
             '0,0.[0000]'
           ) + ' BEETS',
-        pendingBeetsValue: fNum(
-          sumBy(farms, farm => farm.pendingBeetsValue),
+        hasPendingRewardToken: pendingRewardToken > 0,
+        pendingRewardToken:
+          numeral(pendingRewardToken).format('0,0.[0000]') + ' HND',
+        pendingRewardValue: fNum(
+          pendingBeetsValue + pendingRewardTokenValue,
           'usd'
         ),
         apr: fNum(averageApr, 'percent'),
