@@ -67,8 +67,6 @@ export function calculateApr(
     86400 *
     365;
 
-  console.log('reward token per year', rewardTokenPerYear);
-
   const valuePerYear =
     beetsPrice * farmBeetsPerYear + rewardTokenPrice * rewardTokenPerYear;
 

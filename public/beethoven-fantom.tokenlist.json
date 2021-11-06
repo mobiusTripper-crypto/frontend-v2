@@ -293,6 +293,14 @@
       "decimals": 18,
       "chainId": 250,
       "logoURI": "https://assets.coingecko.com/coins/images/13599/large/wsta_logo.png"
+    },
+    {
+      "name": "linSpirit",
+      "address": "0xc5713B6a0F26bf0fdC1c52B90cd184D950be515C",
+      "symbol": "LINSPIRIT",
+      "decimals": 18,
+      "chainId": 250,
+      "logoURI": "https://beethoven-assets.s3.eu-central-1.amazonaws.com/linspirit.png"
     }
   ]
 }
