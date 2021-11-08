@@ -575,7 +575,8 @@ export default function useSor({
   function calculateSwapCost(tokenAddress: string): BigNumber {
     const ethPriceFiat = priceFor(appNetworkConfig.nativeAsset.address);
     const tokenPriceFiat = priceFor(tokenAddress);
-    const gasPriceWei = store.state.market.gasPrice || 0;
+    //const gasPriceWei = store.state.market.gasPrice || 0;
+    const gasPriceWei = GAS_PRICE;
     const gasPriceScaled = scale(bnum(gasPriceWei), -18);
     const ethPriceToken = bnum(Number(ethPriceFiat) / Number(tokenPriceFiat));
     const swapCost = bnum(SWAP_COST);
@@ -589,9 +590,9 @@ export default function useSor({
     tokenDecimals: number,
     sorManager: SorManager
   ): Promise<void> {
-    // If using Polygon get price of swap using stored market prices
+    // If using Polygon or Fantom get price of swap using stored market prices
     // If mainnet price retrieved on-chain using SOR
-    if (appNetworkConfig.chainId === 137) {
+    if (appNetworkConfig.chainId === 137 || appNetworkConfig.chainId === 250) {
       const swapCostToken = calculateSwapCost(tokenOutAddressInput.value);
       await sorManager.setCostOutputToken(
         tokenAddress,
