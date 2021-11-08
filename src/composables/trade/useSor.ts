@@ -576,7 +576,6 @@ export default function useSor({
     const ethPriceFiat = priceFor(appNetworkConfig.nativeAsset.address);
     const tokenPriceFiat = priceFor(tokenAddress);
     const gasPriceWei = store.state.market.gasPrice || GAS_PRICE;
-    console.log('GAS PRICE GWEI', gasPriceWei);
     const gasPriceScaled = scale(bnum(gasPriceWei), -18);
     const ethPriceToken = bnum(Number(ethPriceFiat) / Number(tokenPriceFiat));
     const swapCost = bnum(SWAP_COST);
