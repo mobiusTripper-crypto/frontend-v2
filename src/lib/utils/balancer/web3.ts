@@ -46,7 +46,7 @@ export async function sendTransaction(
     const gasLimit = gasLimitNumber.toNumber();
     overrides.gasLimit = Math.floor(gasLimit * (1 + GAS_LIMIT_BUFFER));
 
-    if (
+    /*if (
       USE_BLOCKNATIVE_GAS_PLATFORM &&
       overrides.gasPrice == null &&
       overrides.maxFeePerGas == null &&
@@ -65,7 +65,7 @@ export async function sendTransaction(
           overrides.gasPrice = gasPrice.price;
         }
       }
-    }
+    }*/
 
     console.log('GAS OVERRIDES', overrides);
 
