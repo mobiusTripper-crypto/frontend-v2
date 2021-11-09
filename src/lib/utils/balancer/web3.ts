@@ -67,6 +67,8 @@ export async function sendTransaction(
       }
     }
 
+    console.log('GAS OVERRIDES', overrides);
+
     return await contractWithSigner[action](...params, overrides);
   } catch (e) {
     if (e.code === ErrorCode.UNPREDICTABLE_GAS_LIMIT && ENV !== 'development') {
