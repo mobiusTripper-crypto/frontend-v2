@@ -88,6 +88,7 @@ import usePoolFilters from '@/composables/pools/usePoolFilters';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
 import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
+import useBeethovenxConfig from '@/composables/useBeethovenxConfig';
 
 export default defineComponent({
   components: {
@@ -100,7 +101,8 @@ export default defineComponent({
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady, isV1Supported, appNetworkConfig } = useWeb3();
+    const { isWalletReady, isV1Supported } = useWeb3();
+    const { beethovenxConfig } = useBeethovenxConfig();
     const {
       selectedTokens,
       addSelectedToken,
@@ -122,7 +124,7 @@ export default defineComponent({
     //TODO: this will break down once pagination starts happening
     const communityPools = computed(() => {
       return poolsWithFarms.value?.filter(
-        pool => !appNetworkConfig.incentivizedPools.includes(pool.id)
+        pool => !beethovenxConfig.value.incentivizedPools.includes(pool.id)
       );
     });
 
@@ -133,11 +135,11 @@ export default defineComponent({
             return (
               selectedTokens.value.every((selectedToken: string) =>
                 pool.tokenAddresses.includes(selectedToken)
-              ) && appNetworkConfig.incentivizedPools.includes(pool.id)
+              ) && beethovenxConfig.value.incentivizedPools.includes(pool.id)
             );
           })
         : poolsWithFarms?.value.filter(pool =>
-            appNetworkConfig.incentivizedPools.includes(pool.id)
+            beethovenxConfig.value.incentivizedPools.includes(pool.id)
           );
     });
 

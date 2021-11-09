@@ -1,19 +1,16 @@
 import {
+  computed,
+  ComputedRef,
+  InjectionKey,
   provide,
   reactive,
-  toRefs,
-  computed,
-  InjectionKey,
-  ComputedRef,
-  Ref
+  Ref,
+  toRefs
 } from 'vue';
 import symbolKeys from '@/constants/symbol.keys';
-import localStorageKeys from '@/constants/local-storage.keys';
 import { TokenList, TokenListMap } from '@/types/TokenList';
-import { tokenListService } from '@/services/token-list/token-list.service';
-import { lsSet } from '@/lib/utils';
-import { pick } from 'lodash';
 import useTokenListsQuery from '@/composables/queries/useTokenListsQuery';
+import useWeb3 from '@/services/web3/useWeb3';
 
 /** TYPES */
 export interface TokenListsState {
@@ -35,7 +32,6 @@ export interface TokenListsProviderResponse {
 }
 
 /** SETUP */
-const { uris } = tokenListService;
 export const TokenListsProviderSymbol: InjectionKey<TokenListsProviderResponse> = Symbol(
   symbolKeys.Providers.TokenLists
 );
@@ -44,11 +40,12 @@ export default {
   name: 'TokenListsProvider',
 
   setup(props, { slots }) {
+    const { appNetworkConfig } = useWeb3();
     /**
      * STATE
      */
     const state: TokenListsState = reactive({
-      activeListKeys: [uris.Balancer.Default]
+      activeListKeys: [appNetworkConfig.tokenListSanityUrl]
     });
 
     /**
@@ -83,29 +80,27 @@ export default {
     /**
      * All active (toggled) tokenlists
      */
-    const activeTokenLists = computed(
-      (): TokenListMap => pick(allTokenLists.value, state.activeListKeys)
-    );
+    const activeTokenLists = computed((): TokenListMap => allTokenLists.value);
 
     /**
      * The default Balancer token list.
      */
     const defaultTokenList = computed(
-      (): TokenList => allTokenLists.value[uris.Balancer.Default]
+      (): TokenList => allTokenLists.value[appNetworkConfig.tokenListSanityUrl]
     );
 
     /**
      * The Balancer vetted token list, contains LBP tokens.
      */
     const vettedTokenList = computed(
-      (): TokenList => allTokenLists.value[uris.Balancer.Vetted]
+      (): TokenList => allTokenLists.value[appNetworkConfig.tokenListSanityUrl]
     );
 
     /**
      * All Balancer token lists mapped by URI.
      */
     const balancerTokenLists = computed(
-      (): TokenListMap => pick(allTokenLists.value, uris.Balancer.All)
+      (): TokenListMap => allTokenLists.value
     );
 
     /**
@@ -114,7 +109,7 @@ export default {
      * This excludes lists like the Balancer vetted list.
      */
     const approvedTokenLists = computed(
-      (): TokenListMap => pick(allTokenLists.value, uris.Approved)
+      (): TokenListMap => allTokenLists.value
     );
 
     /**
@@ -126,7 +121,7 @@ export default {
      * makes additonal tokens available in the token search modal.
      */
     function toggleTokenList(uri: string): void {
-      if (!uris.Approved.includes(uri)) return;
+      /*if (!uris.Approved.includes(uri)) return;
 
       if (state.activeListKeys.includes(uri)) {
         // Deactivate token list
@@ -136,7 +131,7 @@ export default {
         state.activeListKeys.push(uri);
       }
 
-      lsSet(localStorageKeys.TokenLists.Toggled, state.activeListKeys);
+      lsSet(localStorageKeys.TokenLists.Toggled, state.activeListKeys);*/
     }
 
     /**

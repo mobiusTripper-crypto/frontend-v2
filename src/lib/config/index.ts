@@ -68,11 +68,12 @@ export interface Config {
     weightStep: number;
     timeStep: number;
   };
-  incentivizedPools: string[];
   etherscan: {
     apiKey: string;
     apiUrl: string;
   };
+  tokenListSanityUrl: string;
+  configSanityUrl: string;
 }
 
 const config: Record<string, Config> = {
