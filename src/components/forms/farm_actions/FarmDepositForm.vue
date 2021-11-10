@@ -99,10 +99,11 @@ import { TOKENS } from '@/constants/tokens';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useFarm from '@/composables/farms/useFarm';
-import useApprovalRequiredQuery from '@/composables/queries/useApprovalRequiredQuery';
+import useAllowanceAvailableQuery from '@/composables/queries/useAllowanceAvailableQuery';
 import { getAddress } from '@ethersproject/address';
 import { BigNumber } from 'bignumber.js';
 import useEthers from '@/composables/useEthers';
+import { FP_SCALING_FACTOR } from '@/lib/utils/numbers';
 
 type DataProps = {
   depositForm: FormRef;
@@ -152,13 +153,23 @@ export default defineComponent({
     const approving = ref(false);
 
     const { approve, deposit } = useFarm(toRef(props, 'pool'));
-    const approvalRequiredQuery = useApprovalRequiredQuery(
+    const allowanceAvailableQuery = useAllowanceAvailableQuery(
       props.pool.farm.pair
     );
     const bptBalance = computed(() =>
       balanceFor(getAddress(props.pool.farm.pair))
     );
-    const approvalRequired = computed(() => approvalRequiredQuery.data.value);
+    const approvalRequired = computed(() => {
+      if (parseFloat(amount.value) === 0 || amount.value === '') {
+        return false;
+      }
+
+      return (
+        allowanceAvailableQuery.data.value
+          ?.div(FP_SCALING_FACTOR)
+          .lt(amount.value) || false
+      );
+    });
     const { txListener } = useEthers();
 
     function amountRules() {
@@ -183,7 +194,7 @@ export default defineComponent({
 
       txListener(tx, {
         onTxConfirmed: async () => {
-          await approvalRequiredQuery.refetch.value();
+          await allowanceAvailableQuery.refetch.value();
           approving.value = false;
         },
         onTxFailed: () => {
@@ -206,7 +217,7 @@ export default defineComponent({
 
       txListener(tx, {
         onTxConfirmed: async () => {
-          await approvalRequiredQuery.refetch.value();
+          await allowanceAvailableQuery.refetch.value();
           emit('success', tx);
           data.amount = '';
           depositing.value = false;
