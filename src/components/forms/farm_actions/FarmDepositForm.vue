@@ -103,7 +103,7 @@ import useAllowanceAvailableQuery from '@/composables/queries/useAllowanceAvaila
 import { getAddress } from '@ethersproject/address';
 import useEthers from '@/composables/useEthers';
 import { FP_SCALING_FACTOR } from '@/lib/utils/numbers';
-import { BigNumber } from '@ethersproject/bignumber';
+import BigNumber from 'bignumber.js';
 
 type DataProps = {
   depositForm: FormRef;
@@ -159,17 +159,7 @@ export default defineComponent({
     const bptBalance = computed(() =>
       balanceFor(getAddress(props.pool.farm.pair))
     );
-    const approvalRequired = computed(() => {
-      if (amount.value === '' || parseFloat(amount.value) === 0) {
-        return false;
-      }
 
-      return (
-        allowanceAvailableQuery.data.value
-          ?.div(FP_SCALING_FACTOR)
-          .lt(BigNumber.from(parseInt(amount.value) + 1)) || false
-      );
-    });
     const { txListener } = useEthers();
 
     function amountRules() {
@@ -202,6 +192,19 @@ export default defineComponent({
         }
       });
     }
+
+    const approvalRequired = computed(() => {
+      if (amount.value === '' || parseFloat(amount.value) === 0) {
+        return false;
+      }
+
+      const availableAllowance = new BigNumber(
+        allowanceAvailableQuery.data.value?.toString() || '0'
+      );
+      const amountScaled = scale(new BigNumber(amount.value), 18);
+
+      return availableAllowance.lt(amountScaled);
+    });
 
     async function submit(): Promise<void> {
       if (!data.depositForm.validate()) return;
