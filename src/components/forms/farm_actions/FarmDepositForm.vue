@@ -101,9 +101,9 @@ import useTokens from '@/composables/useTokens';
 import useFarm from '@/composables/farms/useFarm';
 import useAllowanceAvailableQuery from '@/composables/queries/useAllowanceAvailableQuery';
 import { getAddress } from '@ethersproject/address';
-import { BigNumber } from 'bignumber.js';
 import useEthers from '@/composables/useEthers';
 import { FP_SCALING_FACTOR } from '@/lib/utils/numbers';
+import { BigNumber } from '@ethersproject/bignumber';
 
 type DataProps = {
   depositForm: FormRef;
@@ -160,14 +160,14 @@ export default defineComponent({
       balanceFor(getAddress(props.pool.farm.pair))
     );
     const approvalRequired = computed(() => {
-      if (parseFloat(amount.value) === 0 || amount.value === '') {
+      if (amount.value === '' || parseFloat(amount.value) === 0) {
         return false;
       }
 
       return (
         allowanceAvailableQuery.data.value
           ?.div(FP_SCALING_FACTOR)
-          .lt(amount.value) || false
+          .lt(BigNumber.from(parseInt(amount.value) + 1)) || false
       );
     });
     const { txListener } = useEthers();
