@@ -1,6 +1,6 @@
 <template>
   <BalForm ref="withdrawForm" @on-submit="submit">
-    <div class="px-4 pt-6 pb-20 border-b dark:border-gray-900">
+    <div class="px-4 pt-8">
       <BalTextInput
         name="Withdraw"
         v-model="amount"
@@ -53,7 +53,7 @@
           block
           @click="trackGoal(Goals.ClickFarmWithdraw)"
         >
-          {{ $t('withdraw') }}
+          Withdraw BPT
         </BalBtn>
       </template>
     </div>

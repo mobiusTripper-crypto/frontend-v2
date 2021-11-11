@@ -90,6 +90,12 @@ export default class Pools {
       ) {
         pool.name = `*DEPRECATED* ${pool.name} - Please migrate to the Beethoven-X pool`;
       }
+      if (
+        pool.id ===
+        '0x2c580c6f08044d6dfaca8976a66c8fadddbd9901000000000000000000000038'
+      ) {
+        pool.name = 'Guqin Qi V2';
+      }
 
       const pastPool = pastPools.find(p => p.id === pool.id);
       const volume = this.calcVolume(pool, pastPool);

@@ -4,10 +4,11 @@ import { useQuery } from 'vue-query';
 import { QueryObserverOptions } from 'react-query/core';
 import QUERY_KEYS from '@/constants/queryKeys';
 import useWeb3 from '@/services/web3/useWeb3';
+import { BigNumber } from 'ethers';
 
-export default function useApprovalRequiredQuery(
+export default function useAllowanceAvailableQuery(
   token: string,
-  options: QueryObserverOptions<boolean> = {}
+  options: QueryObserverOptions<BigNumber> = {}
 ) {
   const { account, isWalletReady, appNetworkConfig } = useWeb3();
   const enabled = computed(() => isWalletReady.value);
@@ -20,7 +21,7 @@ export default function useApprovalRequiredQuery(
       appNetworkConfig.addresses.masterChef
     );
 
-    return allowance.eq(0);
+    return allowance;
   };
 
   const queryOptions = reactive({
@@ -28,5 +29,5 @@ export default function useApprovalRequiredQuery(
     ...options
   });
 
-  return useQuery<boolean>(queryKey, queryFn, queryOptions);
+  return useQuery<BigNumber>(queryKey, queryFn, queryOptions);
 }

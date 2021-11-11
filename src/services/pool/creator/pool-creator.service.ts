@@ -12,6 +12,7 @@ import { bnToNormalizedWeights } from '@/lib/utils/numbers';
 import { parseUnits } from '@ethersproject/units';
 import { encodeJoinWeightedPool } from '@/lib/utils/balancer/weightedPoolEncoding';
 import { PoolVerifierService } from '@/services/pool/creator/pool-verifier.service';
+import { sleep } from '@/lib/utils';
 
 export interface PoolTokenInput {
   address: string;
@@ -43,7 +44,7 @@ export class PoolCreatorService {
     swapFeePercentage: string,
     tokens: PoolTokenInput[]
   ): Promise<TransactionResponse> {
-    const sorted = orderBy(tokens, 'address', 'asc');
+    const sorted = this.sortTokens(tokens);
 
     return await sendTransaction(
       provider,
@@ -71,7 +72,7 @@ export class PoolCreatorService {
     address: string,
     tokenInfoMap: TokenInfoMap
   ): Promise<TransactionResponse> {
-    const sorted = orderBy(tokens, 'address', 'asc');
+    const sorted = this.sortTokens(tokens);
     const amountsIn = sorted.map(token =>
       parseUnits(token.amount, tokenInfoMap[token.address].decimals)
     );
@@ -100,14 +101,27 @@ export class PoolCreatorService {
     const poolCreatedEvent = receipt.events.find(
       (e: { event: string }) => e.event === 'PoolCreated'
     );
+    let poolId = '';
 
-    const poolId = await callStatic(
-      provider,
-      poolCreatedEvent.args.pool,
-      weightedPoolAbi,
-      'getPoolId',
-      []
-    );
+    //generous amount of retries, to give the rpc time to catch up.
+    for (let i = 0; i < 20; i++) {
+      try {
+        await sleep(1000);
+        poolId = await callStatic(
+          provider,
+          poolCreatedEvent.args.pool,
+          weightedPoolAbi,
+          'getPoolId',
+          []
+        );
+      } catch {
+        //
+      }
+    }
+
+    if (poolId === '') {
+      throw new Error('Failed to retrieve the pool id');
+    }
 
     return {
       poolAddress: poolCreatedEvent.args.pool,
@@ -126,7 +140,7 @@ export class PoolCreatorService {
     poolAddress: string,
     blockHash: string
   ) {
-    const sorted = orderBy(tokens, 'address', 'asc');
+    const sorted = this.sortTokens(tokens);
 
     await this.poolVerifier.verifyPool(
       provider,
@@ -140,5 +154,9 @@ export class PoolCreatorService {
       poolAddress,
       blockHash
     );
+  }
+
+  private sortTokens(tokens: PoolTokenInput[]): PoolTokenInput[] {
+    return orderBy(tokens, token => token.address.toLowerCase(), 'asc');
   }
 }

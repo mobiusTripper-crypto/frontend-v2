@@ -13,6 +13,7 @@
           :pool="pool"
           :missing-prices="missingPrices"
           @success="handleInvestment($event)"
+          :has-unstaked-bpt="hasUnstakedBpt"
         />
         <SuccessOverlay
           v-if="investmentSuccess"
@@ -28,6 +29,7 @@
           :pool="pool"
           :missing-prices="missingPrices"
           @success="handleWithdrawal($event)"
+          :has-staked-bpt="hasStakedBpt"
         />
         <SuccessOverlay
           v-if="withdrawalSuccess"
@@ -38,12 +40,35 @@
           @close="withdrawalSuccess = false"
         />
       </template>
+      <template v-if="activeTab === 'farm'">
+        <FarmDepositForm :pool="pool" @success="handleFarmInvestment($event)" />
+        <SuccessOverlay
+          v-if="farmInvestmentSuccess"
+          :title="$t('farmDepositSettled')"
+          :description="$t('farmDepositSuccess')"
+          :closeLabel="$t('close')"
+          :explorerLink="explorer.txLink(txHash)"
+          @close="farmInvestmentSuccess = false"
+        />
+        <FarmWithdrawForm
+          :pool="pool"
+          @success="handleFarmWithdrawal($event)"
+        />
+        <SuccessOverlay
+          v-if="farmWithdrawalSuccess"
+          :title="$t('farmWithdrawalSettled')"
+          :description="$t('farmWithdrawalSuccess')"
+          :closeLabel="$t('close')"
+          :explorerLink="explorer.txLink(txHash)"
+          @close="farmWithdrawalSuccess = false"
+        />
+      </template>
     </div>
   </BalCard>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import InvestForm from '@/components/forms/pool_actions/InvestForm.vue';
 import WithdrawForm from '@/components/forms/pool_actions/WithdrawForm.vue';
 import SuccessOverlay from '@/components/cards/SuccessOverlay.vue';
@@ -53,6 +78,10 @@ import TradeSettingsPopover, {
 } from '@/components/popovers/TradeSettingsPopover.vue';
 import useFathom from '@/composables/useFathom';
 import useWeb3 from '@/services/web3/useWeb3';
+import FarmWithdrawForm from '@/components/forms/farm_actions/FarmWithdrawForm.vue';
+import FarmDepositForm from '@/components/forms/farm_actions/FarmDepositForm.vue';
+import { getAddress } from '@ethersproject/address';
+import useTokens from '@/composables/useTokens';
 
 export default defineComponent({
   name: 'PoolActionsCard',
@@ -63,7 +92,9 @@ export default defineComponent({
     InvestForm,
     WithdrawForm,
     SuccessOverlay,
-    TradeSettingsPopover
+    TradeSettingsPopover,
+    FarmWithdrawForm,
+    FarmDepositForm
   },
 
   props: {
@@ -71,24 +102,49 @@ export default defineComponent({
     missingPrices: { type: Boolean, default: false }
   },
 
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     /**
      * COMPOSABLES
      */
     const { t } = useI18n();
     const { trackGoal, Goals } = useFathom();
     const { explorerLinks: explorer } = useWeb3();
+    const { balanceFor } = useTokens();
 
     /**
      * STATE
      */
-    const tabs = [
-      { value: 'invest', label: t('invest') },
-      { value: 'withdraw', label: t('withdraw') }
-    ];
-    const activeTab = ref(tabs[0].value);
+    const hasUnstakedBpt = computed(() => {
+      const balance = props.pool.farm
+        ? balanceFor(getAddress(props.pool.farm.pair))
+        : '0';
+      return props.pool.farm && parseFloat(balance) > 0;
+    });
+    const hasStakedBpt = computed(
+      () => props.pool.farm && props.pool.farm.share > 0
+    );
+
+    const tabs = computed(() => {
+      const tabs: { value: string; label: string; alert?: boolean }[] = [
+        { value: 'invest', label: t('invest') },
+        { value: 'withdraw', label: t('withdraw') }
+      ];
+
+      if (props.pool.farm) {
+        tabs.push({
+          value: 'farm',
+          label: 'Farm',
+          alert: hasUnstakedBpt.value
+        });
+      }
+
+      return tabs;
+    });
+    const activeTab = ref(tabs.value[0].value);
     const investmentSuccess = ref(false);
     const withdrawalSuccess = ref(false);
+    const farmInvestmentSuccess = ref(false);
+    const farmWithdrawalSuccess = ref(false);
     const txHash = ref('');
 
     /**
@@ -108,6 +164,20 @@ export default defineComponent({
       emit('onTx', txReceipt);
     }
 
+    function handleFarmInvestment(txReceipt): void {
+      farmInvestmentSuccess.value = true;
+      txHash.value = txReceipt.hash;
+      trackGoal(Goals.Invested);
+      emit('onTx', txReceipt);
+    }
+
+    function handleFarmWithdrawal(txReceipt): void {
+      farmWithdrawalSuccess.value = true;
+      txHash.value = txReceipt.hash;
+      trackGoal(Goals.Withdrawal);
+      emit('onTx', txReceipt);
+    }
+
     return {
       // data
       activeTab,
@@ -119,7 +189,11 @@ export default defineComponent({
       // methods
       handleInvestment,
       handleWithdrawal,
-      explorer
+      handleFarmInvestment,
+      handleFarmWithdrawal,
+      explorer,
+      hasUnstakedBpt,
+      hasStakedBpt
     };
   }
 });

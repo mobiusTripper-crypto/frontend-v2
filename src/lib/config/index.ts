@@ -46,6 +46,9 @@ export interface Config {
     balancerHelpers: string;
     beetsUsdcReferencePricePool: string;
     defaultPoolOwner: string;
+    earlyLudwigNft: string;
+    hnd: string;
+    hndRewarder: string;
   };
   strategies: Record<
     string,
@@ -65,11 +68,12 @@ export interface Config {
     weightStep: number;
     timeStep: number;
   };
-  incentivizedPools: string[];
   etherscan: {
     apiKey: string;
     apiUrl: string;
   };
+  tokenListSanityUrl: string;
+  configSanityUrl: string;
 }
 
 const config: Record<string, Config> = {

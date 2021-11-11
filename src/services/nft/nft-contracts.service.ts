@@ -1,16 +1,12 @@
 import { Config } from '@/lib/config';
+import { default as erc20Abi } from '@/lib/abi/ERC20.json';
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { default as MasterChefAbi } from '@/lib/abi/BeethovenxMasterChef.json';
 import { rpcProviderService as _rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
 import { configService as _configService } from '@/services/config/config.service';
-import MasterChef from './contracts/master-chef';
-import BeethovenxToken from '@/services/farm/contracts/beethovenx-token';
-import HndRewarder from '@/services/farm/contracts/hnd-rewarder';
+import EarlyLudwigNft from './contracts/early-ludwig-nft';
 
-export default class MasterChefContractsService {
-  masterChef: MasterChef;
-  hndRewarder: HndRewarder;
-  beethovenxToken: BeethovenxToken;
+export default class NftContractService {
+  earlyLudwigNft: EarlyLudwigNft;
   config: Config;
   provider: JsonRpcProvider;
 
@@ -22,17 +18,15 @@ export default class MasterChefContractsService {
     this.config = this.configService.network;
 
     // Init contracts
-    this.masterChef = new MasterChef(this);
-    this.beethovenxToken = new BeethovenxToken(this);
-    this.hndRewarder = new HndRewarder(this);
+    this.earlyLudwigNft = new EarlyLudwigNft(this);
   }
 
   // Combine all the ABIs and remove duplicates
   public get allABIs() {
     return Object.values(
-      Object.fromEntries([...MasterChefAbi].map(row => [row.name, row]))
+      Object.fromEntries([...erc20Abi].map(row => [row.name, row]))
     );
   }
 }
 
-export const masterChefContractsService = new MasterChefContractsService();
+export const nftContractService = new NftContractService();

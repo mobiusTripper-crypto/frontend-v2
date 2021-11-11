@@ -85,6 +85,12 @@
             <PoolStatCards :pool="pool" :loading="loadingPool" />
           </div>
 
+          <div class="mb-4" v-if="loadingPool || !!pool.farm">
+            <h4 class="px-4 lg:px-0 mb-4">Farm</h4>
+            <FarmStatCardsLoading v-if="loadingPool" />
+            <FarmStatCards v-else :pool="pool" />
+          </div>
+
           <div class="mb-4">
             <h4 v-text="$t('poolComposition')" class="px-4 lg:px-0 mb-4" />
             <PoolBalancesCard :pool="pool" :loading="loadingPool" />
@@ -134,6 +140,8 @@ import useTokens from '@/composables/useTokens';
 import useApp from '@/composables/useApp';
 import useProtocolDataQuery from '@/composables/queries/useProtocolDataQuery';
 import usePools from '@/composables/pools/usePools';
+import FarmStatCards from '@/components/pages/farm/FarmStatCards.vue';
+import FarmStatCardsLoading from '@/components/pages/farm/FarmStatCardsLoading.vue';
 
 interface PoolPageData {
   id: string;
@@ -146,7 +154,9 @@ export default defineComponent({
   components: {
     ...PoolPageComponents,
     GauntletIcon,
-    LiquidityMiningTooltip
+    LiquidityMiningTooltip,
+    FarmStatCardsLoading,
+    FarmStatCards
   },
 
   setup() {
@@ -198,7 +208,8 @@ export default defineComponent({
         dynamic: poolWithFarm
           ? poolWithFarm.dynamic
           : poolQuery.data.value.dynamic,
-        hasLiquidityMiningRewards: !!poolWithFarm
+        hasLiquidityMiningRewards: !!poolWithFarm,
+        farm: poolWithFarm?.farm
       };
     });
     const { isStableLikePool } = usePool(poolQuery.data);

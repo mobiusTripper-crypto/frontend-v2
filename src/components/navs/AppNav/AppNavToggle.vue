@@ -17,9 +17,9 @@
       ]"
       @click="trackGoal(Goals.ClickNavInvest)"
     >
-      {{ $t('invest') }}
+      Invest<span class="hidden lg:inline">&nbsp;/&nbsp;Farm</span>
     </router-link>
-    <router-link
+    <!--    <router-link
       :to="{ name: 'farm' }"
       :class="[
         'toggle-link px-6 rounded-r-lg',
@@ -28,7 +28,7 @@
       @click="trackGoal(Goals.ClickNavFarm)"
     >
       Farm
-    </router-link>
+    </router-link>-->
     <router-link
       :to="{ name: 'my-portfolio' }"
       :class="[
@@ -40,7 +40,7 @@
     >
       Portfolio
     </router-link>
-    <router-link
+    <!--    <router-link
       :to="{ name: 'beets' }"
       :class="[
         'toggle-link px-6 rounded-r-lg',
@@ -49,7 +49,7 @@
       @click="trackGoal(Goals.ClickNavBeets)"
     >
       BEETS
-    </router-link>
+    </router-link>-->
   </div>
 </template>
 

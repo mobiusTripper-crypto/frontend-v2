@@ -38,12 +38,18 @@
           />
         </div>
       </template>
-      <template v-slot:iconColumnCell="farm">
-        <div v-if="!isLoading" class="px-6 py-4">
-          <BalAssetSet
-            :addresses="orderedTokenAddressesFor(farm)"
-            :width="100"
+      <template v-slot:iconColumnCell="pool">
+        <div class="relative">
+          <div
+            v-if="pool.farm && parseFloat(pool.shares) > 0"
+            class="rounded-br-xl h-4 w-4 flex bg-yellow-500 absolute top-0 left-0 bg-opacity-80"
           />
+          <div v-if="!isLoading" class="px-6 py-4 relative">
+            <BalAssetSet
+              :addresses="orderedTokenAddressesFor(pool)"
+              :width="100"
+            />
+          </div>
         </div>
       </template>
       <template v-slot:poolNameCell="pool">
@@ -154,11 +160,16 @@ export default defineComponent({
       },
       {
         name: t('myBalance'),
-        accessor: pool => fNum(pool.shares, 'usd', { forcePreset: true }),
+        accessor: pool =>
+          fNum(
+            parseFloat(pool.shares || '0') + (pool.farm?.stake || 0),
+            'usd',
+            { forcePreset: true }
+          ),
         align: 'right',
         id: 'myBalance',
         hidden: !props.showPoolShares,
-        sortKey: pool => Number(pool.shares),
+        sortKey: pool => Number(pool.shares || 0) + (pool.farm?.stake || 0),
         width: 150
       },
       {

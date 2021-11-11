@@ -66,6 +66,9 @@ const QUERY_KEYS = {
   TokenLists: {
     All: ['tokenLists', 'all']
   },
+  Config: {
+    All: ['config', 'all']
+  },
   Claims: {
     All: (account: Ref<string>) => [CLAIMS_ROOT_KEY, { account }]
   },
@@ -97,7 +100,8 @@ const QUERY_KEYS = {
       'account',
       'portfolio',
       { account, chainId }
-    ]
+    ],
+    Nft: (account: Ref<string>) => ['account', 'nft', { account }]
   },
   App: {
     Chains: ['evm_chains']

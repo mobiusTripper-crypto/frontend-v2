@@ -5,7 +5,7 @@
     <AppHeaderBg />
     <div class="relative">
       <AppHero v-if="isInvestPage" />
-      <GlobalStats v-if="!isPortfolioPage" />
+      <GlobalStats v-if="showGlobalStats" />
     </div>
     <div class="pb-12 lg:px-12 px-4 relative">
       <router-view :key="$route.path" class="flex-auto" />
@@ -145,6 +145,12 @@ export default defineComponent({
     const isInvestPage = computed(() => {
       return route.path === '/invest';
     });
+    const isTradePage = computed(() => {
+      return route.path === '/trade';
+    });
+    const showGlobalStats = computed(() => {
+      return isInvestPage.value || isFarmsPage.value || isTradePage.value;
+    });
 
     // CALLBACKS
     onBeforeMount(async () => {
@@ -167,6 +173,7 @@ export default defineComponent({
       upToLargeBreakpoint,
       isInvestPage,
       isPortfolioPage,
+      showGlobalStats,
       // methods
       toggleWalletSelectModal
     };

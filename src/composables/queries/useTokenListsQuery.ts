@@ -21,7 +21,7 @@ export default function useTokenListsQuery(
 
   const queryFn = async () => {
     console.log('Fetching tokenLists');
-    return await tokenListService.getAll();
+    return tokenListService.getTokenListMap();
   };
 
   const queryOptions = reactive({

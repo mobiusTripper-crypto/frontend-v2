@@ -2,7 +2,15 @@
   <div class="lg:container lg:mx-auto pt-24 md:pt-16">
     <template v-if="isWalletReady && userPools && userPools.length > 0">
       <div class="px-4 lg:px-0">
-        <h3 class="mb-4">My Investments</h3>
+        <h3 class="mb-2">My Investments</h3>
+        <BalAlert
+          v-if="hasUnstakedBpt"
+          title="You have unstaked BPT in your wallet"
+          description="If you deposit your BPT into the farm, you will earn additional rewards paid out in BEETS."
+          type="warning"
+          size="sm"
+          class=""
+        />
       </div>
       <PoolsTable
         :isLoading="isLoadingUserPools"
@@ -18,22 +26,6 @@
         }}</BalLink>
       </div>
       <div class="mb-16" />
-    </template>
-
-    <template v-if="isWalletReady && poolsWithUserInFarm.length > 0">
-      <div class="mb-16">
-        <div class="px-4 lg:px-0">
-          <h3 class="mb-3">My Farms</h3>
-        </div>
-        <FarmsTable
-          :pools="poolsWithUserInFarm"
-          noPoolsLabel="No farms found"
-          :loading="false"
-          :isPaginated="false"
-          :isLoadingMore="false"
-          class="mb-8"
-        />
-      </div>
     </template>
 
     <div class="px-4 lg:px-0">
@@ -93,22 +85,24 @@ import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
-import FarmsTable from '@/components/tables/FarmsTable/FarmsTable.vue';
 import { masterChefContractsService } from '@/services/farm/master-chef-contracts.service';
 import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
+import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
+import useBeethovenxConfig from '@/composables/useBeethovenxConfig';
 
 export default defineComponent({
   components: {
+    BalAlert,
     BalBtn,
     TokenSearchInput,
-    PoolsTable,
-    FarmsTable
+    PoolsTable
   },
 
   setup() {
     // COMPOSABLES
     const router = useRouter();
-    const { isWalletReady, isV1Supported, appNetworkConfig } = useWeb3();
+    const { isWalletReady, isV1Supported } = useWeb3();
+    const { beethovenxConfig } = useBeethovenxConfig();
     const {
       selectedTokens,
       addSelectedToken,
@@ -130,7 +124,7 @@ export default defineComponent({
     //TODO: this will break down once pagination starts happening
     const communityPools = computed(() => {
       return poolsWithFarms.value?.filter(
-        pool => !appNetworkConfig.incentivizedPools.includes(pool.id)
+        pool => !beethovenxConfig.value.incentivizedPools.includes(pool.id)
       );
     });
 
@@ -141,11 +135,11 @@ export default defineComponent({
             return (
               selectedTokens.value.every((selectedToken: string) =>
                 pool.tokenAddresses.includes(selectedToken)
-              ) && appNetworkConfig.incentivizedPools.includes(pool.id)
+              ) && beethovenxConfig.value.incentivizedPools.includes(pool.id)
             );
           })
         : poolsWithFarms?.value.filter(pool =>
-            appNetworkConfig.incentivizedPools.includes(pool.id)
+            beethovenxConfig.value.incentivizedPools.includes(pool.id)
           );
     });
 
@@ -154,6 +148,10 @@ export default defineComponent({
     const poolsWithUserInFarm = computed(() => {
       return onlyPoolsWithFarms.value.filter(pool => pool.farm.stake > 0);
     });
+
+    const hasUnstakedBpt = computed(() =>
+      userPools.value.find(pool => pool.farm && parseFloat(pool.shares) > 0)
+    );
 
     masterChefContractsService.beethovenxToken.getCirculatingSupply();
 
@@ -176,6 +174,7 @@ export default defineComponent({
       poolsHasNextPage,
       poolsIsFetchingNextPage,
       selectedTokens,
+      hasUnstakedBpt,
 
       //methods
       router,

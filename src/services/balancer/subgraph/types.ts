@@ -84,6 +84,7 @@ export interface PoolShare {
 
 export interface DecoratedPoolWithShares extends DecoratedPool {
   shares: string;
+  farm?: DecoratedFarm;
 }
 
 export type PoolActivityType = 'Join' | 'Exit';
@@ -121,7 +122,7 @@ export interface Farm {
   rewarder: {
     id: string;
     rewardToken: string;
-    rewardPerSecond: number;
+    rewardPerSecond: string;
   };
 }
 
@@ -135,6 +136,8 @@ export interface FarmUser {
   pool: {
     id: string;
   };
+  pendingRewardToken: number;
+  pendingRewardTokenValue: number;
 }
 
 export interface DecoratedFarm extends Farm {
@@ -145,6 +148,9 @@ export interface DecoratedFarm extends Farm {
   pendingBeetsValue: number;
   apr: number;
   share: number;
+
+  pendingRewardToken: number;
+  pendingRewardTokenValue: number;
 }
 
 export interface DecoratedPoolWithFarm extends DecoratedPool {

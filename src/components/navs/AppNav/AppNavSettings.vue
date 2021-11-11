@@ -12,7 +12,13 @@
       <div class="flex mt-1">
         <div class="flex">
           <div class="relative">
-            <Avatar :address="account" size="44" />
+            <img
+              v-if="nftImage !== null"
+              :src="nftImage"
+              width="44"
+              class="rounded-full"
+            />
+            <Avatar v-else :address="account" size="44" />
             <div class="connector-icon-wrapper">
               <img
                 :src="connectorLogo"
@@ -189,6 +195,7 @@ import {
 } from '@/constants/options';
 import { TradeInterface } from '@/store/modules/app';
 import useEthereumTxType from '@/composables/useEthereumTxType';
+import useNftQuery from '@/composables/nft/useNftQuery';
 
 const locales = {
   'en-US': 'English',
@@ -225,6 +232,7 @@ export default defineComponent({
       userNetworkConfig
     } = useWeb3();
     const { ethereumTxType, setEthereumTxType } = useEthereumTxType();
+    const nftQuery = useNftQuery();
 
     // DATA
     const data = reactive({
@@ -248,6 +256,10 @@ export default defineComponent({
 
     const connectorLogo = computed(() => getConnectorLogo(connector.value?.id));
     const hideDisconnect = computed(() => connector.value?.id == 'gnosis');
+
+    const nftImage = computed(() => {
+      return nftQuery.data.value || null;
+    });
 
     // METHODS
     const setDarkMode = val => store.commit('app/setDarkMode', val);
@@ -297,7 +309,8 @@ export default defineComponent({
       explorer: explorerLinks,
       ethereumTxType,
       setEthereumTxType,
-      ethereumTxTypeOptions
+      ethereumTxTypeOptions,
+      nftImage
     };
   }
 });

@@ -1,6 +1,6 @@
 <template>
   <BalForm ref="depositForm" @on-submit="submit">
-    <div class="px-4 pt-6 pb-20 border-b dark:border-gray-900">
+    <div class="px-4 pt-6">
       <BalTextInput
         name="Deposit"
         v-model="amount"
@@ -34,22 +34,9 @@
           </div>
         </template>
       </BalTextInput>
-      <div class="text-right">
-        <router-link
-          :to="{
-            name: 'pool',
-            params: {
-              id: pool.id
-            }
-          }"
-          class="text-xs text-gray-500 dark:text-white underline"
-        >
-          Get BPT
-        </router-link>
-      </div>
     </div>
 
-    <div class="p-4">
+    <div class="p-4 pb-8 border-b dark:border-gray-700">
       <BalBtn
         v-if="!isWalletReady"
         :label="$t('connectWallet')"
@@ -59,7 +46,7 @@
       <template v-else>
         <BalBtn
           v-if="approvalRequired"
-          :label="`${$t('approve')}`"
+          label="Approve BPT"
           :loading="approving"
           :loading-label="$t('approving')"
           :disabled="!validInput || parseFloat(amount) === 0 || amount === ''"
@@ -76,7 +63,7 @@
             block
             @click="trackGoal(Goals.ClickFarmDeposit)"
           >
-            {{ $t('deposit') }}
+            Deposit BPT
           </BalBtn>
         </template>
       </template>
@@ -112,10 +99,11 @@ import { TOKENS } from '@/constants/tokens';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useFarm from '@/composables/farms/useFarm';
-import useApprovalRequiredQuery from '@/composables/queries/useApprovalRequiredQuery';
+import useAllowanceAvailableQuery from '@/composables/queries/useAllowanceAvailableQuery';
 import { getAddress } from '@ethersproject/address';
-import { BigNumber } from 'bignumber.js';
 import useEthers from '@/composables/useEthers';
+import { FP_SCALING_FACTOR } from '@/lib/utils/numbers';
+import BigNumber from 'bignumber.js';
 
 type DataProps = {
   depositForm: FormRef;
@@ -165,13 +153,13 @@ export default defineComponent({
     const approving = ref(false);
 
     const { approve, deposit } = useFarm(toRef(props, 'pool'));
-    const approvalRequiredQuery = useApprovalRequiredQuery(
+    const allowanceAvailableQuery = useAllowanceAvailableQuery(
       props.pool.farm.pair
     );
     const bptBalance = computed(() =>
       balanceFor(getAddress(props.pool.farm.pair))
     );
-    const approvalRequired = computed(() => approvalRequiredQuery.data.value);
+
     const { txListener } = useEthers();
 
     function amountRules() {
@@ -196,7 +184,7 @@ export default defineComponent({
 
       txListener(tx, {
         onTxConfirmed: async () => {
-          await approvalRequiredQuery.refetch.value();
+          await allowanceAvailableQuery.refetch.value();
           approving.value = false;
         },
         onTxFailed: () => {
@@ -204,6 +192,19 @@ export default defineComponent({
         }
       });
     }
+
+    const approvalRequired = computed(() => {
+      if (amount.value === '' || parseFloat(amount.value) === 0) {
+        return false;
+      }
+
+      const availableAllowance = new BigNumber(
+        allowanceAvailableQuery.data.value?.toString() || '0'
+      );
+      const amountScaled = scale(new BigNumber(amount.value), 18);
+
+      return availableAllowance.lt(amountScaled);
+    });
 
     async function submit(): Promise<void> {
       if (!data.depositForm.validate()) return;
@@ -219,7 +220,7 @@ export default defineComponent({
 
       txListener(tx, {
         onTxConfirmed: async () => {
-          await approvalRequiredQuery.refetch.value();
+          await allowanceAvailableQuery.refetch.value();
           emit('success', tx);
           data.amount = '';
           depositing.value = false;
