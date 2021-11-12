@@ -8,11 +8,13 @@ import FarmDetail from '@/pages/FarmDetail.vue';
 import BeetsLBP from '@/pages/BeetsLBP.vue';
 import Invest from '@/pages/Invest.vue';
 import PoolCreate from '@/pages/PoolCreate.vue';
+import FreshBeets from '@/pages/FreshBeets.vue';
 
 const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', redirect: '/trade' },
   { path: '/invest', name: 'invest', component: Invest },
   { path: '/my-portfolio', name: 'my-portfolio', component: Portfolio },
+  { path: '/fbeets', name: 'fbeets', component: FreshBeets },
   { path: '/trade/:assetIn?/:assetOut?', name: 'trade', component: Trade },
   {
     path: '/swap/:assetIn?/:assetOut?',

@@ -40,6 +40,17 @@
     >
       Portfolio
     </router-link>
+    <router-link
+      :to="{ name: 'fbeets' }"
+      :class="[
+        'toggle-link px-4 rounded-l-lg',
+        { [activeClasses]: isFreshBeetsPage }
+      ]"
+      @click="trackGoal(Goals.ClickNavFreshBeets)"
+      v-if="isLoggedIn"
+    >
+      fBeets
+    </router-link>
     <!--    <router-link
       :to="{ name: 'beets' }"
       :class="[
@@ -79,6 +90,7 @@ export default defineComponent({
     const isInvestPage = computed(
       () => route.name === 'invest' || String(route.name).startsWith('pool')
     );
+    const isFreshBeetsPage = computed(() => route.name === 'fbeets');
     const isHomePage = computed(
       () =>
         !isTradePage.value &&
@@ -106,7 +118,8 @@ export default defineComponent({
       Goals,
       EXTERNAL_LINKS,
       isLoggedIn,
-      isPortfolioPage
+      isPortfolioPage,
+      isFreshBeetsPage
     };
   }
 });

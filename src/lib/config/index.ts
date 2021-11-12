@@ -35,6 +35,8 @@ export interface Config {
     vault: string;
     masterChef: string;
     beethovenxToken: string;
+    fbeetsVestingToken: string;
+    fbeetsToken: string;
     weightedPoolFactory: string;
     stablePoolFactory: string;
     weth: string;

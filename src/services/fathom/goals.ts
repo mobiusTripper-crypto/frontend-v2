@@ -9,6 +9,7 @@ export class Goals {
   ClickNavTrade = '';
   ClickNavFarm = '';
   ClickNavBeets = '';
+  ClickNavFreshBeets = '';
   ClickNavInvest = '';
   ClickNavHome = '';
   ClickNavLogo = '';
