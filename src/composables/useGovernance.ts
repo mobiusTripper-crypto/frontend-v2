@@ -5,6 +5,7 @@ import { BigNumber, utils } from 'ethers';
 import { bn } from '@/lib/utils/numbers';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { default as FreshBeetsAbi } from '@/lib/abi/FreshBeets.json';
+import { MaxUint256 } from '@ethersproject/constants';
 
 export function useGovernance() {
   const { account, getProvider } = useWeb3();
@@ -28,12 +29,12 @@ export function useGovernance() {
     );
   }
 
-  async function approveVestingToken(amount: BigNumber) {
+  async function approveVestingToken(amount?: BigNumber) {
     await erc20ContractService.erc20.approveToken(
       getProvider(),
       governanceContractsService.fbeets.fbeetsAddress,
       governanceContractsService.fbeets.vestingTokenAddress,
-      amount.toString()
+      amount?.toString()
     );
   }
 
