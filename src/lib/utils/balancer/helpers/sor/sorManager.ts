@@ -126,7 +126,7 @@ export class SorManager {
 
   // This fetches ALL pool with onchain info.
   async fetchPools(): Promise<void> {
-    if (this.isFetching) {
+    /*if (this.isFetching) {
       return;
     }
     this.isFetching = true;
@@ -177,7 +177,10 @@ export class SorManager {
     }
 
     this.selectedPools = this.sorV2.getPools();
-    this.isFetching = false;
+    this.isFetching = false;*/
+
+    this.fetchStatus.v2finishedFetch = true;
+    this.fetchStatus.v2success = false;
   }
   // Gets swaps for V1 & V2 liquidity and determined best result
   async getBestSwap(
@@ -186,34 +189,13 @@ export class SorManager {
     tokenInDecimals: number,
     tokenOutDecimals: number,
     swapType: SwapTypes,
-    amountScaled: OldBigNumber,
+    amountNormalized: OldBigNumber,
     swapDecimals: number,
     liquiditySelection: LiquiditySelection
   ): Promise<SorReturn> {
     console.log(
       `[SorManager] getBestSwap: ${tokenIn}/${tokenOut} (Liq: ${liquiditySelection}) (V1: ${this.isV1Supported})`
     );
-
-    const v1TokenIn = tokenIn === NATIVE_ASSET_ADDRESS ? this.weth : tokenIn;
-    const v1TokenOut = tokenOut === NATIVE_ASSET_ADDRESS ? this.weth : tokenOut;
-
-    let swapsV1: Swap[][] = [];
-    let returnAmountV1 = new OldBigNumber(0);
-    let marketSpV1Scaled = new OldBigNumber(0);
-    let returnAmountV1ConsideringFees = new OldBigNumber(0);
-
-    if (this.isV1Supported)
-      [
-        swapsV1,
-        returnAmountV1,
-        marketSpV1Scaled,
-        returnAmountV1ConsideringFees
-      ] = await this.sorV1.getSwaps(
-        v1TokenIn.toLowerCase(),
-        v1TokenOut.toLowerCase(),
-        swapType === SwapTypes.SwapExactIn ? 'swapExactIn' : 'swapExactOut',
-        amountScaled
-      );
 
     const v2TokenIn = tokenIn === NATIVE_ASSET_ADDRESS ? AddressZero : tokenIn;
     const v2TokenOut =
@@ -232,19 +214,18 @@ export class SorManager {
       boostedPools: beethovenxService.getCachedConfig().boostedPools
     };
 
-    const swapInfoV2: SwapInfo = await this.sorV2.getSwaps(
-      v2TokenIn.toLowerCase(),
-      v2TokenOut.toLowerCase(),
-      swapType,
-      BigNumber.from(amountScaled.toString()),
-      swapOptions
-    );
+    const swapInfoV2: SwapInfo = await beethovenxService.sorGetSwaps({
+      tokenIn: v2TokenIn.toLowerCase(),
+      tokenOut: v2TokenOut.toLowerCase(),
+      swapType: swapType === SwapTypes.SwapExactIn ? 'EXACT_IN' : 'EXACT_OUT',
+      swapAmount: amountNormalized.toString(),
+      swapOptions: {
+        forceRefresh: true,
+        timestamp: timestampSeconds
+      }
+    });
 
     // Both are scaled amounts
-    console.log(`[SorManager] ${returnAmountV1.toString()}: V1 return amount`);
-    console.log(
-      `[SorManager] ${returnAmountV1ConsideringFees.toString()}: V1 return amount with fees`
-    );
     console.log(
       `[SorManager] ${swapInfoV2.returnAmount.toString()}: V2 return amount`
     );
@@ -254,10 +235,10 @@ export class SorManager {
 
     if (swapType === SwapTypes.SwapExactIn) {
       return this.selectBestSwapIn(
-        BigNumber.from(returnAmountV1.toString()),
-        BigNumber.from(returnAmountV1ConsideringFees.toString()),
-        marketSpV1Scaled,
-        swapsV1,
+        BigNumber.from('0'),
+        BigNumber.from('0'),
+        new OldBigNumber(0),
+        [],
         swapInfoV2,
         tokenIn,
         tokenInDecimals,
@@ -267,10 +248,10 @@ export class SorManager {
       );
     } else {
       return this.selectBestSwapOut(
-        BigNumber.from(returnAmountV1.toString()),
-        BigNumber.from(returnAmountV1ConsideringFees.toString()),
-        marketSpV1Scaled,
-        swapsV1,
+        BigNumber.from('0'),
+        BigNumber.from('0'),
+        new OldBigNumber(0),
+        [],
         swapInfoV2,
         tokenIn,
         tokenInDecimals,
@@ -438,7 +419,9 @@ export class SorManager {
 
   // Check if pool info fetch
   hasPoolData(): boolean {
-    if (!this.isV1Supported && this.fetchStatus.v2finishedFetch) {
+    return true;
+
+    /*if (!this.isV1Supported && this.fetchStatus.v2finishedFetch) {
       if (this.fetchStatus.v2success === false) {
         console.log(
           `[SorManager] Error Fetching V2 Pools & V1 Not Supported - No Liquidity Sources.`
@@ -470,6 +453,6 @@ export class SorManager {
     } else {
       console.log(`[SorManager] Not finished fetching pools.`);
       return false;
-    }
+    }*/
   }
 }

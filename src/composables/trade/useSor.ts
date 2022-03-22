@@ -7,8 +7,9 @@ import {
   reactive,
   toRefs
 } from 'vue';
+import { debounce } from 'lodash';
 import { useStore } from 'vuex';
-import { useIntervalFn } from '@vueuse/core';
+import { useIntervalFn, useThrottleFn } from '@vueuse/core';
 import { BigNumber, parseFixed, formatFixed } from '@ethersproject/bignumber';
 import { Zero, WeiPerEther as ONE } from '@ethersproject/constants';
 import { BigNumber as OldBigNumber } from 'bignumber.js';
@@ -44,6 +45,7 @@ import useTokens from '../useTokens';
 import { getStETHByWstETH } from '@/lib/utils/balancer/lido';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import { SubgraphPoolBase, SwapTypes } from '@balancer-labs/sdk';
+import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 
 type SorState = {
   validationErrors: {
@@ -132,6 +134,7 @@ export default function useSor({
   const latestTxHash = ref('');
   const poolsLoading = ref(true);
   const slippageError = ref(false);
+  const loadingSwaps = ref(false);
 
   // COMPOSABLES
   const store = useStore();
@@ -223,7 +226,18 @@ export default function useSor({
     }
   }
 
+  const throttledHandleAmountChange = useThrottleFn(
+    _handleAmountChange,
+    300,
+    true
+  );
+
   async function handleAmountChange(): Promise<void> {
+    loadingSwaps.value = true;
+    await throttledHandleAmountChange();
+  }
+
+  async function _handleAmountChange(): Promise<void> {
     const amount = exactIn.value
       ? tokenInAmountInput.value
       : tokenOutAmountInput.value;
@@ -235,6 +249,7 @@ export default function useSor({
       priceImpact.value = 0;
       sorReturn.value.hasSwaps = false;
       sorReturn.value.returnAmount = Zero;
+      loadingSwaps.value = false;
       return;
     }
 
@@ -244,6 +259,7 @@ export default function useSor({
     if (!tokenInAddress || !tokenOutAddress) {
       if (exactIn.value) tokenOutAmountInput.value = '';
       else tokenInAmountInput.value = '';
+      loadingSwaps.value = false;
       return;
     }
 
@@ -276,12 +292,14 @@ export default function useSor({
 
       sorReturn.value.hasSwaps = false;
       priceImpact.value = 0;
+      loadingSwaps.value = false;
       return;
     }
 
     if (!sorManager || !sorManager.hasPoolData()) {
       if (exactIn.value) tokenOutAmountInput.value = '';
       else tokenInAmountInput.value = '';
+      loadingSwaps.value = false;
       return;
     }
 
@@ -293,10 +311,6 @@ export default function useSor({
       );
 
       const tokenInAmountNormalised = new OldBigNumber(amount); // Normalized value
-      const tokenInAmountScaled = scale(
-        tokenInAmountNormalised,
-        tokenInDecimals
-      );
 
       console.log('[SOR Manager] swapExactIn');
 
@@ -306,10 +320,11 @@ export default function useSor({
         tokenInDecimals,
         tokenOutDecimals,
         SwapTypes.SwapExactIn,
-        tokenInAmountScaled,
+        tokenInAmountNormalised,
         tokenInDecimals,
         liquiditySelection.value
       );
+      console.log('[SOR Manager] swapExactIn return');
 
       sorReturn.value = swapReturn; // TO DO - is it needed?
       const tokenOutAmountNormalised = bnum(
@@ -346,10 +361,7 @@ export default function useSor({
     } else {
       // Notice that outputToken is tokenOut if swapType == 'swapExactIn' and tokenIn if swapType == 'swapExactOut'
       await setSwapCost(tokenInAddressInput.value, tokenInDecimals, sorManager);
-
       let tokenOutAmountNormalised = new OldBigNumber(amount);
-      const tokenOutAmount = scale(tokenOutAmountNormalised, tokenOutDecimals);
-
       console.log('[SOR Manager] swapExactOut');
 
       const swapReturn: SorReturn = await sorManager.getBestSwap(
@@ -358,7 +370,7 @@ export default function useSor({
         tokenInDecimals,
         tokenOutDecimals,
         SwapTypes.SwapExactOut,
-        tokenOutAmount,
+        tokenOutAmountNormalised,
         tokenOutDecimals,
         liquiditySelection.value
       );
@@ -397,10 +409,12 @@ export default function useSor({
       }
     }
 
-    pools.value = sorManager.selectedPools;
+    pools.value = balancerSubgraphService.pools.pools as SubgraphPoolBase[];
 
     state.validationErrors.highPriceImpact =
       priceImpact.value >= HIGH_PRICE_IMPACT_THRESHOLD;
+
+    loadingSwaps.value = false;
   }
 
   function txHandler(tx: TransactionResponse, action: TransactionAction): void {
@@ -677,6 +691,7 @@ export default function useSor({
     // For Tests
     setSwapCost,
     sorManagerInitialized,
-    sorManagerRef
+    sorManagerRef,
+    loadingSwaps
   };
 }
