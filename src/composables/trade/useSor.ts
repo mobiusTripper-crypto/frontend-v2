@@ -1,22 +1,21 @@
 import {
-  Ref,
-  onMounted,
-  ref,
   computed,
   ComputedRef,
+  onMounted,
   reactive,
+  ref,
+  Ref,
   toRefs
 } from 'vue';
-import { debounce } from 'lodash';
 import { useStore } from 'vuex';
 import { useIntervalFn, useThrottleFn } from '@vueuse/core';
-import { BigNumber, parseFixed, formatFixed } from '@ethersproject/bignumber';
-import { Zero, WeiPerEther as ONE } from '@ethersproject/constants';
+import { BigNumber, formatFixed, parseFixed } from '@ethersproject/bignumber';
+import { WeiPerEther as ONE, Zero } from '@ethersproject/constants';
 import { BigNumber as OldBigNumber } from 'bignumber.js';
 import { Pool } from '@balancer-labs/sor/dist/types';
 import { useI18n } from 'vue-i18n';
 
-import { scale, bnum } from '@/lib/utils';
+import { bnum } from '@/lib/utils';
 import {
   getWrapOutput,
   unwrap,
@@ -24,9 +23,9 @@ import {
   WrapType
 } from '@/lib/utils/balancer/wrapper';
 import {
+  LiquiditySelection,
   SorManager,
-  SorReturn,
-  LiquiditySelection
+  SorReturn
 } from '@/lib/utils/balancer/helpers/sor/sorManager';
 import { swapIn, swapOut } from '@/lib/utils/balancer/swapper';
 import { configService } from '@/services/config/config.service';
@@ -184,11 +183,6 @@ export default function useSor({
   }
 
   async function initSor(): Promise<void> {
-    const poolsUrlV1 = `${
-      configService.network.poolsUrlV1
-    }?timestamp=${Date.now()}`;
-    const subgraphUrl = configService.network.poolsUrlV2;
-
     // If V1 previously selected on another network then it uses this and returns no liquidity.
     if (!isV1Supported) {
       store.commit('app/setTradeLiquidity', LiquiditySelection.V2);
@@ -200,9 +194,7 @@ export default function useSor({
       BigNumber.from(GAS_PRICE),
       Number(MAX_POOLS),
       configService.network.chainId,
-      configService.network.addresses.weth,
-      poolsUrlV1,
-      subgraphUrl
+      configService.network.addresses.weth
     );
 
     sorManagerInitialized.value = true;
