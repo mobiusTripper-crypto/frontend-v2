@@ -29,7 +29,8 @@ export default function useUserPendingRewardsQuery(
 
   const queryOptions = reactive({
     enabled,
-    ...options
+    ...options,
+    refetchInterval: 5000
   });
 
   return useQuery<GqlBeetsUserPendingRewards>(queryKey, queryFn, queryOptions);

@@ -23,7 +23,8 @@ export default function usePoolListQuery(
 
   const queryOptions = reactive({
     enabled: true,
-    ...options
+    ...options,
+    refetchInterval: 15000
   });
 
   return useQuery<PoolListItem[]>(queryKey, queryFn, queryOptions);
