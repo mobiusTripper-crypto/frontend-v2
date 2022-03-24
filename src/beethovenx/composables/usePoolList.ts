@@ -75,7 +75,9 @@ export default function usePoolList(
 
   const filteredIncentivizedPools = computed<PoolListItem[]>(() => {
     if (activeFilters.value.length === 0) {
-      return filteredPools.value;
+      return filteredPools.value.filter(pool =>
+        beethovenxConfig.value.incentivizedPools.includes(pool.id)
+      );
     }
 
     const selected = beethovenxConfig.value.poolFilters.filter(filter =>
@@ -83,7 +85,11 @@ export default function usePoolList(
     );
     const poolIds = flatten(selected.map(selected => selected.pools));
 
-    return filteredPools.value.filter(pool => poolIds.includes(pool.id));
+    return filteredPools.value.filter(
+      pool =>
+        poolIds.includes(pool.id) &&
+        beethovenxConfig.value.incentivizedPools.includes(pool.id)
+    );
   });
 
   const filteredCommunityPools = computed<PoolListItem[]>(() => {
