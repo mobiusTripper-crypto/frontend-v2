@@ -1,3 +1,5 @@
+import { PoolToken, PoolType } from '@/services/balancer/subgraph/types';
+
 export interface UserPortfolioData {
   timestamp: number;
   totalValue: number;
@@ -414,3 +416,46 @@ export interface GqlSorSwapRouteHop {
 }
 
 export type GqlSorSwapType = 'EXACT_IN' | 'EXACT_OUT';
+
+export interface PoolListItem {
+  id: string;
+  name: string;
+  address: string;
+  poolType: PoolType;
+  swapFee: string;
+  owner: string;
+  factory: string;
+  amp?: string;
+  tokens: PoolToken[];
+  tokensList: string[];
+  totalLiquidity: string;
+  mainTokens?: string[];
+  apr: GqlBalancePoolApr;
+  isNewPool?: boolean;
+  volume24h: string;
+  fees24h: string;
+}
+
+export interface UserPoolListItem extends PoolListItem {
+  userBalance: string;
+  hasUnstakedBpt?: boolean;
+}
+
+export interface GqlBeetsUserPoolData {
+  __typename?: 'GqlBeetsUserPoolData';
+  balance: Scalars['BigDecimal'];
+  balanceScaled: Scalars['BigInt'];
+  balanceUSD: Scalars['BigDecimal'];
+  mainTokens?: Array<GqlBeetsUserPoolTokenData>;
+  poolId: Scalars['String'];
+  tokens: Array<GqlBeetsUserPoolTokenData>;
+  hasUnstakedBpt?: Scalars['Boolean'];
+}
+
+export interface GqlBeetsUserPoolTokenData {
+  __typename?: 'GqlBeetsUserPoolTokenData';
+  address: Scalars['String'];
+  balance: Scalars['String'];
+  balanceUSD: Scalars['BigDecimal'];
+  symbol: Scalars['String'];
+}

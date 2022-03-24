@@ -37,7 +37,13 @@ const QUERY_KEYS = {
       'all',
       { tokens, poolIds }
     ],
+    List: () => [POOLS_ROOT_KEY, 'list'],
     User: (account: Ref<string>) => [POOLS_ROOT_KEY, 'user', { account }],
+    UserData: (account: Ref<string>) => [
+      POOLS_ROOT_KEY,
+      'userData',
+      { account }
+    ],
     Current: (id: string) => [POOLS_ROOT_KEY, 'current', { id }],
     Snapshot: (id: string) => [POOLS_ROOT_KEY, 'snapshot', { id }],
     Activities: (id: string) => [POOLS_ROOT_KEY, 'activities', 'all', { id }],

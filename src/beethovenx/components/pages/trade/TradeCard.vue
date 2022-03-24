@@ -63,7 +63,6 @@
       @close="tradeSuccess = false"
     />
   </BalCard>
-  <!--  <TradeRatesCard v-if="sorManagerInitialized" :sor-manager="sorManagerRef" />-->
   <teleport to="#modal">
     <TradePreviewModal
       v-if="modalTradePreviewIsOpen"
@@ -113,7 +112,6 @@ import useUserSettings from '@/composables/useUserSettings';
 
 export default defineComponent({
   components: {
-    //TradeRatesCard,
     SuccessOverlay,
     TradePair,
     TradePreviewModal,
