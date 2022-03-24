@@ -61,6 +61,22 @@ export default class BeethovenxService {
       configService.env.BACKEND_URL || configService.network.backendUrl;
   }
 
+  public async getUserPortfolioValue(address: string): Promise<string> {
+    const query = `
+      query {
+        portfolioGetUserPortfolio {
+          totalValue
+        }
+      }
+    `;
+
+    const response = await this.get<{
+      portfolioGetUserPortfolio: { totalValue: string };
+    }>(query, address);
+
+    return response.portfolioGetUserPortfolio.totalValue;
+  }
+
   public async getUserPortfolio(address: string): Promise<UserPortfolio> {
     const query = `
       query {
