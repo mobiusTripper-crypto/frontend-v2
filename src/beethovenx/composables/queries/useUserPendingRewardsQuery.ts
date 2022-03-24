@@ -2,13 +2,13 @@ import { computed, reactive } from 'vue';
 import { useQuery } from 'vue-query';
 import { QueryObserverOptions } from 'react-query/core';
 import QUERY_KEYS from '@/beethovenx/constants/queryKeys';
-import { GqlBeetsUserPoolData } from '@/beethovenx/services/beethovenx/beethovenx-types';
+import { GqlBeetsUserPendingRewards } from '@/beethovenx/services/beethovenx/beethovenx-types';
 import useWeb3 from '@/services/web3/useWeb3';
 import { beethovenxService } from '@/beethovenx/services/beethovenx/beethovenx.service';
 import useApp from '@/composables/useApp';
 
-export default function useUserPoolDataQuery(
-  options: QueryObserverOptions<GqlBeetsUserPoolData> = {}
+export default function useUserPendingRewardsQuery(
+  options: QueryObserverOptions<GqlBeetsUserPendingRewards> = {}
 ) {
   const { appLoading } = useApp();
   const { account, isLoadingProfile } = useWeb3();
@@ -17,10 +17,12 @@ export default function useUserPoolDataQuery(
     () => !appLoading.value && !isLoadingProfile.value && !!account.value
   );
 
-  const queryKey = reactive(QUERY_KEYS.Pools.UserData(account));
+  const queryKey = reactive(QUERY_KEYS.Rewards.Pending(account));
 
   const queryFn = async () => {
-    const response = await beethovenxService.getUserPoolData(account.value);
+    const response = await beethovenxService.getUserPendingRewards(
+      account.value
+    );
 
     return response;
   };
@@ -30,5 +32,5 @@ export default function useUserPoolDataQuery(
     ...options
   });
 
-  return useQuery<GqlBeetsUserPoolData>(queryKey, queryFn, queryOptions);
+  return useQuery<GqlBeetsUserPendingRewards>(queryKey, queryFn, queryOptions);
 }

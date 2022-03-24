@@ -31,6 +31,9 @@ const QUERY_KEYS = {
       { address }
     ]
   },
+  Rewards: {
+    Pending: (account: Ref<string>) => ['pendingRewards', 'user', { account }]
+  },
   Pools: {
     All: (tokens: Ref<string[]>, poolIds: Ref<string[]> | undefined) => [
       POOLS_ROOT_KEY,

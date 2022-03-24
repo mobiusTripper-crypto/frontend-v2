@@ -443,9 +443,19 @@ export interface UserPoolListItem extends PoolListItem {
 
 export interface GqlBeetsUserPoolData {
   __typename?: 'GqlBeetsUserPoolData';
+  averageApr: Scalars['BigDecimal'];
+  averageFarmApr: Scalars['BigDecimal'];
+  pools: Array<GqlBeetsUserPoolPoolData>;
+  totalBalanceUSD: Scalars['BigDecimal'];
+  totalFarmBalanceUSD: Scalars['BigDecimal'];
+}
+
+export interface GqlBeetsUserPoolPoolData {
+  __typename?: 'GqlBeetsUserPoolPoolData';
   balance: Scalars['BigDecimal'];
   balanceScaled: Scalars['BigInt'];
   balanceUSD: Scalars['BigDecimal'];
+  farmBalanceUSD: Scalars['BigDecimal'];
   mainTokens?: Array<GqlBeetsUserPoolTokenData>;
   poolId: Scalars['String'];
   tokens: Array<GqlBeetsUserPoolTokenData>;
@@ -456,6 +466,28 @@ export interface GqlBeetsUserPoolTokenData {
   __typename?: 'GqlBeetsUserPoolTokenData';
   address: Scalars['String'];
   balance: Scalars['String'];
+  balanceUSD: Scalars['BigDecimal'];
+  farmBalanceUSD: Scalars['BigDecimal'];
+  symbol: Scalars['String'];
+}
+
+export interface GqlBeetsUserPendingRewards {
+  __typename?: 'GqlBeetsUserPendingRewards';
+  farm: GqlBeetsUserPendingFarmRewards;
+}
+
+export interface GqlBeetsUserPendingFarmRewards {
+  __typename?: 'GqlBeetsUserPendingFarmRewards';
+  numFarms: Scalars['BigInt'];
+  tokens: Array<GqlBeetsUserPendingRewardsToken>;
+  totalBalanceUSD: Scalars['BigDecimal'];
+  farmIds: string[];
+}
+
+export interface GqlBeetsUserPendingRewardsToken {
+  __typename?: 'GqlBeetsUserPendingRewardsToken';
+  address: Scalars['Bytes'];
+  balance: Scalars['BigDecimal'];
   balanceUSD: Scalars['BigDecimal'];
   symbol: Scalars['String'];
 }
