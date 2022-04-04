@@ -3,16 +3,14 @@ import useProtocolDataQuery from '@/beethovenx/composables/queries/useProtocolDa
 import { computed } from 'vue';
 import useNumbers from '@/composables/useNumbers';
 import useWeb3 from '@/services/web3/useWeb3';
-import usePortfolio from '@/beethovenx/composables/usePortfolio';
 import BalLoadingBlock from '@/components/_global/BalLoadingBlock/BalLoadingBlock.vue';
-import usePortfolioValueQuery from '@/beethovenx/composables/queries/usePortfolioValueQuery';
+import useAllUserPoolData from '@/beethovenx/composables/useAllUserPoolData';
 
 const { fNum } = useNumbers();
 const { account } = useWeb3();
 const protocolDataQuery = useProtocolDataQuery();
 
-const { portfolio, isLoadingPortfolio } = usePortfolio();
-const portfolioValueQuery = usePortfolioValueQuery();
+const { allUserPoolData, userPoolDataLoading } = useAllUserPoolData();
 
 const procotolDataLoading = computed(() => protocolDataQuery.isLoading.value);
 
@@ -22,11 +20,6 @@ const swapFee24h = computed(
 );
 const swapVolume24h = computed(
   () => protocolDataQuery.data?.value?.swapVolume24h || 0
-);
-
-const portfolioValue = computed(() => portfolioValueQuery.data?.value || '0');
-const isLoadingPortfolioValue = computed(
-  () => portfolioValueQuery.isLoading.value || portfolioValueQuery.isIdle.value
 );
 </script>
 
@@ -70,9 +63,9 @@ const isLoadingPortfolioValue = computed(
         ><BalBtn size="sm" color="blue">
           <BalIcon name="bar-chart-2" class="mr-2" />
           My Portfolio:&nbsp;<span>
-            <BalLoadingBlock class="w-16 h-4" v-if="isLoadingPortfolioValue" />
+            <BalLoadingBlock class="w-16 h-4" v-if="userPoolDataLoading" />
             <template v-else>
-              {{ fNum(portfolioValue, 'usd') }}
+              {{ fNum(allUserPoolData.totalBalanceUSD, 'usd') }}
             </template>
           </span>
         </BalBtn>

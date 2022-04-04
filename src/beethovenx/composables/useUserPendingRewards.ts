@@ -1,5 +1,6 @@
 import { computed } from 'vue';
 import {
+  GqlBeetsUserPendingAllFarmRewards,
   GqlBeetsUserPendingRewards,
   GqlBeetsUserPendingRewardsToken
 } from '@/beethovenx/services/beethovenx/beethovenx-types';
@@ -20,7 +21,8 @@ export default function useUserPendingRewards() {
           numFarms: '0',
           totalBalanceUSD: '0',
           tokens: [],
-          farmIds: []
+          farmIds: [],
+          farms: []
         }
       }
   );

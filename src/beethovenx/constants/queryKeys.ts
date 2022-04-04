@@ -48,6 +48,7 @@ const QUERY_KEYS = {
       { account }
     ],
     Current: (id: string) => [POOLS_ROOT_KEY, 'current', { id }],
+    Beethoven: (id: string) => [POOLS_ROOT_KEY, 'current-beethoven', { id }],
     Snapshot: (id: string) => [POOLS_ROOT_KEY, 'snapshot', { id }],
     Activities: (id: string) => [POOLS_ROOT_KEY, 'activities', 'all', { id }],
     UserActivities: (id: string, account: Ref<string>) => [

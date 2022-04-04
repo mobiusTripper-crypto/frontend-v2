@@ -6,26 +6,26 @@
         <div v-else class="px-4 lg:px-0 flex flex-col">
           <div class="flex flex-wrap items-center -mt-2">
             <h3 class="pool-title">
-              {{ pool.name }}
+              {{ beethovenPool.name }}
             </h3>
             <div
-              v-for="([address, tokenMeta], i) in titleTokens"
+              v-for="(token, i) in beethovenPool.tokens"
               :key="i"
               class="mt-2 mr-2 flex items-center px-2 h-10 bg-gray-50 dark:bg-gray-850 rounded-lg"
             >
-              <BalAsset :address="address" />
+              <BalAsset :address="token.address" />
               <span class="ml-2">
-                {{ tokenMeta.symbol }}
+                {{ token.symbol }}
               </span>
               <span
                 v-if="!isStableLikePool"
                 class="font-medium text-gray-400 text-xs mt-px ml-1"
               >
-                {{ fNum(tokenMeta.weight, 'percent_lg') }}
+                {{ fNum(token.weight, 'percent_lg') }}
               </span>
             </div>
             <BalChip
-              v-if="pool.isNewPool"
+              v-if="beethovenPool.isNewPool"
               color="red"
               size="sm"
               class="uppercase mt-2 mr-2"
@@ -33,7 +33,7 @@
             >
               {{ $t('new') }}
             </BalChip>
-            <LiquidityAPRTooltip :pool="pool" class="-ml-1 mt-1" />
+            <LiquidityAPRTooltip :pool="beethovenPool" class="-ml-1 mt-1" />
           </div>
           <div class="flex items-center mt-2">
             <div v-html="poolFeeLabel" class="text-sm" />
@@ -94,21 +94,16 @@
             <PoolVolumeChart v-else :snapshots="snapshots" />
           </div>
           <div class="mb-4 px-1 lg:px-0">
-            <PoolStatCards :pool="pool" :loading="loadingPool" />
+            <PoolStatCards
+              :pool="beethovenPool"
+              :loading="isLoadingBeethovenPool"
+            />
           </div>
 
-          <div
-            class="mb-4"
-            v-if="
-              loadingPool ||
-                (!!pool.decoratedFarm &&
-                  (pool.decoratedFarm.rewards > 0 ||
-                    pool.decoratedFarm.rewardTokenPerDay > 0))
-            "
-          >
+          <div class="mb-4" v-if="isLoadingBeethovenPool || poolHasFarmRewards">
             <h4 class="px-4 lg:px-0 mb-4">Farm</h4>
-            <FarmStatCardsLoading v-if="loadingPool || isLoadingFarms" />
-            <FarmStatCards v-else :pool="pool" />
+            <FarmStatCardsLoading v-if="isLoadingBeethovenPool" />
+            <FarmStatCards v-else :pool="beethovenPool" />
           </div>
 
           <div class="mb-4">
@@ -171,7 +166,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, toRefs, watch } from 'vue';
+import { computed, defineComponent, reactive, ref, toRefs, watch } from 'vue';
 import * as PoolPageComponents from '@/components/contextual/pages/pool';
 import LudwigIcon from '@/beethovenx/components/images/LudwigIcon.vue';
 import LiquidityAPRTooltip from '@/components/tooltips/LiquidityAPRTooltip.vue';
@@ -193,6 +188,7 @@ import usePoolWithFarm from '@/beethovenx/composables/pool/usePoolWithFarm';
 import PoolVolumeChart from '@/beethovenx/components/pages/pool/PoolVolumeChart.vue';
 import BalLoadingBlock from '@/components/_global/BalLoadingBlock/BalLoadingBlock.vue';
 import useConfig from '@/composables/useConfig';
+import useBeethovenPool from '@/beethovenx/composables/useBeethovenPool';
 
 interface PoolPageData {
   id: string;
@@ -223,6 +219,12 @@ export default defineComponent({
     const { addAlert, removeAlert } = useAlerts();
     const { balancerTokenListTokens } = useTokens();
     const { networkConfig } = useConfig();
+
+    const {
+      beethovenPool,
+      isLoadingBeethovenPool,
+      poolHasFarmRewards
+    } = useBeethovenPool(ref(route.params.id as string));
 
     const { pool, loadingPool, isLoadingFarms } = usePoolWithFarm(
       route.params.id as string
@@ -388,6 +390,10 @@ export default defineComponent({
       EXTERNAL_LINKS,
       // computed
       appLoading,
+      beethovenPool,
+      isLoadingBeethovenPool,
+      poolHasFarmRewards,
+
       pool,
       noInitLiquidity,
       poolTypeLabel,

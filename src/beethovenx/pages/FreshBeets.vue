@@ -36,7 +36,6 @@ const {
 const { farmUser, farmUserLoading } = useFarmUser(
   appNetworkConfig.fBeets.farmId
 );
-const { pool, loadingPool } = usePoolWithFarm(appNetworkConfig.fBeets.poolId);
 const fbeetsDeposited = computed(() => {
   const amount = farmUser.value?.amount;
 

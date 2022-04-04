@@ -4,7 +4,7 @@ import useNumbers from '@/composables/useNumbers';
 import numeral from 'numeral';
 import useEthers from '@/composables/useEthers';
 import useBreakpoints from '@/composables/useBreakpoints';
-import useUserPoolData from '@/beethovenx/composables/useUserPoolData';
+import useAllUserPoolData from '@/beethovenx/composables/useAllUserPoolData';
 import useUserPendingRewards from '@/beethovenx/composables/useUserPendingRewards';
 import { masterChefContractsService } from '@/beethovenx/services/farm/master-chef-contracts.service';
 import useWeb3 from '@/services/web3/useWeb3';
@@ -12,7 +12,7 @@ import useTransactions from '@/composables/useTransactions';
 
 const { txListener } = useEthers();
 const { fNum } = useNumbers();
-const { userPoolDataLoading, userPoolData } = useUserPoolData();
+const { userPoolDataLoading, allUserPoolData } = useAllUserPoolData();
 const {
   userPendingRewardsQuery,
   userPendingRewards,
@@ -128,7 +128,7 @@ async function harvestAllRewards(): Promise<void> {
             Total Deposit
           </div>
           <div class="text-xl font-medium truncate flex items-center">
-            {{ fNum(userPoolData.totalFarmBalanceUSD, 'usd') }}
+            {{ fNum(allUserPoolData.totalFarmBalanceUSD, 'usd') }}
           </div>
           <div class="text-sm text-gray-500 font-medium mt-1 text-left">
             {{ userPendingRewards.farm.numFarms }}
@@ -144,10 +144,12 @@ async function harvestAllRewards(): Promise<void> {
             Average APR
           </div>
           <div class="text-xl font-medium truncate flex items-center">
-            {{ fNum(userPoolData.averageFarmApr, 'percent') }}
+            {{ fNum(allUserPoolData.averageFarmApr, 'percent') }}
           </div>
           <div class="text-sm text-gray-500 font-medium mt-1 text-left">
-            {{ fNum(parseFloat(userPoolData.averageFarmApr) / 365, 'percent') }}
+            {{
+              fNum(parseFloat(allUserPoolData.averageFarmApr) / 365, 'percent')
+            }}
             Daily
           </div>
         </BalCard>

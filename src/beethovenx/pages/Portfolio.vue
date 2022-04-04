@@ -84,7 +84,7 @@ import { orderBy, sum } from 'lodash';
 import useNumbers from '@/composables/useNumbers';
 import PortfolioPoolsStatCards from '@/beethovenx/components/pages/portfolio/PortfolioPoolsStatCards.vue';
 import usePortfolio from '@/beethovenx/composables/usePortfolio';
-import useUserPoolData from '@/beethovenx/composables/useUserPoolData';
+import useAllUserPoolData from '@/beethovenx/composables/useAllUserPoolData';
 
 export default defineComponent({
   components: {
@@ -111,7 +111,7 @@ export default defineComponent({
       poolsIsFetchingNextPage
     } = usePools();
     const { portfolio, portfolioHistory, isLoadingPortfolio } = usePortfolio();
-    const { userPoolList, userPoolDataLoading } = useUserPoolData();
+    const { userPoolList, userPoolDataLoading } = useAllUserPoolData();
 
     const { fNum } = useNumbers();
 
