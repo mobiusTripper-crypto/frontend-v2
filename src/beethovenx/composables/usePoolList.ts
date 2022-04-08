@@ -6,7 +6,7 @@ import {
 import usePoolListQuery from '@/beethovenx/composables/queries/usePoolListQuery';
 import useBeethovenxConfig from '@/beethovenx/composables/useBeethovenxConfig';
 import { PoolType } from '@/services/balancer/subgraph/types';
-import { flatten } from 'lodash';
+import { flatten, cloneDeep } from 'lodash';
 
 export default function usePoolList(
   activeFilters: Ref<string[]> = ref([]),
@@ -53,11 +53,25 @@ export default function usePoolList(
       .slice(0, 4);
   });
 
-  const featuredPools = computed<PoolListItem[]>(() =>
-    poolListWithoutLinear.value
+  const featuredPools = computed<PoolListItem[]>(() => {
+    const filteredPoolList = poolListWithoutLinear.value
       .filter(pool => beethovenxConfig.value.featuredPools.includes(pool.id))
-      .slice(0, 4)
-  );
+      .slice(0, 4);
+
+    /* This is a quick fix added to filter out the phantomBpt Token from the feature pool list */
+    const filteredFor4pool = cloneDeep(filteredPoolList);
+    filteredFor4pool.forEach((pool, index, theArray) => {
+      if (
+        pool.id ===
+        '0x6da14f5acd58dd5c8e486cfa1dc1c550f5c61c1c0000000000000000000003cf'
+      ) {
+        const filteredTokens = pool.tokens.filter(token => !token.isPhantomBpt);
+        theArray[index].tokens = filteredTokens;
+      }
+    });
+    /* End of quick fix 4pool code */
+    return filteredFor4pool;
+  });
 
   const filteredPools = computed<PoolListItem[]>(() => {
     if (selectedTokens.value.length === 0) {
