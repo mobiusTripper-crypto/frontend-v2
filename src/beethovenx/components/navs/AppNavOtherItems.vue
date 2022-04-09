@@ -1,5 +1,5 @@
 <template>
-  <BalPopover align="left">
+  <BalPopover :verticalAlign="verticalAlign" align="left">
     <template v-slot:activator>
       <div
         class="flex items-center px-4 cursor-pointer relative"
@@ -38,7 +38,8 @@ export default defineComponent({
   name: 'AppNavOtherItems',
 
   props: {
-    alert: { type: Object as PropType<Alert>, required: true }
+    alert: { type: Object as PropType<Alert>, required: true },
+    verticalAlign: { type: String, default: 'top' }
   },
 
   setup() {
