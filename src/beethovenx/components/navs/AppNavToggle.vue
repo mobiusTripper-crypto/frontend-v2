@@ -12,19 +12,13 @@
       :class="['toggle-link px-5', { [activeClasses]: isInvestPage }]"
       @click="trackGoal(Goals.ClickNavInvest)"
     >
-      Invest{{ upToXLargeBreakpoint ? '' : '&nbsp;/&nbsp;Farm' }}
+      Invest&nbsp;/&nbsp;Farm
     </router-link>
     <router-link
       :to="{ name: 'stake' }"
       :class="['toggle-link px-5', { [activeClasses]: isStakePage }]"
     >
       Stake
-    </router-link>
-    <router-link
-      :to="{ name: 'launch' }"
-      :class="['toggle-link px-5', { [activeClasses]: isLaunchPage }]"
-    >
-      Launch
     </router-link>
   </div>
 </template>
@@ -53,12 +47,6 @@ export default defineComponent({
     const isTradePage = computed(() => route.name === 'trade');
     const isPortfolioPage = computed(() => route.name === 'my-portfolio');
     const isStakePage = computed(() => route.name === 'stake');
-    const isLaunchPage = computed(
-      () =>
-        route.name === 'launch' ||
-        route.name === 'lge-create' ||
-        route.name === 'lge'
-    );
     const isInvestPage = computed(
       () => route.name === 'invest' || String(route.name).startsWith('pool')
     );
@@ -76,7 +64,6 @@ export default defineComponent({
       isPortfolioPage,
       isStakePage,
       isInvestPage,
-      isLaunchPage,
       upToXLargeBreakpoint
     };
   }

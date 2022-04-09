@@ -1,12 +1,13 @@
 <template>
   <div class="app-nav-footer">
     <div class="app-nav-footer-container">
-      <AppNavToggle />
-      <AppNavOtherItems verticalAlign="bottom" align="right" />
+      <div class="w-full flex justify-center">
+        <AppNavToggle />
+        <AppNavOtherItems verticalAlign="bottom" align="right" />
+      </div>
     </div>
   </div>
 </template>
-
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AppNavToggle from '@/beethovenx/components/navs/AppNavToggle.vue';
