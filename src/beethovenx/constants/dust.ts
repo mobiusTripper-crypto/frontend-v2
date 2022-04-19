@@ -1,1 +1,1 @@
-export const MINIMUM_DUST_VALUE = 0.01;
+export const MINIMUM_DUST_VALUE_USD = 0.001;

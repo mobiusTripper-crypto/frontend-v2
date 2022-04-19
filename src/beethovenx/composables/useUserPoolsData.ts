@@ -6,7 +6,7 @@ import {
   GqlBeetsUserPoolPoolData,
   UserPoolListItem
 } from '@/beethovenx/services/beethovenx/beethovenx-types';
-import { MINIMUM_DUST_VALUE } from '@/beethovenx/constants/dust';
+import { MINIMUM_DUST_VALUE_USD } from '@/beethovenx/constants/dust';
 
 export default function useUserPoolsData() {
   const userPoolDataQuery = useUserPoolDataQuery();
@@ -48,7 +48,7 @@ export default function useUserPoolsData() {
           hasUnstakedBpt: data?.hasUnstakedBpt
         };
       })
-      .filter(pool => Number(pool.userBalance) > MINIMUM_DUST_VALUE);
+      .filter(pool => Number(pool.userBalance) > MINIMUM_DUST_VALUE_USD);
   });
 
   return {
