@@ -20,6 +20,7 @@
     >
       Stake
     </router-link>
+    <AppNavLaunch v-if="!upToXLargeBreakpoint" />
   </div>
 </template>
 
@@ -30,10 +31,11 @@ import { useRoute } from 'vue-router';
 import useApp from '@/composables/useApp';
 import useWeb3 from '@/services/web3/useWeb3';
 import useBreakpoints from '@/composables/useBreakpoints';
+import AppNavLaunch from '@/beethovenx/components/navs/AppNavLaunch.vue';
 
 export default defineComponent({
   name: 'AppNavToggle',
-  components: {},
+  components: { AppNavLaunch },
   props: {
     darkModeBg: { type: String, default: '800' }
   },

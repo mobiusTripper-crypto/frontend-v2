@@ -12,12 +12,7 @@
         <div class="text-4xl">...</div>
       </div>
     </template>
-    <router-link
-      :to="{ name: 'launch' }"
-      :class="['toggle-link', { [activeClasses]: isLaunchPage }]"
-    >
-      Launch
-    </router-link>
+    <AppNavLaunch v-if="upToXLargeBreakpoint" />
     <div class="w-48">
       <div
         v-for="(link, index) in EXTERNAL_LINKS.Beethoven.NavOtherItems"
@@ -37,26 +32,25 @@
 </template>
 
 <script lang="ts">
-import { useRoute } from 'vue-router';
 import { computed, defineComponent, PropType } from 'vue';
 import useNumbers from '@/composables/useNumbers';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { Alert } from '@/composables/useAlerts';
 import useProtocolDataQuery from '@/beethovenx/composables/queries/useProtocolDataQuery';
+import AppNavLaunch from '@/beethovenx/components/navs/AppNavLaunch.vue';
 import { EXTERNAL_LINKS } from '@/constants/links';
 
 export default defineComponent({
   name: 'AppNavOtherItems',
-
+  components: { AppNavLaunch },
   props: {
     alert: { type: Object as PropType<Alert>, required: true },
     verticalAlign: { type: String, default: 'top' }
   },
 
   setup(props) {
-    const route = useRoute();
     const { fNum } = useNumbers();
-    const { upToLargeBreakpoint } = useBreakpoints();
+    const { upToXLargeBreakpoint } = useBreakpoints();
 
     const protocolDataQuery = useProtocolDataQuery();
 
@@ -78,26 +72,14 @@ export default defineComponent({
     });
     const loading = computed(() => protocolDataQuery.isLoading.value);
 
-    const isLaunchPage = computed(() => {
-      console.log(route.name);
-      return (
-        route.name === 'launch' ||
-        route.name === 'lge-create' ||
-        route.name === 'lge'
-      );
-    });
-    const activeClasses = 'text-green-500 bg-gray-700';
-
     return {
       fNum,
-      upToLargeBreakpoint,
+      upToXLargeBreakpoint,
       beetsPrice,
       tvl,
       circulatingSupply,
       marketCap,
       loading,
-      isLaunchPage,
-      activeClasses,
       isVerticalAlign,
       // constants
       EXTERNAL_LINKS
@@ -109,10 +91,5 @@ export default defineComponent({
 <style scoped>
 .app-nav-other-item {
   @apply px-4 py-2 text-gray-300 hover:text-green-500 block hover:bg-gray-700;
-}
-
-.toggle-link {
-  @apply px-4 py-2 mb-2 hover:text-green-500 block hover:bg-gray-700;
-  font-variation-settings: 'wght' 600;
 }
 </style>
