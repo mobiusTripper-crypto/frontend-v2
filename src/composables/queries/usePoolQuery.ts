@@ -31,7 +31,7 @@ export default function usePoolQuery(
   /**
    * COMPOSABLES
    */
-  const { getTokens, injectTokens, prices, dynamicDataLoading } = useTokens();
+  const { getToken, injectTokens, prices, dynamicDataLoading } = useTokens();
   const { appLoading } = useApp();
   const { account } = useWeb3();
   const { currency } = useUserSettings();
@@ -171,6 +171,9 @@ export default function usePoolQuery(
 
     //the onchain data is now fetched by the backend, we map it into the desired format
     //here to avoid editing all of the files that currently use onchain
+
+    //force symbol to be pulled from TokenProvider
+    pool.tokens.map(token => (token.symbol = getToken(token.address).symbol));
 
     const onchainData: OnchainPoolData = {
       totalSupply: pool.totalShares,
