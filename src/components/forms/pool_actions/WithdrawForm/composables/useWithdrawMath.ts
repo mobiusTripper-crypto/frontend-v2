@@ -10,7 +10,7 @@ import { computed, Ref, ref, watch } from 'vue';
 import { bnSum, bnum, forChange, scaleDown } from '@/lib/utils';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 // Types
-import { FullPool, Pool } from '@/services/balancer/subgraph/types';
+import { FullPool, PoolToken } from '@/services/balancer/subgraph/types';
 // Services
 import PoolCalculator from '@/services/pool/calculator/calculator.sevice';
 // Composables
@@ -20,9 +20,10 @@ import useTokens from '@/composables/useTokens';
 import useNumbers from '@/composables/useNumbers';
 import useWeb3 from '@/services/web3/useWeb3';
 import { isStablePhantom, usePool } from '@/composables/usePool';
-import { BatchSwap, BatchSwapOut } from '@/types';
+import { BatchSwapOut } from '@/types';
 import { balancerContractsService } from '@/services/balancer/contracts/balancer-contracts.service';
 import OldBigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { TokenInfo } from '@/types/TokenList';
 import { balancer } from '@/lib/balancer.sdk';
 import {
@@ -34,10 +35,8 @@ import { SwapKind } from '@balancer-labs/balancer-js';
 import usePromiseSequence from '@/composables/usePromiseSequence';
 import { getAddress } from '@ethersproject/address';
 import { configService } from '@/services/config/config.service';
-import { fp } from '@/beethovenx/utils/numbers';
 import { isEqual } from 'lodash';
 import useConfig from '@/composables/useConfig';
-import BigNumber from 'bignumber.js';
 
 /**
  * TYPES
@@ -207,18 +206,36 @@ export default function useWithdrawMath(
       pool.value.mainTokens &&
       pool.value.mainTokens[tokenOutIndex.value]
     ) {
+      const poolToken = pool.value.tokens.find(
+        token => token.address === tokenOut.value
+      );
+
+      if (poolToken) {
+        return poolToken.balance;
+      }
+
       const tokenAddress = getAddress(
         pool.value.mainTokens[tokenOutIndex.value]
       );
 
       if (networkConfig.usdTokens.includes(tokenAddress)) {
-        const linearPool = pool.value.linearPools?.find(
-          linearPool =>
-            linearPool.mainToken.address.toLowerCase() ===
-            tokenAddress.toLowerCase()
+        const bbUsdPoolToken = pool.value.tokens.find(
+          token =>
+            token.address.toLowerCase() ===
+            networkConfig.addresses.bbUsd.toLowerCase()
         );
 
-        return linearPool?.mainTokenTotalBalance || '0';
+        return bbUsdPoolToken?.balance || '0';
+      }
+
+      const linearPool = pool.value.linearPools?.find(
+        linearPool =>
+          linearPool.mainToken.address.toLowerCase() ===
+          tokenAddress.toLowerCase()
+      );
+
+      if (linearPool) {
+        return linearPool.mainTokenTotalBalance;
       }
     } else if (
       isWeightedPoolWithNestedLinearPools.value &&
@@ -259,13 +276,54 @@ export default function useWithdrawMath(
       hasNestedUsdStablePhantomPool.value &&
       pool.value.mainTokens
     ) {
+      const stablePhantomPool = pool.value.stablePhantomPools![0];
       const bptInScaled = parseUnits(propBptIn.value, 18);
-      const proportionalAmount = formatUnits(
-        bptInScaled.div(pool.value.mainTokens.length),
-        18
-      );
+      const fixedRatio = poolCalculator.ratioOf('send', 0);
 
-      return pool.value.mainTokens.map(() => proportionalAmount);
+      return pool.value.mainTokens.map(mainToken => {
+        const poolToken = getPoolTokenForMainToken(mainToken);
+        const tokenIdx = pool.value.tokens.findIndex(
+          token =>
+            token.address.toLowerCase() === poolToken?.address.toLowerCase()
+        );
+
+        if (networkConfig.usdTokens.includes(mainToken)) {
+          const linearPool = pool.value.linearPools?.find(
+            linearPool =>
+              linearPool.mainToken.address.toLowerCase() ===
+              mainToken.toLowerCase()
+          );
+          const usdTotalBalance = bnSum(
+            stablePhantomPool.tokens.map(token =>
+              parseUnits(token.balance, token.decimals).toString()
+            )
+          ).toString();
+          const usdToken = stablePhantomPool.tokens.find(
+            token =>
+              token.address.toLowerCase() === linearPool?.address.toLowerCase()
+          );
+          const usdTokenBalance = parseUnits(
+            usdToken?.balance || '0',
+            usdToken?.decimals || 18
+          );
+
+          return formatUnits(
+            bptInScaled
+              .mul(poolCalculator.receiveRatios[tokenIdx])
+              .div(fixedRatio)
+              .mul(usdTokenBalance)
+              .div(usdTotalBalance),
+            18
+          );
+        }
+
+        return formatUnits(
+          bptInScaled
+            .mul(poolCalculator.receiveRatios[tokenIdx])
+            .div(fixedRatio),
+          18
+        );
+      });
     }
 
     const { receive } = poolCalculator.propAmountsGiven(
@@ -344,37 +402,43 @@ export default function useWithdrawMath(
     });
   });
 
-  const fullAmountsWithNestedUsdBpt = computed(() => {
+  const singleAssetWithdrawAmountsStablePhantomWithNestedUsd = computed(() => {
     if (!hasNestedUsdStablePhantomPool.value || batchSwapUsd.value === null) {
       return [];
     }
 
-    const amounts: string[] = [];
+    const returnAmount = bnum(batchSwapUsd.value.returnAmounts[0].toString())
+      .abs()
+      .toString();
 
-    for (const token of pool.value.tokensList) {
-      if (token === pool.value.address) {
-        continue;
+    return pool.value.tokensList.map(token => {
+      if (token.toLowerCase() === tokenOut.value.toLowerCase()) {
+        const tokenInfo = getToken(token);
+
+        return formatUnits(returnAmount, tokenInfo.decimals);
+      } else if (
+        networkConfig.usdTokens.includes(tokenOut.value) &&
+        token === configService.network.addresses.bbUsd.toLowerCase()
+      ) {
+        const tokenInfo = getToken(tokenOut.value);
+
+        return formatUnits(returnAmount, tokenInfo.decimals);
       }
 
-      if (token === configService.network.addresses.bbUsd.toLowerCase()) {
-        amounts.push(
-          formatUnits(
-            bnum(batchSwapUsd.value.returnAmounts[0].toString())
-              .abs()
-              .toString(),
-            18
-          )
-        );
-      } else {
-        const amountIdx = tokenAddresses.value.findIndex(
-          address => address.toLowerCase() === token.toLowerCase()
-        );
+      const linearPool = pool.value.linearPools?.find(
+        linearPool => linearPool.address.toLowerCase() === token.toLowerCase()
+      );
 
-        amounts.push(fullAmounts.value[amountIdx]);
+      if (
+        linearPool &&
+        tokenOut.value.toLowerCase() ===
+          linearPool.mainToken.address.toLowerCase()
+      ) {
+        return formatUnits(returnAmount, linearPool.mainToken.decimals);
       }
-    }
 
-    return amounts;
+      return '0';
+    });
   });
 
   /**
@@ -493,11 +557,14 @@ export default function useWithdrawMath(
     if (hasNestedUsdStablePhantomPool.value && batchSwapUsd.value !== null) {
       return (
         poolCalculator
-          .priceImpact(fullAmountsWithNestedUsdBpt.value, {
-            exactOut: exactOut.value,
-            tokenIndex: tokenOutIndex.value,
-            queryBPT: fullBPTIn.value
-          })
+          .priceImpact(
+            singleAssetWithdrawAmountsStablePhantomWithNestedUsd.value,
+            {
+              exactOut: exactOut.value,
+              tokenIndex: tokenOutIndex.value,
+              queryBPT: fullBPTIn.value
+            }
+          )
           .toNumber() || 0
       );
     }
@@ -692,14 +759,13 @@ export default function useWithdrawMath(
     const fetchPools = !batchSwap.value; // Only needs to be fetched on first call
 
     if (hasNestedUsdStablePhantomPool.value) {
-      const usdBatchSwapAmounts = tokensOut
-        .map((address, index) => ({
-          address,
-          amount: batchSwapAmounts[index] || '0'
-        }))
-        .filter(item =>
+      const usdBatchSwapAmounts = tokensOut.map((address, index) => ({
+        address,
+        amount: batchSwapAmounts[index] || '0'
+      }));
+      /*.filter(item =>
           configService.network.usdTokens.includes(getAddress(item.address))
-        );
+        );*/
 
       if (usdBatchSwapAmounts.length > 0) {
         batchSwapUsd.value = await balancer.swaps.queryBatchSwapWithSor({
@@ -1117,6 +1183,49 @@ export default function useWithdrawMath(
         );
       }
     }
+  }
+
+  function getPoolTokenForMainToken(mainToken: string): PoolToken | null {
+    mainToken = mainToken.toLowerCase();
+
+    const token = pool.value.tokens.find(
+      token => token.address.toLowerCase() === mainToken
+    );
+
+    //mainToken is directly in the pool, not nested
+    if (token) {
+      return token;
+    }
+
+    const linearPool = pool.value.linearPools?.find(
+      linearPool => linearPool.mainToken.address.toLowerCase() === mainToken
+    );
+
+    if (linearPool) {
+      const nestedLinearBpt = pool.value.tokens.find(
+        token =>
+          token.address.toLowerCase() === linearPool.address.toLowerCase()
+      );
+
+      if (nestedLinearBpt) {
+        return nestedLinearBpt;
+      }
+
+      //linear is nested in a stable phantom
+      const stablePhantom = pool.value.stablePhantomPools
+        ? pool.value.stablePhantomPools[0]
+        : undefined;
+      const nestedStablePhantomBpt = pool.value.tokens.find(
+        token =>
+          token.address.toLowerCase() === stablePhantom?.address.toLowerCase()
+      );
+
+      if (nestedStablePhantomBpt) {
+        return nestedStablePhantomBpt;
+      }
+    }
+
+    return null;
   }
 
   /**
