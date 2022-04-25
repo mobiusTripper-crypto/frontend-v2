@@ -39,7 +39,6 @@ import useBreakpoints from '@/composables/useBreakpoints';
 
 export default defineComponent({
   name: 'AppNavToggle',
-  components: {},
   props: {
     darkModeBg: { type: String, default: '800' }
   },

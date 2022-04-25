@@ -39,7 +39,6 @@ import { EXTERNAL_LINKS } from '@/constants/links';
 
 export default defineComponent({
   name: 'AppNavOtherItems',
-  components: {},
   props: {
     alert: { type: Object as PropType<Alert>, required: true },
     verticalAlign: { type: String, default: 'top' }

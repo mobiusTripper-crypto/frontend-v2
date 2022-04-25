@@ -20,9 +20,7 @@ export default defineComponent({
 
   setup() {
     const { bp } = useBreakpoints();
-    const showSmallLogo = computed(() => {
-      return bp.value === 'xs' || bp.value === 'lg';
-    });
+    const showSmallLogo = computed(() => ['xs', 'lg'].includes(bp.value));
 
     return { showSmallLogo };
   }
