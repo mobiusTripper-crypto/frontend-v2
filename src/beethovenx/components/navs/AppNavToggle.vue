@@ -12,7 +12,7 @@
       :class="['toggle-link px-5', { [activeClasses]: isInvestPage }]"
       @click="trackGoal(Goals.ClickNavInvest)"
     >
-      Invest&nbsp;/&nbsp;Farm
+      Invest{{ upToXLargeBreakpoint ? '' : '&nbsp;/&nbsp;Farm' }}
     </router-link>
     <router-link
       :to="{ name: 'stake' }"
@@ -20,7 +20,12 @@
     >
       Stake
     </router-link>
-    <AppNavLaunch v-if="!upToXLargeBreakpoint" />
+    <router-link
+      :to="{ name: 'launch' }"
+      :class="['toggle-link px-5', { [activeClasses]: isLaunchPage }]"
+    >
+      Launch
+    </router-link>
   </div>
 </template>
 
@@ -31,11 +36,10 @@ import { useRoute } from 'vue-router';
 import useApp from '@/composables/useApp';
 import useWeb3 from '@/services/web3/useWeb3';
 import useBreakpoints from '@/composables/useBreakpoints';
-import AppNavLaunch from '@/beethovenx/components/navs/AppNavLaunch.vue';
 
 export default defineComponent({
   name: 'AppNavToggle',
-  components: { AppNavLaunch },
+  components: {},
   props: {
     darkModeBg: { type: String, default: '800' }
   },
@@ -52,6 +56,13 @@ export default defineComponent({
     const isInvestPage = computed(
       () => route.name === 'invest' || String(route.name).startsWith('pool')
     );
+    const isLaunchPage = computed(() => {
+      return (
+        route.name === 'launch' ||
+        route.name === 'lge-create' ||
+        route.name === 'lge'
+      );
+    });
 
     const { trackGoal, Goals } = useFathom();
 
@@ -66,6 +77,7 @@ export default defineComponent({
       isPortfolioPage,
       isStakePage,
       isInvestPage,
+      isLaunchPage,
       upToXLargeBreakpoint
     };
   }

@@ -14,9 +14,8 @@
         color="white"
         :size="upToLargeBreakpoint ? 'md' : 'sm'"
         @click="toggleWalletSelectModal"
-        class="mr-2"
       >
-        <WalletIcon class="mr-2" />
+        <WalletIcon />
         <span class="hidden lg:inline-block" v-text="$t('connectWallet')" />
         <span class="lg:hidden" v-text="$t('connect')" />
       </BalBtn>

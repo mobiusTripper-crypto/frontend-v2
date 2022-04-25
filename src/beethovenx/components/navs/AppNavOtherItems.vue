@@ -12,7 +12,6 @@
         <div class="text-4xl">...</div>
       </div>
     </template>
-    <AppNavLaunch v-if="upToXLargeBreakpoint" />
     <div class="w-48">
       <div
         v-for="(link, index) in EXTERNAL_LINKS.Beethoven.NavOtherItems"
@@ -34,15 +33,13 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
 import useNumbers from '@/composables/useNumbers';
-import useBreakpoints from '@/composables/useBreakpoints';
 import { Alert } from '@/composables/useAlerts';
 import useProtocolDataQuery from '@/beethovenx/composables/queries/useProtocolDataQuery';
-import AppNavLaunch from '@/beethovenx/components/navs/AppNavLaunch.vue';
 import { EXTERNAL_LINKS } from '@/constants/links';
 
 export default defineComponent({
   name: 'AppNavOtherItems',
-  components: { AppNavLaunch },
+  components: {},
   props: {
     alert: { type: Object as PropType<Alert>, required: true },
     verticalAlign: { type: String, default: 'top' }
@@ -50,8 +47,6 @@ export default defineComponent({
 
   setup(props) {
     const { fNum } = useNumbers();
-    const { upToXLargeBreakpoint } = useBreakpoints();
-
     const protocolDataQuery = useProtocolDataQuery();
 
     const isVerticalAlign = computed(() =>
@@ -74,7 +69,6 @@ export default defineComponent({
 
     return {
       fNum,
-      upToXLargeBreakpoint,
       beetsPrice,
       tvl,
       circulatingSupply,

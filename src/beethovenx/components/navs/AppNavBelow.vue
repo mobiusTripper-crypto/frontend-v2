@@ -24,7 +24,7 @@ const swapVolume24h = computed(
 
 <template>
   <div class="bg-black">
-    <div class="px-4 lg:px-6 py-2 flex items-center">
+    <div class="px-3 xl:px-6 py-2 flex items-center">
       <div class="flex-1 items-center">
         <span class="mr-4">
           TVL:
