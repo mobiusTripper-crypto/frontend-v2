@@ -1,9 +1,13 @@
 <template>
-  <BalPopover align="left">
+  <BalPopover
+    :verticalAlign="verticalAlign"
+    align="left"
+    closeOnClickInside="true"
+  >
     <template v-slot:activator>
       <div
         class="flex items-center px-4 cursor-pointer relative"
-        style="top: -10px"
+        :style="isVerticalAlign"
       >
         <div class="text-4xl">...</div>
       </div>
@@ -29,23 +33,24 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
 import useNumbers from '@/composables/useNumbers';
-import useBreakpoints from '@/composables/useBreakpoints';
 import { Alert } from '@/composables/useAlerts';
 import useProtocolDataQuery from '@/beethovenx/composables/queries/useProtocolDataQuery';
 import { EXTERNAL_LINKS } from '@/constants/links';
 
 export default defineComponent({
   name: 'AppNavOtherItems',
-
   props: {
-    alert: { type: Object as PropType<Alert>, required: true }
+    alert: { type: Object as PropType<Alert>, required: true },
+    verticalAlign: { type: String, default: 'top' }
   },
 
-  setup() {
+  setup(props) {
     const { fNum } = useNumbers();
-    const { upToLargeBreakpoint } = useBreakpoints();
-
     const protocolDataQuery = useProtocolDataQuery();
+
+    const isVerticalAlign = computed(() =>
+      props.verticalAlign === 'top' ? { top: '-10px' } : { top: '-6px' }
+    );
     const tvl = computed(
       () => protocolDataQuery.data?.value?.totalLiquidity || 0
     );
@@ -63,13 +68,12 @@ export default defineComponent({
 
     return {
       fNum,
-      upToLargeBreakpoint,
       beetsPrice,
       tvl,
       circulatingSupply,
       marketCap,
       loading,
-
+      isVerticalAlign,
       // constants
       EXTERNAL_LINKS
     };

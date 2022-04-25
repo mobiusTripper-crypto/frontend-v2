@@ -36,11 +36,11 @@ const isHomePage = computed(() => route.path === '/');
   <div>
     <AppNav />
     <AppHeaderBg />
-    <div class="z-10 pb-16 relative">
+    <div class="z-10 pb-16 relative px-4 lg:px-6">
       <router-view :key="$route.path" />
     </div>
     <AppFooterNav v-if="upToMediumBreakpoint" />
-    <div class="-top-14 xl:top-0 flex flex-col items-center relative">
+    <div class="bottom-12 md:bottom-0 flex flex-col items-center relative">
       <img src="~@/beethovenx/assets/images/community-image.png" />
       <div class="absolute bottom-0 flex justify-center pb-4 xl:pb-6 xl:ml-8">
         <template
