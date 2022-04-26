@@ -15,7 +15,8 @@ module.exports = {
         'dark',
         /^dark:/,
         /^mr/,
-        /^w/
+        /^w/,
+        /^bottom/
       ]
     }
   },
