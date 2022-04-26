@@ -39,7 +39,6 @@ import useBreakpoints from '@/composables/useBreakpoints';
 
 export default defineComponent({
   name: 'AppNavToggle',
-  components: {},
   props: {
     darkModeBg: { type: String, default: '800' }
   },
@@ -53,15 +52,16 @@ export default defineComponent({
     const isTradePage = computed(() => route.name === 'trade');
     const isPortfolioPage = computed(() => route.name === 'my-portfolio');
     const isStakePage = computed(() => route.name === 'stake');
-    const isLaunchPage = computed(
-      () =>
-        route.name === 'launch' ||
-        route.name === 'lge-create' ||
-        route.name === 'lge'
-    );
     const isInvestPage = computed(
       () => route.name === 'invest' || String(route.name).startsWith('pool')
     );
+    const isLaunchPage = computed(() => {
+      return (
+        route.name === 'launch' ||
+        route.name === 'lge-create' ||
+        route.name === 'lge'
+      );
+    });
 
     const { trackGoal, Goals } = useFathom();
 

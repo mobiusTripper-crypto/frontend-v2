@@ -7,12 +7,14 @@ type Props = {
   trigger?: PopoverTrigger;
   align?: string;
   verticalAlign?: string;
+  closeOnClickInside?: boolean;
 };
 
 const props = withDefaults(defineProps<Props>(), {
   trigger: 'click',
   align: 'right',
-  verticalAlign: 'top'
+  verticalAlign: 'top',
+  closeOnClickInside: false
 });
 
 const emit = defineEmits<{
@@ -62,6 +64,9 @@ function handleClickOutside() {
     hidePopover();
   }
 }
+function handleClickInside() {
+  props.closeOnClickInside && hidePopover();
+}
 </script>
 
 <template>
@@ -74,7 +79,10 @@ function handleClickOutside() {
     >
       <slot name="activator" />
     </div>
-    <div :class="['bal-popover-wrapper', popoverWrapperClasses]">
+    <div
+      @click="trigger === 'click' && handleClickInside()"
+      :class="['bal-popover-wrapper', popoverWrapperClasses]"
+    >
       <BalCard shadow="lg" v-bind="$attrs" darkBgColor="800" class="">
         <slot :close="hidePopover" />
       </BalCard>
