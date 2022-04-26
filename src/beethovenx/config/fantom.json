@@ -62,7 +62,10 @@
     "batchRelayer": "0xC852F984CA3310AFc596adeB17EfcB0542646920",
     "bbUsd": "0x5ddb92a5340fd0ead3987d3661afcd6104c3b757"
   },
-  "usdTokens": ["0x04068DA6C83AFCFA0e13ba15A6696662335D5B75", "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E"],
+  "usdTokens": [
+    "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E"
+  ],
   "usdTokenToWrappedTokenMap": {
     "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75": "0xEF0210eB96c7EB36AF8ed1c20306462764935607",
     "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E": "0x637eC617c86D24E421328e6CAEa1d92114892439"
@@ -109,6 +112,7 @@
     "poolId": "0xcde5a11a4acb4ee4c805352cec57e236bdbc3837000200000000000000000019",
     "poolAddress": "0xcde5a11a4acb4ee4c805352cec57e236bdbc3837",
     "farmId": "22",
-    "oldFarmId": "9"
+    "oldFarmId": "9",
+    "lockAddress": "0x"
   }
 }

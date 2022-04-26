@@ -16,6 +16,10 @@ import {
   GqlHistoricalTokenPrice,
   GqlLge,
   GqlLgeCreateInput,
+  GqlLock,
+  GqlLockingUser,
+  GqlRewardToken,
+  GqlLockingReward,
   GqlSorGetSwapsInput,
   GqlSorGetSwapsResponse,
   GqlTokenPrice,
@@ -935,6 +939,100 @@ export default class BeethovenxService {
         sorGetSwaps.returnAmountConsideringFees
       )
     };
+  }
+
+  public async getLockData(): Promise<{
+    locker: GqlLock;
+    lockingRewardTokens: GqlRewardToken[];
+  }> {
+    const query = jsonToGraphQLQuery({
+      query: {
+        locker: {
+          totalLockedAmount: true,
+          totalLockedUsd: true,
+          totalLockedPercentage: true,
+          timestamp: true,
+          block: true
+        },
+        lockingRewardTokens: {
+          rewardRate: true,
+          rewardToken: true,
+          rewardPeriodFinish: true,
+          totalRewardAmount: true,
+          totalRewardAmountUsd: true,
+          apr: true
+        }
+      }
+    });
+
+    const data = await this.get<{
+      locker: GqlLock;
+      lockingRewardTokens: GqlRewardToken[];
+    }>(query);
+
+    return data;
+  }
+
+  public async getLockUserData(
+    account: string
+  ): Promise<{
+    lockingUser: GqlLockingUser;
+    lockingUserVotingPower: number;
+  }> {
+    const query = jsonToGraphQLQuery({
+      query: {
+        lockingUser: {
+          totalLockedAmount: true,
+          totalLockedAmountUsd: true,
+          totalUnlockedAmount: true,
+          totalUnlockedAmountUsd: true,
+          totalVotingPower: true,
+          lockedToVotingPowerRatio: true,
+          lockingPeriods: {
+            lockAmount: true,
+            lockAmountUsd: true,
+            epoch: true,
+            withdrawn: true
+          },
+          totalClaimedRewardsUsd: true,
+          claimedRewards: {
+            amount: true,
+            amountUsd: true,
+            token: true
+          },
+          totalLostThroughKick: true,
+          totalLostThroughKickUsd: true
+        },
+        lockingUserVotingPower: true
+      }
+    });
+
+    const data = await this.get<{
+      lockingUser: GqlLockingUser;
+      lockingUserVotingPower: number;
+    }>(query, account);
+
+    return data;
+  }
+
+  public async getLockRewardsData(
+    account: string
+  ): Promise<{ lockingPendingRewards: GqlLockingReward[] }> {
+    const query = jsonToGraphQLQuery({
+      query: {
+        lockingPendingRewards: {
+          amount: true,
+          amountUsd: true,
+          token: true
+        }
+      }
+    });
+
+    const data = await this.get<{ lockingPendingRewards: GqlLockingReward[] }>(
+      query,
+      account
+    );
+    return data;
   }
 
   private get userProfileDataFragment() {

@@ -89,6 +89,7 @@ export interface Config {
     poolAddress: string;
     farmId: string;
     oldFarmId: string;
+    lockAddress: string;
   };
 }
 

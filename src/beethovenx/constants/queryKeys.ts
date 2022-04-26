@@ -5,6 +5,7 @@ export const BALANCES_ROOT_KEY = 'accountBalances';
 export const CLAIMS_ROOT_KEY = 'claims';
 export const SWAPS_ROOT_KEY = 'swaps';
 export const TOKEN_PRICES_ROOT_KEY = 'tokenPrices';
+export const LOCKER_ROOT_KEY = 'lock';
 
 const QUERY_KEYS = {
   Farms: {
@@ -134,6 +135,15 @@ const QUERY_KEYS = {
   },
   FBeets: {
     all: ['FBeets', 'all']
+  },
+  Lock: {
+    all: [LOCKER_ROOT_KEY, 'all'],
+    Rewards: (account: Ref<string>) => [
+      LOCKER_ROOT_KEY,
+      'rewards',
+      { account }
+    ],
+    User: (account: Ref<string>) => [LOCKER_ROOT_KEY, 'user', { account }]
   }
 };
 
