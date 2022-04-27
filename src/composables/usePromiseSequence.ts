@@ -6,9 +6,9 @@ export default function usePromiseSequence() {
 
   async function processAll(): Promise<void> {
     processing.value = true;
-    for (let i = 0; i < promises.value.length; i++) {
-      await promises.value[i]();
-      promises.value.splice(i, 1);
+    while (promises.value.length > 0) {
+      await promises.value[0]();
+      promises.value.pop();
     }
     processing.value = false;
   }
