@@ -50,7 +50,11 @@ const tokenAddresses = computed(() => {
 const tokens = computed(() => getTokens(tokenAddresses.value));
 
 const options = computed(() => {
-  if (isWeightedPoolWithNestedLinearPools.value) {
+  if (
+    isWeightedPoolWithNestedLinearPools.value ||
+    props.pool.id ===
+      '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406'
+  ) {
     return ['all'];
   }
 
