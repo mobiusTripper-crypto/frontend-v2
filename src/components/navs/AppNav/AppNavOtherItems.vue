@@ -32,9 +32,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
-import useNumbers from '@/composables/useNumbers';
 import { Alert } from '@/composables/useAlerts';
-import useProtocolDataQuery from '@/beethovenx/composables/queries/useProtocolDataQuery';
 import { EXTERNAL_LINKS } from '@/constants/links';
 
 export default defineComponent({
@@ -45,34 +43,11 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { fNum } = useNumbers();
-    const protocolDataQuery = useProtocolDataQuery();
-
     const isVerticalAlign = computed(() =>
       props.verticalAlign === 'top' ? { top: '-10px' } : { top: '-6px' }
     );
-    const tvl = computed(
-      () => protocolDataQuery.data?.value?.totalLiquidity || 0
-    );
-
-    const beetsPrice = computed(
-      () => protocolDataQuery.data?.value?.beetsPrice || 0
-    );
-    const circulatingSupply = computed(
-      () => protocolDataQuery.data.value?.circulatingSupply || 0
-    );
-    const marketCap = computed(() => {
-      return beetsPrice.value * circulatingSupply.value;
-    });
-    const loading = computed(() => protocolDataQuery.isLoading.value);
 
     return {
-      fNum,
-      beetsPrice,
-      tvl,
-      circulatingSupply,
-      marketCap,
-      loading,
       isVerticalAlign,
       // constants
       EXTERNAL_LINKS
