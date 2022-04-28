@@ -55,6 +55,7 @@ import { computed, defineComponent, PropType } from 'vue';
 import { chunk } from 'lodash';
 import useNumbers from '@/composables/useNumbers';
 import { DecoratedPool } from '@/services/balancer/subgraph/types';
+import useTokens from '@/composables/useTokens';
 
 import BalAsset from '../_global/BalAsset/BalAsset.vue';
 
@@ -91,6 +92,8 @@ export default defineComponent({
     /**
      * COMPUTED
      */
+    const { getToken } = useTokens();
+
     const addressesChunks = computed(() =>
       chunk(props.addresses, props.maxAssetsPerLine)
     );
@@ -103,8 +106,15 @@ export default defineComponent({
         (radius.value * 2)
     );
 
+    //token symbol gets from onchain data, using getToken to get from config
+    // this getToken method should be moved to the backend when possible
     const tokens = computed(() =>
-      props.pool?.tokens.filter(token => token.address !== props.pool?.address)
+      props.pool?.tokens
+        .filter(token => token.address !== props.pool?.address)
+        .map(token => ({
+          ...token,
+          symbol: getToken(token.address).symbol
+        }))
     );
 
     /**
