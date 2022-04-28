@@ -50,12 +50,15 @@ const tokenAddresses = computed(() => {
 const tokens = computed(() => getTokens(tokenAddresses.value));
 
 const options = computed(() => {
-  if (
-    isWeightedPoolWithNestedLinearPools.value ||
-    props.pool.id ===
-      '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406'
-  ) {
+  if (isWeightedPoolWithNestedLinearPools.value) {
     return ['all'];
+  }
+
+  if (
+    props.pool.id ===
+    '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406'
+  ) {
+    return ['all', '0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3'];
   }
 
   return ['all', ...tokenAddresses.value];
