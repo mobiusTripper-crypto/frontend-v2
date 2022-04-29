@@ -565,7 +565,7 @@ export default class BeethovenxService {
       beetsGetUserDataForAllFarms: GqlBeetsFarmUser[];
     }>(query, userAddress);
 
-    this.lastFarmsFetch = timestamp;
+    this.lastFarmUsersFetch = timestamp;
     this.farmUsers = beetsGetUserDataForAllFarms;
 
     return beetsGetUserDataForAllFarms;
