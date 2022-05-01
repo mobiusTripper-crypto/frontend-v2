@@ -28,7 +28,7 @@ export default function useUserPoolDataQuery(
   const queryOptions = reactive({
     enabled,
     ...options,
-    refetchInterval: 5000
+    refetchInterval: 15000
   });
 
   return useQuery<GqlBeetsUserPoolData>(queryKey, queryFn, queryOptions);

@@ -97,7 +97,7 @@ export default function useFarmUserQuery(
 
   const queryOptions = reactive({
     enabled,
-    refetchInterval: 3000,
+    refetchInterval: 10000,
     ...options
   });
 
