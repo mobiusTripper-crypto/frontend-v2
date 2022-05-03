@@ -4,17 +4,18 @@ import { computed } from 'vue';
 import useNumbers from '@/composables/useNumbers';
 import BalAssetSet from '@/components/_global/BalAsset/BalAssetSet.vue';
 import LiquidityAPRTooltip from '@/components/tooltips/LiquidityAPRTooltip.vue';
-import { Pool } from '@/services/balancer/subgraph/types';
 import { useRouter } from 'vue-router';
 import BalLoadingBlock from '@/components/_global/BalLoadingBlock/BalLoadingBlock.vue';
 import usePoolList from '@/beethovenx/composables/usePoolList';
+import { orderedTokenAddressesFor } from '@/composables/usePool';
+import { PoolListItem } from '@/beethovenx/services/beethovenx/beethovenx-types';
 
 const { fNum } = useNumbers();
 const { homeFeaturedPools, poolListLoading } = usePoolList();
 const router = useRouter();
 const isLoading = computed(() => poolListLoading.value);
 
-function handleRowClick(pool: Pool) {
+function handleRowClick(pool: PoolListItem) {
   router.push({ name: 'pool', params: { id: pool.id } });
 }
 </script>
@@ -44,7 +45,7 @@ function handleRowClick(pool: Pool) {
         <template v-slot:footer>
           <div>
             <BalAssetSet
-              :addresses="featuredPool.pool.tokensList"
+              :addresses="orderedTokenAddressesFor(featuredPool.pool)"
               :size="40"
               :width="150"
             />

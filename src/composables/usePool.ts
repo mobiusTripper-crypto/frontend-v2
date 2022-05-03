@@ -11,6 +11,7 @@ import { configService } from '@/services/config/config.service';
 import { getAddress } from 'ethers/lib/utils';
 import { bnum } from '@/lib/utils';
 import { fNum } from './useNumbers';
+import { PoolListItem } from '@/beethovenx/services/beethovenx/beethovenx-types';
 
 /**
  * METHODS
@@ -100,12 +101,16 @@ export function poolWeightsLabel(pool: FullPool): string {
     .join(', ');
 }
 
-export function orderedTokenAddressesFor(pool: DecoratedPoolWithShares) {
+export function orderedTokenAddressesFor(
+  pool: DecoratedPoolWithShares | PoolListItem
+) {
   const sortedTokens = orderedPoolTokens(pool);
   return sortedTokens.map(token => getAddress(token.address));
 }
 
-function orderedPoolTokens(pool: DecoratedPoolWithShares): PoolToken[] {
+function orderedPoolTokens(
+  pool: DecoratedPoolWithShares | PoolListItem
+): PoolToken[] {
   if (isStablePhantom(pool.poolType))
     return pool.tokens.filter(token => token.address !== pool.address);
   if (isStableLike(pool.poolType)) return pool.tokens;
