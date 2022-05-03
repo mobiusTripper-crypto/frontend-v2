@@ -32,7 +32,8 @@ export default function useProtocolDataQuery(
 
   const queryOptions = reactive({
     enabled: true,
-    ...options
+    ...options,
+    refetchInterval: 10000
   });
 
   return useQuery<ProtocolData>(
