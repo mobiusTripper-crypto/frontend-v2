@@ -112,15 +112,14 @@ const seedTokens = computed((): number[] =>
 /**
  * METHODS
  */
-function handleSliderChange(newVal: number): void {
+async function handleSliderChange(newVal: number): Promise<void> {
   const fractionBasisPoints = (newVal / slider.value.max) * 10000;
+
   propBptIn.value = bnum(bptBalance.value)
     .times(fractionBasisPoints)
     .div(10000)
     .toFixed(props.pool.onchain.decimals);
-}
 
-async function handleSliderEnd(): Promise<void> {
   if (shouldFetchBatchSwap.value || shouldFetchExitBatchSwap.value) {
     await props.math.getSwap();
   }
@@ -169,7 +168,6 @@ onBeforeMount(() => {
           tooltip="none"
           :disabled="!hasBpt"
           @update:modelValue="handleSliderChange"
-          @dragEnd="handleSliderEnd"
         />
       </div>
     </div>
