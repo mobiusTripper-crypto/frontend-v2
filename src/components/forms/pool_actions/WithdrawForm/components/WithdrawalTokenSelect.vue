@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, toRef } from 'vue';
+import { computed, onMounted, ref, toRef } from 'vue';
 // Types
 import { FullPool } from '@/services/balancer/subgraph/types';
 import { TokenInfo } from '@/types/TokenList';
@@ -65,7 +65,7 @@ const options = computed(() => {
     props.pool.id ===
     '0x6da14f5acd58dd5c8e486cfa1dc1c550f5c61c1c0000000000000000000003cf'
   ) {
-    return ['all', '0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b'];
+    return ['0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b'];
   }
 
   return ['all', ...tokenAddresses.value];
@@ -90,6 +90,15 @@ function handleSelected(newToken: string): void {
     tokenOut.value = newToken;
   }
 }
+
+onMounted(() => {
+  if (
+    props.pool.id ===
+    '0x6da14f5acd58dd5c8e486cfa1dc1c550f5c61c1c0000000000000000000003cf'
+  ) {
+    handleSelected('0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b');
+  }
+});
 </script>
 
 <template>
