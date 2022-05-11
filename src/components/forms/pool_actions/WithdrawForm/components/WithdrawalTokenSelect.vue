@@ -61,6 +61,13 @@ const options = computed(() => {
     return ['all', '0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3'];
   }
 
+  if (
+    props.pool.id ===
+    '0x6da14f5acd58dd5c8e486cfa1dc1c550f5c61c1c0000000000000000000003cf'
+  ) {
+    return ['all', '0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b'];
+  }
+
   return ['all', ...tokenAddresses.value];
 });
 
