@@ -124,6 +124,10 @@ onBeforeMount(() => {
       :balanceLoading="loadingAmountsOut"
       fixedToken
       disableNativeAssetBuffer
+      :disableMax="
+        pool?.id ===
+          '0x6da14f5acd58dd5c8e486cfa1dc1c550f5c61c1c0000000000000000000003cf'
+      "
     >
       <template #tokenSelect>
         <WithdrawalTokenSelect :pool="pool" :initToken="tokenOut" />
