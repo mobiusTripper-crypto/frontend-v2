@@ -707,7 +707,13 @@ export default function useWithdrawMath(
     propBptIn.value = bptBalance.value;
 
     if (shouldFetchBatchSwap.value) {
-      batchSwap.value = await getBatchSwap();
+      if (
+        pool.value.id !==
+        '0x6da14f5acd58dd5c8e486cfa1dc1c550f5c61c1c0000000000000000000003cf'
+      ) {
+        batchSwap.value = await getBatchSwap();
+      }
+
       if (shouldUseBatchRelayer.value) {
         await balancer.swaps.fetchPools();
         batchRelayerSwap.value = await getBatchRelayerSwap();
