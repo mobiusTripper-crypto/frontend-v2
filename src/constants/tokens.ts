@@ -34,6 +34,11 @@ export const TOKENS = {
       ETH: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
       WETH: '0x80dD2B80FbcFB06505A301d732322e987380EcD6',
       BAL: '0xba100000625a3754423978a60c9317c58a424e3d'
+    },
+    '10': {
+      ETH: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      WETH: '0x4200000000000000000000000000000000000006',
+      BAL: ''
     }
   },
   Prices: {
