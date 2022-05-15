@@ -15,6 +15,7 @@ import ProportionalWithdrawalInput from './components/ProportionalWithdrawalInpu
 import WithdrawalTokenSelect from './components/WithdrawalTokenSelect.vue';
 import usePools from '@/composables/pools/usePools';
 import usePoolTransfers from '@/composables/contextual/pool-transfers/usePoolTransfers';
+import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
 
 /**
  * TYPES
@@ -86,7 +87,10 @@ const disabled = computed(() => {
     !hasAmounts.value ||
     !hasValidInputs.value ||
     isMismatchedNetwork.value ||
-    loadingAmountsOut.value
+    loadingAmountsOut.value ||
+    (isProportional.value &&
+      props.pool.id ===
+        '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406')
   );
 });
 
@@ -111,6 +115,17 @@ onBeforeMount(() => {
       :pool="pool"
       :tokenAddresses="tokensOut"
       :math="withdrawMath"
+    />
+    <BalAlert
+      type="warning"
+      v-if="
+        pool.id ===
+          '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406' &&
+          isProportional
+      "
+      title="Proportional withdraw disabled"
+      description="Proportional withdraw has been disabled for this pool. Please withdraw with DEI"
+      class="mt-4"
     />
     <TokenInput
       v-else
