@@ -26,7 +26,8 @@ const { priceImpact, highPriceImpact, loadingAmountsOut } = toRefs(props.math);
  * COMPUTED
  */
 const priceImpactClasses = computed(() => ({
-  'bg-red-500 text-white divide-red-400 border-none': highPriceImpact.value
+  'dark:bg-gray-800': !highPriceImpact.value,
+  'bg-red-500 dark:bg-red-500 text-white divide-red-400': highPriceImpact.value
 }));
 </script>
 
@@ -70,7 +71,6 @@ const priceImpactClasses = computed(() => ({
   @apply flex;
   @apply rounded-lg;
   @apply divide-x dark:divide-gray-900 border dark:border-gray-900;
-  @apply dark:bg-gray-800;
 }
 
 .data-table-number-col {

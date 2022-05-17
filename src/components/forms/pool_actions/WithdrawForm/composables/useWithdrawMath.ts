@@ -603,10 +603,7 @@ export default function useWithdrawMath(
   );
 
   const shouldFetchBatchSwap = computed(
-    (): boolean =>
-      pool.value &&
-      isStablePhantomPool.value &&
-      bnum(normalizedBPTIn.value).gt(0)
+    (): boolean => pool.value && isStablePhantomPool.value
   );
 
   const shouldFetchExitBatchSwap = computed(
@@ -624,7 +621,10 @@ export default function useWithdrawMath(
     // If batchSwap has any 0 return amounts, we should use batch relayer
     if (batchSwap.value) {
       const returnAmounts = batchSwap.value.returnAmounts;
-      return hasBpt.value && returnAmounts.some(amount => bnum(amount).eq(0));
+      return (
+        bnum(normalizedBPTIn.value).gt(0) &&
+        returnAmounts.some(amount => bnum(amount).eq(0))
+      );
     }
 
     return false;

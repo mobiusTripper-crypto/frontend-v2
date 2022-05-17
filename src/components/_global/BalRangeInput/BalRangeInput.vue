@@ -15,7 +15,7 @@
     <vue-slider
       v-model="range"
       v-bind="$attrs"
-      @change="onChange"
+      @change="debouncedOnChange"
       @drag-end="onDragEnd"
       :dot-style="dotStyle"
       :rail-style="railSyle"
@@ -30,6 +30,7 @@ import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/antd.css';
 import { theme } from '@/../tailwind.config';
 import useDarkMode from '@/composables/useDarkMode';
+import _debounce from 'lodash/debounce';
 
 export default defineComponent({
   name: 'BalRangeInput',
@@ -51,6 +52,10 @@ export default defineComponent({
     const { darkMode } = useDarkMode();
 
     const colors = theme.extend.colors;
+
+    const debouncedOnChange = _debounce(function(event) {
+      onChange(event);
+    }, 50);
 
     function onChange(value) {
       emit('change', value);
@@ -96,7 +101,8 @@ export default defineComponent({
       onDragEnd,
       dotStyle,
       railSyle,
-      proccessStyle
+      proccessStyle,
+      debouncedOnChange
     };
   }
 });
