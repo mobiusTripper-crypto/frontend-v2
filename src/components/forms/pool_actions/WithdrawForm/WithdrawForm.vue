@@ -110,12 +110,6 @@ onBeforeMount(() => {
 
 <template>
   <div>
-    <ProportionalWithdrawalInput
-      v-if="isProportional"
-      :pool="pool"
-      :tokenAddresses="tokensOut"
-      :math="withdrawMath"
-    />
     <BalAlert
       type="warning"
       v-if="
@@ -125,7 +119,13 @@ onBeforeMount(() => {
       "
       title="Proportional withdraw disabled"
       description="Proportional withdraw has been disabled for this pool. Please withdraw with DEI"
-      class="mt-4"
+      class="mb-4"
+    />
+    <ProportionalWithdrawalInput
+      v-if="isProportional"
+      :pool="pool"
+      :tokenAddresses="tokensOut"
+      :math="withdrawMath"
     />
     <TokenInput
       v-else
