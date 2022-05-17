@@ -13,6 +13,7 @@ import FarmActionsCard from '@/beethovenx/components/pages/farm/FarmActionsCard.
 import { lpTokensFor } from '@/composables/usePool';
 import usePools from '@/composables/pools/usePools';
 import usePoolTransfers from '@/composables/contextual/pool-transfers/usePoolTransfers';
+import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
 
 /**
  * TYPES
@@ -97,6 +98,16 @@ onBeforeMount(() => {
         {{ isWalletReady ? fiatTotal : '-' }}
       </h5>
     </div>
+    <BalAlert
+      v-if="
+        pool.id ===
+          '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406'
+      "
+      title="Investing is currently paused"
+      type="warning"
+      description="We have temporarily paused deposits for this pool"
+      class="mb-4"
+    />
 
     <BalBtn
       v-if="!isWalletReady"
@@ -107,6 +118,10 @@ onBeforeMount(() => {
     />
     <div v-else class="grid gap-2 grid-cols-2">
       <BalBtn
+        :disabled="
+          pool.id ===
+            '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406'
+        "
         tag="router-link"
         :to="{ name: 'invest' }"
         :label="$t('invest')"
