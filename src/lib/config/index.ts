@@ -4,6 +4,7 @@ import rinkeby from '../../beethovenx/config/rinkeby.json';
 import polygon from './polygon.json';
 import arbitrum from './arbitrum.json';
 import fantom from '../../beethovenx/config/fantom.json';
+import optimism from '../../beethovenx/config/optimism.json';
 import docker from './docker.json';
 import test from './test.json';
 import { Network } from '@/composables/useNetwork';
@@ -100,6 +101,7 @@ const config: Record<Config['chainId'], Config> = {
   //[Network.POLYGON]: polygon,
   //[Network.ARBITRUM]: arbitrum,
   [Network.FANTOM]: fantom,
+  [Network.OPTIMISM]: optimism,
   //12345: test,
   // @ts-ignore
   17: docker

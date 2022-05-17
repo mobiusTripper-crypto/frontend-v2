@@ -1,0 +1,107 @@
+{
+  "key": "10",
+  "chainId": 10,
+  "chainName": "Optimism",
+  "name": "Optimism Mainnet",
+  "shortName": "Optimism",
+  "network": "optimism",
+  "unknown": false,
+  "rpc": "https://mainnet.optimism.io",
+  "ws": "wss://ws-mainnet.optimism.io",
+  "loggingRpc": "",
+  "explorer": "https://optimistic.etherscan.io/",
+  "explorerName": "The Optimistic Explorer",
+  "subgraph": "",
+  "blockSubgraph": "",
+  "farmSubgraph": "f",
+  "backendUrl": "",
+  "poolsUrlV1": "",
+  "poolsUrlV2": "",
+  "nativeAsset": {
+    "name": "Ether",
+    "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+    "symbol": "ETH",
+    "decimals": 18,
+    "deeplinkId": "ether",
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+    "minTransactionBuffer": "0.05"
+  },
+  "subgraphs": {
+    "aave": ""
+  },
+  "addresses": {
+    "bFactory": "",
+    "bActions": "",
+    "dsProxyRegistry": "",
+    "exchangeProxy": "",
+    "merkleRedeem": "",
+    "multicall": "0x2DC0E2aa608532Da689e89e237dF582B783E552C",
+    "authorizer": "0xA331D84eC860Bf466b4CdCcFb4aC09a1B43F3aE6 ",
+    "vault": "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
+    "weightedPoolFactory": "0xdAE7e32ADc5d490a43cCba1f0c736033F2b4eFca ",
+    "weightedPool2TokensFactory": "0x0F3e0c4218b7b0108a3643cFe9D3ec0d4F57c54e",
+    "stablePoolFactory": "0x41B953164995c11C81DA73D212ED8Af25741b7Ac",
+    "lbpFactory": "",
+    "tokenFactory": "",
+    "weth": "0x4200000000000000000000000000000000000006",
+    "stETH": "",
+    "wstETH": "",
+    "usdc": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+    "beets": "",
+    "lidoRelayer": "",
+    "balancerHelpers": "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9",
+    "masterChef": "",
+    "beetsUsdcReferencePricePool": "",
+    "beethovenxToken": "",
+    "fbeetsVestingToken": "",
+    "fbeetsToken": "",
+    "defaultPoolOwner": "",
+    "earlyLudwigNft": "",
+    "merkleOrchard": "",
+    "copperProxy": "",
+    "batchRelayer": "0x0000000000000000000000000000000000000000",
+    "bbUsd": ""
+  },
+  "usdTokens": [
+    "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+    "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+  ],
+  "usdTokenToWrappedTokenMap": {
+    "0x7F5c764cBc14f9669B88837ca1490cCa17c31607": "",
+    "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1": ""
+  },
+  "strategies": {
+    "0": {
+      "type": "0",
+      "name": "stablePool"
+    },
+    "1": {
+      "type": "1",
+      "name": "weightedPool"
+    },
+    "2": {
+      "type": "2",
+      "name": "weightedPool"
+    }
+  },
+  "etherscan": {
+    "apiKey": "",
+    "apiUrl": ""
+  },
+  "tokenListSanityUrl": "",
+  "configSanityUrl": "",
+  "supportsEIP1559": false,
+  "supportsElementPools": false,
+  "keys": {
+    "infura": "",
+    "alchemy": ""
+  },
+  "fBeets": {
+    "address": "",
+    "poolId": "",
+    "poolAddress": "",
+    "farmId": "",
+    "oldFarmId": "",
+    "lockAddress": ""
+  }
+}
