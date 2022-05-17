@@ -1,6 +1,7 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import ConfigService, { configService } from '@/services/config/config.service';
 import { Network } from '@/composables/useNetwork';
+import { StaticJsonRpcBatchProvider } from '@/services/rpc-provider/static-json-rpc-batch-provider';
 
 type NewBlockHandler = (blockNumber: number) => any;
 
@@ -10,7 +11,7 @@ export default class RpcProviderService {
 
   constructor(private readonly config: ConfigService = configService) {
     this.network = this.config.network.shortName;
-    this.jsonProvider = new JsonRpcProvider(this.config.rpc);
+    this.jsonProvider = new StaticJsonRpcBatchProvider(this.config.rpc);
   }
 
   public initBlockListener(newBlockHandler: NewBlockHandler): void {
@@ -27,7 +28,8 @@ export default class RpcProviderService {
     const rpcUrl = `${this.config.getNetworkConfig(networkKey).rpc}/${
       this.config.env.INFURA_PROJECT_ID
     }`;
-    return new JsonRpcProvider(rpcUrl);
+
+    return new StaticJsonRpcBatchProvider(rpcUrl);
   }
 }
 
