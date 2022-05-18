@@ -1,20 +1,19 @@
 <template>
-  <BalPopover align="left" no-pad>
+  <BalPopover align="right" no-pad>
     <template v-slot:activator>
       <BalBtn
-        color="white"
+        color="transparent"
+        flat
+        class="text-base"
         :size="upToLargeBreakpoint ? 'md' : 'sm'"
-        class="ml-4"
+        :circle="upToLargeBreakpoint"
+        :class="{ btn: upToLargeBreakpoint }"
       >
         <img
           :src="iconSrc(activeNetwork)"
           :alt="activeNetwork.name"
-          class="w-5 h-5 rounded-full shadow-sm"
+          :class="[bp === 'xs' ? 'h-8 w-8' : 'w-9 h-9', 'pl-2']"
         />
-        <span class="ml-2">
-          {{ activeNetwork.name }}
-        </span>
-        <BalIcon name="chevron-down" size="sm" class="ml-2" />
       </BalBtn>
     </template>
     <div class="flex flex-col w-44 rounded-lg overflow-hidden">
@@ -65,36 +64,25 @@ export default defineComponent({
     const configService = new ConfigService();
 
     // COMPOSABLES
-    const { upToLargeBreakpoint } = useBreakpoints();
+    const { bp, upToLargeBreakpoint } = useBreakpoints();
 
     // DATA
     const networks = [
       {
-        id: 'ethereum',
-        name: 'Ethereum',
-        subdomain: 'app',
-        key: '1'
+        id: 'fantom',
+        name: 'Fantom',
+        subdomain: 'ftm',
+        key: '250'
       },
       {
-        id: 'polygon',
-        name: 'Polygon',
-        subdomain: 'polygon',
-        key: '137'
-      },
-      {
-        id: 'arbitrum',
-        name: 'Arbitrum',
-        subdomain: 'arbitrum',
-        key: '42161'
+        id: 'optimism',
+        name: 'Optimism',
+        subdomain: 'op',
+        key: '10'
       }
     ];
 
-    const appNetworkSupported = networks
-      .map(network => network.key)
-      .includes(configService.network.key);
-
     const activeNetwork = networks.find(network => {
-      if (!appNetworkSupported && network.id === 'ethereum') return true;
       return isActive(network);
     });
 
@@ -104,16 +92,16 @@ export default defineComponent({
     }
 
     function appUrl(network: Network): string {
-      return `https://${network.subdomain}.balancer.fi`;
+      return `https://${network.subdomain}.beets.fi`;
     }
 
     function isActive(network: Network): boolean {
-      if (!appNetworkSupported && network.id === 'ethereum') return true;
       return configService.network.key === network.key;
     }
 
     return {
       // computed
+      bp,
       upToLargeBreakpoint,
       // data
       networks,
