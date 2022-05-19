@@ -787,27 +787,16 @@ export default function useWithdrawMath(
       }
     }
 
-    let result = await balancer.swaps.queryBatchSwapWithSor({
+    const result = await balancer.swaps.queryBatchSwapWithSor({
       tokensIn: tokensIn,
-      //tokensOut,
-      tokensOut: [tokensOut[2], tokensOut[1], tokensOut[0]],
+      tokensOut,
       swapType,
-      //amounts: batchSwapAmounts,
-      amounts: [batchSwapAmounts[2], batchSwapAmounts[1], batchSwapAmounts[0]],
+      amounts: batchSwapAmounts,
       fetchPools: {
         fetchPools,
         fetchOnChain: false
       }
     });
-
-    result = {
-      ...result,
-      returnAmounts: [
-        result.returnAmounts[2],
-        result.returnAmounts[1],
-        result.returnAmounts[0]
-      ]
-    };
 
     batchSwapLoading.value = false;
     return result;
