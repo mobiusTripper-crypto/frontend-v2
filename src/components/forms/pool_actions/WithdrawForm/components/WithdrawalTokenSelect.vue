@@ -32,7 +32,9 @@ const selectedOption = ref(props.initToken);
  * COMPOSABLES
  */
 const { getTokens, getToken, nativeAsset } = useTokens();
-const { isProportional, tokenOut } = useWithdrawalState(toRef(props, 'pool'));
+const { isProportional, tokenOut, maxSlider } = useWithdrawalState(
+  toRef(props, 'pool')
+);
 const { isWethPool, isWeightedPoolWithNestedLinearPools } = usePool(
   toRef(props, 'pool')
 );
@@ -81,9 +83,12 @@ const assetSetWidth = computed(
  * METHODS
  */
 function handleSelected(newToken: string): void {
+  console.log(tokenOut.value, newToken);
   if (newToken === 'all') {
     isProportional.value = true;
     selectedOption.value = 'all';
+    tokenOut.value = 'all';
+    maxSlider();
   } else {
     isProportional.value = false;
     selectedOption.value = newToken;

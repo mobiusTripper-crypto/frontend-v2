@@ -263,6 +263,20 @@ watch(blockNumber, async () => {
   }
 });
 
+watch(stakeBptInFarm, () => {
+  if (
+    actions.value.includes(batchRelayerApproval.action.value) &&
+    !stakeBptInFarm.value
+  ) {
+    actions.value.shift();
+  } else if (
+    (isWeightedPoolWithNestedLinearPools.value || stakeBptInFarm.value) &&
+    !batchRelayerApproval.isUnlocked.value
+  ) {
+    actions.value.unshift(batchRelayerApproval.action.value);
+  }
+});
+
 onBeforeMount(() => {
   if (
     (isWeightedPoolWithNestedLinearPools.value || stakeBptInFarm.value) &&
@@ -276,7 +290,7 @@ onBeforeMount(() => {
 
 <template>
   <div>
-    <BalActionSteps :actions="actions" />
+    <BalActionSteps :actions="actions" :key="stakeBptInFarm" />
     <template v-if="investmentState.confirmed">
       <div
         class="flex items-center justify-between text-gray-400 dark:text-gray-600 mt-4 text-sm"
