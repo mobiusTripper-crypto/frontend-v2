@@ -1,13 +1,14 @@
 <template>
   <div>
     <div v-if="account" class="flex items-center">
+      <AppNavNetworkSelect />
       <AppNavActivityBtn />
       <AppNavClaimBtn />
       <AppNavBeets />
       <AppNavAccountBtn />
-      <AppNavNetworkSelect />
     </div>
     <div v-else class="flex items-center">
+      <AppNavNetworkSelect />
       <div class="mr-2">
         <AppNavBeets />
       </div>
@@ -16,7 +17,6 @@
         <span class="hidden lg:inline-block" v-text="$t('connectWallet')" />
         <span class="lg:hidden" v-text="$t('connect')" />
       </BalBtn>
-      <AppNavNetworkSelect />
     </div>
   </div>
 </template>
