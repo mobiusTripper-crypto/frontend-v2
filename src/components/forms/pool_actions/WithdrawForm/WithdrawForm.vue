@@ -87,10 +87,10 @@ const disabled = computed(() => {
     !hasAmounts.value ||
     !hasValidInputs.value ||
     isMismatchedNetwork.value ||
-    loadingAmountsOut.value ||
+    loadingAmountsOut.value /*||
     (isProportional.value &&
       props.pool.id ===
-        '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406')
+        '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406')*/
   );
 });
 
@@ -110,7 +110,7 @@ onBeforeMount(() => {
 
 <template>
   <div>
-    <BalAlert
+    <!--    <BalAlert
       type="warning"
       v-if="
         pool.id ===
@@ -120,7 +120,7 @@ onBeforeMount(() => {
       title="Proportional withdraw disabled"
       description="Proportional withdraw has been disabled for this pool. Please withdraw with DEI"
       class="mb-4"
-    />
+    />-->
     <ProportionalWithdrawalInput
       v-if="isProportional"
       :pool="pool"
