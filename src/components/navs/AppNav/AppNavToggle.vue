@@ -15,7 +15,7 @@
       Invest{{ upToXLargeBreakpoint ? '' : '&nbsp;/&nbsp;Farm' }}
     </router-link>
     <router-link
-      v-if="network.flags.freshBeets"
+      v-if="featureFlags.hasFreshBeets"
       :to="{ name: 'stake' }"
       :class="['toggle-link px-5', { [activeClasses]: isStakePage }]"
     >
@@ -50,7 +50,7 @@ export default defineComponent({
     const { appLoading } = useApp();
     const { account } = useWeb3();
     const { upToXLargeBreakpoint } = useBreakpoints();
-    const { network } = configService;
+    const { featureFlags } = configService;
     const activeClasses = 'bg-black text-green-500 dark:bg-gray-800';
     const isTradePage = computed(() => route.name === 'trade');
     const isPortfolioPage = computed(() => route.name === 'my-portfolio');
@@ -81,7 +81,7 @@ export default defineComponent({
       isInvestPage,
       isLaunchPage,
       upToXLargeBreakpoint,
-      network
+      featureFlags
     };
   }
 });

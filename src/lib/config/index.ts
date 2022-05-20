@@ -92,9 +92,12 @@ export interface Config {
     oldFarmId: string;
     lockAddress: string;
   };
-  flags: {
-    freshBeets: boolean;
-  };
+  featureFlags: FeatureFlags;
+}
+
+export interface FeatureFlags {
+  hasFreshBeets: boolean;
+  hasLbpLaunch: boolean;
 }
 
 const config: Record<Config['chainId'], Config> = {
