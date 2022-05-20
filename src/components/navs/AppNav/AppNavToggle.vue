@@ -22,6 +22,7 @@
       Stake
     </router-link>
     <router-link
+      v-if="featureFlags.hasLbpLaunch"
       :to="{ name: 'launch' }"
       :class="['toggle-link px-5', { [activeClasses]: isLaunchPage }]"
     >
