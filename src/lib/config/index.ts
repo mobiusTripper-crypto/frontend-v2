@@ -92,6 +92,9 @@ export interface Config {
     oldFarmId: string;
     lockAddress: string;
   };
+  flags: {
+    freshBeets: boolean;
+  };
 }
 
 const config: Record<Config['chainId'], Config> = {

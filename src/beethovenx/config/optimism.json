@@ -103,5 +103,8 @@
     "farmId": "",
     "oldFarmId": "",
     "lockAddress": ""
+  },
+  "flags": {
+    "freshBeets": false
   }
 }

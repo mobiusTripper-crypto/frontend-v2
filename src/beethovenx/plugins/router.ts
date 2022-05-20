@@ -14,6 +14,9 @@ import HomePage from '@/beethovenx/pages/Home.vue';
 import InvestPage from '@/beethovenx/pages/Invest.vue';
 import Lock from '@/beethovenx/pages/Lock.vue';
 import LinearPools from '@/beethovenx/pages/LinearPools.vue';
+import { configService } from '@/services/config/config.service';
+
+const { network } = configService;
 
 const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', component: HomePage },
@@ -53,7 +56,6 @@ const routes: RouteRecordRaw[] = [
   { path: '/pools', name: 'pools', component: InvestPage },
   { path: '/pool-create', name: 'pool-create', component: PoolCreate },
   // { path: '/my-portfolio', name: 'my-portfolio', component: Portfolio },
-  { path: '/stake', name: 'stake', component: FreshBeets },
   { path: '/lge-create', name: 'lge-create', component: LbpCreate },
   { path: '/launch', name: 'launch', component: LgeList },
   { path: '/lge/:id', name: 'lge', component: LbpDetail },
@@ -64,6 +66,10 @@ const routes: RouteRecordRaw[] = [
     redirect: '/'
   }
 ];
+
+if (network.flags.freshBeets) {
+  routes.push({ path: '/stake', name: 'stake', component: FreshBeets });
+}
 
 /**
  * DEV/STAGING ONLY ROUTES

@@ -114,5 +114,8 @@
     "farmId": "5",
     "oldFarmId": "0",
     "lockAddress": "0x4E3dB1E512d1cf0d4e8700bd281df71fbFcf257B"
+  },
+  "flags": {
+    "freshBeets": true
   }
 }
