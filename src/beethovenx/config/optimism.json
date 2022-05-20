@@ -103,5 +103,9 @@
     "farmId": "",
     "oldFarmId": "",
     "lockAddress": ""
+  },
+  "featureFlags": {
+    "hasFreshBeets": false,
+    "hasLbpLaunch": false
   }
 }
