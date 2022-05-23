@@ -1,4 +1,4 @@
-import { Config } from '@/lib/config';
+import { Config, FeatureFlags } from '@/lib/config';
 import configs from '@/lib/config';
 import template from '@/lib/utils/template';
 import { Network, networkId } from '@/composables/useNetwork';
@@ -68,6 +68,10 @@ export default class ConfigService {
       INFURA_KEY: this.env.INFURA_PROJECT_ID,
       ALCHEMY_KEY: this.env.ALCHEMY_KEY
     });
+  }
+
+  public get featureFlags(): FeatureFlags {
+    return this.network.featureFlags;
   }
 }
 
