@@ -20,7 +20,7 @@
         <Avatar v-else :address="account" :size="avatarSize" />
         <span
           v-text="_shorten(account)"
-          class="pl-2 hidden lg:inline-block eth-address"
+          class="pl-2 hidden xl:inline-block eth-address"
         />
       </BalBtn>
     </template>
@@ -56,12 +56,10 @@ export default defineComponent({
     });
 
     const avatarSize = computed(() => {
-      if (bp.value === 'sm') {
-        return 35;
-      } else if (['md', 'lg'].includes(bp.value)) {
-        return 40;
-      } else {
+      if (bp.value === 'xs') {
         return 20;
+      } else {
+        return 25;
       }
     });
 

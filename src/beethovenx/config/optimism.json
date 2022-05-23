@@ -13,10 +13,10 @@
   "explorerName": "The Optimistic Explorer",
   "subgraph": "",
   "blockSubgraph": "",
-  "farmSubgraph": "f",
-  "backendUrl": "",
+  "farmSubgraph": "",
+  "backendUrl": "https://backend-optimism.beets-ftm-node.com/graphql",
   "poolsUrlV1": "",
-  "poolsUrlV2": "",
+  "poolsUrlV2": "https://backend-optimism.beets-ftm-node.com/graphql",
   "nativeAsset": {
     "name": "Ether",
     "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",

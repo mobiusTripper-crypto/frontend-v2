@@ -10,7 +10,7 @@
       >
         <img
           src="~@/beethovenx/assets/images/beets-icon-large.png"
-          width="28"
+          width="25"
           class="mr-2"
           v-if="upToLargeBreakpoint ? !loading : true"
         />
