@@ -65,7 +65,7 @@ const routes: RouteRecordRaw[] = [
   }
 ];
 
-if (featureFlags.hasFreshBeets) {
+if (featureFlags.supportsMasterChef) {
   routes.push({ path: '/stake', name: 'stake', component: FreshBeets });
 }
 if (featureFlags.hasLbpLaunch) {

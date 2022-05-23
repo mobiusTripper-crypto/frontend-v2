@@ -96,7 +96,7 @@ export interface Config {
 }
 
 export interface FeatureFlags {
-  hasFreshBeets: boolean;
+  supportsMasterChef: boolean;
   hasLbpLaunch: boolean;
 }
 

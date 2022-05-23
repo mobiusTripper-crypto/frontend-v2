@@ -116,7 +116,7 @@
     "lockAddress": "0x"
   },
   "featureFlags": {
-    "hasFreshBeets": true,
+    "supportsMasterChef": true,
     "hasLbpLaunch": true
   }
 }
