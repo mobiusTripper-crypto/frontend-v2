@@ -15,7 +15,7 @@
       Invest{{ upToXLargeBreakpoint ? '' : '&nbsp;/&nbsp;Farm' }}
     </router-link>
     <router-link
-      v-if="featureFlags.hasFreshBeets"
+      v-if="featureFlags.supportsMasterChef"
       :to="{ name: 'stake' }"
       :class="['toggle-link px-5', { [activeClasses]: isStakePage }]"
     >
