@@ -2,6 +2,7 @@
 import HomeDiscoverInvestmentPool from '@/beethovenx/components/pages/home/HomeDiscoverInvestmentPool.vue';
 import HomeNewsItems from '@/beethovenx/components/pages/home/HomeNewsItems.vue';
 import HomeEducationItems from '@/beethovenx/components/pages/home/HomeEducationItems.vue';
+import { configService } from '@/services/config/config.service';
 </script>
 
 <template>
@@ -26,7 +27,7 @@ import HomeEducationItems from '@/beethovenx/components/pages/home/HomeEducation
                 class="mt-3 text-base sm:mt-5 sm:text-xl lg:text-lg xl:text-xl pl-4 text-left font-book"
               >
                 Built on Balancer V2, Beethoven X is the first next-generation
-                AMM protocol on Fantom Opera.
+                AMM protocol on {{ configService.network.name }}.
               </p>
               <div class="sm:hidden pt-8">
                 <router-link

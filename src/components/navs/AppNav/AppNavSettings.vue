@@ -113,7 +113,11 @@
           <template v-slot:activator>
             <BalIcon name="info" size="xs" class="ml-1 text-gray-400 -mb-px" />
           </template>
-          <div v-html="$t('marketConditionsWarning')" />
+          <div
+            v-html="
+              $t('marketConditionsWarning', [configService.network.shortName])
+            "
+          />
         </BalTooltip>
       </div>
       <AppSlippageForm class="mt-1" />
@@ -204,6 +208,7 @@ import useEthereumTxType from '@/composables/useEthereumTxType';
 import { ENABLE_LEGACY_TRADE_INTERFACE } from '@/composables/trade/constants';
 import { Network } from '@/composables/useNetwork';
 import useNftQuery from '@/beethovenx/composables/nft/useNftQuery';
+import { configService } from '@/services/config/config.service';
 
 const locales = {
   'en-US': 'English',
@@ -345,7 +350,8 @@ export default defineComponent({
       ethereumTxType,
       setEthereumTxType,
       ethereumTxTypeOptions,
-      nftImage
+      nftImage,
+      configService
     };
   }
 });

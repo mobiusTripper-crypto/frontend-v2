@@ -10,8 +10,9 @@
     >
       <h6>New to Fantom?</h6>
       <p class="text-sm">
-        Beethoven X is a DeFi app on Fantom. To invest and trade here, you'll
-        first need to set up an Fantom Opera compatible wallet.
+        Beethoven X is a DeFi app on {{ configService.network.shortName }}. To
+        invest and trade here, you'll first need to set up an
+        {{ configService.network.name }} compatible wallet.
         <BalLink :href="EXTERNAL_LINKS.Ethereum.Wallets" external>
           Learn More
           <span class="align-middle"
@@ -28,6 +29,8 @@ import { SupportedWallets } from '@/services/web3/web3.plugin';
 import WalletButton from '@/components/web3/WalletButton.vue';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import { defineComponent } from 'vue';
+import { configService } from '@/services/config/config.service';
+
 export default defineComponent({
   emits: ['close'],
   components: {
@@ -42,7 +45,8 @@ export default defineComponent({
   setup() {
     return {
       wallets: SupportedWallets.filter(id => id !== 'gnosis'),
-      EXTERNAL_LINKS
+      EXTERNAL_LINKS,
+      configService
     };
   }
 });
