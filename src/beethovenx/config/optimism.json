@@ -55,7 +55,7 @@
     "beethovenxToken": "",
     "fbeetsVestingToken": "",
     "fbeetsToken": "",
-    "defaultPoolOwner": "",
+    "defaultPoolOwner": "0x0000000000000000000000000000000000000000",
     "earlyLudwigNft": "",
     "merkleOrchard": "",
     "copperProxy": "",
