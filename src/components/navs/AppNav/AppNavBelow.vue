@@ -28,7 +28,7 @@ const swapVolume24h = computed(
             v-if="procotolDataLoading"
             class="w-20 h-4 inline-block"
           />
-          <span v-else class="text-green-500">${{ fNum(tvl, 'usd_lg') }}</span>
+          <span v-else class="text-green-500">{{ fNum(tvl, 'usd_lg') }}</span>
         </span>
         <span class="mr-4 hidden md:inline">
           Volume (24h):
@@ -37,7 +37,7 @@ const swapVolume24h = computed(
             class="w-20 h-4 inline-block"
           />
           <span v-else class="text-green-500">
-            ${{ fNum(swapVolume24h, 'usd_lg') }}
+            {{ fNum(swapVolume24h, 'usd_lg') }}
           </span>
         </span>
         <span class="mr-4 hidden md:inline">
@@ -47,7 +47,7 @@ const swapVolume24h = computed(
             class="w-16 h-4 inline-block"
           />
           <span v-else class="text-green-500">
-            ${{ fNum(swapFee24h, 'usd_lg') }}
+            {{ fNum(swapFee24h, 'usd_lg') }}
           </span>
         </span>
       </div>

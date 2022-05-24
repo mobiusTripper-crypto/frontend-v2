@@ -12,7 +12,7 @@
         <img
           :src="iconSrc(activeNetwork)"
           :alt="activeNetwork.name"
-          :class="[bp === 'xs' ? 'h-8 w-8' : 'w-9 h-9', 'pl-2']"
+          class="h-7 w-7"
         />
       </BalBtn>
     </template>
@@ -64,7 +64,7 @@ export default defineComponent({
     const configService = new ConfigService();
 
     // COMPOSABLES
-    const { bp, upToLargeBreakpoint } = useBreakpoints();
+    const { upToLargeBreakpoint } = useBreakpoints();
 
     // DATA
     const networks = [
@@ -92,7 +92,8 @@ export default defineComponent({
     }
 
     function appUrl(network: Network): string {
-      return `https://${network.subdomain}.beets.fi`;
+      //      return `https://${network.subdomain}.beets.fi`;
+      return `https://${network.subdomain}.beets.local:8080`;
     }
 
     function isActive(network: Network): boolean {
@@ -101,7 +102,6 @@ export default defineComponent({
 
     return {
       // computed
-      bp,
       upToLargeBreakpoint,
       // data
       networks,

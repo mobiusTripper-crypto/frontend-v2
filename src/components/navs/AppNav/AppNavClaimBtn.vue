@@ -1,5 +1,5 @@
 <template>
-  <BalPopover no-pad>
+  <BalPopover no-pad v-if="featureFlags.supportsMasterChef">
     <template v-slot:activator>
       <BalBtn
         color="transparent"
@@ -88,6 +88,7 @@ import numeral from 'numeral';
 import usePools from '@/composables/pools/usePools';
 import useEthers from '@/composables/useEthers';
 import useBreakpoints from '@/composables/useBreakpoints';
+import { configService } from '@/services/config/config.service';
 import { Alert } from '@/composables/useAlerts';
 
 export default defineComponent({
@@ -109,6 +110,7 @@ export default defineComponent({
     } = usePools();
     const harvesting = ref(false);
     const { upToLargeBreakpoint } = useBreakpoints();
+    const { featureFlags } = configService;
 
     const data = computed(() => {
       const farms = onlyPoolsWithFarms.value.map(pool => pool.decoratedFarm);
@@ -185,7 +187,8 @@ export default defineComponent({
       harvesting,
       upToLargeBreakpoint,
       isLoadingPools,
-      isLoadingFarms
+      isLoadingFarms,
+      featureFlags
     };
   }
 });
