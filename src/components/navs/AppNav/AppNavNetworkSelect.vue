@@ -7,12 +7,11 @@
         class="text-base"
         :size="upToLargeBreakpoint ? 'md' : 'sm'"
         :circle="upToLargeBreakpoint"
-        :class="{ btn: upToLargeBreakpoint }"
       >
         <img
           :src="iconSrc(activeNetwork)"
           :alt="activeNetwork.name"
-          class="'h-7 w-7'"
+          width="25"
         />
       </BalBtn>
     </template>

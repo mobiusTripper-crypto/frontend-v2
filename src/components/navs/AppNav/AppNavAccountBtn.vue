@@ -15,7 +15,7 @@
           v-if="nftImage !== null"
           :src="nftImage"
           width="22"
-          class="rounded-full h-22 w-22"
+          class="rounded-full"
         />
         <Avatar v-else :address="account" :size="avatarSize" />
         <span
