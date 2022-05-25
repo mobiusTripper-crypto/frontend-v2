@@ -90,7 +90,6 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import { EXTERNAL_LINKS } from '@/constants/links';
 import useWeb3 from '@/services/web3/useWeb3';
 import useEthers from '@/composables/useEthers';
 import BalBtn from '@/components/_global/BalBtn/BalBtn.vue';
@@ -163,7 +162,6 @@ export default defineComponent({
       //methods
       router,
       // constants
-      EXTERNAL_LINKS,
       fNum,
       tokenListsLoaded,
       dynamicDataLoaded,

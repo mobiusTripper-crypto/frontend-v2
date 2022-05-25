@@ -4,6 +4,7 @@ import AppFooterNav from '@/components/navs/AppFooterNav/AppFooterNav.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
 import AppHeaderBg from '@/beethovenx/components/backgrounds/AppHeaderBg.vue';
 import { EXTERNAL_LINKS } from '@/constants/links';
+import { configService } from '@/services/config/config.service';
 
 /**
  * COMPOSABLES
@@ -26,7 +27,14 @@ const { upToMediumBreakpoint } = useBreakpoints();
           v-for="(item, index) in EXTERNAL_LINKS.Beethoven.NavOtherItems"
           :key="index"
         >
-          <BalLink :href="item.url" v-if="item.icon" external class="mx-6">
+          <BalLink
+            :href="item.url"
+            v-if="
+              item.icon && item.chainId?.includes(configService.network.chainId)
+            "
+            external
+            class="mx-6"
+          >
             <img
               :src="require(`@/beethovenx/assets/images/${item.icon}.png`)"
               width="40"

@@ -70,7 +70,6 @@
 <script lang="ts">
 import { computed, defineComponent, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { EXTERNAL_LINKS } from '@/constants/links';
 import PoolsTable from '@/components/tables/PoolsTable/PoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
@@ -170,10 +169,7 @@ export default defineComponent({
       fNum,
       avgFees,
       userPoolList,
-      userPoolDataLoading,
-
-      // constants
-      EXTERNAL_LINKS
+      userPoolDataLoading
     };
   }
 });
