@@ -30,7 +30,7 @@ export function fNum(
   if (options.format) return numeral(number).format(options.format);
 
   let adjustedPreset;
-  if (number >= 10_000 && !options.forcePreset) {
+  if (number >= 10_000 && preset === 'usd' && !options.forcePreset) {
     adjustedPreset = `${preset}_lg`;
   }
 

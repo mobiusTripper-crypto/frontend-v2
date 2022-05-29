@@ -31,7 +31,7 @@
             TVL
           </div>
           <div class="text-xl font-medium truncate flex items-center">
-            ${{ fNum(tvl, 'usd_lg') }}
+            {{ fNum(tvl, 'usd_lg') }}
           </div>
         </BalCard>
         <BalCard>
@@ -49,7 +49,7 @@
             Market Cap
           </div>
           <div class="text-xl font-medium truncate flex items-center">
-            ${{ fNum(marketCap, 'usd_lg') }}
+            {{ fNum(marketCap, 'usd_lg') }}
           </div>
         </BalCard>
         <BalCard>
