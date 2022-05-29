@@ -29,57 +29,68 @@ export const EXTERNAL_LINKS = {
     NavOtherItems: [
       {
         title: 'Vote',
-        url: 'https://snapshot.org/#/beets.eth'
+        url: 'https://snapshot.org/#/beets.eth',
+        chainId: [250]
       },
       {
         title: 'Analytics',
-        url: 'https://info.beets.fi'
+        url: 'https://info.beets.fi',
+        chainId: [250]
       },
       {
         title: 'Docs & Help',
         url: 'https://docs.beets.fi',
-        icon: 'gitbook-logo'
+        icon: 'gitbook-logo',
+        chainId: [10, 250]
       },
       {
         title: 'Github',
         url: 'https://github.com/beethovenxfi',
-        icon: 'github-logo'
+        icon: 'github-logo',
+        chainId: [10, 250]
       },
       {
         title: 'Twitter',
         url: 'https://twitter.com/beethoven_x',
-        icon: 'twitter-icon'
+        icon: 'twitter-icon',
+        chainId: [10, 250]
       },
       {
         title: 'Medium',
         url: 'https://beethovenxio.medium.com/',
-        icon: 'medium-icon'
+        icon: 'medium-icon',
+        chainId: [10, 250]
       },
       {
         title: 'Discord',
         subTitle: '',
         url: 'https://discord.gg/jedS4zGk28',
-        icon: 'discord-icon'
+        icon: 'discord-icon',
+        chainId: [10, 250]
       },
       {
         title: 'Olympus Bonds',
         subtitle: 'olympus pro',
-        url: 'https://pro.olympusdao.finance/#/bond'
+        url: 'https://pro.olympusdao.finance/#/bond',
+        chainId: [250]
       },
       {
         title: 'Multichain Bridge',
         subTitle: 'ETH / AVAX / BSC / MATIC',
-        url: 'https://app.multichain.org/#/router'
+        url: 'https://app.multichain.org/#/router',
+        chainId: [10, 250]
       },
       {
         title: 'AllBridge',
         subTitle: 'SOL / MATIC / CELO',
-        url: 'https://app.allbridge.io/bridge?from=SOL&to=FTM&asset=SOL'
+        url: 'https://app.allbridge.io/bridge?from=SOL&to=FTM&asset=SOL',
+        chainId: [250]
       },
       {
         title: 'Wormhole Bridge',
         subTitle: 'TERRA / SOL / OTHERS',
-        url: 'https://portalbridge.com/#/transfer'
+        url: 'https://portalbridge.com/#/transfer',
+        chainId: [250]
       }
     ]
   }

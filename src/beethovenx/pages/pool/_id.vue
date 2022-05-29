@@ -181,7 +181,6 @@ import { usePool } from '@/composables/usePool';
 import usePoolQuery from '@/composables/queries/usePoolQuery';
 import usePoolSnapshotsQuery from '@/beethovenx/composables/queries/usePoolSnapshotsQuery';
 import { POOLS } from '@/constants/pools';
-import { EXTERNAL_LINKS } from '@/constants/links';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import useApp from '@/composables/useApp';
@@ -384,7 +383,6 @@ export default defineComponent({
     return {
       // data
       ...toRefs(data),
-      EXTERNAL_LINKS,
       // computed
       appLoading,
       pool,

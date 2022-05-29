@@ -17,7 +17,6 @@ import { computed, defineComponent, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-import { EXTERNAL_LINKS } from '@/constants/links';
 import LinearPoolsTable from '@/components/tables/LinearPoolsTable/LinearPoolsTable.vue';
 import usePools from '@/composables/pools/usePools';
 import useWeb3 from '@/services/web3/useWeb3';
@@ -121,10 +120,7 @@ export default defineComponent({
       beethovenxConfig,
       toggleFilter,
       activeFilters,
-      filteredLinearPools,
-
-      // constants
-      EXTERNAL_LINKS
+      filteredLinearPools
     };
   }
 });
