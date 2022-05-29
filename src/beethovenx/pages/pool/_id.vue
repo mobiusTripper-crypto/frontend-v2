@@ -97,16 +97,18 @@
             <PoolStatCards :pool="pool" :loading="loadingPool" />
           </div>
 
-          <div
-            class="mb-4"
-            v-if="
-              loadingPool || (pool.farm && pool.farm.rewardTokens.length > 0)
-            "
-          >
-            <h4 class="px-4 lg:px-0 mb-4">Farm</h4>
-            <FarmStatCardsLoading v-if="loadingPool || isLoadingFarms" />
-            <FarmStatCards v-else :pool="pool" />
-          </div>
+          <template v-if="networkConfig.featureFlags.supportsMasterChef">
+            <div
+              class="mb-4"
+              v-if="
+                loadingPool || (pool.farm && pool.farm.rewardTokens.length > 0)
+              "
+            >
+              <h4 class="px-4 lg:px-0 mb-4">Farm</h4>
+              <FarmStatCardsLoading v-if="loadingPool || isLoadingFarms" />
+              <FarmStatCards v-else :pool="pool" />
+            </div>
+          </template>
 
           <div class="mb-4">
             <h4 v-text="$t('poolComposition')" class="px-4 lg:px-0 mb-4" />
@@ -402,6 +404,7 @@ export default defineComponent({
       isLoadingFarms,
       hasCustomToken,
       hasDefaultOwner,
+      networkConfig,
       // methods
       fNum,
       onNewTx

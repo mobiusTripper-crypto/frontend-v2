@@ -12,7 +12,11 @@
       :class="['toggle-link px-5', { [activeClasses]: isInvestPage }]"
       @click="trackGoal(Goals.ClickNavInvest)"
     >
-      Invest{{ upToXLargeBreakpoint ? '' : '&nbsp;/&nbsp;Farm' }}
+      Invest{{
+        !upToXLargeBreakpoint && featureFlags.supportsMasterChef
+          ? '&nbsp;/&nbsp;Farm'
+          : ''
+      }}
     </router-link>
     <router-link
       v-if="featureFlags.supportsMasterChef"

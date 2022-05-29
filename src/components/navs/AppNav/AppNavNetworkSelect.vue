@@ -7,12 +7,11 @@
         class="text-base"
         :size="upToLargeBreakpoint ? 'md' : 'sm'"
         :circle="upToLargeBreakpoint"
-        :class="{ btn: upToLargeBreakpoint }"
       >
         <img
           :src="iconSrc(activeNetwork)"
           :alt="activeNetwork.name"
-          :class="[bp === 'xs' ? 'h-8 w-8' : 'w-9 h-9', 'pl-2']"
+          width="25"
         />
       </BalBtn>
     </template>
@@ -64,7 +63,7 @@ export default defineComponent({
     const configService = new ConfigService();
 
     // COMPOSABLES
-    const { bp, upToLargeBreakpoint } = useBreakpoints();
+    const { upToLargeBreakpoint } = useBreakpoints();
 
     // DATA
     const networks = [
@@ -101,7 +100,6 @@ export default defineComponent({
 
     return {
       // computed
-      bp,
       upToLargeBreakpoint,
       // data
       networks,

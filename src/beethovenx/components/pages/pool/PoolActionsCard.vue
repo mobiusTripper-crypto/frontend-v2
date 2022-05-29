@@ -14,6 +14,7 @@ import { lpTokensFor } from '@/composables/usePool';
 import usePools from '@/composables/pools/usePools';
 import usePoolTransfers from '@/composables/contextual/pool-transfers/usePoolTransfers';
 import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
+import { configService } from '@/services/config/config.service';
 
 /**
  * TYPES
@@ -37,6 +38,7 @@ const { balanceFor, nativeAsset, wrappedNativeAsset } = useTokens();
 const { fNum, toFiat } = useNumbers();
 const { currency } = useUserSettings();
 const { isWalletReady, toggleWalletSelectModal } = useWeb3();
+const { featureFlags } = configService;
 
 /**
  * COMPUTED
@@ -139,7 +141,7 @@ onBeforeMount(() => {
   </BalCard>
 
   <FarmActionsCard
-    v-if="hasFarm"
+    v-if="hasFarm && featureFlags.supportsMasterChef"
     :has-unstaked-bpt="hasUnstakedBpt"
     :token-address="tokenAddress"
     :farm-id="farmId"

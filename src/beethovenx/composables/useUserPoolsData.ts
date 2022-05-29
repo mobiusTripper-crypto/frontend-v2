@@ -7,10 +7,12 @@ import {
   UserPoolListItem
 } from '@/beethovenx/services/beethovenx/beethovenx-types';
 import { MINIMUM_DUST_VALUE_USD } from '@/beethovenx/constants/dust';
+import { configService } from '@/services/config/config.service';
 
 export default function useUserPoolsData() {
   const userPoolDataQuery = useUserPoolDataQuery();
   const { poolList, poolListLoading } = usePoolList();
+  const { featureFlags } = configService;
 
   const userPoolDataLoading = computed(
     () =>
@@ -45,7 +47,8 @@ export default function useUserPoolsData() {
         return {
           ...pool,
           userBalance: data?.balanceUSD || '0',
-          hasUnstakedBpt: data?.hasUnstakedBpt
+          hasUnstakedBpt:
+            data?.hasUnstakedBpt && featureFlags.supportsMasterChef
         };
       })
       .filter(pool => Number(pool.userBalance) > MINIMUM_DUST_VALUE_USD);
