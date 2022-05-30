@@ -142,6 +142,12 @@ const defaultAttrs = {
       decimals: true
     },
     poolToken: true
+  },
+  gauge: {
+    address: true,
+    id: true,
+    totalLiquidity: true,
+    totalSupply: true
   }
 };
 

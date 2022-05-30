@@ -688,3 +688,10 @@ export interface GqlLockingReward {
   amountUsd: Scalars['BigDecimal'];
   token: Scalars['Bytes'];
 }
+
+export interface GqlBalancerPoolGauge {
+  address: Scalars['Bytes'];
+  id: Scalars['ID'];
+  totalLiquidity: Scalars['BigDecimal'];
+  totalSupply: Scalars['BigDecimal'];
+}

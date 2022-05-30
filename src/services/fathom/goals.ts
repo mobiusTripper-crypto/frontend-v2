@@ -18,6 +18,7 @@ export class Goals {
   ConnectedWallet = '';
   ClickSwap = '';
   Swapped = '';
+  ClickGaugeDeposit = '';
 
   constructor(configService = new ConfigService(), goalsMap = GOALS_MAP) {
     const appNetworkGoals = goalsMap[configService.network.key];
