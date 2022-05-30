@@ -77,9 +77,7 @@ export default function useGauge(
 
   async function deposit(amount: BigNumber) {
     try {
-      const provider = getProvider();
-
-      const tx = await getDepositTransaction(provider, amount.toString());
+      const tx = await getDepositTransaction(amount.toString());
 
       addTransaction({
         id: tx.hash,
@@ -92,18 +90,14 @@ export default function useGauge(
         }
       });
 
-      console.log('post send', tx);
-
       return tx;
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function getDepositTransaction(
-    provider: Web3Provider,
-    amount: string | number
-  ) {
+  async function getDepositTransaction(amount: string | number) {
+    const provider = getProvider();
     return sendTransaction(
       provider,
       gaugeAddress.value,
@@ -141,14 +135,8 @@ export default function useGauge(
 
   async function withdrawAndHarvest(amount: BigNumber) {
     try {
-      const provider = getProvider();
-      const tx = await masterChefContractsService.masterChef.withdrawAndHarvest(
-        provider,
-        gaugeAddress.value,
-        amount.toString(),
-        account.value
-      );
-
+      const tx = await getWithdrawTransaction(amount.toString());
+      console.log(tx);
       addTransaction({
         id: tx.hash,
         type: 'tx',
@@ -164,6 +152,17 @@ export default function useGauge(
     } catch (error) {
       console.error(error);
     }
+  }
+
+  async function getWithdrawTransaction(amount: string | number) {
+    const provider = getProvider();
+    return sendTransaction(
+      provider,
+      gaugeAddress.value,
+      REWARDER_CONTRACT_ABI,
+      'withdraw(uint256,bool)',
+      [amount.toString(), true]
+    );
   }
 
   return {

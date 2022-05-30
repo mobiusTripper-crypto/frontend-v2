@@ -13,6 +13,7 @@ import {
   GqlBeetsUserPendingAllFarmRewards,
   GqlBeetsUserPendingRewards,
   GqlBeetsUserPoolData,
+  GqlGaugeUserShare,
   GqlHistoricalTokenPrice,
   GqlLge,
   GqlLgeCreateInput,
@@ -1033,6 +1034,28 @@ export default class BeethovenxService {
       account
     );
     return data;
+  }
+
+  public async getGaugesUserShares(
+    poolId: string,
+    account: string
+  ): Promise<GqlGaugeUserShare> {
+    const query = jsonToGraphQLQuery({
+      query: {
+        gaugesUserShares: {
+          __args: { poolId },
+          amount: true,
+          gaugeAddress: true,
+          poolId: true
+        }
+      }
+    });
+
+    const { gaugesUserShares } = await this.get<{
+      gaugesUserShares: GqlGaugeUserShare;
+    }>(query, account);
+
+    return gaugesUserShares;
   }
 
   private get userProfileDataFragment() {

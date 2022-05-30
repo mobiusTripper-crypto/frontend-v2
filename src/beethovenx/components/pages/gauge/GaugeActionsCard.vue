@@ -10,6 +10,7 @@ import SuccessOverlay from '@/components/cards/SuccessOverlay.vue';
 type Props = {
   tokenAddress: string;
   gaugeAddress: string;
+  poolId: string;
   hasUnstakedBpt: boolean;
   hasStakeRewards: boolean;
 };
@@ -72,8 +73,8 @@ const activeTab = ref(tabs[0].value);
       </div>
       <SuccessOverlay
         v-if="gaugeInvestmentSuccess"
-        :title="$t('stakeDepositSettled')"
-        :description="$t('stakeDepositSuccess')"
+        :title="$t('farmDepositSettled')"
+        :description="$t('farmDepositSettled')"
         :closeLabel="$t('close')"
         :explorerLink="explorer.txLink(txHash)"
         @close="gaugeInvestmentSuccess = false"
@@ -83,13 +84,14 @@ const activeTab = ref(tabs[0].value);
         <GaugeWithdrawForm
           :token-address="props.tokenAddress"
           :gauge-address="props.gaugeAddress"
+          :pool-id="props.poolId"
           @success="handleGaugeWithdrawal($event)"
         />
       </div>
       <SuccessOverlay
         v-if="gaugeWithdrawalSuccess"
-        :title="$t('stakeWithdrawalSettled')"
-        :description="$t('stakeWithdrawalSuccess')"
+        :title="$t('farmWithdrawalSettled')"
+        :description="$t('farmWithdrawalSettled')"
         :closeLabel="$t('close')"
         :explorerLink="explorer.txLink(txHash)"
         @close="gaugeWithdrawalSuccess = false"

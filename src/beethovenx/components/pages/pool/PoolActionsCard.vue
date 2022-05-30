@@ -73,16 +73,18 @@ const hasUnstakedBpt = computed(() =>
   featureFlags.supportsMasterChef
     ? props.pool.farm &&
       parseFloat(balanceFor(getAddress(props.pool.address))) > 0
-    : //TODO: check if there is gauge contract &&
+    : hasGauge.value &&
       parseFloat(balanceFor(getAddress(props.pool.address))) > 0
 );
 
 const hasFarm = computed(() => !!props.pool.farm);
+const hasGauge = computed(() => !!props.pool.gauge);
 
 const farmId = computed(() => props.pool.farm?.id || '');
 const tokenAddress = computed(() => props.pool.address);
 const hasFarmRewards = computed(() => props.pool.farm?.rewards || 0 > 0);
 const gaugeAddress = computed(() => props.pool.gauge?.address || '');
+const poolId = computed(() => props.pool.id);
 /**
  * CALLBACKS
  */
@@ -149,10 +151,11 @@ onBeforeMount(() => {
     :has-farm-rewards="hasFarmRewards"
   />
   <GaugeActionsCard
-    v-else
+    v-else-if="hasGauge"
     :has-unstaked-bpt="hasUnstakedBpt"
     :token-address="tokenAddress"
     :gauge-address="gaugeAddress"
+    :pool-id="poolId"
     :has-farm-rewards="hasFarmRewards"
   />
 </template>

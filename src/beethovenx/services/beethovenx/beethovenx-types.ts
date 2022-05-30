@@ -695,3 +695,9 @@ export interface GqlBalancerPoolGauge {
   totalLiquidity: Scalars['BigDecimal'];
   totalSupply: Scalars['BigDecimal'];
 }
+
+export interface GqlGaugeUserShare {
+  amount: Scalars['BigDecimal'];
+  gaugeAddress: Scalars['Bytes'];
+  poolId: Scalars['Bytes'];
+}

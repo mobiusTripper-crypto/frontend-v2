@@ -76,8 +76,8 @@ import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import { BigNumber } from 'bignumber.js';
 import useEthers from '@/composables/useEthers';
-import useFarmUserQuery from '@/beethovenx/composables/farms/useFarmUserQuery';
 import useGauge from '@/beethovenx/composables/gauge/useGauge';
+import useGaugeUserQuery from '@/beethovenx/composables/gauge/useGaugeUserQuery';
 
 type DataProps = {
   withdrawForm: FormRef;
@@ -88,7 +88,7 @@ type DataProps = {
 };
 
 export default defineComponent({
-  name: 'FarmWithdrawForm',
+  name: 'GaugeWithdrawForm',
   components: {},
   emits: ['success'],
 
@@ -97,7 +97,11 @@ export default defineComponent({
       type: String,
       required: true
     },
-    farmId: {
+    gaugeAddress: {
+      type: String,
+      required: true
+    },
+    poolId: {
       type: String,
       required: true
     },
@@ -125,20 +129,20 @@ export default defineComponent({
     const { tokens } = useTokens();
     const { trackGoal, Goals } = useFathom();
     const { amount } = toRefs(data);
-    const { tokenAddress, farmId } = toRefs(props);
-    const { withdrawAndHarvest } = useGauge(tokenAddress, farmId);
-    const farmUserQuery = useFarmUserQuery(farmId.value);
-    const farmUser = computed(() => {
-      return farmUserQuery.data.value;
-    });
-    const bptDeposited = computed(() => {
-      const amount = farmUser.value?.amount;
+    const { tokenAddress, gaugeAddress, poolId } = toRefs(props);
+    const { withdrawAndHarvest } = useGauge(tokenAddress, gaugeAddress);
+    const gaugeUserQuery = useGaugeUserQuery(poolId.value);
 
-      return amount ? scale(new BigNumber(amount), -18).toString() : '0';
+    const gaugeUser = computed(() => {
+      return gaugeUserQuery.data.value;
+    });
+
+    const bptDeposited = computed(() => {
+      return gaugeUser.value?.amount || 0;
     });
 
     function amountRules() {
-      return isWalletReady.value && farmUser.value
+      return isWalletReady.value && gaugeUser.value
         ? [
             isPositive(),
             isLessThanOrEqualTo(bptDeposited.value, t('exceedsBalance'))
@@ -193,7 +197,7 @@ export default defineComponent({
       // methods
       submit,
       trackGoal,
-      farmUser,
+      gaugeUser,
       loading: withdrawing,
       bptDeposited
     };
