@@ -1059,9 +1059,9 @@ export default class BeethovenxService {
         gaugesUserShares: {
           __args: { poolId },
           amount: true,
+          amountUSD: true,
           gaugeAddress: true,
-          poolId: true,
-          amountUSD: true
+          poolId: true
         }
       }
     });
@@ -1071,6 +1071,33 @@ export default class BeethovenxService {
     }>(query, account);
 
     return gaugesUserShares;
+  }
+
+  public async getGaugesAllUserShares(
+    account: string
+  ): Promise<GqlGaugeUserShare[]> {
+    const query = jsonToGraphQLQuery({
+      query: {
+        gaugesAllUserShares: {
+          amount: true,
+          amountUSD: true,
+          gaugeAddress: true,
+          poolId: true,
+          tokens: {
+            address: true,
+            decimals: true,
+            name: true,
+            symbol: true
+          }
+        }
+      }
+    });
+
+    const { gaugesAllUserShares } = await this.get<{
+      gaugesAllUserShares: GqlGaugeUserShare[];
+    }>(query, account);
+
+    return gaugesAllUserShares;
   }
 
   private get userProfileDataFragment() {

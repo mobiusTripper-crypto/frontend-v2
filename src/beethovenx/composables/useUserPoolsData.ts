@@ -1,16 +1,19 @@
-import { computed } from 'vue';
+import { computed, Ref } from 'vue';
 import useUserPoolDataQuery from '@/beethovenx/composables/queries/useUserPoolDataQuery';
 import usePoolList from '@/beethovenx/composables/usePoolList';
 import {
   GqlBeetsUserPoolData,
   GqlBeetsUserPoolPoolData,
+  GqlGaugeUserShare,
   UserPoolListItem
 } from '@/beethovenx/services/beethovenx/beethovenx-types';
 import { MINIMUM_DUST_VALUE_USD } from '@/beethovenx/constants/dust';
 import { configService } from '@/services/config/config.service';
+import useGaugeAllUsersSharesQuery from '@/beethovenx/composables/gauge/useGaugeAllUsersSharesQuery';
 
 export default function useUserPoolsData() {
   const userPoolDataQuery = useUserPoolDataQuery();
+  const gaugeAllUsersShareQuery = useGaugeAllUsersSharesQuery();
   const { poolList, poolListLoading } = usePoolList();
   const { featureFlags } = configService;
 
@@ -35,6 +38,9 @@ export default function useUserPoolsData() {
   const userPools = computed<GqlBeetsUserPoolPoolData[]>(
     () => userPoolsData.value.pools
   );
+  const gaugeUserPools = computed<GqlGaugeUserShare[]>(
+    () => gaugeAllUsersShareQuery.data.value || []
+  );
 
   const userPoolList = computed<UserPoolListItem[]>(() => {
     const userPoolIds = userPools.value.map(item => item.poolId);
@@ -43,10 +49,16 @@ export default function useUserPoolsData() {
       .filter(pool => userPoolIds.includes(pool.id))
       .map(pool => {
         const data = userPools.value.find(item => item.poolId === pool.id);
+        const gaugeData = gaugeUserPools.value.find(
+          item => item.poolId === pool.id
+        );
 
         return {
           ...pool,
-          userBalance: data?.balanceUSD || '0',
+          userBalance: (
+            parseFloat(data?.balanceUSD || '0') +
+            parseFloat(gaugeData?.amountUSD || '0')
+          ).toString(),
           hasUnstakedBpt:
             data?.hasUnstakedBpt && featureFlags.supportsMasterChef
         };
