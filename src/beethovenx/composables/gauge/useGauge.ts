@@ -33,7 +33,7 @@ export default function useGauge(pool: Ref<FullPool>) {
   const { addTransaction } = useTransactions();
   const gaugeUserQuery = useGaugeUserQuery(pool.value.id);
   const { data: gaugeUserBalance } = useGaugeUserBalanceQuery(
-    pool.value.gauge.address
+    pool.value.gauge?.address || null
   );
 
   const { priceFor } = useTokens();
