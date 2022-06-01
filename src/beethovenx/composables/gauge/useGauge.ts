@@ -17,6 +17,7 @@ import { useQuery } from 'vue-query';
 import QUERY_KEYS from '@/constants/queryKeys';
 import useTokens from '@/composables/useTokens';
 import useGaugeUserBalanceQuery from '@/beethovenx/composables/gauge/useGaugeUserBalanceQuery';
+import useEthers from '@/composables/useEthers';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -36,6 +37,20 @@ export default function useGauge(pool: Ref<FullPool>) {
   );
 
   const { priceFor } = useTokens();
+  const { txListener } = useEthers();
+
+  const {
+    isLoading: isPendingRewardsLoading,
+    data: pendingRewards,
+    refetch
+  } = useQuery(
+    QUERY_KEYS.Rewards.GetRewards(pool.value.id),
+    getPendingRewards,
+    reactive({
+      enabled: true,
+      refetchInterval: 5000
+    })
+  );
 
   async function approve() {
     try {
@@ -109,6 +124,15 @@ export default function useGauge(pool: Ref<FullPool>) {
         }
       });
 
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          await refetch.value();
+        },
+        onTxFailed: () => {
+          //
+        }
+      });
+
       return tx;
     } catch (error) {
       console.error(error);
@@ -161,15 +185,6 @@ export default function useGauge(pool: Ref<FullPool>) {
   const gaugeUser = computed(() => {
     return gaugeUserQuery.data.value;
   });
-
-  const { isLoading: isPendingRewardsLoading, data: pendingRewards } = useQuery(
-    QUERY_KEYS.Rewards.GetRewards(pool.value.id),
-    getPendingRewards,
-    reactive({
-      enabled: true,
-      refetchInterval: 5000
-    })
-  );
 
   async function getPendingRewards() {
     const provider = getProvider();
