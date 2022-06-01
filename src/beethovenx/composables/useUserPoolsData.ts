@@ -24,16 +24,28 @@ export default function useUserPoolsData() {
       poolListLoading.value
   );
 
-  const userPoolsData = computed<GqlBeetsUserPoolData>(
-    () =>
-      userPoolDataQuery.data.value ?? {
-        totalBalanceUSD: '0',
-        totalFarmBalanceUSD: '0',
-        averageFarmApr: '0',
-        averageApr: '0',
-        pools: []
-      }
-  );
+  const userPoolsData = computed<GqlBeetsUserPoolData>(() => {
+    const gaugeTotalBalanceUSD = gaugeUserPools.value
+      ? gaugeUserPools.value
+          .map(item => parseFloat(item.amountUSD))
+          .reduce((total, value) => total + value)
+      : 0;
+
+    const data = userPoolDataQuery.data.value ?? {
+      totalBalanceUSD: '0',
+      totalFarmBalanceUSD: '0',
+      averageFarmApr: '0',
+      averageApr: '0',
+      pools: []
+    };
+
+    return {
+      ...data,
+      totalBalanceUSD: (
+        gaugeTotalBalanceUSD + parseFloat(data.totalBalanceUSD)
+      ).toString()
+    };
+  });
 
   const userPools = computed<GqlBeetsUserPoolPoolData[]>(
     () => userPoolsData.value.pools
