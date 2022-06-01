@@ -122,7 +122,7 @@ export default defineComponent({
     const { trackGoal, Goals } = useFathom();
     const { amount } = toRefs(data);
     const { pool } = toRefs(props);
-    const { withdrawAndHarvest } = useGauge(pool);
+    const { withdrawAndHarvest, gaugeUserBalance } = useGauge(pool);
     const gaugeUserQuery = useGaugeUserQuery(pool.value.id);
 
     const gaugeUser = computed(() => {
@@ -130,8 +130,7 @@ export default defineComponent({
     });
 
     const bptDeposited = computed(() => {
-      console.log('bpt', pool, pool.value, pool.value.id, gaugeUser.value);
-      return gaugeUser.value?.amount || 0;
+      return gaugeUserBalance.value || '0';
     });
 
     function amountRules() {
