@@ -64,28 +64,22 @@
         {{ fNum(pendingRewards.balanceUSD, 'usd') }}
       </div>
 
-      <!-- <BalBtn
+      <BalBtn
         label="Harvest"
         block
         color="gradient"
-        :disabled="!farmPendingRewards"
+        :disabled="!pendingRewards"
         :loading="harvesting"
         @click.prevent="harvestRewards"
-      /> -->
+      />
     </BalCard>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, PropType, toRefs } from 'vue';
+import { defineComponent, ref, PropType, toRefs } from 'vue';
 import useNumbers from '@/composables/useNumbers';
 import useEthers from '@/composables/useEthers';
-import useFarm from '@/beethovenx/composables/farms/useFarm';
-import { GqlBalancerPoolWithRequiredFarm } from '@/beethovenx/services/beethovenx/beethovenx-types';
-import BalAsset from '@/components/_global/BalAsset/BalAsset.vue';
-import useUserPoolData from '@/beethovenx/composables/useUserPoolData';
-import useFarmUserQuery from '@/beethovenx/composables/farms/useFarmUserQuery';
-import { sumBy } from 'lodash';
 import useGauge from '@/beethovenx/composables/gauge/useGauge';
 import { FullPool } from '@/services/balancer/subgraph/types';
 
@@ -105,22 +99,42 @@ export default defineComponent({
 
     const { fNum } = useNumbers();
     const { txListener } = useEthers();
-    //const { harvest } = useFarm(ref(props.pool.address), ref(props.pool.farm.id));
     const harvesting = ref(false);
-    //const farmUserQuery = useFarmUserQuery(props.pool.farm.id);
-    //const farmUser = computed(() => farmUserQuery.data.value);
-    //const { userPoolData } = useUserPoolData(ref(props.pool.id));
     const { pool } = toRefs(props);
+    const {
+      gaugeUser,
+      pendingRewards,
+      isPendingRewardsLoading,
+      harvest
+    } = useGauge(pool);
 
-    const { gaugeUser, pendingRewards, isPendingRewardsLoading } = useGauge(
-      pool
-    );
+    async function harvestRewards(): Promise<void> {
+      harvesting.value = true;
+      const tx = await harvest();
+
+      if (!tx) {
+        harvesting.value = false;
+        return;
+      }
+
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          //          await refetchPendingRewards(); // TODO, fix useQuery so can refetch
+          harvesting.value = false;
+        },
+        onTxFailed: () => {
+          harvesting.value = false;
+        }
+      });
+    }
 
     return {
       fNum,
       gaugeUser,
       pendingRewards,
-      isPendingRewardsLoading
+      isPendingRewardsLoading,
+      harvesting,
+      harvestRewards
     };
   }
 });

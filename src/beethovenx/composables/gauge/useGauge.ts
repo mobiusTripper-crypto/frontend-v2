@@ -92,12 +92,7 @@ export default function useGauge(pool: Ref<FullPool>) {
 
   async function harvest() {
     try {
-      const provider = getProvider();
-      const tx = await masterChefContractsService.masterChef.harvest(
-        provider,
-        pool.value.gauge.address,
-        account.value
-      );
+      const tx = await getHarvestTransaction();
 
       addTransaction({
         id: tx.hash,
@@ -105,8 +100,7 @@ export default function useGauge(pool: Ref<FullPool>) {
         action: 'claim',
         summary: 'Harvest staked rewards',
         details: {
-          contractAddress: pool.value.address,
-          spender: appNetworkConfig.addresses.masterChef
+          contractAddress: pool.value.address
         }
       });
 
@@ -114,6 +108,17 @@ export default function useGauge(pool: Ref<FullPool>) {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  async function getHarvestTransaction() {
+    const provider = getProvider();
+    return sendTransaction(
+      provider,
+      pool.value.gauge.address,
+      GAUGE_CONTRACT_ABI,
+      'claim_rewards()',
+      []
+    );
   }
 
   async function withdrawAndHarvest(amount: BigNumber) {
@@ -161,7 +166,6 @@ export default function useGauge(pool: Ref<FullPool>) {
   );
 
   async function getPendingRewards() {
-    console.log('pool', pool.value);
     const { priceFor } = useTokens();
 
     const provider = getProvider();
