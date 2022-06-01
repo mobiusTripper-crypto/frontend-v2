@@ -9,23 +9,23 @@
           {{ fNum(pool.gauge.totalLiquidity, 'usd') }}
         </div>
       </BalCard>
-      <!-- <BalCard>
+      <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
           Rewards
         </div>
         <div
-          v-for="(rewardToken, i) in props.pool.farm.rewardTokens"
+          v-for="(rewardToken, i) in pool.gauge.rewardTokens"
           :key="i"
           :class="[
             'text-xl font-medium truncate flex items-center',
-            i < props.pool.farm.rewardTokens.length - 1 ? 'mb-1' : ''
+            i < pool.gauge.rewardTokens.length - 1 ? 'mb-1' : ''
           ]"
         >
-          {{ fNum(rewardToken.rewardPerDay, 'token_lg') }}
+          {{ fNum(rewardToken.rewardsPerDay, 'token_lg') }}
           <BalAsset :address="rewardToken.address" class="mx-1" />
           <span>/ day</span>
         </div>
-      </BalCard> -->
+      </BalCard>
       <BalCard>
         <div class="text-sm text-gray-500 font-medium mb-2">
           My Balance

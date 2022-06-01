@@ -152,7 +152,9 @@ const defaultAttrs = {
       address: true,
       decimals: true,
       name: true,
-      symbol: true
+      symbol: true,
+      rewardsPerDay: true,
+      rewardsPerSecond: true
     }
   }
 };

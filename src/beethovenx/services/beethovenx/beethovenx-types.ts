@@ -710,4 +710,6 @@ export interface GqlGaugeRewardToken {
   decimals: Scalars['Int'];
   name: Scalars['String'];
   symbol: Scalars['String'];
+  rewardsPerDay: Scalars['String'];
+  rewardsPerSecond: Scalars['String'];
 }
