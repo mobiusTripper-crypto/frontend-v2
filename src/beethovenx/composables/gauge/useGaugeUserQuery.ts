@@ -19,7 +19,7 @@ export default function useGaugeUserQuery(
       poolId,
       account.value
     );
-    return { ...gauges, balanceUSD: '345' }; // TODO balances need to be calculate
+    return gauges; // TODO balances need to be calculate
   };
 
   const queryOptions = reactive({

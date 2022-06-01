@@ -1060,8 +1060,8 @@ export default class BeethovenxService {
           __args: { poolId },
           amount: true,
           gaugeAddress: true,
-          poolId: true
-          //          ,balanceUSD: true
+          poolId: true,
+          amountUSD: true
         }
       }
     });

@@ -161,7 +161,7 @@ export default function useGauge(pool: Ref<FullPool>) {
         summary: 'Withdraw staked LP tokens',
         details: {
           contractAddress: pool.value.address,
-          spender: appNetworkConfig.addresses.masterChef
+          spender: pool.value.gauge.address
         }
       });
 

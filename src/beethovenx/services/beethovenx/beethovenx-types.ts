@@ -702,7 +702,7 @@ export interface GqlGaugeUserShare {
   amount: Scalars['BigDecimal'];
   gaugeAddress: Scalars['Bytes'];
   poolId: Scalars['Bytes'];
-  balanceUSD: Scalars['BigDecimal'];
+  amountUSD: Scalars['BigDecimal'];
 }
 
 export interface GqlGaugeRewardToken {
