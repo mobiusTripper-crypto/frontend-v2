@@ -729,6 +729,18 @@ export default class BeethovenxService {
               valueUSD: true,
               weight: true
             }
+          },
+          gauge: {
+            address: true,
+            id: true,
+            totalLiquidity: true,
+            totalSupply: true,
+            rewardTokens: {
+              address: true,
+              decimals: true,
+              name: true,
+              symbol: true
+            }
           }
         }
       }
@@ -1047,6 +1059,7 @@ export default class BeethovenxService {
           amount: true,
           gaugeAddress: true,
           poolId: true
+          //          ,balanceUSD: true
         }
       }
     });

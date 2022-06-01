@@ -67,7 +67,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  reactive,
+  ref,
+  toRefs,
+  watch,
+  PropType
+} from 'vue';
 import { FormRef } from '@/types';
 import {
   isLessThanOrEqualTo,
@@ -87,6 +95,7 @@ import useEthers from '@/composables/useEthers';
 import BigNumber from 'bignumber.js';
 import useAllowanceAvailableQuery from '@/beethovenx/composables/gauge/useAllowanceAvailableQuery';
 import useGauge from '@/beethovenx/composables/gauge/useGauge';
+import { FullPool } from '@/services/balancer/subgraph/types';
 
 type DataProps = {
   depositForm: FormRef;
@@ -105,20 +114,7 @@ export default defineComponent({
   emits: ['success'],
 
   props: {
-    tokenAddress: {
-      type: String,
-      required: true
-    },
-    gaugeAddress: {
-      type: String,
-      required: true
-    },
-    tokenName: {
-      type: String
-    },
-    dataLoading: {
-      type: Boolean
-    }
+    pool: { type: Object as PropType<FullPool>, required: true }
   },
 
   setup(props, { emit }) {
@@ -143,15 +139,15 @@ export default defineComponent({
     const { amount } = toRefs(data);
     const depositing = ref(false);
     const approving = ref(false);
-    const { tokenAddress, gaugeAddress } = toRefs(props);
+    const { pool } = toRefs(props);
 
-    const { approve, deposit } = useGauge(tokenAddress, gaugeAddress);
+    const { approve, deposit } = useGauge(pool);
     const allowanceAvailableQuery = useAllowanceAvailableQuery(
-      tokenAddress.value,
-      gaugeAddress.value
+      pool.value.address,
+      pool.value.gauge.address
     );
     const bptBalance = computed(() =>
-      balanceFor(getAddress(tokenAddress.value))
+      balanceFor(getAddress(pool.value.address))
     );
 
     const { txListener } = useEthers();
@@ -166,7 +162,6 @@ export default defineComponent({
     }
 
     async function approveToken(): Promise<void> {
-      console.log('approveToken', gaugeAddress.value);
       if (!data.depositForm.validate()) return;
 
       approving.value = true;

@@ -14,9 +14,9 @@
   "subgraph": "https://api.thegraph.com/subgraphs/name/beethovenxfi/beethovenx-optimism",
   "blockSubgraph": "",
   "farmSubgraph": "",
-  "backendUrl": "https://backend-optimism-cdn.beets-ftm-node.com/graphql",
+  "backendUrl": "https://backend-optimism.beets-ftm-node.com/ ",
   "poolsUrlV1": "",
-  "poolsUrlV2": "https://backend-optimism-cdn.beets-ftm-node.com/graphql",
+  "poolsUrlV2": "https://backend-optimism.beets-ftm-node.com/",
   "nativeAsset": {
     "name": "Ether",
     "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",

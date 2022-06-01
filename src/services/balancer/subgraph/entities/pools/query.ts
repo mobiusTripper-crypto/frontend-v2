@@ -147,7 +147,13 @@ const defaultAttrs = {
     address: true,
     id: true,
     totalLiquidity: true,
-    totalSupply: true
+    totalSupply: true,
+    rewardTokens: {
+      address: true,
+      decimals: true,
+      name: true,
+      symbol: true
+    }
   }
 };
 

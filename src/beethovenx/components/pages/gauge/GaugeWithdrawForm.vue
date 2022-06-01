@@ -50,7 +50,7 @@
           :disabled="!validInput || amount === '0' || amount === ''"
           :loading="withdrawing || dataLoading"
           block
-          @click="trackGoal(Goals.ClickFarmWithdraw)"
+          @click="trackGoal(Goals.ClickGaugeWithdraw)"
         >
           Withdraw {{ tokenName ? tokenName : 'BPT' }}
         </BalBtn>
@@ -60,7 +60,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  reactive,
+  ref,
+  toRefs,
+  watch,
+  PropType
+} from 'vue';
 import { FormRef } from '@/types';
 import {
   isLessThanOrEqualTo,
@@ -78,6 +86,7 @@ import { BigNumber } from 'bignumber.js';
 import useEthers from '@/composables/useEthers';
 import useGauge from '@/beethovenx/composables/gauge/useGauge';
 import useGaugeUserQuery from '@/beethovenx/composables/gauge/useGaugeUserQuery';
+import { FullPool } from '@/services/balancer/subgraph/types';
 
 type DataProps = {
   withdrawForm: FormRef;
@@ -93,24 +102,7 @@ export default defineComponent({
   emits: ['success'],
 
   props: {
-    tokenAddress: {
-      type: String,
-      required: true
-    },
-    gaugeAddress: {
-      type: String,
-      required: true
-    },
-    poolId: {
-      type: String,
-      required: true
-    },
-    tokenName: {
-      type: String
-    },
-    dataLoading: {
-      type: Boolean
-    }
+    pool: { type: Object as PropType<FullPool>, required: true }
   },
 
   setup(props, { emit }) {
@@ -123,21 +115,22 @@ export default defineComponent({
     });
 
     const { txListener } = useEthers();
-    const { isWalletReady, account, toggleWalletSelectModal } = useWeb3();
+    const { isWalletReady, toggleWalletSelectModal } = useWeb3();
     const withdrawing = ref(false);
     const { t } = useI18n();
     const { tokens } = useTokens();
     const { trackGoal, Goals } = useFathom();
     const { amount } = toRefs(data);
-    const { tokenAddress, gaugeAddress, poolId } = toRefs(props);
-    const { withdrawAndHarvest } = useGauge(tokenAddress, gaugeAddress);
-    const gaugeUserQuery = useGaugeUserQuery(poolId.value);
+    const { pool } = toRefs(props);
+    const { withdrawAndHarvest } = useGauge(pool);
+    const gaugeUserQuery = useGaugeUserQuery(pool.value.id);
 
     const gaugeUser = computed(() => {
       return gaugeUserQuery.data.value;
     });
 
     const bptDeposited = computed(() => {
+      console.log('bpt', pool, pool.value, pool.value.id, gaugeUser.value);
       return gaugeUser.value?.amount || 0;
     });
 

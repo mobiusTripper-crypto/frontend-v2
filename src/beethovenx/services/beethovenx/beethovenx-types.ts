@@ -550,6 +550,7 @@ export interface GqlBalancerPool {
   farm?: GqlBeetsFarm;
   farmTotalLiquidity: Scalars['BigDecimal'];
   fees24h: Scalars['BigDecimal'];
+  gauge: GqlBalancerPoolGauge;
   holdersCount: Scalars['BigInt'];
   id: Scalars['ID'];
   isNewPool?: Scalars['Boolean'];
@@ -692,6 +693,7 @@ export interface GqlLockingReward {
 export interface GqlBalancerPoolGauge {
   address: Scalars['Bytes'];
   id: Scalars['ID'];
+  rewardTokens: Array<GqlGaugeRewardToken>;
   totalLiquidity: Scalars['BigDecimal'];
   totalSupply: Scalars['BigDecimal'];
 }
@@ -700,4 +702,12 @@ export interface GqlGaugeUserShare {
   amount: Scalars['BigDecimal'];
   gaugeAddress: Scalars['Bytes'];
   poolId: Scalars['Bytes'];
+  balanceUSD: Scalars['BigDecimal'];
+}
+
+export interface GqlGaugeRewardToken {
+  address: Scalars['Bytes'];
+  decimals: Scalars['Int'];
+  name: Scalars['String'];
+  symbol: Scalars['String'];
 }

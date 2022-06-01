@@ -6,13 +6,10 @@ import { ref } from 'vue';
 import useTokens from '@/composables/useTokens';
 import BalTabs from '@/components/_global/BalTabs/BalTabs.vue';
 import SuccessOverlay from '@/components/cards/SuccessOverlay.vue';
+import { FullPool } from '@/services/balancer/subgraph/types';
 
 type Props = {
-  tokenAddress: string;
-  gaugeAddress: string;
-  poolId: string;
-  hasUnstakedBpt: boolean;
-  hasStakeRewards: boolean;
+  pool: FullPool;
 };
 
 const props = defineProps<Props>();
@@ -66,8 +63,7 @@ const activeTab = ref(tabs[0].value);
       <BalTabs v-model="activeTab" :tabs="tabs" no-pad class="-mb-px" />
       <div v-if="activeTab === 'deposit'" class="mt-4">
         <GaugeDepositForm
-          :token-address="props.tokenAddress"
-          :gauge-address="props.gaugeAddress"
+          :pool="props.pool"
           @success="handleGaugeInvestment($event)"
         />
       </div>
@@ -82,9 +78,7 @@ const activeTab = ref(tabs[0].value);
       />
       <div v-if="activeTab === 'withdraw'" class="mt-4">
         <GaugeWithdrawForm
-          :token-address="props.tokenAddress"
-          :gauge-address="props.gaugeAddress"
-          :pool-id="props.poolId"
+          :pool="props.pool"
           @success="handleGaugeWithdrawal($event)"
         />
       </div>

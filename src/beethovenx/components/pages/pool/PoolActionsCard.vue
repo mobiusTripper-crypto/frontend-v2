@@ -153,9 +153,6 @@ onBeforeMount(() => {
   <GaugeActionsCard
     v-else-if="hasGauge"
     :has-unstaked-bpt="hasUnstakedBpt"
-    :token-address="tokenAddress"
-    :gauge-address="gaugeAddress"
-    :pool-id="poolId"
-    :has-farm-rewards="hasFarmRewards"
+    :pool="props.pool"
   />
 </template>

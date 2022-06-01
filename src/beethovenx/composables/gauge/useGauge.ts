@@ -1,16 +1,22 @@
-import { ref, Ref } from 'vue';
+import { computed, Ref, reactive } from 'vue';
 import useWeb3 from '@/services/web3/useWeb3';
 import { TransactionResponse, Web3Provider } from '@ethersproject/providers';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { default as abi } from '@/lib/abi/ERC20.json';
-import { MaxUint256 } from '@ethersproject/constants';
 import { bnum } from '@/lib/utils';
 import BigNumber from 'bignumber.js';
 import { masterChefContractsService } from '@/beethovenx/services/farm/master-chef-contracts.service';
-//import { DecoratedPoolWithRequiredFarm } from '@/beethovenx/services/subgraph/subgraph-types';
 import useTransactions from '@/composables/useTransactions';
 import { erc20ContractService } from '@/beethovenx/services/erc20/erc20-contracts.service';
-import REWARDER_CONTRACT_ABI from '@/beethovenx/abi/LiquidityGaugeV5.json';
+import GAUGE_CONTRACT_ABI from '@/beethovenx/abi/LiquidityGaugeV5.json';
+import { FullPool } from '@/services/balancer/subgraph/types';
+import { Multicaller } from '@/lib/utils/balancer/contract';
+import { configService } from '@/services/config/config.service';
+import useGaugeUserQuery from '@/beethovenx/composables/gauge/useGaugeUserQuery';
+import { formatUnits } from 'ethers/lib/utils';
+import { useQuery } from 'vue-query';
+import QUERY_KEYS from '@/constants/queryKeys';
+import useTokens from '@/composables/useTokens';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -21,35 +27,18 @@ export async function approveToken(
   return sendTransaction(web3, token, abi, 'approve', [spender, amount]);
 }
 
-export default function useGauge(
-  tokenAddress: Ref<string>,
-  gaugeAddress: Ref<string>
-) {
+export default function useGauge(pool: Ref<FullPool>) {
   const { getProvider, appNetworkConfig, account } = useWeb3();
   const { addTransaction } = useTransactions();
-
-  // async function requiresApproval(
-  //   amount: Ref<string> = ref(MaxUint256.toString())
-  // ) {
-  //   const allowance = await erc20ContractService.erc20.allowance(
-  //     tokenAddress.value,
-  //     account.value,
-  //     appNetworkConfig.addresses.masterChef
-  //   );
-
-  //   if (!amount || bnum(amount.value).eq(0)) return false;
-
-  //   return allowance.lt(amount.value);
-  // }
+  const gaugeUserQuery = useGaugeUserQuery(pool.value.id);
 
   async function approve() {
-    console.log('pre approval', gaugeAddress.value, tokenAddress.value);
     try {
       const provider = getProvider();
       const tx = await erc20ContractService.erc20.approveToken(
         provider,
-        gaugeAddress.value,
-        tokenAddress.value
+        pool.value.gauge.address,
+        pool.value.address
       );
 
       addTransaction({
@@ -58,8 +47,8 @@ export default function useGauge(
         action: 'approve',
         summary: `Approve LP token`,
         details: {
-          contractAddress: tokenAddress,
-          spender: gaugeAddress
+          contractAddress: pool.value.address,
+          spender: pool.value.gauge.address
         }
       });
 
@@ -68,12 +57,6 @@ export default function useGauge(
       console.error(error);
     }
   }
-
-  // async function checkAllowanceAndApprove() {
-  //   if (await requiresApproval()) {
-  //     await approve();
-  //   }
-  // }
 
   async function deposit(amount: BigNumber) {
     try {
@@ -85,8 +68,8 @@ export default function useGauge(
         action: 'invest',
         summary: 'Deposit LP tokens',
         details: {
-          contractAddress: tokenAddress,
-          spender: gaugeAddress
+          contractAddress: pool.value.address,
+          spender: pool.value.gauge.address
         }
       });
 
@@ -100,8 +83,8 @@ export default function useGauge(
     const provider = getProvider();
     return sendTransaction(
       provider,
-      gaugeAddress.value,
-      REWARDER_CONTRACT_ABI,
+      pool.value.gauge.address,
+      GAUGE_CONTRACT_ABI,
       'deposit(uint256)',
       [amount.toString()]
     );
@@ -112,7 +95,7 @@ export default function useGauge(
       const provider = getProvider();
       const tx = await masterChefContractsService.masterChef.harvest(
         provider,
-        gaugeAddress.value,
+        pool.value.gauge.address,
         account.value
       );
 
@@ -122,7 +105,7 @@ export default function useGauge(
         action: 'claim',
         summary: 'Harvest staked rewards',
         details: {
-          contractAddress: tokenAddress,
+          contractAddress: pool.value.address,
           spender: appNetworkConfig.addresses.masterChef
         }
       });
@@ -143,7 +126,7 @@ export default function useGauge(
         action: 'claim',
         summary: 'Withdraw staked LP tokens',
         details: {
-          contractAddress: tokenAddress,
+          contractAddress: pool.value.address,
           spender: appNetworkConfig.addresses.masterChef
         }
       });
@@ -158,19 +141,75 @@ export default function useGauge(
     const provider = getProvider();
     return sendTransaction(
       provider,
-      gaugeAddress.value,
-      REWARDER_CONTRACT_ABI,
+      pool.value.gauge.address,
+      GAUGE_CONTRACT_ABI,
       'withdraw(uint256,bool)',
       [amount.toString(), true]
     );
   }
 
+  const gaugeUser = computed(() => {
+    return gaugeUserQuery.data.value;
+  });
+
+  const { isLoading: isPendingRewardsLoading, data: pendingRewards } = useQuery(
+    QUERY_KEYS.Rewards.GetRewards(pool.value.id),
+    getPendingRewards,
+    reactive({
+      enabled: true
+    })
+  );
+
+  async function getPendingRewards() {
+    console.log('pool', pool.value);
+    const { priceFor } = useTokens();
+
+    const provider = getProvider();
+    const multicaller = new Multicaller(
+      configService.network.key,
+      provider,
+      GAUGE_CONTRACT_ABI
+    );
+
+    pool.value.gauge.rewardTokens.map(rewardToken => {
+      multicaller.call(
+        `${pool.value.gauge.address}.claimableRewards.${rewardToken.address}`,
+        pool.value.gauge.address,
+        'claimable_reward_write',
+        [account.value, rewardToken.address]
+      );
+    });
+
+    const gaugesDataMap = await multicaller.execute();
+
+    let balanceUSD = 0;
+    const rewards = pool.value.gauge.rewardTokens.map(rewardToken => {
+      const balance =
+        gaugesDataMap[pool.value.gauge.address].claimableRewards[
+          rewardToken.address
+        ];
+      balanceUSD += bnum(balance)
+        .times(priceFor(rewardToken.address))
+        .toNumber();
+
+      //      console.log(rewardToken.address, priceFor(rewardToken.address));
+
+      return {
+        symbol: rewardToken.symbol,
+        balance: formatUnits(balance, rewardToken.decimals)
+      };
+    });
+    //    console.log(balanceUSD); //TODO, need to add reward tokens to test this
+    return { rewards: rewards, balanceUSD: balanceUSD };
+  }
+
   return {
-    //    requiresApproval,
     approve,
-    //    checkAllowanceAndApprove,
     deposit,
     harvest,
-    withdrawAndHarvest
+    withdrawAndHarvest,
+    gaugeUser,
+    pendingRewards,
+    isPendingRewardsLoading
   };
 }
