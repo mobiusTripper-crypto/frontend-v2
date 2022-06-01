@@ -3,7 +3,8 @@ import { DecoratedFarm } from '@/beethovenx/services/subgraph/subgraph-types';
 import { BigNumber } from 'ethers';
 import {
   GqlBalancePoolApr,
-  GqlBeetsFarm
+  GqlBeetsFarm,
+  GqlBalancerPoolGauge
 } from '@/beethovenx/services/beethovenx/beethovenx-types';
 
 export type Address = string;
@@ -109,6 +110,7 @@ export interface Pool {
   isNewPool?: boolean;
   volume24h: string;
   fees24h: string;
+  gauge: GqlBalancerPoolGauge;
 }
 
 export interface LinearPool extends Pool {

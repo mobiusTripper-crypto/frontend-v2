@@ -110,7 +110,8 @@ const QUERY_KEYS = {
       account: Ref<string>,
       chainId: Ref<number | undefined>
     ) => ['account', 'profile', { networkId, account, chainId }]
-  }
+  },
+  Rewards: { GetRewards: (poolId: string) => ['poolId', { poolId }] }
 };
 
 export default QUERY_KEYS;

@@ -10,8 +10,8 @@ import useWeb3 from '@/services/web3/useWeb3';
 import { getAddress } from '@ethersproject/address';
 import BalCard from '@/components/_global/BalCard/BalCard.vue';
 import FarmActionsCard from '@/beethovenx/components/pages/farm/FarmActionsCard.vue';
+import GaugeActionsCard from '@/beethovenx/components/pages/gauge/GaugeActionsCard.vue';
 import { lpTokensFor } from '@/composables/usePool';
-import usePools from '@/composables/pools/usePools';
 import usePoolTransfers from '@/composables/contextual/pool-transfers/usePoolTransfers';
 import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
 import { configService } from '@/services/config/config.service';
@@ -69,18 +69,22 @@ const fiatTotal = computed(() => {
   return fNum(fiatValue, currency.value);
 });
 
-const hasUnstakedBpt = computed(
-  () =>
-    props.pool.farm &&
-    parseFloat(balanceFor(getAddress(props.pool.address))) > 0
+const hasUnstakedBpt = computed(() =>
+  featureFlags.supportsMasterChef
+    ? props.pool.farm &&
+      parseFloat(balanceFor(getAddress(props.pool.address))) > 0
+    : hasGauge.value &&
+      parseFloat(balanceFor(getAddress(props.pool.address))) > 0
 );
 
 const hasFarm = computed(() => !!props.pool.farm);
+const hasGauge = computed(() => !!props.pool.gauge);
 
 const farmId = computed(() => props.pool.farm?.id || '');
 const tokenAddress = computed(() => props.pool.address);
 const hasFarmRewards = computed(() => props.pool.farm?.rewards || 0 > 0);
-
+const gaugeAddress = computed(() => props.pool.gauge?.address || '');
+const poolId = computed(() => props.pool.id);
 /**
  * CALLBACKS
  */
@@ -139,12 +143,16 @@ onBeforeMount(() => {
       />
     </div>
   </BalCard>
-
   <FarmActionsCard
     v-if="hasFarm && featureFlags.supportsMasterChef"
     :has-unstaked-bpt="hasUnstakedBpt"
     :token-address="tokenAddress"
     :farm-id="farmId"
     :has-farm-rewards="hasFarmRewards"
+  />
+  <GaugeActionsCard
+    v-else-if="hasGauge"
+    :has-unstaked-bpt="hasUnstakedBpt"
+    :pool="props.pool"
   />
 </template>

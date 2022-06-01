@@ -109,6 +109,18 @@
               <FarmStatCards v-else :pool="pool" />
             </div>
           </template>
+          <template v-else>
+            <div
+              class="mb-4"
+              v-if="
+                loadingPool || pool.gauge //TODO <<< what to check???? && pool.farm.rewardTokens.length > 0)
+              "
+            >
+              <h4 class="px-4 lg:px-0 mb-4">Gauge</h4>
+              <FarmStatCardsLoading v-if="loadingPool || isLoadingFarms" />
+              <GaugeStatCards v-else :pool="pool" />
+            </div>
+          </template>
 
           <div class="mb-4">
             <h4 v-text="$t('poolComposition')" class="px-4 lg:px-0 mb-4" />
@@ -187,6 +199,7 @@ import useApp from '@/composables/useApp';
 import useAlerts, { AlertPriority, AlertType } from '@/composables/useAlerts';
 import FarmStatCards from '@/beethovenx/components/pages/farm/FarmStatCards.vue';
 import FarmStatCardsLoading from '@/beethovenx/components/pages/farm/FarmStatCardsLoading.vue';
+import GaugeStatCards from '@/beethovenx/components/pages/gauge/GaugeStatCards.vue';
 import usePoolWithFarm from '@/beethovenx/composables/pool/usePoolWithFarm';
 import PoolVolumeChart from '@/beethovenx/components/pages/pool/PoolVolumeChart.vue';
 import BalLoadingBlock from '@/components/_global/BalLoadingBlock/BalLoadingBlock.vue';
@@ -204,7 +217,8 @@ export default defineComponent({
     LudwigIcon,
     LiquidityAPRTooltip,
     FarmStatCards,
-    FarmStatCardsLoading
+    FarmStatCardsLoading,
+    GaugeStatCards
   },
 
   setup() {

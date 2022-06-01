@@ -6,6 +6,7 @@ export const CLAIMS_ROOT_KEY = 'claims';
 export const SWAPS_ROOT_KEY = 'swaps';
 export const TOKEN_PRICES_ROOT_KEY = 'tokenPrices';
 export const LOCKER_ROOT_KEY = 'lock';
+export const GAUGES_ROOT_KEY = 'gauges';
 
 const QUERY_KEYS = {
   Farms: {
@@ -144,6 +145,13 @@ const QUERY_KEYS = {
       { account }
     ],
     User: (account: Ref<string>) => [LOCKER_ROOT_KEY, 'user', { account }]
+  },
+  Gauges: {
+    User: (poolId: string, account: Ref<string>) => [
+      GAUGES_ROOT_KEY,
+      'user',
+      { poolId, account }
+    ]
   }
 };
 
