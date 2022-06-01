@@ -151,6 +151,11 @@ const QUERY_KEYS = {
       GAUGES_ROOT_KEY,
       'user',
       { poolId, account }
+    ],
+    UserBalance: (gauge: string, account: Ref<string>) => [
+      GAUGES_ROOT_KEY,
+      'user-balance',
+      { gauge, account }
     ]
   }
 };

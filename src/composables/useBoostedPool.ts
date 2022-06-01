@@ -4,21 +4,23 @@ import { FullPoolWithFarm } from '@/services/balancer/subgraph/types';
 import useTokens from '@/composables/useTokens';
 import PoolCalculator from '@/services/pool/calculator/calculator.sevice';
 import { keyBy } from 'lodash';
+import useGauge from '@/beethovenx/composables/gauge/useGauge';
 
 export function useBoostedPool(
   pool: Ref<FullPoolWithFarm>,
   poolCalculator: PoolCalculator
 ) {
   const { balanceFor } = useTokens();
+  const { gaugeUserBalance } = useGauge(pool);
 
   const userPoolBalance = computed(() => {
-    const farm = pool.value.decoratedFarm;
-
     const userBalance = parseFloat(balanceFor(getAddress(pool.value.address)));
-    const farmBalance = farm ? farm.userBpt : 0;
+    const gaugeBalance = gaugeUserBalance.value
+      ? parseFloat(gaugeUserBalance.value)
+      : 0;
 
     const { receive } = poolCalculator.propAmountsGiven(
-      `${userBalance + farmBalance}`,
+      `${userBalance + gaugeBalance}`,
       0,
       'send'
     );

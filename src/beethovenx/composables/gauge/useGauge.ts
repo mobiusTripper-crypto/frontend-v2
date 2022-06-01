@@ -17,6 +17,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { useQuery } from 'vue-query';
 import QUERY_KEYS from '@/constants/queryKeys';
 import useTokens from '@/composables/useTokens';
+import useGaugeUserBalanceQuery from '@/beethovenx/composables/gauge/useGaugeUserBalanceQuery';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -31,6 +32,11 @@ export default function useGauge(pool: Ref<FullPool>) {
   const { getProvider, appNetworkConfig, account } = useWeb3();
   const { addTransaction } = useTransactions();
   const gaugeUserQuery = useGaugeUserQuery(pool.value.id);
+  const { data: gaugeUserBalance } = useGaugeUserBalanceQuery(
+    pool.value.gauge.address
+  );
+
+  const { priceFor } = useTokens();
 
   async function approve() {
     try {
@@ -166,8 +172,6 @@ export default function useGauge(pool: Ref<FullPool>) {
   );
 
   async function getPendingRewards() {
-    const { priceFor } = useTokens();
-
     const provider = getProvider();
     const multicaller = new Multicaller(
       configService.network.key,
@@ -214,6 +218,7 @@ export default function useGauge(pool: Ref<FullPool>) {
     withdrawAndHarvest,
     gaugeUser,
     pendingRewards,
-    isPendingRewardsLoading
+    isPendingRewardsLoading,
+    gaugeUserBalance
   };
 }
