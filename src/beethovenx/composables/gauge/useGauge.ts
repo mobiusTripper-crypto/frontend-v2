@@ -1,11 +1,10 @@
-import { computed, Ref, reactive } from 'vue';
+import { computed, reactive, Ref } from 'vue';
 import useWeb3 from '@/services/web3/useWeb3';
 import { TransactionResponse, Web3Provider } from '@ethersproject/providers';
 import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { default as abi } from '@/lib/abi/ERC20.json';
 import { bnum } from '@/lib/utils';
 import BigNumber from 'bignumber.js';
-import { masterChefContractsService } from '@/beethovenx/services/farm/master-chef-contracts.service';
 import useTransactions from '@/composables/useTransactions';
 import { erc20ContractService } from '@/beethovenx/services/erc20/erc20-contracts.service';
 import GAUGE_CONTRACT_ABI from '@/beethovenx/abi/LiquidityGaugeV5.json';
@@ -167,7 +166,8 @@ export default function useGauge(pool: Ref<FullPool>) {
     QUERY_KEYS.Rewards.GetRewards(pool.value.id),
     getPendingRewards,
     reactive({
-      enabled: true
+      enabled: true,
+      refetchInterval: 5000
     })
   );
 
