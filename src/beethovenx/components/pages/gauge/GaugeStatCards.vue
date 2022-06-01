@@ -31,7 +31,7 @@
           My Balance
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ fNum(gaugeUser?.balanceUSD ?? '0', 'usd') }}
+          {{ fNum(gaugeUser?.amountUSD ?? '0', 'usd') }}
         </div>
       </BalCard>
       <BalCard>
@@ -41,7 +41,7 @@
         <div class="text-xl font-medium truncate flex items-center">
           {{
             fNum(
-              `${parseFloat(gaugeUser?.balanceUSD || '0') /
+              `${parseFloat(gaugeUser?.amountUSD || '0') /
                 parseFloat(pool.gauge.totalLiquidity ?? '1')}`,
               'percent'
             )

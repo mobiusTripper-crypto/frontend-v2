@@ -5,7 +5,6 @@ import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { default as abi } from '@/lib/abi/ERC20.json';
 import { bnum } from '@/lib/utils';
 import BigNumber from 'bignumber.js';
-import { masterChefContractsService } from '@/beethovenx/services/farm/master-chef-contracts.service';
 import useTransactions from '@/composables/useTransactions';
 import { erc20ContractService } from '@/beethovenx/services/erc20/erc20-contracts.service';
 import GAUGE_CONTRACT_ABI from '@/beethovenx/abi/LiquidityGaugeV5.json';
@@ -33,7 +32,7 @@ export default function useGauge(pool: Ref<FullPool>) {
   const { addTransaction } = useTransactions();
   const gaugeUserQuery = useGaugeUserQuery(pool.value.id);
   const { data: gaugeUserBalance } = useGaugeUserBalanceQuery(
-    pool.value.gauge.address
+    pool.value.gauge?.address
   );
 
   const { priceFor } = useTokens();
@@ -138,7 +137,7 @@ export default function useGauge(pool: Ref<FullPool>) {
         summary: 'Withdraw staked LP tokens',
         details: {
           contractAddress: pool.value.address,
-          spender: appNetworkConfig.addresses.masterChef
+          spender: pool.value.gauge.address
         }
       });
 
