@@ -7,43 +7,66 @@ import { configService } from '@/services/config/config.service';
 
 <template>
   <div>
-    <div
-      class="hero-container -mx-4 lg:-mx-6 pt-10 sm:pt-16 lg:pt-8 overflow-hidden"
-    >
-      <div class="mx-auto max-w-7xl">
-        <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+    <div class="hero-container -mx-4 lg:-mx-6 pt-10 sm:pt-16 lg:pt-8 relative">
+      <img
+        class="absolute w-full h-full top-0 left-0"
+        src="~@/beethovenx/assets/images/op-header-bg.png"
+      />
+
+      <div class="mx-auto max-w-7xl xl:grid xl:grid-cols-2 gap-8 z-10 relative">
+        <div class="hidden xl:block">
+          <img
+            src="~@/beethovenx/assets/images/op-header-beethoven.png"
+            style="height: 567px !important; width: 624px !important;"
+          />
+        </div>
+        <div class="pb-12 flex flex-col justify-center mx-12 xl:mx-4">
+          <img src="~@/beethovenx/assets/images/op-header-text.svg" />
+
+          <p
+            class="mt-3 text-base sm:mt-5 sm:text-xl lg:text-lg xl:text-xl pl-4 text-left font-book text-center font-bold text-red-500"
+          >
+            An AMM re-imagineered for everyone
+          </p>
+          <div class="pt-8 flex sm:pt-12 justify-center">
+            <router-link
+              :to="{ name: 'trade' }"
+              class="beet-button green-button-small mx-auto sm:mx-0"
+            >
+              Swap
+            </router-link>
+            <router-link
+              :to="{ name: 'pools' }"
+              class="beet-button blue-button-small mx-auto sm:ml-4 sm:mt-0 sm:mr-0"
+            >
+              Invest
+            </router-link>
+          </div>
+        </div>
+        <!--        <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+          <div class="lg:m-0 lg:relative hidden xl:flex">
+            <div class="flex-1 hidden lg:block" />
+            <div
+              class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0 items-right flex justify-end"
+            >
+              <img
+                src="~@/beethovenx/assets/images/op-header-beethoven.png"
+                style="height: 567px !important; width: 624px !important;"
+              />
+            </div>
+          </div>
           <div
-            class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center pb-8 lg:pb-0"
+            class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left flex lg:items-center pb-8 lg:pb-0 z-10"
           >
             <div class="lg:pb-12">
-              <h1 class="hero-h1">
-                <span class="block">Your spiritually</span>
-                <span class="block">SYMPHONIC</span>
-                <span class="block">Decentralized</span>
-                <span class="block">Investment Platform</span>
-              </h1>
-              <img src="~@/beethovenx/assets/images/title-text.svg" />
+              <img src="~@/beethovenx/assets/images/op-header-text.svg" />
+
               <p
-                class="mt-3 text-base sm:mt-5 sm:text-xl lg:text-lg xl:text-xl pl-4 text-left font-book"
+                class="mt-3 text-base sm:mt-5 sm:text-xl lg:text-lg xl:text-xl pl-4 text-left font-book text-center font-bold text-red-500"
               >
-                Built on Balancer V2, Beethoven X is the first next-generation
-                AMM protocol on {{ configService.network.name }}.
+                An AMM re-imagineered for everyone
               </p>
-              <div class="sm:hidden pt-8">
-                <router-link
-                  :to="{ name: 'trade' }"
-                  class="beet-button green-button mx-auto"
-                >
-                  Swap
-                </router-link>
-                <router-link
-                  :to="{ name: 'pools' }"
-                  class="beet-button blue-button mx-auto mt-4"
-                >
-                  Invest
-                </router-link>
-              </div>
-              <div class="pt-8 hidden sm:flex sm:pt-12">
+              <div class="pt-8 flex sm:pt-12 justify-center">
                 <router-link
                   :to="{ name: 'trade' }"
                   class="beet-button green-button-small mx-auto sm:mx-0"
@@ -59,21 +82,7 @@ import { configService } from '@/services/config/config.service';
               </div>
             </div>
           </div>
-          <div
-            class="sm:mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative hidden lg:flex"
-          >
-            <div class="flex-1 hidden lg:block" />
-            <div
-              class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0 items-right flex justify-end"
-            >
-              <img
-                src="~@/beethovenx/assets/images/hero-image.png"
-                width="453"
-                height="590"
-              />
-            </div>
-          </div>
-        </div>
+        </div>-->
       </div>
     </div>
     <div class="lg:container lg:mx-auto pt-10 md:pt-12">
