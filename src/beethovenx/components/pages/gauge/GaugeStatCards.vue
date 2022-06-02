@@ -6,7 +6,7 @@
           TVL
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ fNum(pool.gauge.totalLiquidity, 'usd') }}
+          {{ fNum(gaugeBptBalanceUsd, 'usd') }}
         </div>
       </BalCard>
       <BalCard>
@@ -31,7 +31,7 @@
           My Balance
         </div>
         <div class="text-xl font-medium truncate flex items-center">
-          {{ fNum(gaugeUser?.amountUSD ?? '0', 'usd') }}
+          {{ fNum(gaugeUserBalanceUsd, 'usd') }}
         </div>
       </BalCard>
       <BalCard>
@@ -41,8 +41,11 @@
         <div class="text-xl font-medium truncate flex items-center">
           {{
             fNum(
-              `${parseFloat(gaugeUser?.amountUSD || '0') /
-                parseFloat(pool.gauge.totalLiquidity ?? '1')}`,
+              `${
+                gaugeBptBalanceUsd
+                  ? gaugeUserBalanceUsd / gaugeBptBalanceUsd
+                  : 1
+              }`,
               'percent'
             )
           }}
@@ -77,7 +80,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, toRefs } from 'vue';
+import { defineComponent, ref, PropType, toRefs, computed } from 'vue';
 import useNumbers from '@/composables/useNumbers';
 import useEthers from '@/composables/useEthers';
 import useGauge from '@/beethovenx/composables/gauge/useGauge';
@@ -105,7 +108,11 @@ export default defineComponent({
       gaugeUser,
       pendingRewards,
       isPendingRewardsLoading,
-      harvest
+      harvest,
+      gaugeUserBalance,
+      gaugeUserBalanceUsd,
+      gaugeBptBalanceUsd,
+      gaugeBptBalance
     } = useGauge(pool);
 
     async function harvestRewards(): Promise<void> {
@@ -134,7 +141,9 @@ export default defineComponent({
       pendingRewards,
       isPendingRewardsLoading,
       harvesting,
-      harvestRewards
+      harvestRewards,
+      gaugeUserBalanceUsd,
+      gaugeBptBalanceUsd
     };
   }
 });

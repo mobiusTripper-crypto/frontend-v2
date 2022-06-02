@@ -19,7 +19,7 @@ import useTokens from '@/composables/useTokens';
 import useGaugeUserBalanceQuery from '@/beethovenx/composables/gauge/useGaugeUserBalanceQuery';
 import useEthers from '@/composables/useEthers';
 import ChildChainGaugeRewardHelper from '@/beethovenx/abi/ChildChainGaugeRewardHelper.json';
-import { Contract } from '@ethersproject/contracts';
+import useGaugeBptBalanceQuery from '@/beethovenx/composables/gauge/useGaugeBptBalanceQuery';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -31,12 +31,34 @@ export async function approveToken(
 }
 
 export default function useGauge(pool: Ref<FullPool>) {
-  const { getProvider, appNetworkConfig, account, getSigner } = useWeb3();
+  const { getProvider, appNetworkConfig, account } = useWeb3();
   const { addTransaction } = useTransactions();
   const gaugeUserQuery = useGaugeUserQuery(pool.value.id);
-  const { data: gaugeUserBalance } = useGaugeUserBalanceQuery(
+  const {
+    data: gaugeUserBalance,
+    refetch: gaugeUserBalanceReftech
+  } = useGaugeUserBalanceQuery(pool.value.gauge?.address || null);
+  const {
+    data: gaugeBptBalance,
+    refetch: gaugeBptBalanceRefetch
+  } = useGaugeBptBalanceQuery(
+    pool.value.address,
     pool.value.gauge?.address || null
   );
+
+  const bptPrice = computed(() => {
+    return (
+      parseFloat(pool.value.totalLiquidity) / parseFloat(pool.value.totalShares)
+    );
+  });
+
+  const gaugeUserBalanceUsd = computed(() => {
+    return bptPrice.value * parseFloat(gaugeUserBalance.value || '0');
+  });
+
+  const gaugeBptBalanceUsd = computed(() => {
+    return bptPrice.value * parseFloat(gaugeBptBalance.value || '0');
+  });
 
   const { priceFor } = useTokens();
   const { txListener } = useEthers();
@@ -92,6 +114,16 @@ export default function useGauge(pool: Ref<FullPool>) {
         details: {
           contractAddress: pool.value.address,
           spender: pool.value.gauge.address
+        }
+      });
+
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          await gaugeBptBalanceRefetch.value();
+          await gaugeUserBalanceReftech.value();
+        },
+        onTxFailed: () => {
+          //
         }
       });
 
@@ -155,7 +187,6 @@ export default function useGauge(pool: Ref<FullPool>) {
   async function withdrawAndHarvest(amount: BigNumber) {
     try {
       const tx = await getWithdrawTransaction(amount.toString());
-      console.log(tx);
       addTransaction({
         id: tx.hash,
         type: 'tx',
@@ -164,6 +195,16 @@ export default function useGauge(pool: Ref<FullPool>) {
         details: {
           contractAddress: pool.value.address,
           spender: pool.value.gauge.address
+        }
+      });
+
+      txListener(tx, {
+        onTxConfirmed: async () => {
+          await gaugeBptBalanceRefetch.value();
+          await gaugeUserBalanceReftech.value();
+        },
+        onTxFailed: () => {
+          //
         }
       });
 
@@ -234,6 +275,9 @@ export default function useGauge(pool: Ref<FullPool>) {
     gaugeUser,
     pendingRewards,
     isPendingRewardsLoading,
-    gaugeUserBalance
+    gaugeUserBalance,
+    gaugeUserBalanceUsd,
+    gaugeBptBalance,
+    gaugeBptBalanceUsd
   };
 }
