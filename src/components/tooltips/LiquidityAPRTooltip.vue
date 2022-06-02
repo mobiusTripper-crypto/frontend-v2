@@ -3,19 +3,22 @@ import { computed } from 'vue';
 import useNumbers from '@/composables/useNumbers';
 import { DecoratedPool } from '@/services/balancer/subgraph/types';
 import { bnum } from '@/lib/utils';
+import { Placement } from '@/components/_global/BalTooltip/BalTooltip.vue';
 
 /**
  * TYPES
  */
 type Props = {
   pool: DecoratedPool;
+  placement: Placement;
 };
 
 /**
  * PROPS
  */
-const props = defineProps<Props>();
-
+const props = withDefaults(defineProps<Props>(), {
+  placement: 'top'
+});
 /**
  * COMPOSABLES
  */
@@ -27,7 +30,7 @@ const hasThirdPartyAPR = computed(() =>
 </script>
 
 <template v-slot:aprCell="pool">
-  <BalTooltip width="auto" noPad>
+  <BalTooltip width="auto" noPad :placement="placement">
     <template v-slot:activator>
       <div class="ml-1">
         <StarsIcon
