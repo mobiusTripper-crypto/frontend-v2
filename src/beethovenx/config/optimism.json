@@ -61,7 +61,7 @@
     "copperProxy": "",
     "batchRelayer": "0x0000000000000000000000000000000000000000",
     "bbUsd": "",
-    "gaugeRewardHelper": "0x534C0c704A09fC70004C2616349ad46b30072D68"
+    "gaugeRewardHelper": "0x299dcDF14350999496204c141A0c20A29d71AF3E"
   },
   "usdTokens": [
     "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
