@@ -1,12 +1,14 @@
 <template>
   <div>
     <div v-if="account" class="flex items-center">
+      <AppNavNetworkSelect />
       <AppNavActivityBtn />
       <AppNavClaimBtn />
       <AppNavBeets />
       <AppNavAccountBtn />
     </div>
     <div v-else class="flex">
+      <AppNavNetworkSelect />
       <div class="mr-2">
         <AppNavBeets />
       </div>
@@ -31,6 +33,7 @@ import AppNavActivityBtn from './AppNavActivityBtn/AppNavActivityBtn.vue';
 import AppNavAccountBtn from './AppNavAccountBtn.vue';
 import AppNavClaimBtn from './AppNavClaimBtn.vue';
 import AppNavBeets from './AppNavBeets.vue';
+import AppNavNetworkSelect from './AppNavNetworkSelect.vue';
 
 export default defineComponent({
   name: 'AppNavActions',
@@ -39,7 +42,8 @@ export default defineComponent({
     AppNavBeets,
     AppNavAccountBtn,
     AppNavClaimBtn,
-    AppNavActivityBtn
+    AppNavActivityBtn,
+    AppNavNetworkSelect
   },
 
   setup() {
