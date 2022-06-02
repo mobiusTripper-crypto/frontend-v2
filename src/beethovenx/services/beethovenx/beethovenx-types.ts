@@ -449,6 +449,7 @@ export interface PoolListItem {
   tokens: PoolToken[];
   tokensList: string[];
   totalLiquidity: string;
+  totalShares: string;
   mainTokens?: string[];
   apr: GqlBalancePoolApr;
   isNewPool?: boolean;

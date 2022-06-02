@@ -775,6 +775,7 @@ export default class BeethovenxService {
           amp: true,
           tokensList: true,
           totalLiquidity: true,
+          totalShares: true,
           mainTokens: true,
           isNewPool: true,
           volume24h: true,

@@ -20,6 +20,7 @@ import useGaugeUserBalanceQuery from '@/beethovenx/composables/gauge/useGaugeUse
 import useEthers from '@/composables/useEthers';
 import ChildChainGaugeRewardHelper from '@/beethovenx/abi/ChildChainGaugeRewardHelper.json';
 import useGaugeBptBalanceQuery from '@/beethovenx/composables/gauge/useGaugeBptBalanceQuery';
+import useGaugeUserBalancesQuery from '@/beethovenx/composables/gauge/useGaugeUserBalancesQuery';
 
 export async function approveToken(
   web3: Web3Provider,

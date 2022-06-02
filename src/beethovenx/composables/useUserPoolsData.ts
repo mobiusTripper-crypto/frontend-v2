@@ -1,4 +1,4 @@
-import { computed, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import useUserPoolDataQuery from '@/beethovenx/composables/queries/useUserPoolDataQuery';
 import usePoolList from '@/beethovenx/composables/usePoolList';
 import {
@@ -11,27 +11,39 @@ import { MINIMUM_DUST_VALUE_USD } from '@/beethovenx/constants/dust';
 import { configService } from '@/services/config/config.service';
 import useGaugeAllUsersSharesQuery from '@/beethovenx/composables/gauge/useGaugeAllUsersSharesQuery';
 import useTokens from '@/composables/useTokens';
+import useGaugeUserBalancesQuery from '@/beethovenx/composables/gauge/useGaugeUserBalancesQuery';
+import { getAddress } from '@ethersproject/address';
 
 export default function useUserPoolsData() {
   const userPoolDataQuery = useUserPoolDataQuery();
-  const gaugeAllUsersShareQuery = useGaugeAllUsersSharesQuery();
   const { poolList, poolListLoading } = usePoolList();
-  const { featureFlags } = configService;
   const { balanceFor } = useTokens();
+  const gaugeAddresses = computed(() =>
+    poolList.value
+      .filter(item => item.gauge)
+      .map(item => item.gauge?.address || '')
+  );
+  const {
+    data: gaugeUserBalances,
+    isLoading: gaugeUserBalancesLoading
+  } = useGaugeUserBalancesQuery(gaugeAddresses);
 
   const userPoolDataLoading = computed(
     () =>
       userPoolDataQuery.isLoading.value ||
       userPoolDataQuery.isIdle.value ||
-      poolListLoading.value
+      poolListLoading.value ||
+      gaugeUserBalancesLoading.value
   );
 
   const userPoolsData = computed<GqlBeetsUserPoolData>(() => {
-    const gaugeTotalBalanceUSD = gaugeUserPools.value
+    /*const gaugeTotalBalanceUSD = gaugeUserPools.value
       ? gaugeUserPools.value
           .map(item => parseFloat(item.amountUSD))
           .reduce((total, value) => total + value)
-      : 0;
+      : 0;*/
+
+    //console.log('gaugeUserBalances', gaugeUserBalances);
 
     const data = userPoolDataQuery.data.value ?? {
       totalBalanceUSD: '0',
@@ -43,45 +55,47 @@ export default function useUserPoolsData() {
 
     return {
       ...data,
-      totalBalanceUSD: (
+      /*totalBalanceUSD: (
         gaugeTotalBalanceUSD + parseFloat(data.totalBalanceUSD)
-      ).toString()
+      ).toString()*/
+      totalBalanceUSD: '0'
     };
   });
 
   const userPools = computed<GqlBeetsUserPoolPoolData[]>(
     () => userPoolsData.value.pools
   );
-  const gaugeUserPools = computed<GqlGaugeUserShare[]>(
-    () => gaugeAllUsersShareQuery.data.value || []
-  );
 
   const userPoolList = computed<UserPoolListItem[]>(() => {
-    poolList.value.map(item => {
-      console.log(item.name, balanceFor(item.address));
-    });
-
-    const userPoolIds = userPools.value.map(item => item.poolId);
-
-    return poolList.value
-      .filter(pool => userPoolIds.includes(pool.id))
+    const abc = poolList.value
+      .filter(
+        item =>
+          parseFloat(balanceFor(item.address)) > 0 ||
+          parseFloat(
+            gaugeUserBalances.value && item.gauge
+              ? gaugeUserBalances.value[item.gauge.address]
+              : '0'
+          ) > 0
+      )
       .map(pool => {
-        const data = userPools.value.find(item => item.poolId === pool.id);
-        const gaugeData = gaugeUserPools.value.find(
-          item => item.poolId === pool.id
+        const bptInWallet = parseFloat(balanceFor(pool.address));
+        const bptStaked = parseFloat(
+          gaugeUserBalances.value && pool.gauge
+            ? gaugeUserBalances.value[pool.gauge.address]
+            : '0'
         );
+        const userBptTotal = bptInWallet + bptStaked;
 
         return {
           ...pool,
-          userBalance: (
-            parseFloat(data?.balanceUSD || '0') +
-            parseFloat(gaugeData?.amountUSD || '0')
-          ).toString(),
-          hasUnstakedBpt:
-            data?.hasUnstakedBpt && featureFlags.supportsMasterChef
+          userBalance: `${parseFloat(pool.totalLiquidity) *
+            (userBptTotal / parseFloat(pool.totalShares))}`,
+          hasUnstakedBpt: pool.gauge && parseFloat(balanceFor(pool.address)) > 0
         };
       })
       .filter(pool => Number(pool.userBalance) > MINIMUM_DUST_VALUE_USD);
+
+    return abc;
   });
 
   return {

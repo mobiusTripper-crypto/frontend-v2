@@ -1,36 +1,39 @@
-import { reactive } from 'vue';
+import { computed, reactive, Ref } from 'vue';
 import { useQuery } from 'vue-query';
 import { QueryObserverOptions } from 'react-query/core';
 import QUERY_KEYS from '@/beethovenx/constants/queryKeys';
 import useWeb3 from '@/services/web3/useWeb3';
-import { Contract } from '@ethersproject/contracts';
 import GAUGE_CONTRACT_ABI from '@/beethovenx/abi/LiquidityGaugeV5.json';
 import { formatFixed } from '@ethersproject/bignumber';
 import usePoolList from '@/beethovenx/composables/usePoolList';
 import { Multicaller } from '@/lib/utils/balancer/contract';
 import { configService } from '@/services/config/config.service';
+import { BalanceMap } from '@/services/token/concerns/balances.concern';
+import { mapValues } from 'lodash';
 
 export default function useGaugeUserBalancesQuery(
-  guageAddress: string | null,
-  options: QueryObserverOptions<string> = {}
+  gaugeAddresses: Ref<string[]>,
+  options: QueryObserverOptions<BalanceMap> = {}
 ) {
-  const { account, getProvider } = useWeb3();
-  const provider = getProvider();
-  const { poolList } = usePoolList();
-  const gaugeAddresses = poolList.value
-    .filter(item => item.gauge)
-    .map(item => item.gauge?.address || '');
+  const { account, getProvider, isWalletReady } = useWeb3();
+  const enabled = computed(
+    () => isWalletReady.value && gaugeAddresses.value.length > 0
+  );
 
-  const queryKey = QUERY_KEYS.Gauges.UserBalances(gaugeAddresses, account);
+  const queryKey = QUERY_KEYS.Gauges.UserBalances(
+    gaugeAddresses.value,
+    account
+  );
 
   const queryFn = async () => {
+    const provider = getProvider();
     const multicaller = new Multicaller(
       configService.network.key,
       provider,
       GAUGE_CONTRACT_ABI
     );
 
-    gaugeAddresses.forEach(gaugeAddress => {
+    gaugeAddresses.value.forEach(gaugeAddress => {
       multicaller.call(gaugeAddress, gaugeAddress, 'balanceOf', [
         account.value
       ]);
@@ -38,22 +41,14 @@ export default function useGaugeUserBalancesQuery(
 
     const result = await multicaller.execute({});
 
-    const gaugeContract = new Contract(
-      guageAddress,
-      GAUGE_CONTRACT_ABI,
-      provider
-    );
-
-    const balance = await gaugeContract.balanceOf(account.value);
-
-    return formatFixed(balance, 18);
+    return mapValues(result, value => formatFixed(value, 18));
   };
 
   const queryOptions = reactive({
-    enabled: true,
+    enabled,
     ...options,
     refetchInterval: 5000
   });
 
-  return useQuery<string>(queryKey, queryFn, queryOptions);
+  return useQuery<BalanceMap>(queryKey, queryFn, queryOptions);
 }
