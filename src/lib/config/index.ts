@@ -65,6 +65,7 @@ export interface Config {
     copperProxy: string;
     batchRelayer: string;
     bbUsd: string;
+    gaugeRewardHelper: string;
   };
   usdTokens: string[];
   usdTokenToWrappedTokenMap: { [mainToken: string]: string };

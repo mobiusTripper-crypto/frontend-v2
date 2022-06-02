@@ -18,6 +18,8 @@ import QUERY_KEYS from '@/constants/queryKeys';
 import useTokens from '@/composables/useTokens';
 import useGaugeUserBalanceQuery from '@/beethovenx/composables/gauge/useGaugeUserBalanceQuery';
 import useEthers from '@/composables/useEthers';
+import ChildChainGaugeRewardHelper from '@/beethovenx/abi/ChildChainGaugeRewardHelper.json';
+import { Contract } from '@ethersproject/contracts';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -29,7 +31,7 @@ export async function approveToken(
 }
 
 export default function useGauge(pool: Ref<FullPool>) {
-  const { getProvider, appNetworkConfig, account } = useWeb3();
+  const { getProvider, appNetworkConfig, account, getSigner } = useWeb3();
   const { addTransaction } = useTransactions();
   const gaugeUserQuery = useGaugeUserQuery(pool.value.id);
   const { data: gaugeUserBalance } = useGaugeUserBalanceQuery(
@@ -143,10 +145,10 @@ export default function useGauge(pool: Ref<FullPool>) {
     const provider = getProvider();
     return sendTransaction(
       provider,
-      pool.value.gauge.address,
-      GAUGE_CONTRACT_ABI,
-      'claim_rewards()',
-      []
+      appNetworkConfig.addresses.gaugeRewardHelper,
+      ChildChainGaugeRewardHelper,
+      'claimRewards',
+      [pool.value.gauge.address, account.value]
     );
   }
 
@@ -191,15 +193,15 @@ export default function useGauge(pool: Ref<FullPool>) {
     const multicaller = new Multicaller(
       configService.network.key,
       provider,
-      GAUGE_CONTRACT_ABI
+      ChildChainGaugeRewardHelper
     );
 
     pool.value.gauge.rewardTokens.map(rewardToken => {
       multicaller.call(
         `${pool.value.gauge.address}.claimableRewards.${rewardToken.address}`,
-        pool.value.gauge.address,
-        'claimable_reward_write',
-        [account.value, rewardToken.address]
+        appNetworkConfig.addresses.gaugeRewardHelper,
+        'pendingRewards',
+        [pool.value.gauge.address, account.value, rewardToken.address]
       );
     });
 
@@ -215,14 +217,12 @@ export default function useGauge(pool: Ref<FullPool>) {
         .times(priceFor(rewardToken.address))
         .toNumber();
 
-      //      console.log(rewardToken.address, priceFor(rewardToken.address));
-
       return {
         symbol: rewardToken.symbol,
         balance: formatUnits(balance, rewardToken.decimals)
       };
     });
-    //    console.log(balanceUSD); //TODO, need to add reward tokens to test this
+
     return { rewards: rewards, balanceUSD: balanceUSD };
   }
 

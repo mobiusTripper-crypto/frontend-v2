@@ -60,7 +60,8 @@
     "merkleOrchard": "",
     "copperProxy": "",
     "batchRelayer": "0x0000000000000000000000000000000000000000",
-    "bbUsd": ""
+    "bbUsd": "",
+    "gaugeRewardHelper": "0x534C0c704A09fC70004C2616349ad46b30072D68"
   },
   "usdTokens": [
     "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
