@@ -75,6 +75,12 @@ export const EXTERNAL_LINKS = {
         chainId: [250]
       },
       {
+        title: 'Optimism Bridge',
+        subTitle: 'ETH / MATIC / BSC / ARBITRUM / GNO / +more',
+        url: 'https://app.optimism.io/bridge',
+        chainId: [10]
+      },
+      {
         title: 'Multichain Bridge',
         subTitle: 'ETH / AVAX / BSC / MATIC',
         url: 'https://app.multichain.org/#/router',
