@@ -804,6 +804,10 @@ export default class BeethovenxService {
                 apr: true
               }
             }
+          },
+          gauge: {
+            address: true,
+            id: true
           }
         }
       }

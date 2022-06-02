@@ -1,7 +1,7 @@
 import { computed, reactive, ref, Ref } from 'vue';
 import { useInfiniteQuery } from 'vue-query';
 import { UseInfiniteQueryOptions } from 'react-query/types';
-import { flatten } from 'lodash';
+import { flatten, uniq } from 'lodash';
 import QUERY_KEYS from '@/constants/queryKeys';
 import { balancerSubgraphService } from '@/services/balancer/subgraph/balancer-subgraph.service';
 import {
@@ -119,12 +119,14 @@ export default function usePoolsQuery(
       }
     }
 
-    const tokens = flatten(
-      pools.map(pool => [
-        ...pool.tokensList,
-        ...lpTokensFor(pool),
-        balancerSubgraphService.pools.addressFor(pool.id)
-      ])
+    const tokens = uniq(
+      flatten(
+        pools.map(pool => [
+          ...pool.tokensList,
+          ...lpTokensFor(pool),
+          balancerSubgraphService.pools.addressFor(pool.id)
+        ])
+      )
     );
 
     await injectTokens(tokens);

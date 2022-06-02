@@ -110,7 +110,7 @@ export interface Pool {
   isNewPool?: boolean;
   volume24h: string;
   fees24h: string;
-  gauge: GqlBalancerPoolGauge;
+  gauge?: GqlBalancerPoolGauge;
 }
 
 export interface LinearPool extends Pool {

@@ -412,7 +412,7 @@ export default {
      */
     function balanceFor(address: string): string {
       try {
-        return balances.value[address] || '0';
+        return balances.value[getAddress(address)] || '0';
       } catch {
         return '0';
       }

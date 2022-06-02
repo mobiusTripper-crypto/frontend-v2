@@ -144,7 +144,7 @@ export default defineComponent({
     const { approve, deposit } = useGauge(pool);
     const allowanceAvailableQuery = useAllowanceAvailableQuery(
       pool.value.address,
-      pool.value.gauge.address
+      pool.value.gauge?.address || ''
     );
     const bptBalance = computed(() =>
       balanceFor(getAddress(pool.value.address))

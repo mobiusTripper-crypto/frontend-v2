@@ -10,12 +10,14 @@ import {
 import { MINIMUM_DUST_VALUE_USD } from '@/beethovenx/constants/dust';
 import { configService } from '@/services/config/config.service';
 import useGaugeAllUsersSharesQuery from '@/beethovenx/composables/gauge/useGaugeAllUsersSharesQuery';
+import useTokens from '@/composables/useTokens';
 
 export default function useUserPoolsData() {
   const userPoolDataQuery = useUserPoolDataQuery();
   const gaugeAllUsersShareQuery = useGaugeAllUsersSharesQuery();
   const { poolList, poolListLoading } = usePoolList();
   const { featureFlags } = configService;
+  const { balanceFor } = useTokens();
 
   const userPoolDataLoading = computed(
     () =>
@@ -55,6 +57,10 @@ export default function useUserPoolsData() {
   );
 
   const userPoolList = computed<UserPoolListItem[]>(() => {
+    poolList.value.map(item => {
+      console.log(item.name, balanceFor(item.address));
+    });
+
     const userPoolIds = userPools.value.map(item => item.poolId);
 
     return poolList.value

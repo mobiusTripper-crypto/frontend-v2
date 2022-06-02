@@ -71,7 +71,7 @@ export default function useGauge(pool: Ref<FullPool>) {
     QUERY_KEYS.Rewards.GetRewards(pool.value.id),
     getPendingRewards,
     reactive({
-      enabled: true,
+      enabled: !!pool.value.gauge,
       refetchInterval: 5000
     })
   );
@@ -81,7 +81,7 @@ export default function useGauge(pool: Ref<FullPool>) {
       const provider = getProvider();
       const tx = await erc20ContractService.erc20.approveToken(
         provider,
-        pool.value.gauge.address,
+        pool.value.gauge?.address || '',
         pool.value.address
       );
 
@@ -92,7 +92,7 @@ export default function useGauge(pool: Ref<FullPool>) {
         summary: `Approve LP token`,
         details: {
           contractAddress: pool.value.address,
-          spender: pool.value.gauge.address
+          spender: pool.value.gauge?.address || ''
         }
       });
 
@@ -113,7 +113,7 @@ export default function useGauge(pool: Ref<FullPool>) {
         summary: 'Deposit LP tokens',
         details: {
           contractAddress: pool.value.address,
-          spender: pool.value.gauge.address
+          spender: pool.value.gauge?.address || ''
         }
       });
 
@@ -137,7 +137,7 @@ export default function useGauge(pool: Ref<FullPool>) {
     const provider = getProvider();
     return sendTransaction(
       provider,
-      pool.value.gauge.address,
+      pool.value.gauge?.address || '',
       GAUGE_CONTRACT_ABI,
       'deposit(uint256)',
       [amount.toString()]
@@ -180,7 +180,7 @@ export default function useGauge(pool: Ref<FullPool>) {
       appNetworkConfig.addresses.gaugeRewardHelper,
       ChildChainGaugeRewardHelper,
       'claimRewards',
-      [pool.value.gauge.address, account.value]
+      [pool.value.gauge?.address || '', account.value]
     );
   }
 
@@ -194,7 +194,7 @@ export default function useGauge(pool: Ref<FullPool>) {
         summary: 'Withdraw staked LP tokens',
         details: {
           contractAddress: pool.value.address,
-          spender: pool.value.gauge.address
+          spender: pool.value.gauge?.address || ''
         }
       });
 
@@ -218,7 +218,7 @@ export default function useGauge(pool: Ref<FullPool>) {
     const provider = getProvider();
     return sendTransaction(
       provider,
-      pool.value.gauge.address,
+      pool.value.gauge?.address || '',
       GAUGE_CONTRACT_ABI,
       'withdraw(uint256,bool)',
       [amount.toString(), true]
@@ -237,21 +237,21 @@ export default function useGauge(pool: Ref<FullPool>) {
       ChildChainGaugeRewardHelper
     );
 
-    pool.value.gauge.rewardTokens.map(rewardToken => {
+    pool.value.gauge?.rewardTokens.map(rewardToken => {
       multicaller.call(
-        `${pool.value.gauge.address}.claimableRewards.${rewardToken.address}`,
+        `${pool.value.gauge?.address}.claimableRewards.${rewardToken.address}`,
         appNetworkConfig.addresses.gaugeRewardHelper,
         'pendingRewards',
-        [pool.value.gauge.address, account.value, rewardToken.address]
+        [pool.value.gauge?.address, account.value, rewardToken.address]
       );
     });
 
     const gaugesDataMap = await multicaller.execute();
 
     let balanceUSD = 0;
-    const rewards = pool.value.gauge.rewardTokens.map(rewardToken => {
+    const rewards = pool.value.gauge?.rewardTokens.map(rewardToken => {
       const balance =
-        gaugesDataMap[pool.value.gauge.address].claimableRewards[
+        gaugesDataMap[pool.value.gauge?.address || '']?.claimableRewards[
           rewardToken.address
         ];
       balanceUSD += bnum(balance)

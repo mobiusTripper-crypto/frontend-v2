@@ -454,6 +454,9 @@ export interface PoolListItem {
   isNewPool?: boolean;
   volume24h: string;
   fees24h: string;
+  gauge?: {
+    address: string;
+  };
 }
 
 export interface UserPoolListItem extends PoolListItem {
