@@ -13,6 +13,7 @@ import useGaugeAllUsersSharesQuery from '@/beethovenx/composables/gauge/useGauge
 import useTokens from '@/composables/useTokens';
 import useGaugeUserBalancesQuery from '@/beethovenx/composables/gauge/useGaugeUserBalancesQuery';
 import { getAddress } from '@ethersproject/address';
+import { sumBy } from 'lodash';
 
 export default function useUserPoolsData() {
   const userPoolDataQuery = useUserPoolDataQuery();
@@ -34,36 +35,6 @@ export default function useUserPoolsData() {
       userPoolDataQuery.isIdle.value ||
       poolListLoading.value ||
       gaugeUserBalancesLoading.value
-  );
-
-  const userPoolsData = computed<GqlBeetsUserPoolData>(() => {
-    /*const gaugeTotalBalanceUSD = gaugeUserPools.value
-      ? gaugeUserPools.value
-          .map(item => parseFloat(item.amountUSD))
-          .reduce((total, value) => total + value)
-      : 0;*/
-
-    //console.log('gaugeUserBalances', gaugeUserBalances);
-
-    const data = userPoolDataQuery.data.value ?? {
-      totalBalanceUSD: '0',
-      totalFarmBalanceUSD: '0',
-      averageFarmApr: '0',
-      averageApr: '0',
-      pools: []
-    };
-
-    return {
-      ...data,
-      /*totalBalanceUSD: (
-        gaugeTotalBalanceUSD + parseFloat(data.totalBalanceUSD)
-      ).toString()*/
-      totalBalanceUSD: '0'
-    };
-  });
-
-  const userPools = computed<GqlBeetsUserPoolPoolData[]>(
-    () => userPoolsData.value.pools
   );
 
   const userPoolList = computed<UserPoolListItem[]>(() => {
@@ -96,6 +67,34 @@ export default function useUserPoolsData() {
       .filter(pool => Number(pool.userBalance) > MINIMUM_DUST_VALUE_USD);
 
     return abc;
+  });
+
+  const userPoolsData = computed<GqlBeetsUserPoolData>(() => {
+    /*const gaugeTotalBalanceUSD = gaugeUserPools.value
+      ? gaugeUserPools.value
+          .map(item => parseFloat(item.amountUSD))
+          .reduce((total, value) => total + value)
+      : 0;*/
+
+    //console.log('gaugeUserBalances', gaugeUserBalances);
+
+    const data = userPoolDataQuery.data.value ?? {
+      totalBalanceUSD: '0',
+      totalFarmBalanceUSD: '0',
+      averageFarmApr: '0',
+      averageApr: '0',
+      pools: []
+    };
+
+    return {
+      ...data,
+      /*totalBalanceUSD: (
+        gaugeTotalBalanceUSD + parseFloat(data.totalBalanceUSD)
+      ).toString()*/
+      totalBalanceUSD: `${sumBy(userPoolList.value, item =>
+        parseFloat(item.userBalance)
+      )}`
+    };
   });
 
   return {
