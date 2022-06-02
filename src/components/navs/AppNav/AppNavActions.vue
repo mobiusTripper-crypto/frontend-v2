@@ -4,14 +4,16 @@
       <AppNavNetworkSelect />
       <AppNavActivityBtn />
       <AppNavClaimBtn />
-      <AppNavBeets />
+      <!-- hide for now -->
+      <!-- <AppNavBeets /> -->
       <AppNavAccountBtn />
     </div>
     <div v-else class="flex items-center">
       <AppNavNetworkSelect />
-      <div class="mr-2">
+      <!-- hide for now -->
+      <!-- <div class="mr-2">
         <AppNavBeets />
-      </div>
+      </div> -->
       <BalBtn color="white" :size="'sm'" @click="toggleWalletSelectModal">
         <WalletIcon class="mr-2" />
         <span class="hidden lg:inline-block" v-text="$t('connectWallet')" />
@@ -35,7 +37,7 @@ export default defineComponent({
   name: 'AppNavActions',
 
   components: {
-    AppNavBeets,
+    // AppNavBeets,
     AppNavAccountBtn,
     AppNavClaimBtn,
     AppNavActivityBtn,
