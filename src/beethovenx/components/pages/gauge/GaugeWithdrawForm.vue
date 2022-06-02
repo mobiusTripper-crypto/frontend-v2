@@ -54,6 +54,11 @@
         >
           Withdraw {{ tokenName ? tokenName : 'BPT' }}
         </BalBtn>
+        <BalAlert
+          class="mt-4"
+          title="Please harvest your pending rewards prior to withdrawing."
+          type="warning"
+        />
       </template>
     </div>
   </BalForm>
@@ -87,6 +92,7 @@ import useEthers from '@/composables/useEthers';
 import useGauge from '@/beethovenx/composables/gauge/useGauge';
 import useGaugeUserQuery from '@/beethovenx/composables/gauge/useGaugeUserQuery';
 import { FullPool } from '@/services/balancer/subgraph/types';
+import BalAlert from '@/components/_global/BalAlert/BalAlert.vue';
 
 type DataProps = {
   withdrawForm: FormRef;
@@ -98,7 +104,7 @@ type DataProps = {
 
 export default defineComponent({
   name: 'GaugeWithdrawForm',
-  components: {},
+  components: { BalAlert },
   emits: ['success'],
 
   props: {
