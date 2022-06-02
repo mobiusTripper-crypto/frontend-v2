@@ -700,9 +700,10 @@ export interface GqlBalancerPoolGauge {
 
 export interface GqlGaugeUserShare {
   amount: Scalars['BigDecimal'];
+  amountUSD: Scalars['BigDecimal'];
   gaugeAddress: Scalars['Bytes'];
   poolId: Scalars['Bytes'];
-  balanceUSD: Scalars['BigDecimal'];
+  tokens: Array<GqlGaugeRewardToken>;
 }
 
 export interface GqlGaugeRewardToken {

@@ -6,20 +6,18 @@ import useWeb3 from '@/services/web3/useWeb3';
 import { beethovenxService } from '@/beethovenx/services/beethovenx/beethovenx.service';
 import { GqlGaugeUserShare } from '@/beethovenx/services/beethovenx/beethovenx-types';
 
-export default function useGaugeUserQuery(
-  poolId: string,
-  options: QueryObserverOptions<GqlGaugeUserShare> = {}
+export default function useGaugeAllUsersSharesQuery(
+  options: QueryObserverOptions<GqlGaugeUserShare[]> = {}
 ) {
   const { account } = useWeb3();
 
-  const queryKey = QUERY_KEYS.Gauges.User(poolId, account);
+  const queryKey = QUERY_KEYS.Gauges.UserData(account);
 
   const queryFn = async () => {
-    const gauges = await beethovenxService.getGaugesUserShares(
-      poolId,
+    const gauges = await beethovenxService.getGaugesAllUserShares(
       account.value
     );
-    return gauges; // TODO balances need to be calculate
+    return gauges;
   };
 
   const queryOptions = reactive({
@@ -28,5 +26,5 @@ export default function useGaugeUserQuery(
     refetchInterval: 5000
   });
 
-  return useQuery<GqlGaugeUserShare>(queryKey, queryFn, queryOptions);
+  return useQuery<GqlGaugeUserShare[]>(queryKey, queryFn, queryOptions);
 }
