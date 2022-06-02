@@ -91,6 +91,10 @@ export default defineComponent({
     }
 
     function appUrl(network: Network): string {
+      if (network.id === 'fantom') {
+        return `https://beets.fi`;
+      }
+
       return `https://${network.subdomain}.beets.fi`;
     }
 
