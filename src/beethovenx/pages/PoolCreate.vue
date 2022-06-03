@@ -14,7 +14,7 @@
         title="Do not create pools using sUSD or SNX."
         type="warning"
         description="Until a mechanism is implemented to resolve the double-entrypoint compatability issue, it is not advisable to create pool using the sUSD or SNX tokens."
-        class="mb-4"
+        class="my-4"
       />
     </div>
     <BalCard class="pt-2 relative">
