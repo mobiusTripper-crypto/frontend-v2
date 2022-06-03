@@ -107,11 +107,11 @@ onBeforeMount(() => {
     <BalAlert
       v-if="
         pool.id ===
-          '0xdfc65c1f15ad3507754ef0fd4ba67060c108db7e000000000000000000000406'
+          '0x7ef99013e446ddce2486b8e04735b7019a115e6f000100000000000000000005'
       "
-      title="Investing is currently paused"
+      title="Investing in this pool is currently discouraged"
       type="warning"
-      description="We have temporarily paused deposits for this pool"
+      description="Until a mechanism is implemented to resolve the double-entrypoint compatability issue, it is not advisable to invest into this pool."
       class="mb-4"
     />
 
