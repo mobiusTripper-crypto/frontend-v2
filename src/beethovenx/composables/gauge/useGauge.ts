@@ -21,6 +21,8 @@ import useEthers from '@/composables/useEthers';
 import ChildChainGaugeRewardHelper from '@/beethovenx/abi/ChildChainGaugeRewardHelper.json';
 import useGaugeBptBalanceQuery from '@/beethovenx/composables/gauge/useGaugeBptBalanceQuery';
 import useGaugeUserBalancesQuery from '@/beethovenx/composables/gauge/useGaugeUserBalancesQuery';
+import { getAddress } from '@ethersproject/address';
+import { formatFixed } from '@ethersproject/bignumber';
 
 export async function approveToken(
   web3: Web3Provider,
@@ -255,9 +257,10 @@ export default function useGauge(pool: Ref<FullPool>) {
         gaugesDataMap[pool.value.gauge?.address || '']?.claimableRewards[
           rewardToken.address
         ];
-      balanceUSD += bnum(balance)
-        .times(priceFor(rewardToken.address))
-        .toNumber();
+
+      balanceUSD +=
+        parseFloat(formatFixed(balance.toString(), rewardToken.decimals)) *
+        priceFor(getAddress(rewardToken.address));
 
       return {
         symbol: rewardToken.symbol,
