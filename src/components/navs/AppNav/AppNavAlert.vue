@@ -8,7 +8,7 @@
         v-if="alert.action && alert.actionLabel"
         class="ml-4 cursor-pointer"
         color="white"
-        size="xs"
+        :size="upToMediumBreakpoint ? 'sm' : 'xs'"
         :label="alert.actionLabel"
         @click="alert.action"
       />
@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import useAlerts, { Alert, AlertType } from '@/composables/useAlerts';
+import useBreakpoints from '@/composables/useBreakpoints';
 import { computed, defineComponent, PropType } from 'vue';
 
 export default defineComponent({
@@ -32,6 +33,7 @@ export default defineComponent({
 
   setup(props) {
     const { removeAlert } = useAlerts();
+    const { upToMediumBreakpoint } = useBreakpoints();
 
     const colorClass = computed(() => {
       switch (props.alert.type) {
@@ -70,7 +72,13 @@ export default defineComponent({
       }
     }
 
-    return { classes, iconName, handleClose, handleClick };
+    return {
+      classes,
+      iconName,
+      handleClose,
+      handleClick,
+      upToMediumBreakpoint
+    };
   }
 });
 </script>

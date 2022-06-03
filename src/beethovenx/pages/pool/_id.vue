@@ -33,11 +33,15 @@
             >
               {{ $t('new') }}
             </BalChip>
-            <LiquidityAPRTooltip :pool="pool" class="-ml-1 mt-1" />
+            <LiquidityAPRTooltip
+              placement="bottom"
+              :pool="pool"
+              class="-ml-1 mt-1"
+            />
           </div>
           <div class="flex items-center mt-2">
             <div v-html="poolFeeLabel" class="text-sm" />
-            <BalTooltip>
+            <BalTooltip placement="bottom">
               <template v-slot:activator>
                 <BalLink v-if="hasDefaultOwner">
                   <LudwigIcon class="ml-2" />
