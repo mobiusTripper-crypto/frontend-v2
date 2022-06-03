@@ -44,7 +44,7 @@
               `${
                 gaugeBptBalanceUsd
                   ? gaugeUserBalanceUsd / gaugeBptBalanceUsd
-                  : 1
+                  : 0
               }`,
               'percent'
             )
