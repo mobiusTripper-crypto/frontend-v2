@@ -4,9 +4,7 @@
       class="flex text-gray-500 items-center cursor-pointer"
       @click="toggleVisibility"
     >
-      <div class="mr-2">
-        {{ label }}
-      </div>
+      <div class="mr-2">{{ label }}</div>
       <BalIcon v-if="visible" name="chevron-up" size="sm" />
       <BalIcon v-else name="chevron-down" size="sm" />
     </div>
@@ -133,7 +131,7 @@ import { useI18n } from 'vue-i18n';
 import useWeb3 from '@/services/web3/useWeb3';
 import useTokens from '@/composables/useTokens';
 import { NATIVE_ASSET_ADDRESS } from '@/constants/tokens';
-import { Network } from '@/composables/useNetwork';
+import ConfigService from '@/services/config/config.service';
 import { SubgraphPoolBase, SwapV2 } from '@balancer-labs/sdk';
 
 interface Route {
@@ -191,6 +189,7 @@ export default defineComponent({
     const { tokens } = useTokens();
 
     const visible = ref(false);
+    const configService = new ConfigService();
 
     function toggleVisibility(): void {
       visible.value = !visible.value;
@@ -444,7 +443,12 @@ export default defineComponent({
     }
 
     function getPoolLink(id: string): string {
-      return `https://app.beets.fi/#/pool/${id}`;
+      const appUrl =
+        configService.network.chainId === 250
+          ? `https://beets.fi`
+          : `https://op.beets.fi`;
+
+      return appUrl + `/#/pool/${id}`;
     }
 
     return {
