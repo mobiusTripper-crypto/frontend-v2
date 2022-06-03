@@ -8,7 +8,7 @@
     <div
       class="p-4 rounded-lg bg-gradient-to-b from-gray-50 dark:from-gray-900 to-gray-100 dark:to-gray-850"
     >
-      <h6>New to Fantom?</h6>
+      <h6>New to {{ configService.network.shortName }}?</h6>
       <p class="text-sm">
         Beethoven X is a DeFi app on {{ configService.network.shortName }}. To
         invest and trade here, you'll first need to set up an
