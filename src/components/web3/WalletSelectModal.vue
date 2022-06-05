@@ -13,7 +13,7 @@
         Beethoven X is a DeFi app on {{ configService.network.shortName }}. To
         invest and trade here, you'll first need to set up an
         {{ configService.network.name }} compatible wallet.
-        <BalLink :href="EXTERNAL_LINKS.Ethereum.Wallets" external>
+        <BalLink href="https://www.optimism.io/apps/wallets" external>
           Learn More
           <span class="align-middle"
             ><BalIcon name="arrow-up-right" size="sm"
