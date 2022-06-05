@@ -38,7 +38,7 @@
         </div>
       </template>
       <template v-slot:iconColumnCell="pool">
-        <div v-if="!isLoading" class="px-6 py-4">
+        <div v-if="!isLoading" class="px-6 py-4 text-left">
           <BalAssetSetWithTooltip
             :addresses="orderedTokenAddressesFor(pool)"
             :width="100"
