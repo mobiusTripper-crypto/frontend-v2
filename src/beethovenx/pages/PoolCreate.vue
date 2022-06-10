@@ -10,24 +10,6 @@
           get drained.
         </li>
       </ul>
-      <BalAlert
-        title="Do not create pools using Synthetix tokens (e.g., SNX,
-      sBTC, sUSD)"
-        type="warning"
-        class="my-4"
-      >
-        Until a mechanism is implemented to resolve the double-entrypoint
-        compatability issue, it is not advisable to create a pool with double
-        entry-point ERC20 tokens, including but not limited to Synthetix tokens
-        (e.g., SNX, sBTC, sUSD)
-        <a
-          href="https://forum.balancer.fi/t/medium-severity-bug-found/3161"
-          class="underline"
-          target="_blank"
-        >
-          Learn more
-        </a>
-      </BalAlert>
     </div>
     <BalCard class="pt-2 relative">
       <PoolCreateDefinitionFields

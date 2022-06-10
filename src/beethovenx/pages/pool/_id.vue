@@ -61,24 +61,6 @@
         </div>
 
         <BalAlert
-          v-if="
-            pool?.id ===
-              '0x7ef99013e446ddce2486b8e04735b7019a115e6f000100000000000000000005'
-          "
-          type="error"
-          title="This pool contains double-entrypoint tokens, which have been found to be incompatible with Balancer. It is currently not possible to withdraw all assets from the pool proportionally. While it is possible to withdraw in a single asset, liquidity providers are advised to wait. A mechanism is being implemented to allow for proportional withdrawals."
-          class="mt-4"
-        >
-          <a
-            href="https://forum.balancer.fi/t/medium-severity-bug-found/3161"
-            class="underline"
-            target="_blank"
-          >
-            Learn more
-          </a>
-        </BalAlert>
-
-        <BalAlert
           v-if="!appLoading && missingPrices"
           type="warning"
           :title="$t('noPriceInfo')"

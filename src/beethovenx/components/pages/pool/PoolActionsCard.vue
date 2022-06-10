@@ -104,16 +104,6 @@ onBeforeMount(() => {
         {{ isWalletReady ? fiatTotal : '-' }}
       </h5>
     </div>
-    <BalAlert
-      v-if="
-        pool.id ===
-          '0x7ef99013e446ddce2486b8e04735b7019a115e6f000100000000000000000005'
-      "
-      title="Investing in this pool is currently discouraged"
-      type="warning"
-      description="Until a mechanism is implemented to resolve the double-entrypoint compatability issue, it is not advisable to invest into this pool."
-      class="mb-4"
-    />
 
     <BalBtn
       v-if="!isWalletReady"
