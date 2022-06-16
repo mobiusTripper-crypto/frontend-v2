@@ -13,12 +13,14 @@
         <div class="text-sm text-gray-500 font-medium mb-2">
           Rewards
         </div>
+        <template v-if="rewardTokens.length === 0"> No rewards</template>
         <div
-          v-for="(rewardToken, i) in pool.gauge.rewardTokens"
+          v-else
+          v-for="(rewardToken, i) in rewardTokens"
           :key="i"
           :class="[
             'text-xl font-medium truncate flex items-center',
-            i < pool.gauge.rewardTokens.length - 1 ? 'mb-1' : ''
+            i < rewardTokens.length - 1 ? 'mb-1' : ''
           ]"
         >
           {{ fNum(rewardToken.rewardsPerDay, 'token_lg') }}
@@ -71,7 +73,7 @@
         label="Harvest"
         block
         color="gradient"
-        :disabled="!pendingRewards"
+        :disabled="!hasPendingRewards"
         :loading="harvesting"
         @click.prevent="harvestRewards"
       />
@@ -107,6 +109,7 @@ export default defineComponent({
     const {
       gaugeUser,
       pendingRewards,
+      hasPendingRewards,
       isPendingRewardsLoading,
       harvest,
       gaugeUserBalance,
@@ -126,7 +129,6 @@ export default defineComponent({
 
       txListener(tx, {
         onTxConfirmed: async () => {
-          //          await refetchPendingRewards(); // TODO, fix useQuery so can refetch
           harvesting.value = false;
         },
         onTxFailed: () => {
@@ -135,15 +137,23 @@ export default defineComponent({
       });
     }
 
+    const rewardTokens = computed(() =>
+      pool.value.gauge?.rewardTokens.filter(
+        rewardToken => Number(rewardToken.rewardsPerDay) > 0
+      )
+    );
+
     return {
       fNum,
       gaugeUser,
       pendingRewards,
+      hasPendingRewards,
       isPendingRewardsLoading,
       harvesting,
       harvestRewards,
       gaugeUserBalanceUsd,
-      gaugeBptBalanceUsd
+      gaugeBptBalanceUsd,
+      rewardTokens
     };
   }
 });

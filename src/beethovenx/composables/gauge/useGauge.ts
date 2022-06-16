@@ -252,24 +252,32 @@ export default function useGauge(pool: Ref<FullPool>) {
     const gaugesDataMap = await multicaller.execute();
 
     let balanceUSD = 0;
-    const rewards = pool.value.gauge?.rewardTokens.map(rewardToken => {
-      const balance =
-        gaugesDataMap[pool.value.gauge?.address || '']?.claimableRewards[
-          rewardToken.address
-        ];
+    const rewards = pool.value.gauge?.rewardTokens
+      .map(rewardToken => {
+        const balance = formatUnits(
+          gaugesDataMap[pool.value.gauge?.address || '']?.claimableRewards[
+            rewardToken.address
+          ],
+          rewardToken.decimals
+        );
 
-      balanceUSD +=
-        parseFloat(formatFixed(balance.toString(), rewardToken.decimals)) *
-        priceFor(getAddress(rewardToken.address));
+        if (parseFloat(balance) > 0) {
+          balanceUSD +=
+            parseFloat(balance) * priceFor(getAddress(rewardToken.address));
 
-      return {
-        symbol: rewardToken.symbol,
-        balance: formatUnits(balance, rewardToken.decimals)
-      };
-    });
-
+          return {
+            symbol: rewardToken.symbol,
+            balance: balance
+          };
+        }
+      })
+      .filter(item => item != undefined);
     return { rewards: rewards, balanceUSD: balanceUSD };
   }
+
+  const hasPendingRewards = computed(
+    () => pendingRewards.value?.balanceUSD != 0
+  );
 
   return {
     approve,
@@ -278,6 +286,7 @@ export default function useGauge(pool: Ref<FullPool>) {
     withdrawAndHarvest,
     gaugeUser,
     pendingRewards,
+    hasPendingRewards,
     isPendingRewardsLoading,
     gaugeUserBalance,
     gaugeUserBalanceUsd,
