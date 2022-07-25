@@ -396,12 +396,7 @@ export default function useWithdrawMath(
       const indexOfDecimal = amount.indexOf('.');
 
       return parseUnits(
-        indexOfDecimal === -1
-          ? amount
-          : amount.slice(
-              0,
-              1 + indexOfDecimal + withdrawalTokens.value[i].decimals
-            ),
+        amount.slice(0, indexOfDecimal + withdrawalTokens.value[i].decimals),
         withdrawalTokens.value[i].decimals
       ).toString();
     });
