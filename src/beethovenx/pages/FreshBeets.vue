@@ -6,7 +6,6 @@ import { useFreshBeets } from '@/beethovenx/composables/stake/useFreshBeets';
 import { scaleDown } from '@/lib/utils';
 import { BigNumber } from 'bignumber.js';
 import FreshBeetsBalances from '@/beethovenx/components/pages/fbeets/FreshBeetsBalances.vue';
-import FreshBeetsHeader from '@/beethovenx/components/pages/fbeets/FreshBeetsHeader.vue';
 import FreshBeetsOldFarmAlert from '@/beethovenx/components/pages/fbeets/FreshBeetsOldFarmAlert.vue';
 import FreshBeetsStatCards from '@/beethovenx/components/pages/fbeets/FreshBeetsStatCards.vue';
 import BalTabs from '@/components/_global/BalTabs/BalTabs.vue';
@@ -90,7 +89,6 @@ const activeTab = ref(tabs[0].value);
 
 <template>
   <div class="lg:container lg:mx-auto pt-12 md:pt-12">
-    <FreshBeetsHeader />
     <FreshBeetsOldFarmAlert v-if="oldFarmUser && oldFarmUser.amount > 0" />
 
     <div class="flex justify-center">
